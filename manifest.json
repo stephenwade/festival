@@ -1,0 +1,7 @@
+{
+  "name": "festival",
+  "short_name": "festival",
+  "description": "Festival",
+  "start_url": "/",
+  "display": "standalone"
+}
