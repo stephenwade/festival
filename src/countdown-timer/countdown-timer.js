@@ -1,4 +1,5 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import moment from 'moment/src/moment.js';
 
 /**
  * @customElement
