@@ -14,8 +14,24 @@ export class CountdownTimer extends PolymerElement {
           font-size: 40px;
         }
       </style>
-      Counting down…
+      [[setsDescription]]
     `;
+  }
+
+  static get properties() {
+    return {
+      sets: {
+        type: Object
+      },
+      setsDescription: {
+        type: String,
+        computed: 'describeSets(sets)'
+      }
+    };
+  }
+
+  describeSets(sets) {
+    return `The next set starts ${moment().to(sets[0].start)}.`;
   }
 }
 
