@@ -33,6 +33,8 @@ export class FestivalApp extends PolymerElement {
           display: flex;
           align-items: center;
           justify-content: center;
+          font-family: 'Roboto', sans-serif;
+          font-weight: 100;
         }
       </style>
       <template is="dom-if" if="{{!joined}}">

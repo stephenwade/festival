@@ -18,8 +18,6 @@ export class JoinButton extends PolymerElement {
           padding-left: 30px;
           padding-right: 30px;
           font-size: 100px;
-          font-family: 'Roboto', sans-serif;
-          font-weight: 100;
           user-select: none;
         }
 
