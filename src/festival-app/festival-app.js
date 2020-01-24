@@ -37,13 +37,13 @@ export class FestivalApp extends PolymerElement {
           font-weight: 100;
         }
       </style>
-      <template is="dom-if" if="{{!joined}}">
+      <template is="dom-if" if="[[!joined]]">
         <join-button on-click="joinClicked"></join-button>
       </template>
-      <template is="dom-if" if="{{waiting}}">
+      <template is="dom-if" if="[[waiting]]">
         <countdown-timer on-click="timerClicked" sets="[[sets]]"></countdown-timer>
       </template>
-      <template is="dom-if" if="{{playing}}">
+      <template is="dom-if" if="[[playing]]">
         <music-player></music-player>
       </template>
     `;
