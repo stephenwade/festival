@@ -19,6 +19,7 @@ export class JoinButton extends PolymerElement {
           padding-right: 30px;
           font-size: 100px;
           user-select: none;
+          font-weight: 100;
         }
 
         .button:hover {
