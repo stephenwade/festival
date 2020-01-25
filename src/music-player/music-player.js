@@ -17,14 +17,24 @@ export class MusicPlayer extends PolymerElement {
           font-size: 40px;
         }
       </style>
-      <template is="dom-if" id="if">
+      <template is="dom-if" id="if-queued">
+        Queued…
+      </template>
+      <template is="dom-if" id="if-play">
         Playing music
       </template>
     `;
   }
 
+  queue() {
+    this.shadowRoot.getElementById('if-queued').if = true;
+    setTimeout(() => {
+      this.shadowRoot.getElementById('if-queued').if = false;
+    }, 1000);
+  }
+
   play() {
-    this.shadowRoot.getElementById('if').if = true;
+    this.shadowRoot.getElementById('if-play').if = true;
   }
 }
 

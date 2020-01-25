@@ -42,7 +42,11 @@ export class FestivalApp extends PolymerElement {
         <paper-spinner-lite active></paper-spinner-lite>
       </template>
       <template is="dom-if" if="[[waiting]]" restamp>
-        <festival-waiting sets="[[sets]]" on-join="_waitingClicked"></festival-waiting>
+        <festival-waiting
+          sets="[[sets]]"
+          on-join="_handleJoined"
+          on-countdown-finished="_handleCountdownFinished"
+        ></festival-waiting>
       </template>
       <music-player></music-player>
     `;
@@ -65,7 +69,11 @@ export class FestivalApp extends PolymerElement {
     };
   }
 
-  _waitingClicked() {
+  _handleJoined() {
+    this.shadowRoot.querySelector('music-player').queue();
+  }
+
+  _handleCountdownFinished() {
     this.waiting = false;
     this.shadowRoot.querySelector('music-player').play();
   }

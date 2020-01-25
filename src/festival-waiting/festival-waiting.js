@@ -1,5 +1,6 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-button/paper-button.js';
+import '@polymer/polymer/lib/elements/dom-if.js';
 import moment from 'moment/src/moment.js';
 
 /**
@@ -28,16 +29,21 @@ export class FestivalWaiting extends PolymerElement {
           min-width: 14em;
         }
       </style>
-      <p>The first set starts:<br />[[_startTimeDescription]].</p>
-      <p>
-        <paper-button
-          raised
-          disabled="[[!_canJoin]]"
-          on-click="_handleJoinClicked"
-        >
-          [[_joinButtonText]]
-        </paper-button>
-      </p>
+      <template is="dom-if" if="[[!joined]]">
+        <p>The first set starts:<br />[[_startTimeDescription]].</p>
+        <p>
+          <paper-button
+            raised
+            disabled="[[!_canJoin]]"
+            on-click="_handleJoinClicked"
+          >
+            [[_joinButtonText]]
+          </paper-button>
+        </p>
+      </template>
+      <template is="dom-if" if="[[joined]]">
+        <span on-click="_countdownFinished">Joining…</span>
+      </template>
     `;
   }
 
@@ -45,6 +51,10 @@ export class FestivalWaiting extends PolymerElement {
     return {
       sets: {
         type: Object
+      },
+      joined: {
+        type: Boolean,
+        value: false
       },
       _now: {
         type: moment
@@ -122,7 +132,12 @@ export class FestivalWaiting extends PolymerElement {
   }
 
   _handleJoinClicked() {
+    this.joined = true;
     this.dispatchEvent(new CustomEvent('join'));
+  }
+
+  _countdownFinished() {
+    this.dispatchEvent(new CustomEvent('countdown-finished'));
   }
 }
 
