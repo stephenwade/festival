@@ -13,13 +13,7 @@ export class FestivalApp extends PolymerElement {
   constructor() {
     super();
 
-    afterNextRender(this, () => {
-      fetch('/public/sets.json')
-        .then(response => response.json())
-        .then(json => {
-          this.sets = json;
-        });
-    });
+    afterNextRender(this, this.fetchSets);
   }
 
   static get template() {
@@ -80,6 +74,14 @@ export class FestivalApp extends PolymerElement {
 
   timerClicked() {
     this.playing = true;
+  }
+
+  fetchSets() {
+    fetch('/public/sets.json')
+      .then(response => response.json())
+      .then(json => {
+        this.sets = json;
+      });
   }
 }
 
