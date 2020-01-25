@@ -13,7 +13,7 @@ export class FestivalApp extends PolymerElement {
   constructor() {
     super();
 
-    afterNextRender(this, this.fetchSets);
+    afterNextRender(this, this._fetchSets);
   }
 
   static get template() {
@@ -42,7 +42,7 @@ export class FestivalApp extends PolymerElement {
         <paper-spinner-lite active></paper-spinner-lite>
       </template>
       <template is="dom-if" if="[[waiting]]" restamp>
-        <festival-waiting sets="[[sets]]" on-click="waitingClicked"></festival-waiting>
+        <festival-waiting sets="[[sets]]" on-click="_waitingClicked"></festival-waiting>
       </template>
       <music-player></music-player>
     `;
@@ -65,16 +65,12 @@ export class FestivalApp extends PolymerElement {
     };
   }
 
-  computeWaiting(joined, playing) {
-    return joined && !playing;
-  }
-
-  waitingClicked() {
+  _waitingClicked() {
     this.waiting = false;
     this.shadowRoot.querySelector('music-player').play();
   }
 
-  fetchSets() {
+  _fetchSets() {
     fetch('/public/sets.json')
       .then(response => response.json())
       .then(json => {
