@@ -14,7 +14,6 @@ export class JoinButton extends PolymerElement {
           height: 150px;
           border-radius: 150px;
           line-height: 150px;
-          color: #fffa;
           padding-left: 30px;
           padding-right: 30px;
           font-size: 100px;
