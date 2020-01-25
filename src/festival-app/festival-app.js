@@ -3,6 +3,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 import '../countdown-timer/countdown-timer.js';
 import '../join-button/join-button.js';
+import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '../music-player/music-player.js';
 
 /**
@@ -29,8 +30,18 @@ export class FestivalApp extends PolymerElement {
           justify-content: center;
           font-family: 'Roboto', sans-serif;
           font-weight: 300;
+          color: #fffa;
+        }
+        paper-spinner-lite {
+          width: 100px;
+          height: 100px;
+          --paper-spinner-color: #b5b5bc;
+          --paper-spinner-stroke-width: 8px;
         }
       </style>
+      <template is="dom-if" if="[[loading]]" restamp>
+        <paper-spinner-lite active></paper-spinner-lite>
+      </template>
       <template is="dom-if" if="[[!joined]]">
         <join-button on-click="joinClicked"></join-button>
       </template>
@@ -45,6 +56,10 @@ export class FestivalApp extends PolymerElement {
 
   static get properties() {
     return {
+      loading: {
+        type: Boolean,
+        value: true
+      },
       joined: {
         type: Boolean,
         value: false
@@ -81,6 +96,7 @@ export class FestivalApp extends PolymerElement {
       .then(response => response.json())
       .then(json => {
         this.sets = json;
+        this.loading = false;
       });
   }
 }
