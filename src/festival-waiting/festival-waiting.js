@@ -22,7 +22,7 @@ export class FestivalWaiting extends PolymerElement {
         }
       </style>
       <p>The first set starts:<br />[[startTimeDescription]].</p>
-      <p><paper-button raised>Join</paper-button></p>
+      <p><paper-button raised on-click="_handleJoinClicked">Join</paper-button></p>
     `;
   }
 
@@ -45,6 +45,10 @@ export class FestivalWaiting extends PolymerElement {
         return 'dddd, MMMM D' + (this.year() === now.year() ? '' : ', YYYY') + ' [at] h:mm A';
       }
     });
+  }
+
+  _handleJoinClicked() {
+    this.dispatchEvent(new CustomEvent('join'));
   }
 }
 
