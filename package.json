@@ -8,6 +8,7 @@
     "watch": "browser-sync start --proxy localhost:8080 --open --files \"**/*\""
   },
   "dependencies": {
+    "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-spinner": "^3.0.2",
     "@polymer/polymer": "^3.0.0",
     "moment": "^2.24.0"
