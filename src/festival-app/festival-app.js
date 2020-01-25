@@ -23,18 +23,18 @@ export class FestivalApp extends PolymerElement {
           position: absolute;
           width: 100%;
           height: 100%;
-          background-color: #223;
+          background-color: #121212;
           display: flex;
           align-items: center;
           justify-content: center;
           font-family: 'Roboto', sans-serif;
           font-weight: 300;
-          color: #fffa;
+          color: rgba(255, 255, 255, 0.87);
         }
         paper-spinner-lite {
           width: 100px;
           height: 100px;
-          --paper-spinner-color: #b5b5bc;
+          --paper-spinner-color: #ffb74d;
           --paper-spinner-stroke-width: 8px;
         }
       </style>
