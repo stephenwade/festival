@@ -3,10 +3,6 @@ import '@polymer/paper-button/paper-button.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 import moment from 'moment/src/moment.js';
 
-/**
- * @customElement
- * @polymer
- */
 export class FestivalWaiting extends PolymerElement {
   static get template() {
     return html`

@@ -5,10 +5,6 @@ import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '../festival-waiting/festival-waiting.js';
 import '../music-player/music-player.js';
 
-/**
- * @customElement
- * @polymer
- */
 export class FestivalApp extends PolymerElement {
   constructor() {
     super();
