@@ -63,9 +63,8 @@ export class FestivalCountdown extends PolymerElement {
   _computeCountdownText(_duration) {
     const minutes = _duration.minutes();
     const seconds = _duration.seconds();
-    if (minutes > 0 && seconds > 0)
-      return String(minutes) + ':' + String(seconds).padStart(2, '0');
-    return '0:00';
+    if (minutes < 0 || seconds < 0) return '0:00';
+    return String(minutes) + ':' + String(seconds).padStart(2, '0');
   }
 
   _updateNow() {
