@@ -31,11 +31,20 @@ export class FestivalApp extends PolymerElement {
           font-weight: 300;
           color: rgba(255, 255, 255, 0.87);
         }
+
         paper-spinner-lite {
           width: 100px;
           height: 100px;
           --paper-spinner-color: #ffb74d;
           --paper-spinner-stroke-width: 8px;
+        }
+
+        festival-waiting {
+          transition: opacity 2s ease-in;
+        }
+
+        festival-waiting.ending {
+          opacity: 0;
         }
       </style>
       <template is="dom-if" if="[[loading]]" restamp>
@@ -45,6 +54,7 @@ export class FestivalApp extends PolymerElement {
         <festival-waiting
           sets="[[sets]]"
           on-join="_handleJoined"
+          on-countdown-ending="_handleCountdownEnding"
           on-countdown-finished="_handleCountdownFinished"
         ></festival-waiting>
       </template>
@@ -71,6 +81,10 @@ export class FestivalApp extends PolymerElement {
 
   _handleJoined() {
     this.shadowRoot.querySelector('music-player').queue();
+  }
+
+  _handleCountdownEnding() {
+    this.shadowRoot.querySelector('festival-waiting').classList.add('ending');
   }
 
   _handleCountdownFinished() {

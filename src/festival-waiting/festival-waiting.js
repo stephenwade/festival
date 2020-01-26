@@ -30,7 +30,7 @@ export class FestivalWaiting extends PolymerElement {
         }
       </style>
       <template is="dom-if" if="[[!joined]]">
-        <p>The first set starts:<br />[[_startTimeDescription]].</p>
+        <p>The first set starts:<br />[[_startTimeDescription]]</p>
         <p>
           <paper-button
             raised
@@ -42,7 +42,7 @@ export class FestivalWaiting extends PolymerElement {
         </p>
       </template>
       <template is="dom-if" if="[[joined]]">
-        <span on-click="_countdownFinished">Joining…</span>
+        [[_countdownText]]
       </template>
     `;
   }
@@ -78,8 +78,16 @@ export class FestivalWaiting extends PolymerElement {
       _joinButtonText: {
         type: String,
         computed: '_computeJoinButtonText(_canJoin, _joinTime, _now)'
+      },
+      _countdownText: {
+        type: String,
+        computed: '_computeCountdownText(_startTime, _now)'
       }
     };
+  }
+
+  static get observers() {
+    return ['_observeCountdown(joined, _startTime, _now)'];
   }
 
   connectedCallback() {
@@ -123,8 +131,32 @@ export class FestivalWaiting extends PolymerElement {
   }
 
   _computeJoinButtonText(_canJoin, _joinTime, _now) {
-    if (_joinTime && _now)
+    if (_joinTime && _now) {
       return 'Join' + (_canJoin ? '' : ' ' + _now.to(_joinTime));
+    }
+  }
+
+  _computeCountdownText(_startTime, _now) {
+    if (_startTime && _now) {
+      const duration = moment.duration(_startTime.diff(_now));
+      const minutes = duration.minutes();
+      const seconds = duration.seconds();
+      return String(minutes) + ':' + String(seconds).padStart(2, '0');
+    }
+  }
+
+  _observeCountdown(joined, _startTime, _now) {
+    if (joined && _startTime && _now) {
+      const duration = moment.duration(_startTime.diff(_now));
+      const seconds = Math.trunc(duration.asSeconds());
+      console.log(seconds);
+      if (seconds === 2) {
+        this.dispatchEvent(new CustomEvent('countdown-ending'));
+      }
+      if (seconds <= 0) {
+        this.dispatchEvent(new CustomEvent('countdown-finished'));
+      }
+    }
   }
 
   _updateNow() {
@@ -134,10 +166,6 @@ export class FestivalWaiting extends PolymerElement {
   _handleJoinClicked() {
     this.joined = true;
     this.dispatchEvent(new CustomEvent('join'));
-  }
-
-  _countdownFinished() {
-    this.dispatchEvent(new CustomEvent('countdown-finished'));
   }
 }
 
