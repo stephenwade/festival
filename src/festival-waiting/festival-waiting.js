@@ -2,6 +2,7 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 import moment from 'moment/src/moment.js';
+import '../now-playing/now-playing.js';
 
 export class FestivalWaiting extends PolymerElement {
   static get template() {
@@ -26,7 +27,9 @@ export class FestivalWaiting extends PolymerElement {
         }
       </style>
       <template is="dom-if" if="[[!joined]]">
-        <p>The first set starts:<br />[[_startTimeDescription]]</p>
+        <p>
+          <now-playing sets="[[sets]]"></now-playing>
+        </p>
         <p>
           <paper-button
             raised
@@ -58,10 +61,6 @@ export class FestivalWaiting extends PolymerElement {
       _startTime: {
         type: moment,
         computed: '_computeStartTime(sets)'
-      },
-      _startTimeDescription: {
-        type: String,
-        computed: '_computeStartTimeDescription(_startTime)'
       },
       _joinTime: {
         type: moment,
