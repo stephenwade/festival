@@ -11,7 +11,8 @@
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-spinner": "^3.0.2",
     "@polymer/polymer": "^3.0.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "standardized-audio-context": "^23.1.2"
   },
   "devDependencies": {
     "@polymer/test-fixture": "^4.0.2",
