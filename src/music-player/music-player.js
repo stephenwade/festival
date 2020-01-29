@@ -1,9 +1,12 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
+import { AudioContext } from 'standardized-audio-context';
 
 export class MusicPlayer extends PolymerElement {
-  ready() {
-    super.ready();
+  constructor() {
+    super();
+
+    this.audioContext = new AudioContext();
   }
 
   static get template() {
@@ -13,8 +16,8 @@ export class MusicPlayer extends PolymerElement {
           font-size: 40px;
         }
       </style>
-      <template is="dom-if" id="if-queued">
-        Queued…
+      <template is="dom-if" id="if-audiocontext">
+        Resumed AudioContext
       </template>
       <template is="dom-if" id="if-play">
         Playing music
@@ -22,10 +25,13 @@ export class MusicPlayer extends PolymerElement {
     `;
   }
 
-  queue() {
-    this.shadowRoot.getElementById('if-queued').if = true;
+  prepareAudioContext() {
+    // Safari will only resume the AudioContext on a click event
+    this.audioContext.resume();
+
+    this.shadowRoot.getElementById('if-audiocontext').if = true;
     setTimeout(() => {
-      this.shadowRoot.getElementById('if-queued').if = false;
+      this.shadowRoot.getElementById('if-audiocontext').if = false;
     }, 1000);
   }
 

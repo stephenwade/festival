@@ -76,7 +76,7 @@ export class FestivalApp extends PolymerElement {
   }
 
   _handleJoined() {
-    this.shadowRoot.querySelector('music-player').queue();
+    this.shadowRoot.querySelector('music-player').prepareAudioContext();
   }
 
   _handleCountdownEnding() {
