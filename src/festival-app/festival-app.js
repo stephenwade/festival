@@ -48,12 +48,13 @@ export class FestivalApp extends PolymerElement {
       </template>
       <template is="dom-if" if="[[waiting]]" restamp>
         <festival-waiting
+          id="waiting"
           sets="[[sets]]"
           on-join="_handleJoined"
           on-countdown-changed="_handleCountdownChanged"
         ></festival-waiting>
       </template>
-      <music-player></music-player>
+      <music-player id="musicPlayer"></music-player>
     `;
   }
 
@@ -75,26 +76,27 @@ export class FestivalApp extends PolymerElement {
   }
 
   _handleJoined() {
-    this.shadowRoot.querySelector('music-player').prepareAudioContext();
+    this.$.musicPlayer.prepareAudioContext();
   }
 
   _handleCountdownChanged(e) {
     const { seconds } = e.detail;
-    if (seconds === 2)
-      this.shadowRoot.querySelector('festival-waiting').classList.add('ending');
+
+    if (seconds === 2) this.$.waiting.classList.add('ending');
+
     if (seconds <= 0) {
       this.waiting = false;
-      this.shadowRoot.querySelector('music-player').play();
+      this.$.musicPlayer.play();
     }
   }
 
   _handleCountdownEnding() {
-    this.shadowRoot.querySelector('festival-waiting').classList.add('ending');
+    this.$.waiting.classList.add('ending');
   }
 
   _handleCountdownFinished() {
     this.waiting = false;
-    this.shadowRoot.querySelector('music-player').play();
+    this.$.musicPlayer.play();
   }
 
   _fetchSets() {
