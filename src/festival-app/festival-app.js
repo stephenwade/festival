@@ -31,7 +31,7 @@ export class FestivalApp extends PolymerElement {
         paper-spinner-lite {
           width: 100px;
           height: 100px;
-          --paper-spinner-color: #ffb74d;
+          --paper-spinner-color: #ffb74d; /* material orange 300 */
           --paper-spinner-stroke-width: 8px;
         }
 

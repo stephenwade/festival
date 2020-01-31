@@ -36,9 +36,8 @@ export class FestivalWaiting extends PolymerElement {
             raised
             disabled="[[!_canJoin]]"
             on-click="_handleJoinClicked"
+            >[[_joinButtonText]]</paper-button
           >
-            [[_joinButtonText]]
-          </paper-button>
         </p>
       </template>
       <template is="dom-if" if="[[joined]]">
