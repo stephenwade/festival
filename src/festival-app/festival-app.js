@@ -54,7 +54,7 @@ export class FestivalApp extends PolymerElement {
           on-countdown-changed="_handleCountdownChanged"
         ></festival-waiting>
       </template>
-      <music-player id="musicPlayer"></music-player>
+      <music-player id="musicPlayer" src="[[_audioSrc]]"></music-player>
     `;
   }
 
@@ -71,18 +71,28 @@ export class FestivalApp extends PolymerElement {
       sets: {
         type: Object,
         value: undefined
+      },
+      _audioSrc: {
+        type: String,
+        computed: '_computeAudioSrc(sets)'
       }
     };
   }
 
+  _computeAudioSrc(sets) {
+    return sets[0].audio;
+  }
+
   _handleJoined() {
-    this.$.musicPlayer.prepareAudioContext();
+    this.$.musicPlayer.resumeAudioContext();
   }
 
   _handleCountdownChanged(e) {
     const { seconds } = e.detail;
 
     if (seconds === 2) this.$.waiting.classList.add('ending');
+
+    if (seconds <= 2) this.$.musicPlayer.queue();
 
     if (seconds <= 0) {
       this.waiting = false;
@@ -92,6 +102,7 @@ export class FestivalApp extends PolymerElement {
 
   _handleCountdownEnding() {
     this.$.waiting.classList.add('ending');
+    this.$.musicPlayer.queue();
   }
 
   _handleCountdownFinished() {
