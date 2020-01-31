@@ -50,8 +50,7 @@ export class FestivalApp extends PolymerElement {
         <festival-waiting
           sets="[[sets]]"
           on-join="_handleJoined"
-          on-countdown-ending="_handleCountdownEnding"
-          on-countdown-finished="_handleCountdownFinished"
+          on-countdown-changed="_handleCountdownChanged"
         ></festival-waiting>
       </template>
       <music-player></music-player>
@@ -77,6 +76,16 @@ export class FestivalApp extends PolymerElement {
 
   _handleJoined() {
     this.shadowRoot.querySelector('music-player').prepareAudioContext();
+  }
+
+  _handleCountdownChanged(e) {
+    const { seconds } = e.detail;
+    if (seconds === 2)
+      this.shadowRoot.querySelector('festival-waiting').classList.add('ending');
+    if (seconds <= 0) {
+      this.waiting = false;
+      this.shadowRoot.querySelector('music-player').play();
+    }
   }
 
   _handleCountdownEnding() {

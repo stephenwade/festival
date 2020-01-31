@@ -44,8 +44,7 @@ export class FestivalWaiting extends PolymerElement {
       <template is="dom-if" if="[[joined]]">
         <festival-countdown
           to="[[_startTime]]"
-          on-countdown-ending="_handleCountdownEnding"
-          on-countdown-finished="_handleCountdownFinished"
+          on-countdown-changed="_handleCountdownChanged"
         ></festival-countdown>
       </template>
     `;
@@ -137,13 +136,9 @@ export class FestivalWaiting extends PolymerElement {
     this.dispatchEvent(new CustomEvent('join'));
   }
 
-  _handleCountdownEnding() {
-    this.dispatchEvent(new CustomEvent('countdown-ending', { bubbles: true }));
-  }
-
-  _handleCountdownFinished() {
+  _handleCountdownChanged(e) {
     this.dispatchEvent(
-      new CustomEvent('countdown-finished', { bubbles: true })
+      new CustomEvent('countdown-changed', { detail: e.detail })
     );
   }
 }

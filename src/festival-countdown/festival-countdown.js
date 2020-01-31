@@ -33,7 +33,7 @@ export class FestivalCountdown extends PolymerElement {
     this._updateNow();
     this._nowInterval = setInterval(() => {
       this._updateNow();
-    }, 1000);
+    }, 250);
   }
 
   disconnectedCallback() {
@@ -46,18 +46,17 @@ export class FestivalCountdown extends PolymerElement {
     return moment.duration(m.diff(_now));
   }
 
-  _observeDuration(_duration) {
-    const seconds = Math.trunc(_duration.asSeconds());
-    if (seconds === 2) {
-      this.dispatchEvent(
-        new CustomEvent('countdown-ending', { bubbles: true })
-      );
+  _observeDuration(newValue, oldValue) {
+    const seconds = Math.trunc(newValue.asSeconds());
+
+    if (oldValue) {
+      const oldSeconds = Math.trunc(oldValue.asSeconds());
+      if (seconds === oldSeconds) return;
     }
-    if (seconds <= 0) {
-      this.dispatchEvent(
-        new CustomEvent('countdown-finished', { bubbles: true })
-      );
-    }
+
+    this.dispatchEvent(
+      new CustomEvent('countdown-changed', { detail: { seconds } })
+    );
   }
 
   _computeCountdownText(_duration) {
