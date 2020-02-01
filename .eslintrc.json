@@ -32,7 +32,6 @@
     "wrap-iife": ["error", "any"],
     "yoda": "error",
     "no-dupe-else-if": "error",
-    "no-extra-parens": "error",
     "no-import-assign": "error",
     "no-setter-return": "error",
     "require-atomic-updates": "error",
