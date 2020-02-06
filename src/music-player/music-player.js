@@ -38,15 +38,27 @@ export class MusicPlayer extends PolymerElement {
         canvas {
           width: 100%;
           height: 100%;
+        }
+
+        #timer {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+
+        :not(visible) {
           display: none;
         }
 
-        canvas[visible] {
+        [visible] {
           display: initial;
         }
       </style>
-      <audio id="audio" on-timechange="_handleTimeChange"></audio>
+      <audio id="audio" on-timeupdate="_handleTimeUpdate"></audio>
       <canvas id="canvas" visible$="[[_playing]]"></canvas>
+      <div id="timer" visible$="[[_playing]]">[[_currentTimeText]]</div>
     `;
   }
 
@@ -59,11 +71,22 @@ export class MusicPlayer extends PolymerElement {
         type: Number,
         value: 0
       },
+      _currentTimeText: {
+        type: String,
+        computed: '_computeCurrentTimeText(_currentTime)'
+      },
       _playing: {
         type: Boolean,
         value: false
       }
     };
+  }
+
+  _computeCurrentTimeText(_currentTime) {
+    const timeInSeconds = Math.trunc(_currentTime);
+    const minutes = Math.trunc(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return String(minutes) + ':' + String(seconds).padStart(2, '0');
   }
 
   resumeAudioContext() {
@@ -81,7 +104,7 @@ export class MusicPlayer extends PolymerElement {
     this._animate();
   }
 
-  _handleTimeChange(e) {
+  _handleTimeUpdate(e) {
     this._currentTime = e.target.currentTime;
   }
 
