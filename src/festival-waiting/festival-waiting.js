@@ -32,12 +32,7 @@ export class FestivalWaiting extends PolymerElement {
           <now-playing sets="[[sets]]"></now-playing>
         </p>
         <p>
-          <paper-button
-            raised
-            disabled="[[!_canJoin]]"
-            on-click="_handleJoinClicked"
-            >[[_joinButtonText]]</paper-button
-          >
+          <paper-button raised on-click="_handleJoinClicked">Join</paper-button>
         </p>
       </template>
       <template is="dom-if" if="[[joined]]">
@@ -68,18 +63,6 @@ export class FestivalWaiting extends PolymerElement {
       _startTime: {
         type: moment,
         computed: '_computeStartTime(sets)'
-      },
-      _joinTime: {
-        type: moment,
-        computed: '_computeJoinTime(_startTime)'
-      },
-      _canJoin: {
-        type: Boolean,
-        computed: '_computeCanJoin(_joinTime, _now)'
-      },
-      _joinButtonText: {
-        type: String,
-        computed: '_computeJoinButtonText(_canJoin, _joinTime, _now)'
       }
     };
   }
@@ -111,23 +94,6 @@ export class FestivalWaiting extends PolymerElement {
         );
       }
     });
-  }
-
-  _computeJoinTime(_startTime) {
-    return _startTime.clone().subtract(1, 'hour');
-  }
-
-  _computeCanJoin(_joinTime, _now) {
-    if (_joinTime && _now) {
-      return _now.isAfter(_joinTime);
-    }
-    return false;
-  }
-
-  _computeJoinButtonText(_canJoin, _joinTime, _now) {
-    if (_joinTime && _now) {
-      return 'Join' + (_canJoin ? '' : ' ' + _now.to(_joinTime));
-    }
   }
 
   _updateNow() {
