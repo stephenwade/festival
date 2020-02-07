@@ -88,7 +88,7 @@ export class FestivalApp extends PolymerElement {
 
     if (secondsToJoin <= 0) {
       this.waiting = false;
-      this.$.musicPlayer.play();
+      this.$.musicPlayer.play(-secondsToJoin);
     }
   }
 

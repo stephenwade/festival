@@ -28,23 +28,26 @@ export class FestivalCountdown extends PolymerElement {
     super.connectedCallback();
 
     this._updateSeconds();
-    this._secondsInterval = setTimeout(() => {
-      this._updateSeconds();
-      this._secondsInterval = setInterval(() => {
+    if (this._seconds > 0) {
+      this._secondsInterval = setTimeout(() => {
         this._updateSeconds();
-      }, 1000);
-    }, this._getTimeUntilNextSecond() * 1000);
+        this._secondsInterval = setInterval(() => {
+          this._updateSeconds();
+        }, 1000);
+      }, this._getTimeUntilNextSecond() * 1000);
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+
     clearInterval(this._secondsInterval);
   }
 
   _computeCountdownText(totalSeconds) {
     if (totalSeconds < 0) return '0:00';
     const minutes = Math.trunc(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
+    const seconds = Math.trunc(totalSeconds % 60);
     return String(minutes) + ':' + String(seconds).padStart(2, '0');
   }
 
@@ -58,9 +61,11 @@ export class FestivalCountdown extends PolymerElement {
   _updateSeconds() {
     const m = moment(this.to);
     const duration = moment.duration(m.diff(moment()));
-    const seconds = Math.trunc(duration.asSeconds());
-    if (seconds < 0) this.seconds = 0;
-    else this.seconds = seconds;
+    const seconds = duration.asSeconds();
+    this.seconds = seconds;
+
+    if (seconds < 0 && this._secondsInterval)
+      clearInterval(this._secondsInterval);
   }
 }
 

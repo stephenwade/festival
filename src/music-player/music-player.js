@@ -135,9 +135,19 @@ export class MusicPlayer extends PolymerElement {
     this.$.audio.src = this.src;
   }
 
-  play() {
+  play(startTime) {
+    if (startTime) {
+      this._audioWaiting = true;
+      this.$.audio.currentTime = startTime + 1;
+      setTimeout(() => {
+        this._audioWaiting = false;
+        this.$.audio.play();
+      }, 1000);
+    } else {
+      this.$.audio.play();
+    }
+
     this._playing = true;
-    this.$.audio.play();
     this._animate();
   }
 
