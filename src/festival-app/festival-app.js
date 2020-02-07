@@ -42,10 +42,6 @@ export class FestivalApp extends PolymerElement {
         festival-waiting.ending {
           opacity: 0;
         }
-
-        [hidden] {
-          display: none;
-        }
       </style>
       <template is="dom-if" if="[[loading]]" restamp>
         <paper-spinner-lite active></paper-spinner-lite>

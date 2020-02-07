@@ -47,10 +47,6 @@ export class MusicPlayer extends PolymerElement {
           -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
         }
-
-        [hidden] {
-          display: none;
-        }
       </style>
       <audio id="audio" on-timeupdate="_handleTimeUpdate"></audio>
       <canvas id="canvas" hidden$="[[!_playing]]"></canvas>
