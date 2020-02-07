@@ -18,13 +18,6 @@ export class FestivalWaiting extends PolymerElement {
           background-color: #ffb74d; /* material orange 300 */
           color: #000;
           border-radius: 8px;
-          transition: min-width 0.25s ease-out;
-          min-width: 5em;
-        }
-
-        paper-button[disabled] {
-          background-color: rgba(255, 255, 255, 0.12);
-          min-width: 14em;
         }
       </style>
       <template is="dom-if" if="[[!joined]]">
