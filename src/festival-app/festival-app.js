@@ -51,7 +51,7 @@ export class FestivalApp extends PolymerElement {
           id="waiting"
           sets="[[sets]]"
           on-join="_handleJoined"
-          on-countdown-changed="_handleCountdownChanged"
+          seconds="{{secondsToJoin}}"
         ></festival-waiting>
       </template>
       <music-player id="musicPlayer" src="[[_audioSrc]]"></music-player>
@@ -72,11 +72,25 @@ export class FestivalApp extends PolymerElement {
         type: Object,
         value: undefined
       },
+      secondsToJoin: {
+        observer: '_secondsToJoinChanged'
+      },
       _audioSrc: {
         type: String,
         computed: '_computeAudioSrc(sets)'
       }
     };
+  }
+
+  _secondsToJoinChanged(secondsToJoin) {
+    if (secondsToJoin === 2) this.$.waiting.classList.add('ending');
+
+    if (secondsToJoin <= 2) this.$.musicPlayer.queue();
+
+    if (secondsToJoin <= 0) {
+      this.waiting = false;
+      this.$.musicPlayer.play();
+    }
   }
 
   _computeAudioSrc(sets) {
@@ -85,29 +99,6 @@ export class FestivalApp extends PolymerElement {
 
   _handleJoined() {
     this.$.musicPlayer.resumeAudioContext();
-  }
-
-  _handleCountdownChanged(e) {
-    const { seconds } = e.detail;
-
-    if (seconds === 2) this.$.waiting.classList.add('ending');
-
-    if (seconds <= 2) this.$.musicPlayer.queue();
-
-    if (seconds <= 0) {
-      this.waiting = false;
-      this.$.musicPlayer.play();
-    }
-  }
-
-  _handleCountdownEnding() {
-    this.$.waiting.classList.add('ending');
-    this.$.musicPlayer.queue();
-  }
-
-  _handleCountdownFinished() {
-    this.waiting = false;
-    this.$.musicPlayer.play();
   }
 
   _fetchSets() {

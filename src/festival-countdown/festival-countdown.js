@@ -13,61 +13,54 @@ export class FestivalCountdown extends PolymerElement {
       to: {
         type: Number
       },
-      _now: {
-        type: moment
-      },
-      _duration: {
-        type: moment.duration,
-        computed: '_computeDuration(to, _now)',
-        observer: '_observeDuration'
+      seconds: {
+        type: Number,
+        notify: true
       },
       _countdownText: {
         type: String,
-        computed: '_computeCountdownText(_duration)'
+        computed: '_computeCountdownText(seconds)'
       }
     };
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this._updateNow();
-    this._nowInterval = setInterval(() => {
-      this._updateNow();
-    }, 250);
+
+    this._updateSeconds();
+    this._secondsInterval = setTimeout(() => {
+      this._updateSeconds();
+      this._secondsInterval = setInterval(() => {
+        this._updateSeconds();
+      }, 1000);
+    }, this._getTimeUntilNextSecond() * 1000);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    clearInterval(this._nowInterval);
+    clearInterval(this._secondsInterval);
   }
 
-  _computeDuration(to, _now) {
-    const m = moment(to);
-    return moment.duration(m.diff(_now));
-  }
-
-  _observeDuration(newValue, oldValue) {
-    const seconds = Math.trunc(newValue.asSeconds());
-
-    if (oldValue) {
-      const oldSeconds = Math.trunc(oldValue.asSeconds());
-      if (seconds === oldSeconds) return;
-    }
-
-    this.dispatchEvent(
-      new CustomEvent('countdown-changed', { detail: { seconds } })
-    );
-  }
-
-  _computeCountdownText(_duration) {
-    const minutes = _duration.minutes();
-    const seconds = _duration.seconds();
-    if (minutes < 0 || seconds < 0) return '0:00';
+  _computeCountdownText(totalSeconds) {
+    if (totalSeconds < 0) return '0:00';
+    const minutes = Math.trunc(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
     return String(minutes) + ':' + String(seconds).padStart(2, '0');
   }
 
-  _updateNow() {
-    this._now = moment();
+  _getTimeUntilNextSecond() {
+    const m = moment(this.to);
+    const duration = moment.duration(m.diff(moment()));
+    const seconds = duration.asSeconds();
+    return seconds % 1;
+  }
+
+  _updateSeconds() {
+    const m = moment(this.to);
+    const duration = moment.duration(m.diff(moment()));
+    const seconds = Math.trunc(duration.asSeconds());
+    if (seconds < 0) this.seconds = 0;
+    else this.seconds = seconds;
   }
 }
 

@@ -43,7 +43,7 @@ export class FestivalWaiting extends PolymerElement {
       <template is="dom-if" if="[[joined]]">
         <festival-countdown
           to="[[_startTime]]"
-          on-countdown-changed="_handleCountdownChanged"
+          seconds="{{seconds}}"
         ></festival-countdown>
       </template>
     `;
@@ -57,6 +57,10 @@ export class FestivalWaiting extends PolymerElement {
       joined: {
         type: Boolean,
         value: false
+      },
+      seconds: {
+        type: Number,
+        notify: true
       },
       _now: {
         type: moment
@@ -133,12 +137,6 @@ export class FestivalWaiting extends PolymerElement {
   _handleJoinClicked() {
     this.joined = true;
     this.dispatchEvent(new CustomEvent('join'));
-  }
-
-  _handleCountdownChanged(e) {
-    this.dispatchEvent(
-      new CustomEvent('countdown-changed', { detail: e.detail })
-    );
   }
 }
 
