@@ -48,17 +48,13 @@ export class MusicPlayer extends PolymerElement {
           transform: translate(-50%, -50%);
         }
 
-        :not(visible) {
+        [hidden] {
           display: none;
-        }
-
-        [visible] {
-          display: initial;
         }
       </style>
       <audio id="audio" on-timeupdate="_handleTimeUpdate"></audio>
-      <canvas id="canvas" visible$="[[_playing]]"></canvas>
-      <div id="timer" visible$="[[_playing]]">[[_currentTimeText]]</div>
+      <canvas id="canvas" hidden$="[[!_playing]]"></canvas>
+      <div id="timer" hidden$="[[!_playing]]">[[_currentTimeText]]</div>
     `;
   }
 
