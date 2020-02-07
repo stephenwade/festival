@@ -1,6 +1,7 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
+import '@polymer/paper-spinner/paper-spinner-lite.js';
 import { AudioContext } from 'standardized-audio-context';
 
 export class MusicPlayer extends PolymerElement {
@@ -40,29 +41,48 @@ export class MusicPlayer extends PolymerElement {
           height: 100%;
         }
 
-        #timer {
+        #timer,
+        paper-spinner-lite {
           position: absolute;
           top: 50%;
           left: 50%;
           -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+        }
+
+        #timer {
           transition: opacity 1s ease-in;
         }
 
         #timer[hidden] {
           /*
             if you change the display property while changing other properties,
-            nothing animates
+            nothing animates. to work around this and animate the opacity,
+            keep display the same and animate visibility.
           */
           display: initial;
           visibility: hidden;
+          transition: opacity 0.25s ease-in, visibility 0s 0.25s;
 
           opacity: 0;
         }
+
+        paper-spinner-lite {
+          width: 100px;
+          height: 100px;
+          --paper-spinner-color: #ffb74d; /* material orange 300 */
+          --paper-spinner-stroke-width: 8px;
+        }
       </style>
-      <audio id="audio" on-timeupdate="_handleTimeUpdate"></audio>
+      <audio
+        id="audio"
+        on-waiting="_handleWaiting"
+        on-playing="_handlePlaying"
+        on-timeupdate="_handleTimeUpdate"
+      ></audio>
       <canvas id="canvas" hidden$="[[!_playing]]"></canvas>
-      <div id="timer" hidden$="[[!_playing]]">[[_currentTimeText]]</div>
+      <div id="timer" hidden$="[[_timerHidden]]">[[_currentTimeText]]</div>
+      <paper-spinner-lite active="[[_audioWaiting]]"></paper-spinner-lite>
     `;
   }
 
@@ -82,6 +102,14 @@ export class MusicPlayer extends PolymerElement {
       _playing: {
         type: Boolean,
         value: false
+      },
+      _audioWaiting: {
+        type: Boolean,
+        value: false
+      },
+      _timerHidden: {
+        type: Boolean,
+        computed: '_computeTimerHidden(_playing, _audioWaiting)'
       }
     };
   }
@@ -91,6 +119,11 @@ export class MusicPlayer extends PolymerElement {
     const minutes = Math.trunc(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
     return String(minutes) + ':' + String(seconds).padStart(2, '0');
+  }
+
+  _computeTimerHidden(_playing, _audioWaiting) {
+    if (_playing) return _audioWaiting;
+    return true;
   }
 
   resumeAudioContext() {
@@ -106,6 +139,17 @@ export class MusicPlayer extends PolymerElement {
     this._playing = true;
     this.$.audio.play();
     this._animate();
+  }
+
+  _handleWaiting() {
+    this._waitingTimeout = setTimeout(() => {
+      this._audioWaiting = true;
+    }, 500);
+  }
+
+  _handlePlaying() {
+    clearTimeout(this._waitingTimeout);
+    this._audioWaiting = false;
   }
 
   _handleTimeUpdate(e) {
