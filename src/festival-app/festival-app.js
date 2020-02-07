@@ -42,18 +42,21 @@ export class FestivalApp extends PolymerElement {
         festival-waiting.ending {
           opacity: 0;
         }
+
+        [hidden] {
+          display: none;
+        }
       </style>
       <template is="dom-if" if="[[loading]]" restamp>
         <paper-spinner-lite active></paper-spinner-lite>
       </template>
-      <template is="dom-if" if="[[waiting]]" restamp>
-        <festival-waiting
-          id="waiting"
-          sets="[[sets]]"
-          on-join="_handleJoined"
-          seconds="{{secondsToJoin}}"
-        ></festival-waiting>
-      </template>
+      <festival-waiting
+        id="waiting"
+        hidden$="[[!waiting]]"
+        sets="[[sets]]"
+        seconds="{{secondsToJoin}}"
+        on-join="_handleJoined"
+      ></festival-waiting>
       <music-player id="musicPlayer" src="[[_audioSrc]]"></music-player>
     `;
   }
