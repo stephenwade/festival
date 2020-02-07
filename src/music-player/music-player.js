@@ -46,6 +46,18 @@ export class MusicPlayer extends PolymerElement {
           left: 50%;
           -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+          transition: opacity 1s ease-in;
+        }
+
+        #timer[hidden] {
+          /*
+            if you change the display property while changing other properties,
+            nothing animates
+          */
+          display: initial;
+          visibility: hidden;
+
+          opacity: 0;
         }
       </style>
       <audio id="audio" on-timeupdate="_handleTimeUpdate"></audio>
