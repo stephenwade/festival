@@ -72,7 +72,11 @@ export class FestivalApp extends PolymerElement {
         value: undefined
       },
       secondsToJoin: {
-        observer: '_secondsToJoinChanged'
+        type: Number,
+        observer: '_secondsToJoinChanged',
+        // initial value is to undefined so that the first update will trigger
+        // the observer, even if the first value is 0
+        value: undefined
       },
       _audioSrc: {
         type: String,
