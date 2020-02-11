@@ -28,7 +28,7 @@ export class FestivalCountdown extends PolymerElement {
     super.connectedCallback();
 
     this._updateSeconds();
-    if (this._seconds > 0) {
+    if (this.seconds > 0) {
       this._secondsInterval = setTimeout(() => {
         this._updateSeconds();
         this._secondsInterval = setInterval(() => {
