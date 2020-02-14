@@ -87,7 +87,6 @@
     "no-var": "error",
     "prefer-arrow-callback": "warn",
     "prefer-const": "warn",
-    "prefer-destructuring": "warn",
     "prefer-numeric-literals": "error",
     "prefer-rest-params": "error",
     "prefer-spread": "error"
