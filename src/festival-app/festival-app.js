@@ -2,6 +2,7 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
+import moment from 'moment/src/moment.js';
 import '../festival-waiting/festival-waiting.js';
 import '../music-player/music-player.js';
 
@@ -9,7 +10,7 @@ export class FestivalApp extends PolymerElement {
   constructor() {
     super();
 
-    afterNextRender(this, this._fetchSets);
+    afterNextRender(this, this._mockFetchSets);
   }
 
   static get template() {
@@ -53,7 +54,11 @@ export class FestivalApp extends PolymerElement {
         seconds="{{secondsToJoin}}"
         on-join="_handleJoined"
       ></festival-waiting>
-      <music-player id="musicPlayer" src="[[_audioSrc]]"></music-player>
+      <music-player
+        id="musicPlayer"
+        src="[[_audioSrc]]"
+        hidden$="[[!playing]]"
+      ></music-player>
     `;
   }
 
@@ -64,6 +69,10 @@ export class FestivalApp extends PolymerElement {
         value: true
       },
       waiting: {
+        type: Boolean,
+        value: false
+      },
+      playing: {
         type: Boolean,
         value: false
       },
@@ -86,12 +95,14 @@ export class FestivalApp extends PolymerElement {
   }
 
   _secondsToJoinChanged(secondsToJoin) {
-    if (secondsToJoin === 2) this.$.waiting.classList.add('ending');
-
-    if (secondsToJoin <= 2) this.$.musicPlayer.queue();
+    if (secondsToJoin <= 2.5) {
+      this.$.waiting.classList.add('ending');
+      this.$.musicPlayer.queue();
+    }
 
     if (secondsToJoin <= 0) {
       this.waiting = false;
+      this.playing = true;
       this.$.musicPlayer.play(-secondsToJoin);
     }
   }
@@ -112,6 +123,46 @@ export class FestivalApp extends PolymerElement {
         this.waiting = true;
         this.loading = false;
       });
+  }
+
+  _mockFetchSets() {
+    this.sets = [
+      {
+        audio: '/public/mock/not-enough.mp3',
+        title: 'Anavae – Not Enough Instrumental',
+        start: moment()
+          .add(5, 'seconds')
+          .toISOString(),
+        length: 224.03
+      },
+      {
+        audio: '/public/mock/modern.mp3',
+        title: 'bignic – Modern',
+        start: moment()
+          .add(229, 'seconds')
+          .toISOString(),
+        length: 186.44
+      },
+      {
+        audio: '/public/mock/how-i-love.mp3',
+        title: 'Mayhem – How I Love',
+        start: moment()
+          .add(632, 'seconds')
+          .toISOString(),
+        length: 192.89
+      },
+      {
+        audio: '/public/mock/wonderland.mp3',
+        title: 'Griffin McElroy – Wonderland Round Three',
+        start: moment()
+          .add(855, 'seconds')
+          .toISOString(),
+        length: 156.92
+      }
+    ];
+    console.log(this.sets); // eslint-disable-line no-console
+    this.waiting = true;
+    this.loading = false;
   }
 }
 

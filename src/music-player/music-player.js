@@ -136,7 +136,7 @@ export class MusicPlayer extends PolymerElement {
   }
 
   play(startTime) {
-    if (startTime) {
+    if (startTime && startTime > 0.5) {
       this._audioWaiting = true;
       this.$.audio.currentTime = startTime + 1;
       setTimeout(() => {
