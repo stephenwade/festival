@@ -24,7 +24,7 @@ export class FestivalApp extends PolymerElement {
   }
 
   handleAction(e) {
-    this.$.controller.action(e);
+    this.$.controller.action(e.detail);
   }
 }
 

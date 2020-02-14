@@ -14,13 +14,29 @@ export class FestivalController extends PolymerElement {
     };
   }
 
-  constructor() {
-    super();
+  connectedCallback() {
+    super.connectedCallback();
 
-    this.state = {};
+    this.action({ action: 'INIT' });
   }
 
-  action(e) {} // eslint-disable-line no-unused-vars, no-empty-function
+  action(detail) {
+    switch (detail.action) {
+      case 'INIT':
+        this._initializeState();
+        break;
+
+      default:
+        throw new Error('Unknown action');
+    }
+  }
+
+  _initializeState() {
+    this.state = {
+      dataLoaded: false,
+      data: {}
+    };
+  }
 }
 
 window.customElements.define('festival-controller', FestivalController);
