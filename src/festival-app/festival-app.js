@@ -1,14 +1,13 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 import '../festival-ui/festival-ui.js';
+import '../festival-data/festival-data.js';
 
-export class FestivalApp extends PolymerElement {
+export class FestivalApp extends ActionMixin(PolymerElement) {
   static get template() {
     return html`
-      <festival-ui
-        id="ui"
-        state="[[state]]"
-        on-action="_handleAction"
-      ></festival-ui>
+      <festival-ui id="ui" state="[[state]]"></festival-ui>
+      <festival-data id="data"></festival-data>
     `;
   }
 
@@ -21,15 +20,30 @@ export class FestivalApp extends PolymerElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this._handleAction({ detail: { action: 'INIT' } });
+    this.addEventListener('action', this._handleAction);
+
+    this.fireAction('INIT');
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    this.removeEventListener('action', this._handleAction);
   }
 
   _handleAction(e) {
+    const action = e.detail.action;
     const detail = e.detail;
 
-    switch (detail.action) {
+    switch (action) {
       case 'INIT':
         this._initializeState();
+        this._loadData();
+        break;
+
+      case 'LOADED_DATA':
+        this.set('state.data', detail.data);
+        this.set('state.dataLoaded', true);
         break;
 
       default:
@@ -42,6 +56,10 @@ export class FestivalApp extends PolymerElement {
       dataLoaded: false,
       data: {}
     };
+  }
+
+  _loadData() {
+    this.$.data.loadData();
   }
 }
 

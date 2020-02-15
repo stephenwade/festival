@@ -21,7 +21,8 @@ export class FestivalUi extends PolymerElement {
       state: Object,
       _stateDescription: {
         type: String,
-        computed: '_computeStateDescription(state)'
+        computed:
+          '_computeStateDescription(state, state.dataLoaded, state.data)'
       }
     };
   }
