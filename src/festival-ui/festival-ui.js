@@ -22,7 +22,7 @@ export class FestivalUi extends PolymerElement {
       _stateDescription: {
         type: String,
         computed:
-          '_computeStateDescription(state, state.dataLoaded, state.data)'
+          '_computeStateDescription(state, state.setsLoaded, state.setsData)'
       }
     };
   }

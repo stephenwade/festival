@@ -41,9 +41,9 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
         this._loadData();
         break;
 
-      case 'LOADED_DATA':
-        this.set('state.data', detail.data);
-        this.set('state.dataLoaded', true);
+      case 'SETS_LOADED':
+        this.set('state.setsData', detail.data);
+        this.set('state.setsLoaded', true);
         break;
 
       default:
@@ -53,8 +53,7 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
 
   _initializeState() {
     this.state = {
-      dataLoaded: false,
-      data: {}
+      setsLoaded: false
     };
   }
 

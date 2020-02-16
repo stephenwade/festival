@@ -4,7 +4,7 @@ import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 export class FestivalData extends ActionMixin(HTMLElement) {
   loadData() {
     // always use mock data for now
-    this.fireAction('LOADED_DATA', { data: this._getMockData() });
+    this.fireAction('SETS_LOADED', { data: this._getMockData() });
   }
 
   _getMockData() {
