@@ -1,6 +1,7 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 
-export class FestivalUi extends PolymerElement {
+export class FestivalUi extends ActionMixin(PolymerElement) {
   static get template() {
     return html`
       <style>
@@ -11,8 +12,11 @@ export class FestivalUi extends PolymerElement {
           color: white;
           margin: 0.5em;
         }
+        pre {
+          margin: 0;
+        }
       </style>
-      {{_stateDescription}}
+      <pre>{{_stateDescription}}</pre>
     `;
   }
 
@@ -22,13 +26,27 @@ export class FestivalUi extends PolymerElement {
       _stateDescription: {
         type: String,
         computed:
-          '_computeStateDescription(state, state.setsLoaded, state.setsData)'
+          '_computeStateDescription(state, state.setsLoaded, state.setsData, state.audioContextReady, state.audioData)'
       }
     };
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+
+    this.addEventListener('click', () => {
+      this.fireAction('SETUP_AUDIO_CONTEXT');
+    });
+  }
+
   _computeStateDescription(state) {
-    return JSON.stringify(state);
+    const displayState = { ...state };
+    if (
+      displayState.audioData &&
+      displayState.audioData.constructor === Uint8Array
+    )
+      displayState.audioData = `Uint8Array[${displayState.audioData.length}]`;
+    return JSON.stringify(displayState, undefined, 2);
   }
 }
 
