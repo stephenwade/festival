@@ -93,7 +93,10 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
         break;
       }
     }
-    if (!setsStatus) setsStatus = 'ENDED';
+    if (!setsStatus) {
+      setsStatus = 'ENDED';
+      currentSetDetails = null;
+    }
 
     if (
       setsStatus !== this._setsStatus ||
