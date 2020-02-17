@@ -25,7 +25,7 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
           title: 'bignic – Modern',
           start: m
             .clone()
-            .add(229, 'seconds')
+            .add(234, 'seconds')
             .toISOString(),
           length: 186.44
         },
@@ -34,7 +34,7 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
           title: 'Mayhem – How I Love',
           start: m
             .clone()
-            .add(632, 'seconds')
+            .add(637, 'seconds')
             .toISOString(),
           length: 192.89
         },
@@ -43,7 +43,7 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
           title: 'Griffin McElroy – Wonderland Round Three',
           start: m
             .clone()
-            .add(855, 'seconds')
+            .add(860, 'seconds')
             .toISOString(),
           length: 156.92
         }
