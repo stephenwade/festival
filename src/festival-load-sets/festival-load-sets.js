@@ -13,7 +13,8 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
       sets: [
         {
           audio: '/public/mock/not-enough.mp3',
-          title: 'Anavae – Not Enough Instrumental',
+          artist: 'Anavae',
+          title: 'Not Enough – Instrumental',
           start: m
             .clone()
             .add(5, 'seconds')
@@ -22,7 +23,8 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
         },
         {
           audio: '/public/mock/modern.mp3',
-          title: 'bignic – Modern',
+          artist: 'bignic',
+          title: 'Modern',
           start: m
             .clone()
             .add(234, 'seconds')
@@ -31,7 +33,8 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
         },
         {
           audio: '/public/mock/how-i-love.mp3',
-          title: 'Mayhem – How I Love',
+          artist: 'Mayhem',
+          title: 'How I Love',
           start: m
             .clone()
             .add(637, 'seconds')
@@ -40,7 +43,8 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
         },
         {
           audio: '/public/mock/wonderland.mp3',
-          title: 'Griffin McElroy – Wonderland Round Three',
+          artist: 'Griffin McElroy',
+          title: 'Wonderland: Round Three',
           start: m
             .clone()
             .add(860, 'seconds')
