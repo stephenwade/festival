@@ -8,12 +8,14 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
   }
 
   _getMockData() {
+    const m = moment().startOf('second');
     return {
       sets: [
         {
           audio: '/public/mock/not-enough.mp3',
           title: 'Anavae – Not Enough Instrumental',
-          start: moment()
+          start: m
+            .clone()
             .add(5, 'seconds')
             .toISOString(),
           length: 224.03
@@ -21,7 +23,8 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
         {
           audio: '/public/mock/modern.mp3',
           title: 'bignic – Modern',
-          start: moment()
+          start: m
+            .clone()
             .add(229, 'seconds')
             .toISOString(),
           length: 186.44
@@ -29,7 +32,8 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
         {
           audio: '/public/mock/how-i-love.mp3',
           title: 'Mayhem – How I Love',
-          start: moment()
+          start: m
+            .clone()
             .add(632, 'seconds')
             .toISOString(),
           length: 192.89
@@ -37,7 +41,8 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
         {
           audio: '/public/mock/wonderland.mp3',
           title: 'Griffin McElroy – Wonderland Round Three',
-          start: moment()
+          start: m
+            .clone()
             .add(855, 'seconds')
             .toISOString(),
           length: 156.92
