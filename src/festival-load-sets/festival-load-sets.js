@@ -1,7 +1,7 @@
 import moment from 'moment/src/moment.js';
 import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 
-export class FestivalData extends ActionMixin(HTMLElement) {
+export class FestivalLoadSets extends ActionMixin(HTMLElement) {
   loadData() {
     // always use mock data for now
     this.fireAction('SETS_LOADED', { data: this._getMockData() });
@@ -47,4 +47,4 @@ export class FestivalData extends ActionMixin(HTMLElement) {
   }
 }
 
-window.customElements.define('festival-data', FestivalData);
+window.customElements.define('festival-load-sets', FestivalLoadSets);

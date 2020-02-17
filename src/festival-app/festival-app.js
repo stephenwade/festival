@@ -1,14 +1,14 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 import '../festival-ui/festival-ui.js';
-import '../festival-data/festival-data.js';
+import '../festival-load-sets/festival-load-sets.js';
 import '../festival-audio/festival-audio.js';
 
 export class FestivalApp extends ActionMixin(PolymerElement) {
   static get template() {
     return html`
       <festival-ui id="ui" state="[[state]]"></festival-ui>
-      <festival-data id="data"></festival-data>
+      <festival-load-sets id="loadsets"></festival-load-sets>
       <festival-audio id="audio"></festival-audio>
     `;
   }
@@ -70,7 +70,7 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
   }
 
   _loadData() {
-    this.$.data.loadData();
+    this.$.loadsets.loadData();
   }
 
   _setupAudioContext() {
