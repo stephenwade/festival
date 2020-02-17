@@ -22,6 +22,12 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
     return ['_setupSets(state.setsData)', '_setupTimer(state.setsLoaded)'];
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    clearDriftless(this._tickInterval);
+  }
+
   _setupSets(setsData) {
     if (setsData) {
       this._sets = _.cloneDeep(setsData.sets);
@@ -37,7 +43,9 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
     clearDriftless(this._tickInterval);
     if (setsLoaded) {
       this._tick();
-      setDriftlessIntervalEverySecond(this._tick.bind(this));
+      this._tickInterval = setDriftlessIntervalEverySecond(
+        this._tick.bind(this)
+      );
     }
   }
 
