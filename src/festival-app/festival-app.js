@@ -2,6 +2,7 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 import '../festival-ui/festival-ui.js';
 import '../festival-load-sets/festival-load-sets.js';
+import '../festival-coordinator/festival-coordinator.js';
 import '../festival-audio/festival-audio.js';
 
 export class FestivalApp extends ActionMixin(PolymerElement) {
@@ -9,6 +10,10 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
     return html`
       <festival-ui id="ui" state="[[state]]"></festival-ui>
       <festival-load-sets id="loadsets"></festival-load-sets>
+      <festival-coordinator
+        id="coordinator"
+        state="[[state]]"
+      ></festival-coordinator>
       <festival-audio id="audio"></festival-audio>
     `;
   }
@@ -55,6 +60,10 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
       case 'AUDIO_CONTEXT_READY':
         this.set('state.audioContextReady', true);
         this.set('state.audioData', detail.audioData);
+        break;
+
+      case 'UPDATE_SHOW_STATUS':
+        this.set('state.showStatus', detail.showStatus);
         break;
 
       default:
