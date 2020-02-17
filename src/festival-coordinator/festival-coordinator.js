@@ -1,8 +1,7 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 import {
-  setDriftlessTimeout,
-  setDriftlessInterval,
+  setDriftlessIntervalEverySecond,
   clearDriftless
 } from '../../lib/driftless/driftless.js';
 import moment from 'moment';
@@ -38,16 +37,14 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
     clearDriftless(this._tickInterval);
     if (setsLoaded) {
       this._tick();
-      const millisecondsUntilNextSecond = new Date().getMilliseconds();
-      this._tickInterval = setDriftlessTimeout(() => {
-        this._tickInterval = setDriftlessInterval(this._tick.bind(this), 1000);
-      }, millisecondsUntilNextSecond);
+      setDriftlessIntervalEverySecond(this._tick.bind(this));
     }
   }
 
   _tick() {
     const now = moment();
     this._updateShowStatus(now);
+    this._updateSetsStatus(now);
   }
 
   _updateShowStatus(now) {
@@ -67,6 +64,44 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
     if (showStatus !== this._showStatus) {
       this._showStatus = showStatus;
       this.fireAction('UPDATE_SHOW_STATUS', { showStatus });
+    }
+  }
+
+  _updateSetsStatus(now) {
+    let setsStatus;
+    let currentSetDetails;
+
+    for (const set of this._sets) {
+      if (now.isBefore(set.start)) {
+        const secondsFractionUntilSet = set.start.diff(now, 'seconds', true);
+        const secondsUntilSet = Math.round(secondsFractionUntilSet);
+        currentSetDetails = {
+          set,
+          secondsUntilSet
+        };
+        setsStatus = 'WAITING';
+        break;
+      }
+      if (now.isBefore(set.end)) {
+        const currentTimeFractionInSet = now.diff(set.start, 'seconds', true);
+        const currentTimeInSet = Math.round(currentTimeFractionInSet);
+        currentSetDetails = {
+          set,
+          currentTimeInSet
+        };
+        setsStatus = 'IN_PROGRESS';
+        break;
+      }
+    }
+    if (!setsStatus) setsStatus = 'ENDED';
+
+    if (
+      setsStatus !== this._setsStatus ||
+      currentSetDetails !== this._currentSetDetails
+    ) {
+      this._setsStatus = setsStatus;
+      this._currentSetDetails = currentSetDetails;
+      this.fireAction('UPDATE_SETS_STATUS', { setsStatus, currentSetDetails });
     }
   }
 }
