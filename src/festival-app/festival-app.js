@@ -88,7 +88,7 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
   }
 
   _setupAudioContext() {
-    this.$.audio.setupAudioContext();
+    if (this.state.showStatus !== 'ENDED') this.$.audio.setupAudioContext();
   }
 }
 
