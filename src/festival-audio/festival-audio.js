@@ -19,7 +19,7 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
     analyserNode.minDecibels = -85;
     analyserNode.smoothingTimeConstant = 0.7;
 
-    const audioData = new Uint8Array(analyserNode.frequencyBinCount);
+    const audioVisualizerData = new Uint8Array(analyserNode.frequencyBinCount);
 
     // const gainNode = this.audioContext.createGain();
     // gainNode.gain.value = 0.2;
@@ -30,7 +30,7 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
       .connect(this.audioContext.destination);
 
     this.audioContext.resume().then(() => {
-      this.fireAction('AUDIO_CONTEXT_READY', { audioData });
+      this.fireAction('AUDIO_CONTEXT_READY', { audioVisualizerData });
     });
   }
 }

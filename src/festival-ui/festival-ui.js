@@ -26,7 +26,7 @@ export class FestivalUi extends ActionMixin(PolymerElement) {
       _stateDescription: {
         type: String,
         computed:
-          '_computeStateDescription(state, state.setsLoaded, state.setsData, state.audioContextReady, state.audioData, state.showStatus, state.setsStatus, state.currentSetDetails)'
+          '_computeStateDescription(state, state.setsLoaded, state.setsData, state.audioContextReady, state.audioVisualizerData, state.showStatus, state.setsStatus, state.currentSetDetails)'
       }
     };
   }
@@ -42,10 +42,10 @@ export class FestivalUi extends ActionMixin(PolymerElement) {
   _computeStateDescription(state) {
     const displayState = { ...state };
     if (
-      displayState.audioData &&
-      displayState.audioData.constructor === Uint8Array
+      displayState.audioVisualizerData &&
+      displayState.audioVisualizerData.constructor === Uint8Array
     )
-      displayState.audioData = `Uint8Array[${displayState.audioData.length}]`;
+      displayState.audioVisualizerData = `Uint8Array[${displayState.audioVisualizerData.length}]`;
     return JSON.stringify(displayState, undefined, 2);
   }
 }

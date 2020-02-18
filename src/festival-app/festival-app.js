@@ -59,7 +59,7 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
 
       case 'AUDIO_CONTEXT_READY':
         this.set('state.audioContextReady', true);
-        this.set('state.audioData', detail.audioData);
+        this.set('state.audioVisualizerData', detail.audioVisualizerData);
         break;
 
       case 'UPDATE_SHOW_STATUS':
