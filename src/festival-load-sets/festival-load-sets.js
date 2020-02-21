@@ -14,7 +14,6 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
         {
           audio: '/public/mock/not-enough.mp3',
           artist: 'Anavae',
-          title: 'Not Enough – Instrumental',
           start: m
             .clone()
             .add(5, 'seconds')
@@ -34,7 +33,6 @@ export class FestivalLoadSets extends ActionMixin(HTMLElement) {
         {
           audio: '/public/mock/how-i-love.mp3',
           artist: 'Mayhem',
-          title: 'How I Love',
           start: m
             .clone()
             .add(637, 'seconds')
