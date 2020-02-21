@@ -67,8 +67,7 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
         break;
 
       case 'UPDATE_SETS_STATUS':
-        this.set('state.setsStatus', detail.setsStatus);
-        this.set('state.currentSetDetails', detail.currentSetDetails);
+        this.set('state.currentSet', detail.currentSet);
         break;
 
       default:
