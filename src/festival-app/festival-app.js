@@ -14,7 +14,7 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
         id="coordinator"
         state="[[state]]"
       ></festival-coordinator>
-      <festival-audio id="audio"></festival-audio>
+      <festival-audio id="audio" state="[[state]]"></festival-audio>
     `;
   }
 
