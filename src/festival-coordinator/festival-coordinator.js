@@ -62,7 +62,7 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
     const lastSet = this._sets.slice(-1)[0];
 
     if (now.isBefore(firstSet.start)) {
-      showStatus = 'NOT_STARTED';
+      showStatus = 'WAITING_UNTIL_START';
     } else if (now.isAfter(lastSet.end)) {
       showStatus = 'ENDED';
     } else {
@@ -85,7 +85,7 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
         currentSet = {
           set,
           secondsUntilSet,
-          status: 'WAITING'
+          status: 'WAITING_UNTIL_START'
         };
         break;
       }
@@ -95,15 +95,13 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
         currentSet = {
           set,
           currentTimeInSet,
-          status: 'IN_PROGRESS'
+          status: 'PLAYING'
         };
         break;
       }
     }
     if (!currentSet) {
-      currentSet = {
-        status: 'ENDED'
-      };
+      currentSet = null;
     }
 
     if (currentSet !== this._currentSet) {

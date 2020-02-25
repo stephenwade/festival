@@ -48,7 +48,7 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
 
     this.audioContext.resume().then(() => {
       this.fireAction('AUDIO_CONTEXT_READY', { audioVisualizerData });
-      this._status = 'NOT_STARTED';
+      this._status = 'WAITING_UNTIL_START';
       this._currentSetChanged(this.state.currentSet);
     });
   }
@@ -72,7 +72,7 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
       const set = this.state.currentSet.set;
       const lastSet = this._lastCurrentSet.set;
       const audioChanged = set && (!lastSet || set.audio !== lastSet.audio);
-      const loading = this._status === 'LOADING';
+      const loading = this._status === 'DELAYING_FOR_INITIAL_SYNC';
       if (statusChanged || audioChanged || loading) {
         change = {
           status: this.state.currentSet.status,
@@ -94,9 +94,8 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
           'Cannot queue status change while waiting for audio context'
         );
 
-      case 'NOT_STARTED':
-      case 'PRELOADING':
-      case 'LOADING':
+      case 'WAITING_UNTIL_START':
+      case 'DELAYING_FOR_INITIAL_SYNC':
       case 'ENDED':
         this._performStatusChange(change);
         break;
@@ -111,35 +110,34 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
   }
 
   _performStatusChange(change) {
-    switch (change.status) {
-      case 'WAITING':
-        if (change.src) this.$.audio.src = change.src;
-        this._status = 'PRELOADING';
-        break;
+    if (change.status) {
+      switch (change.status) {
+        case 'WAITING_UNTIL_START':
+          if (change.src) this.$.audio.src = change.src;
+          this._status = 'WAITING_UNTIL_START';
+          break;
 
-      case 'IN_PROGRESS':
-        if (change.src) this.$.audio.src = change.src;
-        if (this._status === 'LOADING') {
-          if (change.currentTime >= this._audioStartTime) {
+        case 'PLAYING':
+          if (change.src) this.$.audio.src = change.src;
+          if (this._status === 'DELAYING_FOR_INITIAL_SYNC') {
+            if (change.currentTime >= this._audioStartTime) {
+              this.$.audio.play();
+              this._status = 'PLAYING';
+            }
+          } else if (change.currentTime > 0) {
+            this._status = 'DELAYING_FOR_INITIAL_SYNC';
+            // delay 2 seconds for audio to load
+            this._audioStartTime = change.currentTime + 2;
+            this.$.audio.src += `#t=${this._audioStartTime}`;
+          } else {
             this.$.audio.play();
             this._status = 'PLAYING';
           }
-        } else if (change.currentTime > 0) {
-          this._status = 'LOADING';
-          // delay 2 seconds for audio to load
-          this._audioStartTime = change.currentTime + 2;
-          this.$.audio.src += `#t=${this._audioStartTime}`;
-        } else {
-          this.$.audio.play();
-          this._status = 'PLAYING';
-        }
-        break;
+          break;
 
-      case 'ENDED':
-        break;
-
-      default:
-        throw new Error('Unknown status');
+        default:
+          throw new Error('Unknown status');
+      }
     }
 
     if (this._status !== 'PLAYING') {
