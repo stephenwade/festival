@@ -31,14 +31,6 @@ export class FestivalUi extends ActionMixin(PolymerElement) {
     };
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-
-    this.addEventListener('click', () => {
-      this.fireAction('SETUP_AUDIO_CONTEXT');
-    });
-  }
-
   _computeStateDescription(state) {
     const displayState = { ...state };
     if (

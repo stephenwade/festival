@@ -53,10 +53,6 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
         this.set('state.setsLoaded', true);
         break;
 
-      case 'SETUP_AUDIO_CONTEXT':
-        this._setupAudioContext();
-        break;
-
       case 'AUDIO_CONTEXT_READY':
         this.set('state.audioContextReady', true);
         this.set('state.audioVisualizerData', detail.audioVisualizerData);
@@ -84,11 +80,6 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
 
   _loadData() {
     this.$.loadsets.loadData();
-  }
-
-  _setupAudioContext() {
-    if (this.state.targetShowStatus !== 'ENDED')
-      this.$.audio.setupAudioContext();
   }
 }
 

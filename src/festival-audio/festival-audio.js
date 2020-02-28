@@ -1,4 +1,6 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { AudioContext } from 'standardized-audio-context';
 import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 
 export class FestivalAudio extends ActionMixin(PolymerElement) {
@@ -7,6 +9,10 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
 
     this._status = 'WAITING_FOR_AUDIO_CONTEXT';
     this._changeQueue = [];
+
+    afterNextRender(this, () => {
+      this._listenForInteraction();
+    });
   }
 
   static get template() {
@@ -25,8 +31,33 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
     return ['_targetCurrentSetChanged(state.targetCurrentSet)'];
   }
 
-  // This must be called from a click event because of Safari
-  setupAudioContext() {
+  // inspired by https://www.mattmontag.com/web/unlock-web-audio-in-safari-for-ios-and-macos
+  _listenForInteraction() {
+    if (!this.audioContext) this._setupAudioContext();
+    if (this.audioContext.state !== 'suspended') return;
+
+    const events = ['touchstart', 'touchend', 'mousedown', 'keydown'];
+    const unlock = () => {
+      if (this.state.targetShowStatus !== 'ENDED') {
+        this.$.audio.src = undefined;
+        this.$.audio.play().catch(() => {
+          // ignore errors
+        });
+        this.audioContext.resume().then(() => {
+          this._handleAudioContextResumed();
+          clean(); // eslint-disable-line no-use-before-define
+        });
+      }
+    };
+    const clean = () => {
+      events.forEach(e => document.body.removeEventListener(e, unlock));
+    };
+    events.forEach(e => {
+      document.body.addEventListener(e, unlock);
+    });
+  }
+
+  _setupAudioContext() {
     this.audioContext = new AudioContext();
 
     const track = this.audioContext.createMediaElementSource(this.$.audio);
@@ -36,7 +67,7 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
     analyserNode.minDecibels = -85;
     analyserNode.smoothingTimeConstant = 0.7;
 
-    const audioVisualizerData = new Uint8Array(analyserNode.frequencyBinCount);
+    this._audioVisualizerData = new Uint8Array(analyserNode.frequencyBinCount);
 
     // const gainNode = this.audioContext.createGain();
     // gainNode.gain.value = 0.2;
@@ -45,12 +76,14 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
       .connect(analyserNode)
       // .connect(gainNode)
       .connect(this.audioContext.destination);
+  }
 
-    this.audioContext.resume().then(() => {
-      this.fireAction('AUDIO_CONTEXT_READY', { audioVisualizerData });
-      this._status = 'WAITING_UNTIL_START';
-      this._targetCurrentSetChanged(this.state.targetCurrentSet);
+  _handleAudioContextResumed() {
+    this.fireAction('AUDIO_CONTEXT_READY', {
+      audioVisualizerData: this._audioVisualizerData
     });
+    this._status = 'WAITING_UNTIL_START';
+    this._targetCurrentSetChanged(this.state.targetCurrentSet);
   }
 
   _targetCurrentSetChanged(currentSet) {
