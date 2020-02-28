@@ -22,7 +22,7 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
   }
 
   static get observers() {
-    return ['_currentSetChanged(state.currentSet)'];
+    return ['_targetCurrentSetChanged(state.targetCurrentSet)'];
   }
 
   // This must be called from a click event because of Safari
@@ -49,11 +49,11 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
     this.audioContext.resume().then(() => {
       this.fireAction('AUDIO_CONTEXT_READY', { audioVisualizerData });
       this._status = 'WAITING_UNTIL_START';
-      this._currentSetChanged(this.state.currentSet);
+      this._targetCurrentSetChanged(this.state.targetCurrentSet);
     });
   }
 
-  _currentSetChanged(currentSet) {
+  _targetCurrentSetChanged(currentSet) {
     if (this._status === 'WAITING_FOR_AUDIO_CONTEXT') return;
     if (!currentSet) return;
 
@@ -61,23 +61,23 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
 
     const firstRun = !this._lastCurrentSet;
     if (firstRun) {
-      const set = this.state.currentSet.set;
+      const set = currentSet.set;
       change = {
-        status: this.state.currentSet.status,
+        status: currentSet.status,
         src: set ? set.audio : undefined,
-        currentTime: this.state.currentSet.currentTimeInSet
+        currentTime: currentSet.currentTime
       };
     } else {
       const statusChanged = currentSet.status !== this._lastCurrentSet.status;
-      const set = this.state.currentSet.set;
+      const set = currentSet.set;
       const lastSet = this._lastCurrentSet.set;
       const audioChanged = set && (!lastSet || set.audio !== lastSet.audio);
       const loading = this._status === 'DELAYING_FOR_INITIAL_SYNC';
       if (statusChanged || audioChanged || loading) {
         change = {
-          status: this.state.currentSet.status,
+          status: currentSet.status,
           src: audioChanged ? set.audio : undefined,
-          currentTime: this.state.currentSet.currentTimeInSet
+          currentTime: currentSet.currentTime
         };
       }
     }

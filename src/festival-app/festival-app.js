@@ -62,12 +62,12 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
         this.set('state.audioVisualizerData', detail.audioVisualizerData);
         break;
 
-      case 'UPDATE_SHOW_STATUS':
-        this.set('state.showStatus', detail.showStatus);
+      case 'UPDATE_TARGET_SHOW_STATUS':
+        this.set('state.targetShowStatus', detail.showStatus);
         break;
 
-      case 'UPDATE_SETS_STATUS':
-        this.set('state.currentSet', detail.currentSet);
+      case 'UPDATE_TARGET_SETS_STATUS':
+        this.set('state.targetCurrentSet', detail.currentSet);
         break;
 
       default:
@@ -87,7 +87,8 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
   }
 
   _setupAudioContext() {
-    if (this.state.showStatus !== 'ENDED') this.$.audio.setupAudioContext();
+    if (this.state.targetShowStatus !== 'ENDED')
+      this.$.audio.setupAudioContext();
   }
 }
 

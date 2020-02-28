@@ -71,7 +71,7 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
 
     if (showStatus !== this._showStatus) {
       this._showStatus = showStatus;
-      this.fireAction('UPDATE_SHOW_STATUS', { showStatus });
+      this.fireAction('UPDATE_TARGET_SHOW_STATUS', { showStatus });
     }
   }
 
@@ -91,10 +91,10 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
       }
       if (now.isBefore(set.end)) {
         const currentTimeFractionInSet = now.diff(set.start, 'seconds', true);
-        const currentTimeInSet = Math.round(currentTimeFractionInSet);
+        const currentTime = Math.round(currentTimeFractionInSet);
         currentSet = {
           set,
-          currentTimeInSet,
+          currentTime,
           status: 'PLAYING'
         };
         break;
@@ -106,7 +106,7 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
 
     if (currentSet !== this._currentSet) {
       this._currentSet = currentSet;
-      this.fireAction('UPDATE_SETS_STATUS', { currentSet });
+      this.fireAction('UPDATE_TARGET_SETS_STATUS', { currentSet });
     }
   }
 }
