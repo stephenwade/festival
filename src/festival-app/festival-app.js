@@ -66,6 +66,10 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
         this.set('state.targetCurrentSet', detail.currentSet);
         break;
 
+      case 'UPDATE_AUDIO_STATUS':
+        this.set('state.audioStatus', detail.audioStatus);
+        break;
+
       default:
         throw new Error('Unknown action');
     }

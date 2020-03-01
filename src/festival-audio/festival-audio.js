@@ -11,6 +11,7 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
     this._changeQueue = [];
 
     afterNextRender(this, () => {
+      this._statusChanged(this._status);
       this._listenForInteraction();
     });
   }
@@ -23,7 +24,11 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
 
   static get properties() {
     return {
-      state: Object
+      state: Object,
+      _status: {
+        type: String,
+        observer: '_statusChanged'
+      }
     };
   }
 
@@ -84,6 +89,10 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
     });
     this._status = 'WAITING_UNTIL_START';
     this._targetCurrentSetChanged(this.state.targetCurrentSet);
+  }
+
+  _statusChanged(audioStatus) {
+    this.fireAction('UPDATE_AUDIO_STATUS', { audioStatus });
   }
 
   _targetCurrentSetChanged(currentSet) {
