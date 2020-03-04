@@ -59,7 +59,7 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
         break;
 
       case 'UPDATE_TARGET_SHOW_STATUS':
-        this.set('state.targetShowStatus', detail.showStatus);
+        this.set('state.targetShowStatus', detail.targetShowStatus);
         break;
 
       case 'UPDATE_TARGET_SETS_STATUS':

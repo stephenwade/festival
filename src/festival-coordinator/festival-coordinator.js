@@ -14,7 +14,11 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
 
   static get properties() {
     return {
-      state: Object
+      state: Object,
+      _targetShowStatus: {
+        type: String,
+        observer: '_targetShowStatusChanged'
+      }
     };
   }
 
@@ -26,6 +30,11 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
     super.disconnectedCallback();
 
     clearDriftless(this._tickInterval);
+  }
+
+  _targetShowStatusChanged(targetShowStatus) {
+    if (targetShowStatus !== this.state.targetShowStatus)
+      this.fireAction('UPDATE_TARGET_SHOW_STATUS', { targetShowStatus });
   }
 
   _setupSets(setsData) {
@@ -56,22 +65,29 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
   }
 
   _updateShowStatus(now) {
-    let showStatus;
-
     const firstSet = this._sets[0];
     const lastSet = this._sets.slice(-1)[0];
 
-    if (now.isBefore(firstSet.start)) {
-      showStatus = 'WAITING_UNTIL_START';
-    } else if (now.isAfter(lastSet.end)) {
-      showStatus = 'ENDED';
-    } else {
-      showStatus = 'IN_PROGRESS';
-    }
+    switch (this._targetShowStatus) {
+      case undefined:
+        this._targetShowStatus = 'WAITING_UNTIL_START';
+      // fallthrough
+      case 'WAITING_UNTIL_START':
+        if (now.isSameOrAfter(firstSet.start)) {
+          this._targetShowStatus = 'IN_PROGRESS';
+        }
+      // fallthrough
+      case 'IN_PROGRESS':
+        if (now.isAfter(lastSet.end)) {
+          this._targetShowStatus = 'ENDED';
+        }
+        break;
 
-    if (showStatus !== this._showStatus) {
-      this._showStatus = showStatus;
-      this.fireAction('UPDATE_TARGET_SHOW_STATUS', { showStatus });
+      case 'ENDED':
+        break;
+
+      default:
+        throw new Error('Unknown status');
     }
   }
 
