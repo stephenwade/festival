@@ -1,61 +1,60 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 import {
   setDriftlessIntervalEverySecond,
   clearDriftless
 } from '../../lib/driftless/driftless.js';
 import moment from 'moment';
 
-export class FestivalCoordinator extends ActionMixin(PolymerElement) {
+export class FestivalCoordinator extends PolymerElement {
   static get template() {
     return null;
   }
 
   static get properties() {
     return {
-      state: Object,
-      _targetShowStatus: {
+      setsData: {
+        type: Object,
+        observer: '_setsDataChanged'
+      },
+      targetShowStatus: {
         type: String,
-        observer: '_targetShowStatusChanged'
+        notify: true
+      },
+      targetAudioStatus: {
+        type: Object,
+        notify: true
       }
     };
-  }
-
-  static get observers() {
-    return [
-      '_setupSets(state.setsData)',
-      '_setupTimer(state.setsLoaded, state.setsData)'
-    ];
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    clearDriftless(this._tickInterval);
+    this._clearTimer();
   }
 
-  _targetShowStatusChanged(targetShowStatus) {
-    if (targetShowStatus !== this.state.targetShowStatus)
-      this.fireAction('UPDATE_TARGET_SHOW_STATUS', { targetShowStatus });
-  }
-
-  _setupSets(setsData) {
+  _setsDataChanged(setsData) {
+    this._clearTimer();
     if (setsData) {
-      setsData.sets.forEach(set => {
-        set.startMoment = moment(set.start);
-        set.endMoment = set.startMoment.clone().add(set.length, 'seconds');
-      });
+      this._addMomentsToSets();
+      this._setupTimer();
     }
   }
 
-  _setupTimer(setsLoaded) {
+  _addMomentsToSets() {
+    this.setsData.sets.forEach(set => {
+      set.startMoment = moment(set.start);
+      set.endMoment = set.startMoment.clone().add(set.length, 'seconds');
+    });
+  }
+
+  _clearTimer() {
     clearDriftless(this._tickInterval);
-    if (setsLoaded) {
-      this._tick();
-      this._tickInterval = setDriftlessIntervalEverySecond(
-        this._tick.bind(this)
-      );
-    }
+  }
+
+  _setupTimer() {
+    this._tick();
+    this._tickInterval = setDriftlessIntervalEverySecond(this._tick.bind(this));
   }
 
   _tick() {
@@ -65,22 +64,22 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
   }
 
   _updateTargetShowStatus(now) {
-    const sets = this.state.setsData.sets;
+    const sets = this.setsData.sets;
     const firstSet = sets[0];
     const lastSet = sets.slice(-1)[0];
 
-    switch (this._targetShowStatus) {
+    switch (this.targetShowStatus) {
       case undefined:
-        this._targetShowStatus = 'WAITING_UNTIL_START';
+        this.targetShowStatus = 'WAITING_UNTIL_START';
       // fallthrough
       case 'WAITING_UNTIL_START':
         if (now.isSameOrAfter(firstSet.startMoment)) {
-          this._targetShowStatus = 'IN_PROGRESS';
+          this.targetShowStatus = 'IN_PROGRESS';
         }
       // fallthrough
       case 'IN_PROGRESS':
         if (now.isAfter(lastSet.endMoment)) {
-          this._targetShowStatus = 'ENDED';
+          this.targetShowStatus = 'ENDED';
         }
         break;
 
@@ -95,7 +94,7 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
   _updateTargetAudioStatus(now) {
     let targetAudioStatus;
 
-    const sets = this.state.setsData.sets;
+    const sets = this.setsData.sets;
 
     for (const set of sets) {
       if (now.isBefore(set.startMoment)) {
@@ -123,10 +122,7 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
       targetAudioStatus = null;
     }
 
-    if (targetAudioStatus !== this._targetAudioStatus) {
-      this._targetAudioStatus = targetAudioStatus;
-      this.fireAction('UPDATE_TARGET_SETS_STATUS', { targetAudioStatus });
-    }
+    this.targetAudioStatus = targetAudioStatus;
   }
 }
 

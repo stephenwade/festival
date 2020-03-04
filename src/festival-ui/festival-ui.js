@@ -1,7 +1,6 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 
-export class FestivalUi extends ActionMixin(PolymerElement) {
+export class FestivalUi extends PolymerElement {
   static get template() {
     return html`
       <style>
@@ -22,23 +21,32 @@ export class FestivalUi extends ActionMixin(PolymerElement) {
 
   static get properties() {
     return {
-      state: Object,
+      setsData: Object,
+      targetShowStatus: String,
+      targetAudioStatus: Object,
       _stateDescription: {
         type: String,
         computed:
-          '_computeStateDescription(state, state.setsLoaded, state.setsData, state.audioContextReady, state.audioVisualizerData, state.targetShowStatus, state.targetAudioStatus, state.audioStatus)'
+          '_computeStateDescription(setsData, targetShowStatus, targetAudioStatus, audioContextReady, audioStatus)'
       }
     };
   }
 
-  _computeStateDescription(state) {
-    const displayState = { ...state };
-    if (
-      displayState.audioVisualizerData &&
-      displayState.audioVisualizerData.constructor === Uint8Array
-    )
-      displayState.audioVisualizerData = `Uint8Array[${displayState.audioVisualizerData.length}]`;
-    return JSON.stringify(displayState, undefined, 2);
+  _computeStateDescription(
+    setsData,
+    targetShowStatus,
+    targetAudioStatus,
+    audioContextReady,
+    audioStatus
+  ) {
+    const state = {
+      setsData,
+      targetShowStatus,
+      targetAudioStatus,
+      audioContextReady,
+      audioStatus
+    };
+    return JSON.stringify(state, undefined, 2);
   }
 }
 

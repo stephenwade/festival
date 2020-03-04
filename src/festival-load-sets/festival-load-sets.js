@@ -1,10 +1,23 @@
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import moment from 'moment/src/moment.js';
-import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 
-export class FestivalLoadSets extends ActionMixin(HTMLElement) {
+export class FestivalLoadSets extends PolymerElement {
+  static get template() {
+    return null;
+  }
+
+  static get properties() {
+    return {
+      setsData: {
+        type: Object,
+        notify: true
+      }
+    };
+  }
+
   loadData() {
     // always use mock data for now
-    this.fireAction('SETS_LOADED', { data: this._getMockData() });
+    this.setsData = this._getMockData();
   }
 
   _getMockData() {

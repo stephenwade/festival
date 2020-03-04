@@ -1,89 +1,57 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 import '../festival-ui/festival-ui.js';
 import '../festival-load-sets/festival-load-sets.js';
 import '../festival-coordinator/festival-coordinator.js';
 import '../festival-audio/festival-audio.js';
 
-export class FestivalApp extends ActionMixin(PolymerElement) {
+export class FestivalApp extends PolymerElement {
   static get template() {
     return html`
-      <festival-ui id="ui" state="[[state]]"></festival-ui>
-      <festival-load-sets id="loadsets"></festival-load-sets>
+      <festival-ui
+        sets-data="[[setsData]]"
+        target-show-status="[[targetShowStatus]]"
+        target-audio-status="[[targetAudioStatus]]"
+        audio-context-ready="[[audioContextReady]]"
+        audio-status="[[audioStatus]]"
+      ></festival-ui>
+      <festival-load-sets
+        id="loader"
+        sets-data="{{setsData}}"
+      ></festival-load-sets>
       <festival-coordinator
-        id="coordinator"
-        state="[[state]]"
+        sets-data="[[setsData]]"
+        target-show-status="{{targetShowStatus}}"
+        target-audio-status="{{targetAudioStatus}}"
       ></festival-coordinator>
-      <festival-audio id="audio" state="[[state]]"></festival-audio>
+      <festival-audio
+        target-show-status="[[targetShowStatus]]"
+        target-audio-status="[[targetAudioStatus]]"
+        audio-context-ready="{{audioContextReady}}"
+        audio-visualizer-data="{{audioVisualizerData}}"
+        audio-status="{{audioStatus}}"
+      ></festival-audio>
     `;
   }
 
   static get properties() {
     return {
-      state: Object
+      setsData: Object,
+      targetShowStatus: String,
+      targetAudioStatus: Object,
+      audioContextReady: Boolean,
+      audioVisualizerData: Object,
+      audioStatus: String
     };
   }
 
-  connectedCallback() {
-    super.connectedCallback();
+  ready() {
+    super.ready();
 
-    this.addEventListener('action', this._handleAction);
-
-    this.fireAction('INIT');
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    this.removeEventListener('action', this._handleAction);
-  }
-
-  _handleAction(e) {
-    const action = e.detail.action;
-    const detail = e.detail;
-
-    switch (action) {
-      case 'INIT':
-        this._initializeState();
-        this._loadData();
-        break;
-
-      case 'SETS_LOADED':
-        this.set('state.setsData', detail.data);
-        this.set('state.setsLoaded', true);
-        break;
-
-      case 'AUDIO_CONTEXT_READY':
-        this.set('state.audioContextReady', true);
-        this.set('state.audioVisualizerData', detail.audioVisualizerData);
-        break;
-
-      case 'UPDATE_TARGET_SHOW_STATUS':
-        this.set('state.targetShowStatus', detail.targetShowStatus);
-        break;
-
-      case 'UPDATE_TARGET_SETS_STATUS':
-        this.set('state.targetAudioStatus', detail.targetAudioStatus);
-        break;
-
-      case 'UPDATE_AUDIO_STATUS':
-        this.set('state.audioStatus', detail.audioStatus);
-        break;
-
-      default:
-        throw new Error('Unknown action');
-    }
-  }
-
-  _initializeState() {
-    this.state = {
-      setsLoaded: false,
-      audioContextReady: false
-    };
+    this._loadData();
   }
 
   _loadData() {
-    this.$.loadsets.loadData();
+    this.$.loader.loadData();
   }
 }
 

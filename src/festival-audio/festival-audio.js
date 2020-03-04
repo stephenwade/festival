@@ -1,19 +1,11 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 import { AudioContext } from 'standardized-audio-context';
-import { ActionMixin } from '../../lib/mixins/action-mixin.js';
 
-export class FestivalAudio extends ActionMixin(PolymerElement) {
+export class FestivalAudio extends PolymerElement {
   constructor() {
     super();
 
-    this._status = 'WAITING_FOR_AUDIO_CONTEXT';
     this._changeQueue = [];
-
-    afterNextRender(this, () => {
-      this._statusChanged(this._status);
-      this._listenForInteraction();
-    });
   }
 
   static get template() {
@@ -24,16 +16,38 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
 
   static get properties() {
     return {
-      state: Object,
-      _status: {
+      targetShowStatus: String,
+      targetAudioStatus: {
+        type: Object,
+        observer: '_targetAudioStatusChanged'
+      },
+      audioContextReady: {
+        type: Boolean,
+        notify: true
+      },
+      audioVisualizerData: {
+        type: Object,
+        notify: true
+      },
+      audioStatus: {
         type: String,
-        observer: '_statusChanged'
+        notify: true
       }
     };
   }
 
-  static get observers() {
-    return ['_targetAudioStatusChanged(state.targetAudioStatus)'];
+  connectedCallback() {
+    super.connectedCallback();
+
+    this.audioStatus = 'WAITING_FOR_AUDIO_CONTEXT';
+    this.audioContextReady = false;
+    this._listenForInteraction();
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    if (this._unlistenForInteraction) this._unlistenForInteraction();
   }
 
   // inspired by https://www.mattmontag.com/web/unlock-web-audio-in-safari-for-ios-and-macos
@@ -43,18 +57,18 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
 
     const events = ['touchstart', 'touchend', 'mousedown', 'keydown'];
     const unlock = () => {
-      if (this.state.targetShowStatus !== 'ENDED') {
+      if (this.targetShowStatus !== 'ENDED') {
         this.$.audio.src = undefined;
         this.$.audio.play().catch(() => {
           // ignore errors
         });
         this.audioContext.resume().then(() => {
           this._handleAudioContextResumed();
-          clean(); // eslint-disable-line no-use-before-define
+          this._unlistenForInteraction();
         });
       }
     };
-    const clean = () => {
+    this._unlistenForInteraction = () => {
       events.forEach(e => document.body.removeEventListener(e, unlock));
     };
     events.forEach(e => {
@@ -84,53 +98,50 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
   }
 
   _handleAudioContextResumed() {
-    this.fireAction('AUDIO_CONTEXT_READY', {
-      audioVisualizerData: this._audioVisualizerData
-    });
-    this._status = 'WAITING_UNTIL_START';
-    this._targetAudioStatusChanged(this.state.targetAudioStatus);
+    this.audioContextReady = true;
+    this.audioVisualizerData = this._audioVisualizerData;
+
+    this.audioStatus = 'WAITING_UNTIL_START';
+    this._targetAudioStatusChanged(this.targetAudioStatus);
   }
 
-  _statusChanged(audioStatus) {
-    this.fireAction('UPDATE_AUDIO_STATUS', { audioStatus });
-  }
-
-  _targetAudioStatusChanged(currentSet) {
-    if (this._status === 'WAITING_FOR_AUDIO_CONTEXT') return;
-    if (!currentSet) return;
+  _targetAudioStatusChanged(targetAudioStatus) {
+    if (this.audioStatus === 'WAITING_FOR_AUDIO_CONTEXT') return;
+    if (!targetAudioStatus) return;
 
     let change;
 
-    const firstRun = !this._lastCurrentSet;
+    const firstRun = !this._lastTargetAudioStatus;
     if (firstRun) {
-      const set = currentSet.set;
+      const set = targetAudioStatus.set;
       change = {
-        status: currentSet.status,
+        status: targetAudioStatus.status,
         src: set ? set.audio : undefined,
-        currentTime: currentSet.currentTime
+        currentTime: targetAudioStatus.currentTime
       };
     } else {
-      const statusChanged = currentSet.status !== this._lastCurrentSet.status;
-      const set = currentSet.set;
-      const lastSet = this._lastCurrentSet.set;
+      const statusChanged =
+        targetAudioStatus.status !== this._lastTargetAudioStatus.status;
+      const set = targetAudioStatus.set;
+      const lastSet = this._lastTargetAudioStatus.set;
       const audioChanged = set && (!lastSet || set.audio !== lastSet.audio);
-      const loading = this._status === 'DELAYING_FOR_INITIAL_SYNC';
+      const loading = this.audioStatus === 'DELAYING_FOR_INITIAL_SYNC';
       if (statusChanged || audioChanged || loading) {
         change = {
-          status: currentSet.status,
+          status: targetAudioStatus.status,
           src: audioChanged ? set.audio : undefined,
-          currentTime: currentSet.currentTime
+          currentTime: targetAudioStatus.currentTime
         };
       }
     }
 
     if (change) this._queueStatusChange(change);
 
-    this._lastCurrentSet = currentSet;
+    this._lastTargetAudioStatus = targetAudioStatus;
   }
 
   _queueStatusChange(change) {
-    switch (this._status) {
+    switch (this.audioStatus) {
       case 'WAITING_FOR_AUDIO_CONTEXT':
         throw new Error(
           'Cannot queue status change while waiting for audio context'
@@ -156,24 +167,24 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
       switch (change.status) {
         case 'WAITING_UNTIL_START':
           if (change.src) this.$.audio.src = change.src;
-          this._status = 'WAITING_UNTIL_START';
+          this.audioStatus = 'WAITING_UNTIL_START';
           break;
 
         case 'PLAYING':
           if (change.src) this.$.audio.src = change.src;
-          if (this._status === 'DELAYING_FOR_INITIAL_SYNC') {
+          if (this.audioStatus === 'DELAYING_FOR_INITIAL_SYNC') {
             if (change.currentTime >= this._audioStartTime) {
               this.$.audio.play();
-              this._status = 'PLAYING';
+              this.audioStatus = 'PLAYING';
             }
           } else if (change.currentTime > 0) {
-            this._status = 'DELAYING_FOR_INITIAL_SYNC';
+            this.audioStatus = 'DELAYING_FOR_INITIAL_SYNC';
             // delay 2 seconds for audio to load
             this._audioStartTime = change.currentTime + 2;
             this.$.audio.src += `#t=${this._audioStartTime}`;
           } else {
             this.$.audio.play();
-            this._status = 'PLAYING';
+            this.audioStatus = 'PLAYING';
           }
           break;
 
@@ -182,14 +193,14 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
       }
     }
 
-    if (this._status !== 'PLAYING') {
+    if (this.audioStatus !== 'PLAYING') {
       const nextChange = this._changeQueue.shift();
       if (nextChange) this._performStatusChange(nextChange);
     }
   }
 
   _handleAudioEnded() {
-    this._status = 'ENDED';
+    this.audioStatus = 'ENDED';
 
     const nextChange = this._changeQueue.shift();
     if (nextChange) this._performStatusChange(nextChange);
