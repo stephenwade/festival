@@ -18,7 +18,8 @@ export class FestivalCoordinator extends PolymerElement {
       },
       targetShowStatus: {
         type: String,
-        notify: true
+        notify: true,
+        value: 'WAITING_UNTIL_START'
       },
       targetAudioStatus: {
         type: Object,
@@ -69,9 +70,6 @@ export class FestivalCoordinator extends PolymerElement {
     const lastSet = sets.slice(-1)[0];
 
     switch (this.targetShowStatus) {
-      case undefined:
-        this.targetShowStatus = 'WAITING_UNTIL_START';
-      // fallthrough
       case 'WAITING_UNTIL_START':
         if (now.isSameOrAfter(firstSet.startMoment)) {
           this.targetShowStatus = 'IN_PROGRESS';

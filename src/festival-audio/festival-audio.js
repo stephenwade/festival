@@ -23,7 +23,8 @@ export class FestivalAudio extends PolymerElement {
       },
       audioContextReady: {
         type: Boolean,
-        notify: true
+        notify: true,
+        value: false
       },
       audioVisualizerData: {
         type: Object,
@@ -31,7 +32,8 @@ export class FestivalAudio extends PolymerElement {
       },
       audioStatus: {
         type: String,
-        notify: true
+        notify: true,
+        value: 'WAITING_FOR_AUDIO_CONTEXT'
       }
     };
   }
@@ -39,8 +41,6 @@ export class FestivalAudio extends PolymerElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.audioStatus = 'WAITING_FOR_AUDIO_CONTEXT';
-    this.audioContextReady = false;
     this._listenForInteraction();
   }
 
