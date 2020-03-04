@@ -5,7 +5,6 @@ import {
   clearDriftless
 } from '../../lib/driftless/driftless.js';
 import moment from 'moment';
-import 'lodash'; /* global _ */
 
 export class FestivalCoordinator extends ActionMixin(PolymerElement) {
   static get template() {
@@ -39,12 +38,10 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
 
   _setupSets(setsData) {
     if (setsData) {
-      this._sets = _.cloneDeep(setsData.sets);
-      for (let i = 0; i < this._sets.length; ++i) {
-        const set = this._sets[i];
-        set.start = moment(set.start);
-        set.end = set.start.clone().add(set.length, 'seconds');
-      }
+      setsData.sets.forEach(set => {
+        set.startMoment = moment(set.start);
+        set.endMoment = set.startMoment.clone().add(set.length, 'seconds');
+      });
     }
   }
 
@@ -65,20 +62,21 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
   }
 
   _updateShowStatus(now) {
-    const firstSet = this._sets[0];
-    const lastSet = this._sets.slice(-1)[0];
+    const sets = this.state.setsData.sets;
+    const firstSet = sets[0];
+    const lastSet = sets.slice(-1)[0];
 
     switch (this._targetShowStatus) {
       case undefined:
         this._targetShowStatus = 'WAITING_UNTIL_START';
       // fallthrough
       case 'WAITING_UNTIL_START':
-        if (now.isSameOrAfter(firstSet.start)) {
+        if (now.isSameOrAfter(firstSet.startMoment)) {
           this._targetShowStatus = 'IN_PROGRESS';
         }
       // fallthrough
       case 'IN_PROGRESS':
-        if (now.isAfter(lastSet.end)) {
+        if (now.isAfter(lastSet.endMoment)) {
           this._targetShowStatus = 'ENDED';
         }
         break;
@@ -94,10 +92,12 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
   _updateSetsStatus(now) {
     let currentSet;
 
-    for (const set of this._sets) {
-      if (now.isBefore(set.start)) {
-        const secondsFractionUntilSet = set.start.diff(now, 'seconds', true);
-        const secondsUntilSet = Math.round(secondsFractionUntilSet);
+    const sets = this.state.setsData.sets;
+
+    for (const set of sets) {
+      if (now.isBefore(set.startMoment)) {
+        const secondsFracUntilSet = set.startMoment.diff(now, 'seconds', true);
+        const secondsUntilSet = Math.round(secondsFracUntilSet);
         currentSet = {
           set,
           secondsUntilSet,
@@ -105,9 +105,9 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
         };
         break;
       }
-      if (now.isBefore(set.end)) {
-        const currentTimeFractionInSet = now.diff(set.start, 'seconds', true);
-        const currentTime = Math.round(currentTimeFractionInSet);
+      if (now.isBefore(set.endMoment)) {
+        const currentTimeFracInSet = now.diff(set.startMoment, 'seconds', true);
+        const currentTime = Math.round(currentTimeFracInSet);
         currentSet = {
           set,
           currentTime,
