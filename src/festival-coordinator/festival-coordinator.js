@@ -22,7 +22,10 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
   }
 
   static get observers() {
-    return ['_setupSets(state.setsData)', '_setupTimer(state.setsLoaded)'];
+    return [
+      '_setupSets(state.setsData)',
+      '_setupTimer(state.setsLoaded, state.setsData)'
+    ];
   }
 
   disconnectedCallback() {
