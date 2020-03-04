@@ -33,7 +33,7 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
   }
 
   static get observers() {
-    return ['_targetCurrentSetChanged(state.targetCurrentSet)'];
+    return ['_targetAudioStatusChanged(state.targetAudioStatus)'];
   }
 
   // inspired by https://www.mattmontag.com/web/unlock-web-audio-in-safari-for-ios-and-macos
@@ -88,14 +88,14 @@ export class FestivalAudio extends ActionMixin(PolymerElement) {
       audioVisualizerData: this._audioVisualizerData
     });
     this._status = 'WAITING_UNTIL_START';
-    this._targetCurrentSetChanged(this.state.targetCurrentSet);
+    this._targetAudioStatusChanged(this.state.targetAudioStatus);
   }
 
   _statusChanged(audioStatus) {
     this.fireAction('UPDATE_AUDIO_STATUS', { audioStatus });
   }
 
-  _targetCurrentSetChanged(currentSet) {
+  _targetAudioStatusChanged(currentSet) {
     if (this._status === 'WAITING_FOR_AUDIO_CONTEXT') return;
     if (!currentSet) return;
 

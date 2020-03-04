@@ -26,7 +26,7 @@ export class FestivalUi extends ActionMixin(PolymerElement) {
       _stateDescription: {
         type: String,
         computed:
-          '_computeStateDescription(state, state.setsLoaded, state.setsData, state.audioContextReady, state.audioVisualizerData, state.targetShowStatus, state.targetCurrentSet, state.audioStatus)'
+          '_computeStateDescription(state, state.setsLoaded, state.setsData, state.audioContextReady, state.audioVisualizerData, state.targetShowStatus, state.targetAudioStatus, state.audioStatus)'
       }
     };
   }

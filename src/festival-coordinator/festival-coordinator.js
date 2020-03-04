@@ -60,11 +60,11 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
 
   _tick() {
     const now = moment();
-    this._updateShowStatus(now);
-    this._updateSetsStatus(now);
+    this._updateTargetShowStatus(now);
+    this._updateTargetAudioStatus(now);
   }
 
-  _updateShowStatus(now) {
+  _updateTargetShowStatus(now) {
     const sets = this.state.setsData.sets;
     const firstSet = sets[0];
     const lastSet = sets.slice(-1)[0];
@@ -92,8 +92,8 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
     }
   }
 
-  _updateSetsStatus(now) {
-    let currentSet;
+  _updateTargetAudioStatus(now) {
+    let targetAudioStatus;
 
     const sets = this.state.setsData.sets;
 
@@ -101,7 +101,7 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
       if (now.isBefore(set.startMoment)) {
         const secondsFracUntilSet = set.startMoment.diff(now, 'seconds', true);
         const secondsUntilSet = Math.round(secondsFracUntilSet);
-        currentSet = {
+        targetAudioStatus = {
           set,
           secondsUntilSet,
           status: 'WAITING_UNTIL_START'
@@ -111,7 +111,7 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
       if (now.isBefore(set.endMoment)) {
         const currentTimeFracInSet = now.diff(set.startMoment, 'seconds', true);
         const currentTime = Math.round(currentTimeFracInSet);
-        currentSet = {
+        targetAudioStatus = {
           set,
           currentTime,
           status: 'PLAYING'
@@ -119,13 +119,13 @@ export class FestivalCoordinator extends ActionMixin(PolymerElement) {
         break;
       }
     }
-    if (!currentSet) {
-      currentSet = null;
+    if (!targetAudioStatus) {
+      targetAudioStatus = null;
     }
 
-    if (currentSet !== this._currentSet) {
-      this._currentSet = currentSet;
-      this.fireAction('UPDATE_TARGET_SETS_STATUS', { currentSet });
+    if (targetAudioStatus !== this._targetAudioStatus) {
+      this._targetAudioStatus = targetAudioStatus;
+      this.fireAction('UPDATE_TARGET_SETS_STATUS', { targetAudioStatus });
     }
   }
 }

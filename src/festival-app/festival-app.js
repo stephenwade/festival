@@ -63,7 +63,7 @@ export class FestivalApp extends ActionMixin(PolymerElement) {
         break;
 
       case 'UPDATE_TARGET_SETS_STATUS':
-        this.set('state.targetCurrentSet', detail.currentSet);
+        this.set('state.targetAudioStatus', detail.targetAudioStatus);
         break;
 
       case 'UPDATE_AUDIO_STATUS':
