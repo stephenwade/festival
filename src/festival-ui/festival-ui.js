@@ -27,24 +27,18 @@ export class FestivalUi extends PolymerElement {
       _stateDescription: {
         type: String,
         computed:
-          '_computeStateDescription(setsData, targetShowStatus, targetAudioStatus.*, audioContextReady, audioStatus)'
+          '_computeStateDescription(setsData, targetShowStatus, audioContextReady, targetAudioStatus.*, audioStatus.*)'
       }
     };
   }
 
-  _computeStateDescription(
-    setsData,
-    targetShowStatus,
-    targetAudioStatusChange,
-    audioContextReady,
-    audioStatus
-  ) {
+  _computeStateDescription(setsData, targetShowStatus, audioContextReady) {
     const state = {
       setsData,
       targetShowStatus,
       targetAudioStatus: this.targetAudioStatus,
       audioContextReady,
-      audioStatus
+      audioStatus: this.audioStatus
     };
     return JSON.stringify(state, undefined, 2);
   }

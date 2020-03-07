@@ -10,7 +10,11 @@ export class FestivalAudio extends PolymerElement {
 
   static get template() {
     return html`
-      <audio id="audio" on-ended="_handleAudioEnded"></audio>
+      <audio
+        id="audio"
+        on-ended="_handleAudioEnded"
+        on-timeupdate="_handleAudioTimeUpdate"
+      ></audio>
     `;
   }
 
@@ -28,9 +32,9 @@ export class FestivalAudio extends PolymerElement {
         notify: true
       },
       audioStatus: {
-        type: String,
+        type: Object,
         notify: true,
-        value: 'WAITING_FOR_AUDIO_CONTEXT'
+        value: () => ({ status: 'WAITING_FOR_AUDIO_CONTEXT' })
       }
     };
   }
@@ -102,48 +106,38 @@ export class FestivalAudio extends PolymerElement {
     this.audioContextReady = true;
     this.audioVisualizerData = this._audioVisualizerData;
 
-    this.audioStatus = 'WAITING_UNTIL_START';
-    this._targetAudioStatusChanged(this.targetAudioStatus);
+    this.set('audioStatus.status', 'WAITING_UNTIL_START');
+    this._targetAudioStatusChanged();
   }
 
   _targetAudioStatusChanged() {
-    if (this.audioStatus === 'WAITING_FOR_AUDIO_CONTEXT') return;
+    if (this.audioStatus.status === 'WAITING_FOR_AUDIO_CONTEXT') return;
 
     const targetAudioStatus = this.targetAudioStatus;
 
-    let change;
+    const thisStatus = { ...targetAudioStatus };
 
     const firstRun = !this._lastTargetAudioStatus;
     if (firstRun) {
-      const set = targetAudioStatus.set;
-      change = {
-        status: targetAudioStatus.status,
-        src: set ? set.audio : undefined,
-        currentTime: targetAudioStatus.currentTime
-      };
+      this._queueStatusChange(thisStatus);
     } else {
       const statusChanged =
         targetAudioStatus.status !== this._lastTargetAudioStatus.status;
-      const set = targetAudioStatus.set;
-      const lastSet = this._lastTargetAudioStatus.set;
-      const audioChanged = set && (!lastSet || set.audio !== lastSet.audio);
-      const loading = this.audioStatus === 'DELAYING_FOR_INITIAL_SYNC';
-      if (statusChanged || audioChanged || loading) {
-        change = {
-          status: targetAudioStatus.status,
-          src: audioChanged ? set.audio : undefined,
-          currentTime: targetAudioStatus.currentTime
-        };
+      const setChanged =
+        targetAudioStatus.set !== this._lastTargetAudioStatus.set;
+
+      if (statusChanged || setChanged) {
+        this._queueStatusChange(thisStatus);
+      } else {
+        this._updateTime(thisStatus);
       }
     }
 
-    if (change) this._queueStatusChange(change);
-
-    this._lastTargetAudioStatus = { ...targetAudioStatus };
+    this._lastTargetAudioStatus = thisStatus;
   }
 
   _queueStatusChange(change) {
-    switch (this.audioStatus) {
+    switch (this.audioStatus.status) {
       case 'WAITING_FOR_AUDIO_CONTEXT':
         throw new Error(
           'Cannot queue status change while waiting for audio context'
@@ -165,47 +159,82 @@ export class FestivalAudio extends PolymerElement {
   }
 
   _performStatusChange(change) {
-    if (change.status) {
-      switch (change.status) {
-        case 'WAITING_UNTIL_START':
-          if (change.src) this.$.audio.src = change.src;
-          this.audioStatus = 'WAITING_UNTIL_START';
-          break;
+    switch (change.status) {
+      case 'WAITING_UNTIL_START':
+        if (change.set !== this.audioStatus.set)
+          this.$.audio.src = change.set.audio;
+        this.audioStatus = {
+          set: change.set,
+          status: 'WAITING_UNTIL_START',
+          secondsUntilSet: change.secondsUntilSet
+        };
+        break;
 
-        case 'PLAYING':
-          if (change.src) this.$.audio.src = change.src;
-          if (this.audioStatus === 'DELAYING_FOR_INITIAL_SYNC') {
-            if (change.currentTime >= this._audioStartTime) {
-              this.$.audio.play();
-              this.audioStatus = 'PLAYING';
-            }
-          } else if (change.currentTime > 0) {
-            this.audioStatus = 'DELAYING_FOR_INITIAL_SYNC';
-            // delay 2 seconds for audio to load
-            this._audioStartTime = change.currentTime + 2;
-            this.$.audio.src += `#t=${this._audioStartTime}`;
-          } else {
-            this.$.audio.play();
-            this.audioStatus = 'PLAYING';
-          }
-          break;
+      case 'PLAYING':
+        if (change.set !== this.audioStatus.set)
+          this.$.audio.src = change.set.audio;
+        if (change.currentTime > 0) {
+          // delay 2 seconds for audio to load
+          const delayingUntil = change.currentTime + 2;
+          this.audioStatus = {
+            set: change.set,
+            status: 'DELAYING_FOR_INITIAL_SYNC',
+            delayingUntil
+          };
+          this.$.audio.src += `#t=${delayingUntil}`;
+        } else {
+          this.$.audio.play();
+          this.audioStatus = {
+            set: change.set,
+            status: 'PLAYING',
+            currentTime: 0
+          };
+        }
+        break;
 
-        default:
-          throw new Error('Unknown status');
-      }
+      default:
+        throw new Error('Unknown status');
     }
 
-    if (this.audioStatus !== 'PLAYING') {
+    if (this.audioStatus.status !== 'PLAYING') {
       const nextChange = this._changeQueue.shift();
       if (nextChange) this._performStatusChange(nextChange);
     }
   }
 
+  _updateTime(change) {
+    switch (this.audioStatus.status) {
+      case 'WAITING_UNTIL_START':
+        this.set('audioStatus.secondsUntilSet', change.secondsUntilSet);
+        break;
+
+      case 'DELAYING_FOR_INITIAL_SYNC':
+        if (change.currentTime >= this.audioStatus.delayingUntil) {
+          this.$.audio.play();
+          this.audioStatus = {
+            set: change.set,
+            status: 'PLAYING',
+            currentTime: this.audioStatus.delayingUntil
+          };
+        }
+        break;
+
+      // no default
+    }
+  }
+
   _handleAudioEnded() {
-    this.audioStatus = 'ENDED';
+    this.set('audioStatus.status', 'ENDED');
 
     const nextChange = this._changeQueue.shift();
     if (nextChange) this._performStatusChange(nextChange);
+  }
+
+  _handleAudioTimeUpdate() {
+    if (this.audioStatus.status === 'PLAYING') {
+      const currentTime = this.$.audio.currentTime;
+      this.set('audioStatus.currentTime', currentTime);
+    }
   }
 }
 

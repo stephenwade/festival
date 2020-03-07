@@ -40,7 +40,7 @@ export class FestivalApp extends PolymerElement {
       targetAudioStatus: Object,
       audioContextReady: Boolean,
       audioVisualizerData: Object,
-      audioStatus: String
+      audioStatus: Object
     };
   }
 
