@@ -17,10 +17,7 @@ export class FestivalAudio extends PolymerElement {
   static get properties() {
     return {
       targetShowStatus: String,
-      targetAudioStatus: {
-        type: Object,
-        observer: '_targetAudioStatusChanged'
-      },
+      targetAudioStatus: Object,
       audioContextReady: {
         type: Boolean,
         notify: true,
@@ -36,6 +33,10 @@ export class FestivalAudio extends PolymerElement {
         value: 'WAITING_FOR_AUDIO_CONTEXT'
       }
     };
+  }
+
+  static get observers() {
+    return ['_targetAudioStatusChanged(targetAudioStatus.*)'];
   }
 
   connectedCallback() {
@@ -105,9 +106,10 @@ export class FestivalAudio extends PolymerElement {
     this._targetAudioStatusChanged(this.targetAudioStatus);
   }
 
-  _targetAudioStatusChanged(targetAudioStatus) {
+  _targetAudioStatusChanged() {
     if (this.audioStatus === 'WAITING_FOR_AUDIO_CONTEXT') return;
-    if (!targetAudioStatus) return;
+
+    const targetAudioStatus = this.targetAudioStatus;
 
     let change;
 
@@ -137,7 +139,7 @@ export class FestivalAudio extends PolymerElement {
 
     if (change) this._queueStatusChange(change);
 
-    this._lastTargetAudioStatus = targetAudioStatus;
+    this._lastTargetAudioStatus = { ...targetAudioStatus };
   }
 
   _queueStatusChange(change) {

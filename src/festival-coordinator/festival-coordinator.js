@@ -37,9 +37,15 @@ export class FestivalCoordinator extends PolymerElement {
   _setsDataChanged(setsData) {
     this._clearTimer();
     if (setsData) {
-      this._addMomentsToSets();
+      this._processSets();
+      this._setInitialTargetAudioStatus();
       this._setupTimer();
     }
+  }
+
+  _processSets() {
+    this._addMomentsToSets();
+    this._sortSets();
   }
 
   _addMomentsToSets() {
@@ -49,13 +55,17 @@ export class FestivalCoordinator extends PolymerElement {
     });
   }
 
-  _clearTimer() {
-    clearDriftless(this._tickInterval);
+  _sortSets() {
+    this.setsData.sets.sort((a, b) => a.startMoment - b.startMoment);
   }
 
   _setupTimer() {
     this._tick();
     this._tickInterval = setDriftlessIntervalEverySecond(this._tick.bind(this));
+  }
+
+  _clearTimer() {
+    clearDriftless(this._tickInterval);
   }
 
   _tick() {
@@ -64,63 +74,101 @@ export class FestivalCoordinator extends PolymerElement {
     this._updateTargetAudioStatus(now);
   }
 
+  _getInitialSet(now) {
+    const sets = this.setsData.sets;
+    for (const set of sets) {
+      if (now.isBefore(set.endMoment)) return set;
+    }
+    return null;
+  }
+
+  _getNextSet() {
+    const sets = this.setsData.sets;
+    const currentSet = this.targetAudioStatus.set;
+    const currentSetId = sets.indexOf(currentSet);
+    const nextSetId = currentSetId + 1;
+    if (nextSetId < sets.length) return sets[nextSetId];
+    return null;
+  }
+
+  _getTargetAudioStatusForSet(set, now) {
+    if (set) {
+      if (now.isBefore(set.startMoment)) {
+        const secondsUntilSetFrac = set.startMoment.diff(
+          now,
+          'seconds',
+          true /* do not truncate */
+        );
+        const secondsUntilSet = Math.round(secondsUntilSetFrac);
+        return {
+          set,
+          secondsUntilSet,
+          status: 'WAITING_UNTIL_START'
+        };
+      }
+
+      const currentTimeFrac = now.diff(
+        set.startMoment,
+        'seconds',
+        true /* do not truncate */
+      );
+      const currentTime = Math.round(currentTimeFrac);
+      return {
+        set,
+        currentTime,
+        status: 'PLAYING'
+      };
+    }
+
+    return {
+      set: null,
+      status: 'ENDED'
+    };
+  }
+
+  _setInitialTargetAudioStatus() {
+    const now = moment();
+    const currentSet = this._getInitialSet(now);
+
+    this.targetAudioStatus = this._getTargetAudioStatusForSet(currentSet, now);
+  }
+
+  _updateTargetAudioStatus(now) {
+    if (this.targetAudioStatus.status === 'ENDED') {
+      this._clearTimer();
+      return;
+    }
+
+    let set = this.targetAudioStatus.set;
+    if (now.isAfter(set.endMoment)) set = this._getNextSet();
+
+    this.targetAudioStatus = this._getTargetAudioStatusForSet(set, now);
+  }
+
   _updateTargetShowStatus(now) {
     const sets = this.setsData.sets;
-    const firstSet = sets[0];
-    const lastSet = sets.slice(-1)[0];
 
     switch (this.targetShowStatus) {
-      case 'WAITING_UNTIL_START':
+      case 'WAITING_UNTIL_START': {
+        const firstSet = sets[0];
         if (now.isSameOrAfter(firstSet.startMoment)) {
           this.targetShowStatus = 'IN_PROGRESS';
-        }
+        } else break;
+      }
       // fallthrough
-      case 'IN_PROGRESS':
+      case 'IN_PROGRESS': {
+        const lastSet = sets.slice(-1)[0];
         if (now.isAfter(lastSet.endMoment)) {
           this.targetShowStatus = 'ENDED';
-        }
-        break;
-
+        } else break;
+      }
+      // fallthrough
       case 'ENDED':
         break;
 
       default:
         throw new Error('Unknown status');
     }
-  }
-
-  _updateTargetAudioStatus(now) {
-    let targetAudioStatus;
-
-    const sets = this.setsData.sets;
-
-    for (const set of sets) {
-      if (now.isBefore(set.startMoment)) {
-        const secondsFracUntilSet = set.startMoment.diff(now, 'seconds', true);
-        const secondsUntilSet = Math.round(secondsFracUntilSet);
-        targetAudioStatus = {
-          set,
-          secondsUntilSet,
-          status: 'WAITING_UNTIL_START'
-        };
-        break;
-      }
-      if (now.isBefore(set.endMoment)) {
-        const currentTimeFracInSet = now.diff(set.startMoment, 'seconds', true);
-        const currentTime = Math.round(currentTimeFracInSet);
-        targetAudioStatus = {
-          set,
-          currentTime,
-          status: 'PLAYING'
-        };
-        break;
-      }
-    }
-    if (!targetAudioStatus) {
-      targetAudioStatus = null;
-    }
-
-    this.targetAudioStatus = targetAudioStatus;
   }
 }
 
