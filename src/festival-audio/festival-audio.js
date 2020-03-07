@@ -219,8 +219,26 @@ export class FestivalAudio extends PolymerElement {
         }
         break;
 
+      case 'PLAYING':
+        this.set('audioStatus.delay', this._getDelay(change));
+        break;
+
       // no default
     }
+  }
+
+  _getDelay(change) {
+    let delay = change.currentTime - this.$.audio.currentTime;
+    if (change.set !== this.audioStatus.set) {
+      const setDifference = change.set.startMoment.diff(
+        this.audioStatus.set.startMoment,
+        'seconds'
+      );
+      delay += setDifference;
+    }
+
+    if (delay < 0) return 0;
+    return delay;
   }
 
   _handleAudioEnded() {
