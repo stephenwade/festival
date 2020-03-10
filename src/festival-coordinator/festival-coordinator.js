@@ -37,13 +37,13 @@ export class FestivalCoordinator extends PolymerElement {
   _setsDataChanged(setsData) {
     this._clearTimer();
     if (setsData) {
-      this._processSets();
+      this._prepareSets();
       this._setInitialTargetAudioStatus();
       this._setupTimer();
     }
   }
 
-  _processSets() {
+  _prepareSets() {
     this._addMomentsToSets();
     this._sortSets();
   }
