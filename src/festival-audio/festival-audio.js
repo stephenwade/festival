@@ -111,11 +111,15 @@ export class FestivalAudio extends PolymerElement {
   }
 
   _targetAudioStatusChanged() {
-    if (this.audioStatus.status === 'WAITING_FOR_AUDIO_CONTEXT') return;
-
     const targetAudioStatus = this.targetAudioStatus;
 
     const thisStatus = { ...targetAudioStatus };
+
+    const ended = targetAudioStatus.status === 'ENDED';
+    const waitingForAudioContext =
+      this.audioStatus.status === 'WAITING_FOR_AUDIO_CONTEXT';
+
+    if (waitingForAudioContext && !ended) return;
 
     const firstRun = !this._lastTargetAudioStatus;
     if (firstRun) {
@@ -138,11 +142,6 @@ export class FestivalAudio extends PolymerElement {
 
   _queueStatusChange(change) {
     switch (this.audioStatus.status) {
-      case 'WAITING_FOR_AUDIO_CONTEXT':
-        throw new Error(
-          'Cannot queue status change while waiting for audio context'
-        );
-
       case 'WAITING_UNTIL_START':
       case 'DELAYING_FOR_INITIAL_SYNC':
       case 'ENDED':
