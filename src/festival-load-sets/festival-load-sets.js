@@ -27,6 +27,7 @@ export class FestivalLoadSets extends PolymerElement {
         {
           audio: '/public/mock/not-enough.mp3',
           artist: 'Anavae',
+          members: ['Rebecca Need-Menear', 'Jamie Finch'],
           start: m
             .clone()
             .add(5, 'seconds')
@@ -36,7 +37,7 @@ export class FestivalLoadSets extends PolymerElement {
         {
           audio: '/public/mock/modern.mp3',
           artist: 'bignic',
-          title: 'Modern',
+          members: ['Nic Gorissen', '@tehbignic'],
           start: m
             .clone()
             .add(234, 'seconds')
@@ -45,7 +46,13 @@ export class FestivalLoadSets extends PolymerElement {
         },
         {
           audio: '/public/mock/how-i-love.mp3',
-          artist: 'Mayhem',
+          artist: 'Ren Queenston',
+          members: [
+            'Mayhem',
+            'LapFox Trax',
+            'Halley Labs',
+            'The Quick Brown Fox'
+          ],
           start: m
             .clone()
             .add(637, 'seconds')
@@ -54,8 +61,13 @@ export class FestivalLoadSets extends PolymerElement {
         },
         {
           audio: '/public/mock/wonderland.mp3',
-          artist: 'Griffin McElroy',
-          title: 'Wonderland: Round Three',
+          artist: 'The Adventure Zone',
+          members: [
+            'Griffin McElroy',
+            'Justin McElroy',
+            'Travis McElroy',
+            'Clint McElroy'
+          ],
           start: m
             .clone()
             .add(860, 'seconds')
