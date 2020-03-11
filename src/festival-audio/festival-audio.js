@@ -172,6 +172,12 @@ export class FestivalAudio extends PolymerElement {
         }
         break;
 
+      case 'ENDED':
+        this.audioStatus = {
+          status: 'ENDED'
+        };
+        break;
+
       default:
         throw new Error('Unknown status');
     }
