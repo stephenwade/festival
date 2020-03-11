@@ -228,7 +228,9 @@ export class FestivalAudio extends PolymerElement {
   }
 
   _handleAudioEnded() {
-    this.set('audioStatus.status', 'ENDED');
+    delete this.audioStatus.set;
+    delete this.audioStatus.delay;
+    this.set('audioStatus.status', 'WAITING_UNTIL_START');
 
     const nextChange = this._changeQueue.shift();
     if (nextChange) this._performStatusChange(nextChange);
