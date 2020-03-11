@@ -27,8 +27,8 @@ export class FestivalAudio extends PolymerElement {
         notify: true,
         value: false
       },
-      audioVisualizerData: {
-        type: Object,
+      getAudioVisualizerData: {
+        type: Function,
         notify: true
       },
       audioStatus: {
@@ -43,42 +43,19 @@ export class FestivalAudio extends PolymerElement {
     return ['_targetAudioStatusChanged(targetAudioStatus.*)'];
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-
-    this._listenForInteraction();
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    if (this._unlistenForInteraction) this._unlistenForInteraction();
-  }
-
-  // inspired by https://www.mattmontag.com/web/unlock-web-audio-in-safari-for-ios-and-macos
-  _listenForInteraction() {
+  initialize() {
     if (!this.audioContext) this._setupAudioContext();
     if (this.audioContext.state !== 'suspended') return;
 
-    const events = ['touchstart', 'touchend', 'mousedown', 'keydown'];
-    const unlock = () => {
-      if (this.targetShowStatus !== 'ENDED') {
-        this.$.audio.src = undefined;
-        this.$.audio.play().catch(() => {
-          // ignore errors
-        });
-        this.audioContext.resume().then(() => {
-          this._handleAudioContextResumed();
-          this._unlistenForInteraction();
-        });
-      }
-    };
-    this._unlistenForInteraction = () => {
-      events.forEach(e => document.body.removeEventListener(e, unlock));
-    };
-    events.forEach(e => {
-      document.body.addEventListener(e, unlock);
-    });
+    if (this.targetShowStatus !== 'ENDED') {
+      this.$.audio.src = undefined;
+      this.$.audio.play().catch(() => {
+        // ignore errors
+      });
+      this.audioContext.resume().then(() => {
+        this._handleAudioContextResumed();
+      });
+    }
   }
 
   _setupAudioContext() {
@@ -91,7 +68,7 @@ export class FestivalAudio extends PolymerElement {
     analyserNode.minDecibels = -85;
     analyserNode.smoothingTimeConstant = 0.7;
 
-    this._audioVisualizerData = new Uint8Array(analyserNode.frequencyBinCount);
+    const audioVisualizerData = new Uint8Array(analyserNode.frequencyBinCount);
 
     // const gainNode = this.audioContext.createGain();
     // gainNode.gain.value = 0.2;
@@ -100,11 +77,15 @@ export class FestivalAudio extends PolymerElement {
       .connect(analyserNode)
       // .connect(gainNode)
       .connect(this.audioContext.destination);
+
+    this.getAudioVisualizerData = () => {
+      analyserNode.getByteFrequencyData(audioVisualizerData);
+      return audioVisualizerData;
+    };
   }
 
   _handleAudioContextResumed() {
     this.audioContextReady = true;
-    this.audioVisualizerData = this._audioVisualizerData;
 
     this.set('audioStatus.status', 'WAITING_UNTIL_START');
     this._targetAudioStatusChanged();

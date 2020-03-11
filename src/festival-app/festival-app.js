@@ -8,11 +8,9 @@ export class FestivalApp extends PolymerElement {
   static get template() {
     return html`
       <festival-ui
-        sets-data="[[setsData]]"
-        target-show-status="[[targetShowStatus]]"
-        target-audio-status="[[targetAudioStatus]]"
-        audio-context-ready="[[audioContextReady]]"
         audio-status="[[audioStatus]]"
+        get-audio-visualizer-data="[[getAudioVisualizerData]]"
+        on-listen="_handleListenClicked"
       ></festival-ui>
       <festival-load-sets
         id="loader"
@@ -24,10 +22,11 @@ export class FestivalApp extends PolymerElement {
         target-audio-status="{{targetAudioStatus}}"
       ></festival-coordinator>
       <festival-audio
+        id="audio"
         target-show-status="[[targetShowStatus]]"
         target-audio-status="[[targetAudioStatus]]"
         audio-context-ready="{{audioContextReady}}"
-        audio-visualizer-data="{{audioVisualizerData}}"
+        get-audio-visualizer-data="{{getAudioVisualizerData}}"
         audio-status="{{audioStatus}}"
       ></festival-audio>
     `;
@@ -39,7 +38,7 @@ export class FestivalApp extends PolymerElement {
       targetShowStatus: String,
       targetAudioStatus: Object,
       audioContextReady: Boolean,
-      audioVisualizerData: Object,
+      getAudioVisualizerData: Function,
       audioStatus: Object
     };
   }
@@ -52,6 +51,10 @@ export class FestivalApp extends PolymerElement {
 
   _loadData() {
     this.$.loader.loadData();
+  }
+
+  _handleListenClicked() {
+    this.$.audio.initialize();
   }
 }
 

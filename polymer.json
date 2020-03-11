@@ -3,5 +3,6 @@
   "lint": {
     "rules": ["polymer-3"],
     "ignoreWarnings": ["not-loadable"]
-  }
+  },
+  "sources": ["src/**/*", "images/**/*"]
 }
