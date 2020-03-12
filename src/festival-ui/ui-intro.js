@@ -56,6 +56,7 @@ export class UiIntro extends PolymerElement {
 
         a {
           text-decoration: none;
+          -webkit-tap-highlight-color: transparent;
         }
       </style>
       <img id="logo" src="images/fest2fest_logo.svg" />
