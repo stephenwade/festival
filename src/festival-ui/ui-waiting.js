@@ -17,11 +17,11 @@ export class UiWaiting extends PolymerElement {
         :host {
           color: white;
           width: 100%;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          -webkit-transform: translateX(-50%) translateY(-50%);
-          transform: translateX(-50%) translateY(-50%);
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
           text-align: center;
           padding: 0 1em;
           text-transform: uppercase;
@@ -38,10 +38,28 @@ export class UiWaiting extends PolymerElement {
           margin-bottom: 0.2em;
         }
 
+        #artist-group-outer {
+          width: 2000px;
+        }
+
+        #artist-group {
+          display: inline-block;
+        }
+
+        #artist-group.vertical {
+          max-width: 100vw;
+          padding: 0 1em;
+        }
+
+        #artist-group.vertical div {
+          display: block;
+          padding-left: 0;
+          text-align: left;
+        }
+
         #artist,
         #members {
           display: inline-block;
-          line-height: 1;
           vertical-align: top;
         }
 
@@ -49,15 +67,17 @@ export class UiWaiting extends PolymerElement {
           font-size: 3em;
           font-weight: 900;
           text-align: right;
-          padding-right: 0.3rem;
+          line-height: 0.9;
           letter-spacing: -0.05em;
+          margin-bottom: -0.2rem;
         }
 
         #members {
           font-size: 1.3em;
           text-align: left;
-          padding-left: 0.3rem;
-          padding-top: 0.2em;
+          line-height: 1;
+          padding-left: 0.6rem;
+          padding-top: 0.25rem;
         }
 
         #members span {
@@ -66,13 +86,17 @@ export class UiWaiting extends PolymerElement {
       </style>
       <div id="countdown">[[_countdownText]]</div>
       <div id="nextup">Next up</div>
-      <div id="artist">[[set.artist]]</div>
-      <div id="members">
-        <dom-repeat items="[[set.members]]">
-          <template>
-            <span>[[item]]</span>
-          </template>
-        </dom-repeat>
+      <div id="artist-group-outer">
+        <div id="artist-group">
+          <div id="artist">[[set.artist]]</div>
+          <div id="members">
+            <dom-repeat items="[[set.members]]" on-dom-change="_resizeText">
+              <template>
+                <span>[[item]]</span>
+              </template>
+            </dom-repeat>
+          </div>
+        </div>
       </div>
     `;
   }
@@ -86,6 +110,29 @@ export class UiWaiting extends PolymerElement {
         computed: '_computeCountdownText(secondsUntilSet)'
       }
     };
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    this._resize = this._resizeText.bind(this);
+
+    window.addEventListener('resize', this._resize);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    window.removeEventListener('resize', this._resize);
+  }
+
+  _resizeText() {
+    const artistGroup = this.$['artist-group'];
+
+    artistGroup.classList.remove('vertical');
+    const rect = artistGroup.getBoundingClientRect();
+    const maxWidth = window.innerWidth;
+    if (rect.width > maxWidth) artistGroup.classList.add('vertical');
   }
 
   _computeCountdownText(secondsUntilSet) {
