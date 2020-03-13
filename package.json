@@ -5,7 +5,9 @@
     "start": "npm run serve | npm run watch",
     "serve": "polymer serve --port 8080",
     "test": "polymer test",
-    "watch": "browser-sync start --proxy localhost:8080 --open --files \"**/*\""
+    "watch": "browser-sync start --proxy localhost:8080 --open --files \"**/*\"",
+    "build": "polymer build && cp -R public build/default/public",
+    "serve-build": "polymer serve build/default"
   },
   "dependencies": {
     "@polymer/paper-button": "^3.0.1",
