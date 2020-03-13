@@ -44,17 +44,25 @@ export class FestivalAudio extends PolymerElement {
   }
 
   initialize() {
-    if (!this.audioContext) this._setupAudioContext();
-    if (this.audioContext.state !== 'suspended') return;
+    // skip setting up AudioContext on iOS
+    const iOS = /iPad|iPhone|iPod/u.test(navigator.userAgent);
+    if (!iOS) {
+      if (!this.audioContext) this._setupAudioContext();
+      if (this.audioContext.state !== 'suspended') return;
+    }
 
     if (this.targetShowStatus !== 'ENDED') {
       this.$.audio.src = undefined;
       this.$.audio.play().catch(() => {
         // ignore errors
       });
-      this.audioContext.resume().then(() => {
+      if (iOS) {
         this._handleAudioContextResumed();
-      });
+      } else {
+        this.audioContext.resume().then(() => {
+          this._handleAudioContextResumed();
+        });
+      }
     }
   }
 

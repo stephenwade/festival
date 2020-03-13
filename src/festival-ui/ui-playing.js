@@ -357,27 +357,29 @@ export class UiPlaying extends PolymerElement {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (!this.delaying) {
-      const dataArray = this.getAudioVisualizerData();
+    if (this.getAudioVisualizerData) {
+      if (!this.delaying) {
+        const dataArray = this.getAudioVisualizerData();
 
-      this._drawCircle(canvas, ctx, dataArray, {
-        start: 0,
-        end: dataArray.length * 0.43,
-        color: '#ffffff',
-        scaleFactor: 0.3,
-        // scaleFactor: 0.1,
-        scaleConstAdd: 60,
-        thatOneValue: 0.6,
-        sizeMultipler: 2 * window.devicePixelRatio
-      });
+        this._drawCircle(canvas, ctx, dataArray, {
+          start: 0,
+          end: dataArray.length * 0.43,
+          color: '#ffffff',
+          scaleFactor: 0.3,
+          // scaleFactor: 0.1,
+          scaleConstAdd: 60,
+          thatOneValue: 0.6,
+          sizeMultipler: 2 * window.devicePixelRatio
+        });
 
-      this._drawProgress(canvas, ctx, dataArray, {
-        progress: this._setProgressPercentage,
-        sizeMultipler: 2 * window.devicePixelRatio
-      });
+        this._drawProgress(canvas, ctx, dataArray, {
+          progress: this._setProgressPercentage,
+          sizeMultipler: 2 * window.devicePixelRatio
+        });
+      }
+
+      window.requestAnimationFrame(this._animate.bind(this));
     }
-
-    window.requestAnimationFrame(this._animate.bind(this));
   }
 }
 
