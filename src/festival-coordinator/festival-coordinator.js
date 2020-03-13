@@ -51,7 +51,11 @@ export class FestivalCoordinator extends PolymerElement {
   _addMomentsToSets() {
     this.setsData.sets.forEach(set => {
       set.startMoment = moment(set.start);
-      set.endMoment = set.startMoment.clone().add(set.length, 'seconds');
+      set.endMoment = set.startMoment
+        .clone()
+        .add(set.length, 'seconds')
+        // subtract 1 second to avoid audio ending before next set is ready
+        .subtract(1, 'seconds');
     });
   }
 
