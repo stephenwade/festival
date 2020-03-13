@@ -123,6 +123,7 @@ export class FestivalAudio extends PolymerElement {
 
   _queueStatusChange(change) {
     switch (this.audioStatus.status) {
+      case 'WAITING_FOR_AUDIO_CONTEXT':
       case 'WAITING_UNTIL_START':
       case 'DELAYING_FOR_INITIAL_SYNC':
       case 'ENDED':
