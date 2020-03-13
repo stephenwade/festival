@@ -1,6 +1,7 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 import './ui-intro.js';
+import './ui-playing.js';
 import './ui-waiting.js';
 
 export class FestivalUi extends PolymerElement {
@@ -43,6 +44,13 @@ export class FestivalUi extends PolymerElement {
           seconds-until-set="[[audioStatus.secondsUntilSet]]"
         ></ui-waiting>
       </template>
+      <template is="dom-if" if="[[_playing]]">
+        <ui-playing
+          set="[[audioStatus.set]]"
+          current-time="[[audioStatus.currentTime]]"
+          get-audio-visualizer-data="[[getAudioVisualizerData]]"
+        ></ui-playing>
+      </template>
     `;
   }
 
@@ -61,6 +69,10 @@ export class FestivalUi extends PolymerElement {
       _waitingUntilStart: {
         type: Boolean,
         computed: '_computeWaitingUntilStart(audioStatus.status)'
+      },
+      _playing: {
+        type: Boolean,
+        computed: '_computePlaying(audioStatus.status)'
       }
     };
   }
@@ -75,6 +87,10 @@ export class FestivalUi extends PolymerElement {
 
   _computeWaitingUntilStart(status) {
     return status && status === 'WAITING_UNTIL_START';
+  }
+
+  _computePlaying(status) {
+    return status && status === 'PLAYING';
   }
 }
 
