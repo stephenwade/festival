@@ -34,10 +34,10 @@ export class FestivalUi extends PolymerElement {
         }
       </style>
       <pre>{{_stateDescription}}</pre>
-      <template is="dom-if" if="{{_waitingForAudioContext}}">
+      <template is="dom-if" if="[[_waitingForAudioContext]]">
         <ui-intro></ui-intro>
       </template>
-      <template is="dom-if" if="{{_waitingUntilStart}}">
+      <template is="dom-if" if="[[_waitingUntilStart]]">
         <ui-waiting
           set="[[audioStatus.set]]"
           seconds-until-set="[[audioStatus.secondsUntilSet]]"
