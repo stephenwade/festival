@@ -1,5 +1,6 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
+import './ui-ended.js';
 import './ui-intro.js';
 import './ui-playing.js';
 import './ui-waiting.js';
@@ -52,6 +53,9 @@ export class FestivalUi extends PolymerElement {
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
         ></ui-playing>
       </template>
+      <template is="dom-if" if="[[_ended]]">
+        <ui-ended></ui-ended>
+      </template>
     `;
   }
 
@@ -82,6 +86,10 @@ export class FestivalUi extends PolymerElement {
       _showPlaying: {
         type: Boolean,
         computed: '_computeShowPlaying(_delayingForInitialSync, _playing)'
+      },
+      _ended: {
+        type: Boolean,
+        computed: '_computeEnded(audioStatus.status)'
       }
     };
   }
@@ -108,6 +116,10 @@ export class FestivalUi extends PolymerElement {
 
   _computeShowPlaying(_delayingForInitialSync, _playing) {
     return _delayingForInitialSync || _playing;
+  }
+
+  _computeEnded(status) {
+    return status && status === 'ENDED';
   }
 }
 
