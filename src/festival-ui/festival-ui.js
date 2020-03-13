@@ -27,7 +27,15 @@ export class FestivalUi extends PolymerElement {
             'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
           background: var(--gradient-background);
         }
+
+        pre {
+          margin: 0;
+          position: absolute;
+          bottom: 0.5em;
+          left: 0.5em;
+        }
       </style>
+      <pre>{{_stateDescription}}</pre>
       <template is="dom-if" if="[[_waitingForAudioContext]]">
         <ui-intro></ui-intro>
       </template>
@@ -55,6 +63,10 @@ export class FestivalUi extends PolymerElement {
     return {
       audioStatus: Object,
       getAudioVisualizerData: Function,
+      _stateDescription: {
+        type: String,
+        computed: '_computeStateDescription(audioStatus.*)'
+      },
       _waitingForAudioContext: {
         type: Boolean,
         computed: '_computeWaitingForAudioContext(audioStatus.status)'
@@ -80,6 +92,10 @@ export class FestivalUi extends PolymerElement {
         computed: '_computeEnded(audioStatus.status)'
       }
     };
+  }
+
+  _computeStateDescription() {
+    return JSON.stringify(this.audioStatus, undefined, 2);
   }
 
   _computeWaitingForAudioContext(status) {
