@@ -44,9 +44,10 @@ export class FestivalUi extends PolymerElement {
           seconds-until-set="[[audioStatus.secondsUntilSet]]"
         ></ui-waiting>
       </template>
-      <template is="dom-if" if="[[_playing]]">
+      <template is="dom-if" if="[[_showPlaying]]">
         <ui-playing
           set="[[audioStatus.set]]"
+          delaying="[[_delayingForInitialSync]]"
           current-time="[[audioStatus.currentTime]]"
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
         ></ui-playing>
@@ -70,9 +71,17 @@ export class FestivalUi extends PolymerElement {
         type: Boolean,
         computed: '_computeWaitingUntilStart(audioStatus.status)'
       },
+      _delayingForInitialSync: {
+        type: Boolean,
+        computed: '_computeDelayingForInitialSync(audioStatus.status)'
+      },
       _playing: {
         type: Boolean,
         computed: '_computePlaying(audioStatus.status)'
+      },
+      _showPlaying: {
+        type: Boolean,
+        computed: '_computeShowPlaying(_delayingForInitialSync, _playing)'
       }
     };
   }
@@ -89,8 +98,16 @@ export class FestivalUi extends PolymerElement {
     return status && status === 'WAITING_UNTIL_START';
   }
 
+  _computeDelayingForInitialSync(status) {
+    return status && status === 'DELAYING_FOR_INITIAL_SYNC';
+  }
+
   _computePlaying(status) {
     return status && status === 'PLAYING';
+  }
+
+  _computeShowPlaying(_delayingForInitialSync, _playing) {
+    return _delayingForInitialSync || _playing;
   }
 }
 

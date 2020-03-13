@@ -1,5 +1,7 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import '@polymer/polymer/lib/elements/dom-if.js';
 import '@polymer/polymer/lib/elements/dom-repeat.js';
+import '@polymer/paper-spinner/paper-spinner-lite.js';
 
 export class UiPlaying extends PolymerElement {
   static get template() {
@@ -39,9 +41,18 @@ export class UiPlaying extends PolymerElement {
         }
 
         #current-time {
+          height: 6rem;
           font-size: 5em;
           font-weight: 900;
           margin-bottom: 0.2em;
+        }
+
+        paper-spinner-lite {
+          --paper-spinner-stroke-width: 3px;
+          --paper-spinner-color: white;
+          width: 4em;
+          height: 4em;
+          font-size: initial;
         }
 
         #artist-group-outer {
@@ -91,7 +102,14 @@ export class UiPlaying extends PolymerElement {
         }
       </style>
       <canvas id="canvas"></canvas>
-      <div id="current-time">[[_currentTimeText]]</div>
+      <div id="current-time">
+        <template is="dom-if" if="[[delaying]]">
+          <paper-spinner-lite active></paper-spinner-lite>
+        </template>
+        <template is="dom-if" if="[[!delaying]]">
+          [[_currentTimeText]]
+        </template>
+      </div>
       <div id="artist-group-outer">
         <div id="artist-group">
           <div id="artist">[[set.artist]]</div>
@@ -110,6 +128,7 @@ export class UiPlaying extends PolymerElement {
   static get properties() {
     return {
       set: Object,
+      delaying: Boolean,
       currentTime: Number,
       getAudioVisualizerData: Function,
       _currentTimeText: {
@@ -334,27 +353,29 @@ export class UiPlaying extends PolymerElement {
 
   _animate() {
     const canvas = this.$.canvas;
-
-    const dataArray = this.getAudioVisualizerData();
-
     const ctx = canvas.getContext('2d');
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    this._drawCircle(canvas, ctx, dataArray, {
-      start: 0,
-      end: dataArray.length * 0.43,
-      color: '#ffffff',
-      scaleFactor: 0.3,
-      // scaleFactor: 0.1,
-      scaleConstAdd: 60,
-      thatOneValue: 0.6,
-      sizeMultipler: 2 * window.devicePixelRatio
-    });
+    if (!this.delaying) {
+      const dataArray = this.getAudioVisualizerData();
 
-    this._drawProgress(canvas, ctx, dataArray, {
-      progress: this._setProgressPercentage,
-      sizeMultipler: 2 * window.devicePixelRatio
-    });
+      this._drawCircle(canvas, ctx, dataArray, {
+        start: 0,
+        end: dataArray.length * 0.43,
+        color: '#ffffff',
+        scaleFactor: 0.3,
+        // scaleFactor: 0.1,
+        scaleConstAdd: 60,
+        thatOneValue: 0.6,
+        sizeMultipler: 2 * window.devicePixelRatio
+      });
+
+      this._drawProgress(canvas, ctx, dataArray, {
+        progress: this._setProgressPercentage,
+        sizeMultipler: 2 * window.devicePixelRatio
+      });
+    }
 
     window.requestAnimationFrame(this._animate.bind(this));
   }
