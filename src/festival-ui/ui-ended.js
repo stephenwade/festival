@@ -38,9 +38,18 @@ export class UiEnded extends PolymerElement {
           width: 12vw;
           margin: 2em auto;
         }
+
+        a {
+          text-decoration: none;
+          -webkit-tap-highlight-color: transparent;
+        }
       </style>
-      <img id="logo" src="images/fest2fest_logo.svg" />
-      <img id="heart" src="images/heart.svg" />
+      <a href="https://twitter.com/URLFESTIVAL">
+        <img id="logo" src="images/fest2fest_logo.svg" />
+      </a>
+      <a href="https://twitter.com/URLFESTIVAL">
+        <img id="heart" src="images/heart.svg" />
+      </a>
     `;
   }
 }

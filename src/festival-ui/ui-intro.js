@@ -62,12 +62,14 @@ export class UiIntro extends PolymerElement {
           -webkit-tap-highlight-color: transparent;
         }
       </style>
-      <iron-image
-        id="logo"
-        src="images/fest2fest_logo.svg"
-        preload
-        loaded="{{_logoLoaded}}"
-      ></iron-image>
+      <a href="https://twitter.com/URLFESTIVAL">
+        <iron-image
+          id="logo"
+          src="images/fest2fest_logo.svg"
+          preload
+          loaded="{{_logoLoaded}}"
+        ></iron-image
+      ></a>
       <template is="dom-if" if="[[_logoLoaded]]">
         <div id="buttons">
           <paper-button id="button-listen" on-click="_handleListenClicked">
