@@ -26,6 +26,7 @@ export class FestivalUi extends PolymerElement {
           font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
             'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
           background: var(--gradient-background);
+          background-size: 100% auto;
         }
       </style>
       <template is="dom-if" if="[[_waitingForAudioContext]]">

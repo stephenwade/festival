@@ -35,11 +35,7 @@
 
     <style>
       html {
-        --gradient-background: linear-gradient(
-          90deg,
-          rgba(57, 103, 220, 1) 0%,
-          rgba(242, 30, 175, 1) 100%
-        );
+        --gradient-background: url('/public/gradient.png');
       }
       html,
       body {
@@ -49,7 +45,13 @@
       body {
         margin: 0;
         background: rgb(57, 103, 220);
-        background: var(--gradient-background);
+        background: var(--gradient-background),
+          linear-gradient(
+            90deg,
+            rgba(57, 103, 220, 1) 0%,
+            rgba(242, 30, 175, 1) 100%
+          );
+        background-size: 100% auto;
       }
     </style>
   </head>

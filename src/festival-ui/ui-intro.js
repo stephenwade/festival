@@ -39,6 +39,7 @@ export class UiIntro extends PolymerElement {
           width: 100%;
           font-size: 2em;
           background: var(--gradient-background);
+          background-size: 100% auto;
           margin-bottom: 0.5em;
         }
 
