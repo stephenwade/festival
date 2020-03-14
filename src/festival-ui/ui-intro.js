@@ -1,4 +1,6 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import '@polymer/polymer/lib/elements/dom-if.js';
+import '@polymer/iron-image/iron-image.js';
 import '@polymer/paper-button/paper-button.js';
 
 export class UiIntro extends PolymerElement {
@@ -59,15 +61,22 @@ export class UiIntro extends PolymerElement {
           -webkit-tap-highlight-color: transparent;
         }
       </style>
-      <img id="logo" src="images/fest2fest_logo.svg" />
-      <div id="buttons">
-        <paper-button id="button-listen" on-click="_handleListenClicked">
-          Listen Live
-        </paper-button>
-        <a href="https://discord.io/festival" target="_blank" tabindex="-1">
-          <paper-button id="button-discord">Join the Discord</paper-button>
-        </a>
-      </div>
+      <iron-image
+        id="logo"
+        src="images/fest2fest_logo.svg"
+        preload
+        loaded="{{_logoLoaded}}"
+      ></iron-image>
+      <template is="dom-if" if="[[_logoLoaded]]">
+        <div id="buttons">
+          <paper-button id="button-listen" on-click="_handleListenClicked">
+            Listen Live
+          </paper-button>
+          <a href="https://discord.io/festival" target="_blank" tabindex="-1">
+            <paper-button id="button-discord">Join the Discord</paper-button>
+          </a>
+        </div>
+      </template>
     `;
   }
 
