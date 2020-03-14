@@ -132,7 +132,7 @@ export class UiWaiting extends PolymerElement {
     artistGroup.classList.remove('vertical');
     const rect = artistGroup.getBoundingClientRect();
     const maxWidth = window.innerWidth;
-    if (rect.width > maxWidth) artistGroup.classList.add('vertical');
+    if (rect.width >= maxWidth) artistGroup.classList.add('vertical');
   }
 
   _computeCountdownText(secondsUntilSet) {

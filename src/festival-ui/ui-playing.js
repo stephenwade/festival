@@ -177,7 +177,7 @@ export class UiPlaying extends PolymerElement {
     artistGroup.classList.remove('vertical');
     const rect = artistGroup.getBoundingClientRect();
     const maxWidth = Math.min(500, window.innerWidth);
-    if (rect.width > maxWidth) artistGroup.classList.add('vertical');
+    if (rect.width >= maxWidth) artistGroup.classList.add('vertical');
   }
 
   _computeCurrentTimeText(currentTime) {
