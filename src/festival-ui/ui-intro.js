@@ -74,7 +74,7 @@ export class UiIntro extends PolymerElement {
             Listen Live
           </paper-button>
           <a href="https://discord.io/festival" target="_blank" tabindex="-1">
-            <paper-button id="button-discord">Join the Discord</paper-button>
+            <paper-button id="button-discord">Join Discord</paper-button>
           </a>
         </div>
       </template>
