@@ -357,6 +357,9 @@ export class UiPlaying extends PolymerElement {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    let mult = Math.min(window.innerWidth / 500, window.innerHeight / 800);
+    mult = Math.min(1, mult);
+
     if (this.getAudioVisualizerData) {
       if (!this.delaying) {
         const dataArray = this.getAudioVisualizerData();
@@ -369,12 +372,12 @@ export class UiPlaying extends PolymerElement {
           // scaleFactor: 0.1,
           scaleConstAdd: 60,
           thatOneValue: 0.6,
-          sizeMultipler: 2 * window.devicePixelRatio
+          sizeMultipler: 2 * window.devicePixelRatio * mult
         });
 
         this._drawProgress(canvas, ctx, dataArray, {
           progress: this._setProgressPercentage,
-          sizeMultipler: 2 * window.devicePixelRatio
+          sizeMultipler: 2 * window.devicePixelRatio * mult
         });
       }
 
