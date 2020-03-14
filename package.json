@@ -6,8 +6,9 @@
     "serve": "polymer serve --port 8080",
     "test": "polymer test",
     "watch": "browser-sync start --proxy localhost:8080 --open --files \"**/*\"",
-    "build": "polymer build && cp -R public build/default/public",
-    "serve-build": "polymer serve build/default"
+    "build-test": "polymer build && cp -R public build/es6-bundled/public",
+    "build": "polymer build",
+    "serve-build": "polymer serve build/es6-bundled"
   },
   "dependencies": {
     "@polymer/iron-image": "^3.0.2",
