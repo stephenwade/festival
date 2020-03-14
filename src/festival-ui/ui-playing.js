@@ -56,7 +56,7 @@ export class UiPlaying extends PolymerElement {
         }
 
         #artist-group-outer {
-          width: 2000px;
+          width: 100vw;
         }
 
         #artist-group {

@@ -39,7 +39,7 @@ export class UiWaiting extends PolymerElement {
         }
 
         #artist-group-outer {
-          width: 2000px;
+          width: 100vw;
         }
 
         #artist-group {
