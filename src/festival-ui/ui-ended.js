@@ -42,6 +42,7 @@ export class UiEnded extends PolymerElement {
         a {
           text-decoration: none;
           -webkit-tap-highlight-color: transparent;
+          width: 100%;
         }
       </style>
       <a href="https://twitter.com/URLFESTIVAL">
