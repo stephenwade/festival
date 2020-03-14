@@ -47,8 +47,14 @@ export class FestivalAudio extends PolymerElement {
     // skip setting up AudioContext on iOS
     const iOS = /iPad|iPhone|iPod/u.test(navigator.userAgent);
     if (!iOS) {
-      if (!this.audioContext) this._setupAudioContext();
-      if (this.audioContext.state !== 'suspended') return;
+      if (!this.audioContext) {
+        try {
+          this._setupAudioContext();
+        } catch (e) {
+          // ignore errors
+        }
+      }
+      if (this.audioContext && this.audioContext.state !== 'suspended') return;
     }
 
     if (this.targetShowStatus !== 'ENDED') {
@@ -56,7 +62,7 @@ export class FestivalAudio extends PolymerElement {
       this.$.audio.play().catch(() => {
         // ignore errors
       });
-      if (iOS) {
+      if (!this.audioContext) {
         this._handleAudioContextResumed();
       } else {
         this.audioContext.resume().then(() => {
