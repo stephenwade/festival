@@ -94,7 +94,7 @@ export class UiPlaying extends PolymerElement {
           text-align: left;
           line-height: 1;
           padding-left: 0.6rem;
-          padding-top: 0.25rem;
+          padding-top: 0.15rem;
         }
 
         #members span {
