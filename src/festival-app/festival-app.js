@@ -8,6 +8,7 @@ export class FestivalApp extends PolymerElement {
   static get template() {
     return html`
       <festival-ui
+        id="ui"
         audio-status="[[audioStatus]]"
         get-audio-visualizer-data="[[getAudioVisualizerData]]"
         on-listen="_handleListenClicked"
@@ -28,6 +29,7 @@ export class FestivalApp extends PolymerElement {
         audio-context-ready="{{audioContextReady}}"
         get-audio-visualizer-data="{{getAudioVisualizerData}}"
         audio-status="{{audioStatus}}"
+        on-error="_handleAudioError"
       ></festival-audio>
     `;
   }
@@ -55,6 +57,10 @@ export class FestivalApp extends PolymerElement {
 
   _handleListenClicked() {
     this.$.audio.initialize();
+  }
+
+  _handleAudioError() {
+    this.$.ui.showError();
   }
 }
 

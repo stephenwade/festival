@@ -14,6 +14,7 @@ export class FestivalAudio extends PolymerElement {
         id="audio"
         on-ended="_handleAudioEnded"
         on-timeupdate="_handleAudioTimeUpdate"
+        on-error="_handleAudioError"
       ></audio>
     `;
   }
@@ -106,6 +107,8 @@ export class FestivalAudio extends PolymerElement {
   }
 
   _targetAudioStatusChanged() {
+    if (this._error) return;
+
     const thisStatus = { ...this.targetAudioStatus };
 
     const ended = thisStatus.status === 'ENDED';
@@ -175,12 +178,16 @@ export class FestivalAudio extends PolymerElement {
           };
           this.$.audio.src += `#t=${delayingUntil}`;
         } else {
-          this.$.audio.play();
-          this.audioStatus = {
-            set: change.set,
-            status: 'PLAYING',
-            currentTime: 0
-          };
+          this.$.audio
+            .play()
+            .then(() => {
+              this.audioStatus = {
+                set: change.set,
+                status: 'PLAYING',
+                currentTime: 0
+              };
+            })
+            .catch(this._handleAudioError);
         }
         break;
 
@@ -253,6 +260,16 @@ export class FestivalAudio extends PolymerElement {
       const currentTime = this.$.audio.currentTime;
       this.set('audioStatus.currentTime', currentTime);
     }
+  }
+
+  _handleAudioError() {
+    this.dispatchEvent(
+      new CustomEvent('error', {
+        bubbles: true,
+        composed: true
+      })
+    );
+    this._error = true;
   }
 }
 

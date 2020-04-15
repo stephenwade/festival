@@ -1,5 +1,7 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
+import '@polymer/paper-toast/paper-toast.js';
+import '@polymer/paper-button/paper-button.js';
 import './ui-ended.js';
 import './ui-intro.js';
 import './ui-playing.js';
@@ -49,6 +51,9 @@ export class FestivalUi extends PolymerElement {
       <template is="dom-if" if="[[_ended]]">
         <ui-ended></ui-ended>
       </template>
+      <paper-toast id="toast" duration="0">
+        <paper-button on-click="_reload">Reload</paper-button>
+      </paper-toast>
     `;
   }
 
@@ -83,6 +88,12 @@ export class FestivalUi extends PolymerElement {
     };
   }
 
+  showError() {
+    const verb = this._showPlaying ? 'playing' : 'loading';
+    this.$.toast.text = `There was a problem ${verb} the audio track.`;
+    this.$.toast.show();
+  }
+
   _computeWaitingForAudioContext(status) {
     return status === 'WAITING_FOR_AUDIO_CONTEXT';
   }
@@ -105,6 +116,10 @@ export class FestivalUi extends PolymerElement {
 
   _computeEnded(status) {
     return status === 'ENDED';
+  }
+
+  _reload() {
+    window.location.reload();
   }
 }
 
