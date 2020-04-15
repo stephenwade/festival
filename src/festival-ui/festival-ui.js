@@ -84,19 +84,19 @@ export class FestivalUi extends PolymerElement {
   }
 
   _computeWaitingForAudioContext(status) {
-    return status && status === 'WAITING_FOR_AUDIO_CONTEXT';
+    return status === 'WAITING_FOR_AUDIO_CONTEXT';
   }
 
   _computeWaitingUntilStart(status) {
-    return status && status === 'WAITING_UNTIL_START';
+    return status === 'WAITING_UNTIL_START';
   }
 
   _computeDelayingForInitialSync(status) {
-    return status && status === 'DELAYING_FOR_INITIAL_SYNC';
+    return status === 'DELAYING_FOR_INITIAL_SYNC';
   }
 
   _computePlaying(status) {
-    return status && status === 'PLAYING';
+    return status === 'PLAYING';
   }
 
   _computeShowPlaying(_delayingForInitialSync, _playing) {
@@ -104,7 +104,7 @@ export class FestivalUi extends PolymerElement {
   }
 
   _computeEnded(status) {
-    return status && status === 'ENDED';
+    return status === 'ENDED';
   }
 }
 

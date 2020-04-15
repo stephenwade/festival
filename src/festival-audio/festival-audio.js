@@ -106,11 +106,9 @@ export class FestivalAudio extends PolymerElement {
   }
 
   _targetAudioStatusChanged() {
-    const targetAudioStatus = this.targetAudioStatus;
+    const thisStatus = { ...this.targetAudioStatus };
 
-    const thisStatus = { ...targetAudioStatus };
-
-    const ended = targetAudioStatus.status === 'ENDED';
+    const ended = thisStatus.status === 'ENDED';
     const waitingForAudioContext =
       this.audioStatus.status === 'WAITING_FOR_AUDIO_CONTEXT';
 
@@ -121,9 +119,8 @@ export class FestivalAudio extends PolymerElement {
       this._queueStatusChange(thisStatus);
     } else {
       const statusChanged =
-        targetAudioStatus.status !== this._lastTargetAudioStatus.status;
-      const setChanged =
-        targetAudioStatus.set !== this._lastTargetAudioStatus.set;
+        thisStatus.status !== this._lastTargetAudioStatus.status;
+      const setChanged = thisStatus.set !== this._lastTargetAudioStatus.set;
 
       if (statusChanged || setChanged) {
         this._queueStatusChange(thisStatus);
