@@ -65,7 +65,7 @@ export class UiIntro extends PolymerElement {
       <a href="https://twitter.com/URLFESTIVAL">
         <iron-image
           id="logo"
-          src="images/fest2fest_logo.svg"
+          src="images/fest2fest-logo.svg"
           preload
           loaded="{{_logoLoaded}}"
         ></iron-image
