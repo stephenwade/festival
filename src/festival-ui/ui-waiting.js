@@ -15,7 +15,7 @@ export class UiWaiting extends PolymerElement {
         }
 
         :host {
-          color: white;
+          color: black;
           width: 100%;
           height: 100%;
           display: flex;
@@ -24,7 +24,6 @@ export class UiWaiting extends PolymerElement {
           justify-content: center;
           text-align: center;
           padding: 0 1em;
-          text-transform: uppercase;
         }
 
         #countdown {
@@ -36,6 +35,7 @@ export class UiWaiting extends PolymerElement {
         #nextup {
           font-size: 2em;
           margin-bottom: 0.2em;
+          text-transform: uppercase;
         }
 
         #artist-group-outer {
@@ -89,13 +89,6 @@ export class UiWaiting extends PolymerElement {
       <div id="artist-group-outer">
         <div id="artist-group">
           <div id="artist">[[set.artist]]</div>
-          <div id="members">
-            <dom-repeat items="[[set.members]]" on-dom-change="_resizeText">
-              <template>
-                <span>[[item]]</span>
-              </template>
-            </dom-repeat>
-          </div>
         </div>
       </div>
     `;

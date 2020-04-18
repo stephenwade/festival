@@ -29,7 +29,7 @@ export class UiEnded extends PolymerElement {
         #logo {
           display: block;
           width: 100%;
-          max-width: 900px;
+          max-width: 650px;
           margin: 2em auto;
         }
 
@@ -46,7 +46,7 @@ export class UiEnded extends PolymerElement {
         }
       </style>
       <a href="https://twitter.com/URLFESTIVAL">
-        <img id="logo" src="images/fest2fest-logo.svg" />
+        <img id="logo" src="images/dnb-break-66-logo.svg" />
       </a>
       <a href="https://twitter.com/URLFESTIVAL">
         <img id="heart" src="images/heart.svg" />
