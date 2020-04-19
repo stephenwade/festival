@@ -17,7 +17,7 @@ export class UiPlaying extends PolymerElement {
         }
 
         :host {
-          color: black;
+          color: white;
           width: 100%;
           height: 100%;
           display: flex;
@@ -26,6 +26,7 @@ export class UiPlaying extends PolymerElement {
           justify-content: center;
           text-align: center;
           padding: 0 1em;
+          text-transform: uppercase;
         }
 
         canvas {
@@ -48,7 +49,7 @@ export class UiPlaying extends PolymerElement {
 
         paper-spinner-lite {
           --paper-spinner-stroke-width: 3px;
-          --paper-spinner-color: black;
+          --paper-spinner-color: white;
           width: 4em;
           height: 4em;
           font-size: initial;
@@ -112,6 +113,13 @@ export class UiPlaying extends PolymerElement {
       <div id="artist-group-outer">
         <div id="artist-group">
           <div id="artist">[[set.artist]]</div>
+          <div id="members">
+            <dom-repeat items="[[set.members]]" on-dom-change="_resizeText">
+              <template>
+                <span>[[item]]</span>
+              </template>
+            </dom-repeat>
+          </div>
         </div>
       </div>
     `;
@@ -234,14 +242,10 @@ export class UiPlaying extends PolymerElement {
   }
 
   _drawCircle(canvas, ctx, dataArray, options = {}) {
-    const defaultColor = window
-      .getComputedStyle(this)
-      .getPropertyValue('--accent-color');
-
     const defaultOptions = {
       start: 0,
       end: dataArray.length * 0.63,
-      color: defaultColor,
+      color: '#ffffff',
       thatOneValue: 0.35
     };
 
@@ -363,6 +367,7 @@ export class UiPlaying extends PolymerElement {
         this._drawCircle(canvas, ctx, dataArray, {
           start: 0,
           end: dataArray.length * 0.43,
+          color: '#ffffff',
           scaleFactor: 0.3,
           // scaleFactor: 0.1,
           scaleConstAdd: 60,

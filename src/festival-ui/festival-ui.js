@@ -24,15 +24,11 @@ export class FestivalUi extends PolymerElement {
           position: absolute;
           width: 100%;
           height: 100%;
-          color: #ff00bd;
+          color: white;
           font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
             'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-          background: var(--background);
+          background: var(--gradient-background);
           background-size: 100% auto;
-        }
-
-        paper-button {
-          font-weight: bold;
         }
       </style>
       <template is="dom-if" if="[[_waitingForAudioContext]]">
