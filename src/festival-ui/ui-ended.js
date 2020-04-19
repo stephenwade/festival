@@ -49,7 +49,7 @@ export class UiEnded extends PolymerElement {
         <img id="logo" src="images/fest2fest-logo.svg" />
       </a>
       <a href="https://twitter.com/URLFESTIVAL">
-        <img id="heart" src="images/heart.svg" />
+        <img id="heart" src="images/heart-white.svg" />
       </a>
     `;
   }
