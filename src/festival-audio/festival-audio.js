@@ -15,6 +15,9 @@ export class FestivalAudio extends PolymerElement {
         on-ended="_handleAudioEnded"
         on-timeupdate="_handleAudioTimeUpdate"
         on-error="_handleAudioError"
+        on-waiting="_handleAudioWaiting"
+        on-playing="_handleAudioPlaying"
+        on-stalled="_handleAudioStalled"
       ></audio>
     `;
   }
@@ -36,6 +39,16 @@ export class FestivalAudio extends PolymerElement {
         type: Object,
         notify: true,
         value: () => ({ status: 'WAITING_FOR_AUDIO_CONTEXT' })
+      },
+      audioWaiting: {
+        type: Boolean,
+        notify: true,
+        value: false
+      },
+      audioStalled: {
+        type: Boolean,
+        notify: true,
+        value: false
       }
     };
   }
@@ -66,9 +79,9 @@ export class FestivalAudio extends PolymerElement {
       if (!this.audioContext) {
         this._handleAudioContextResumed();
       } else {
-        this.audioContext.resume().then(() => {
-          this._handleAudioContextResumed();
-        });
+        this.audioContext
+          .resume()
+          .then(this._handleAudioContextResumed.bind(this));
       }
     }
   }
@@ -178,16 +191,12 @@ export class FestivalAudio extends PolymerElement {
           };
           this.$.audio.src += `#t=${delayingUntil}`;
         } else {
-          this.$.audio
-            .play()
-            .then(() => {
-              this.audioStatus = {
-                set: change.set,
-                status: 'PLAYING',
-                currentTime: 0
-              };
-            })
-            .catch(this._handleAudioError);
+          this.$.audio.play().catch(this._handleAudioError.bind(this));
+          this.audioStatus = {
+            set: change.set,
+            status: 'PLAYING',
+            currentTime: 0
+          };
         }
         break;
 
@@ -270,6 +279,19 @@ export class FestivalAudio extends PolymerElement {
       })
     );
     this._error = true;
+  }
+
+  _handleAudioWaiting() {
+    this.audioWaiting = true;
+  }
+
+  _handleAudioPlaying() {
+    this.audioWaiting = false;
+    this.audioStalled = false;
+  }
+
+  _handleAudioStalled() {
+    this.audioStalled = true;
   }
 }
 

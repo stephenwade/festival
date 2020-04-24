@@ -43,7 +43,7 @@ export class FestivalUi extends PolymerElement {
       <template is="dom-if" if="[[_showPlaying]]">
         <ui-playing
           set="[[audioStatus.set]]"
-          waiting="[[_delayingForInitialSync]]"
+          waiting="[[_waiting]]"
           current-time="[[audioStatus.currentTime]]"
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
         ></ui-playing>
@@ -53,6 +53,9 @@ export class FestivalUi extends PolymerElement {
       </template>
       <paper-toast id="toast" duration="0">
         <paper-button on-click="_reload">Reload</paper-button>
+        <paper-button on-click="_hideToast" hidden$="[[_error]]">
+          Close
+        </paper-button>
       </paper-toast>
     `;
   }
@@ -60,38 +63,60 @@ export class FestivalUi extends PolymerElement {
   static get properties() {
     return {
       audioStatus: Object,
+      audioWaiting: Boolean,
+      audioStalled: {
+        type: Boolean,
+        observer: '_audioStalledChanged',
+      },
       getAudioVisualizerData: Function,
+      _error: Boolean,
+      _stalledAlertShown: {
+        type: Boolean,
+        value: false,
+      },
       _waitingForAudioContext: {
         type: Boolean,
-        computed: '_computeWaitingForAudioContext(audioStatus.status)'
+        computed: '_computeWaitingForAudioContext(audioStatus.status)',
       },
       _waitingUntilStart: {
         type: Boolean,
-        computed: '_computeWaitingUntilStart(audioStatus.status)'
+        computed: '_computeWaitingUntilStart(audioStatus.status)',
       },
-      _delayingForInitialSync: {
+      _waiting: {
         type: Boolean,
-        computed: '_computeDelayingForInitialSync(audioStatus.status)'
+        computed: '_computeWaiting(audioStatus.status, audioWaiting)',
       },
       _playing: {
         type: Boolean,
-        computed: '_computePlaying(audioStatus.status)'
+        computed: '_computePlaying(audioStatus.status)',
       },
       _showPlaying: {
         type: Boolean,
-        computed: '_computeShowPlaying(_delayingForInitialSync, _playing)'
+        computed: '_computeShowPlaying(_waiting, _playing)',
       },
       _ended: {
         type: Boolean,
-        computed: '_computeEnded(audioStatus.status)'
-      }
+        computed: '_computeEnded(audioStatus.status)',
+      },
     };
   }
 
   showError() {
+    this._error = true;
     const verb = this._showPlaying ? 'playing' : 'loading';
     this.$.toast.text = `There was a problem ${verb} the audio track.`;
     this.$.toast.show();
+  }
+
+  _audioStalledChanged(audioStalled) {
+    if (this._error || this._stalledAlertShown) return;
+
+    if (audioStalled) {
+      this.$.toast.text =
+        'Looks like your internet connection is having trouble.';
+      this.$.toast.show();
+      this._stalledAlertShown = true;
+    }
   }
 
   _computeWaitingForAudioContext(status) {
@@ -102,16 +127,16 @@ export class FestivalUi extends PolymerElement {
     return status === 'WAITING_UNTIL_START';
   }
 
-  _computeDelayingForInitialSync(status) {
-    return status === 'DELAYING_FOR_INITIAL_SYNC';
+  _computeWaiting(status, audioWaiting) {
+    return status === 'DELAYING_FOR_INITIAL_SYNC' || audioWaiting;
   }
 
   _computePlaying(status) {
     return status === 'PLAYING';
   }
 
-  _computeShowPlaying(_delayingForInitialSync, _playing) {
-    return _delayingForInitialSync || _playing;
+  _computeShowPlaying(_waiting, _playing) {
+    return _waiting || _playing;
   }
 
   _computeEnded(status) {
@@ -120,6 +145,10 @@ export class FestivalUi extends PolymerElement {
 
   _reload() {
     window.location.reload();
+  }
+
+  _hideToast() {
+    this.$.toast.hide();
   }
 }
 
