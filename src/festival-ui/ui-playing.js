@@ -103,10 +103,10 @@ export class UiPlaying extends PolymerElement {
       </style>
       <canvas id="canvas"></canvas>
       <div id="current-time">
-        <template is="dom-if" if="[[delaying]]">
+        <template is="dom-if" if="[[waiting]]">
           <paper-spinner-lite active></paper-spinner-lite>
         </template>
-        <template is="dom-if" if="[[!delaying]]">
+        <template is="dom-if" if="[[!waiting]]">
           [[_currentTimeText]]
         </template>
       </div>
@@ -128,7 +128,7 @@ export class UiPlaying extends PolymerElement {
   static get properties() {
     return {
       set: Object,
-      delaying: Boolean,
+      waiting: Boolean,
       currentTime: Number,
       getAudioVisualizerData: Function,
       _currentTimeText: {

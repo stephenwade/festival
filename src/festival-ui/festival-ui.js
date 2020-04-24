@@ -43,7 +43,7 @@ export class FestivalUi extends PolymerElement {
       <template is="dom-if" if="[[_showPlaying]]">
         <ui-playing
           set="[[audioStatus.set]]"
-          delaying="[[_delayingForInitialSync]]"
+          waiting="[[_delayingForInitialSync]]"
           current-time="[[audioStatus.currentTime]]"
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
         ></ui-playing>
