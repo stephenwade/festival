@@ -283,11 +283,18 @@ export class FestivalAudio extends PolymerElement {
 
   _handleAudioWaiting() {
     this.audioWaiting = true;
+
+    this._stalledTimeout = setTimeout(
+      this._handleAudioStalled.bind(this),
+      10 * 1000
+    );
   }
 
   _handleAudioPlaying() {
     this.audioWaiting = false;
     this.audioStalled = false;
+
+    clearTimeout(this._stalledTimeout);
   }
 
   _handleAudioStalled() {
