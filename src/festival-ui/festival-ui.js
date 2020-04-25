@@ -30,6 +30,14 @@ export class FestivalUi extends PolymerElement {
           background: var(--gradient-background);
           background-size: 100% auto;
         }
+
+        paper-toast paper-button + paper-button {
+          margin-left: -1em;
+        }
+
+        paper-toast paper-button:last-child {
+          margin-right: -1em;
+        }
       </style>
       <template is="dom-if" if="[[_waitingForAudioContext]]">
         <ui-intro></ui-intro>
