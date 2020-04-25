@@ -35,8 +35,12 @@ export class FestivalUi extends PolymerElement {
           background-size: 100% auto;
         }
 
+        paper-toast paper-button:first-of-type {
+          margin-right: -0.5em;
+        }
+
         paper-toast paper-button + paper-button {
-          margin-left: -1em;
+          margin-left: -0.5em;
         }
 
         paper-toast paper-button:last-child {
