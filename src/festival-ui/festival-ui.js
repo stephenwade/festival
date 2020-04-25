@@ -56,8 +56,8 @@ export class FestivalUi extends PolymerElement {
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
         ></ui-playing>
       </template>
-      <template is="dom-if" if="[[_ended]]">
-        <ui-ended></ui-ended>
+      <template is="dom-if" if="[[_stampEnded]]">
+        <ui-ended hidden$="[[!_ended]]"></ui-ended>
       </template>
       <paper-toast id="toast" duration="0">
         <paper-button on-click="_reload">Reload</paper-button>
@@ -107,7 +107,19 @@ export class FestivalUi extends PolymerElement {
         computed: '_computeEnded(audioStatus.status)',
         observer: '_endedChanged',
       },
+      _stampEnded: {
+        type: Boolean,
+        value: false,
+      },
     };
+  }
+
+  ready() {
+    super.ready();
+
+    setTimeout(() => {
+      this._stampEnded = true;
+    }, 10 * 1000);
   }
 
   showError() {
@@ -153,7 +165,10 @@ export class FestivalUi extends PolymerElement {
   }
 
   _endedChanged(_ended) {
-    if (_ended) this._hideToast();
+    if (_ended) {
+      this._stampEnded = true;
+      this._hideToast();
+    }
   }
 
   _reload() {
