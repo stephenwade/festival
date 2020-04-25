@@ -129,15 +129,15 @@ export class UiPlaying extends PolymerElement {
     return {
       set: Object,
       waiting: Boolean,
-      currentTime: Number,
+      currentTime: {
+        type: Number,
+        observer: '_currentTimeChanged'
+      },
+      _currentTimeTimestamp: Number,
       getAudioVisualizerData: Function,
       _currentTimeText: {
         type: String,
         computed: '_computeCurrentTimeText(currentTime)'
-      },
-      _setProgressPercentage: {
-        type: Number,
-        computed: '_computeSetProgressPercentage(currentTime, set.length)'
       }
     };
   }
@@ -180,15 +180,15 @@ export class UiPlaying extends PolymerElement {
     if (rect.width >= maxWidth) artistGroup.classList.add('vertical');
   }
 
+  _currentTimeChanged() {
+    this._currentTimeTimestamp = performance.now();
+  }
+
   _computeCurrentTimeText(currentTime) {
     const currentTimeAdjusted = Math.floor(currentTime + 0.1);
     const minutes = Math.floor(currentTimeAdjusted / 60);
     const seconds = currentTimeAdjusted % 60;
     return minutes.toString() + ':' + seconds.toString().padStart(2, '0');
-  }
-
-  _computeSetProgressPercentage(currentTime, length) {
-    return currentTime / length;
   }
 
   _getCirclePoint(
@@ -376,13 +376,19 @@ export class UiPlaying extends PolymerElement {
         });
 
         this._drawProgress(canvas, ctx, dataArray, {
-          progress: this._setProgressPercentage,
+          progress: this._calcProgressPercentage(),
           sizeMultipler: 2 * window.devicePixelRatio * mult
         });
       }
 
       window.requestAnimationFrame(this._animate.bind(this));
     }
+  }
+
+  _calcProgressPercentage() {
+    const delayMs = performance.now() - this._currentTimeTimestamp;
+    const currentTime = this.currentTime + delayMs / 1000;
+    return currentTime / this.set.length;
   }
 }
 
