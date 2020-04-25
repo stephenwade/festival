@@ -105,6 +105,7 @@ export class FestivalUi extends PolymerElement {
       _ended: {
         type: Boolean,
         computed: '_computeEnded(audioStatus.status)',
+        observer: '_endedChanged',
       },
     };
   }
@@ -149,6 +150,10 @@ export class FestivalUi extends PolymerElement {
 
   _computeEnded(status) {
     return status === 'ENDED';
+  }
+
+  _endedChanged(_ended) {
+    if (_ended) this._hideToast();
   }
 
   _reload() {
