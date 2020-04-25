@@ -128,12 +128,15 @@ export class UiPlaying extends PolymerElement {
   static get properties() {
     return {
       set: Object,
-      waiting: Boolean,
+      waiting: {
+        type: Boolean,
+        observer: '_updateTimestamp'
+      },
       currentTime: {
         type: Number,
-        observer: '_currentTimeChanged'
+        observer: '_updateTimestamp'
       },
-      _currentTimeTimestamp: Number,
+      _lastUpdateTimestamp: Number,
       getAudioVisualizerData: Function,
       _currentTimeText: {
         type: String,
@@ -180,8 +183,8 @@ export class UiPlaying extends PolymerElement {
     if (rect.width >= maxWidth) artistGroup.classList.add('vertical');
   }
 
-  _currentTimeChanged() {
-    this._currentTimeTimestamp = performance.now();
+  _updateTimestamp() {
+    this._lastUpdateTimestamp = performance.now();
   }
 
   _computeCurrentTimeText(currentTime) {
@@ -386,9 +389,16 @@ export class UiPlaying extends PolymerElement {
   }
 
   _calcProgressPercentage() {
-    const delayMs = performance.now() - this._currentTimeTimestamp;
-    const currentTime = this.currentTime + delayMs / 1000;
-    return currentTime / this.set.length;
+    let currentTime;
+    if (this.waiting) {
+      currentTime = this.currentTime;
+    } else {
+      const delayMs = performance.now() - this._lastUpdateTimestamp;
+      currentTime = this.currentTime + delayMs / 1000;
+    }
+    const result = currentTime / this.set.length;
+    if (result > 1) return 1;
+    return result;
   }
 }
 
