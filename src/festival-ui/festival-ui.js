@@ -20,6 +20,10 @@ export class FestivalUi extends PolymerElement {
           box-sizing: inherit;
         }
 
+        [hidden] {
+          display: none !important;
+        }
+
         :host {
           position: absolute;
           width: 100%;
