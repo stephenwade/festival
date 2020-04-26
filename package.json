@@ -1,6 +1,7 @@
 {
   "name": "festival",
   "description": "Festival",
+  "license": "ISC",
   "scripts": {
     "start": "npm run serve | npm run watch",
     "serve": "polymer serve --port 8080",
