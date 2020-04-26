@@ -13,6 +13,7 @@ export class FestivalUi extends PolymerElement {
       <style>
         :host {
           box-sizing: border-box;
+          user-select: none;
         }
         *,
         *:before,
