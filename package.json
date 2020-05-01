@@ -34,7 +34,7 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --cache",
+    "*.js": "eslint",
     "src/**/*.js": "polymer lint --input",
     "*.{js,json,html,css,md}": "prettier --write"
   }

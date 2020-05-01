@@ -1,6 +1,5 @@
 /node_modules
 /public
 /build
-.eslintcache
 *.sublime-workspace
 .DS_Store
