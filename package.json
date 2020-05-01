@@ -15,17 +15,17 @@
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-spinner": "^3.0.2",
     "@polymer/paper-toast": "^3.0.1",
-    "@polymer/polymer": "^3.0.0",
+    "@polymer/polymer": "^3.4.1",
     "@sentry/browser": "^5.15.5",
     "@webcomponents/webcomponentsjs": "^2.4.3",
-    "moment": "^2.24.0",
+    "moment": "^2.25.0",
     "standardized-audio-context": "^23.1.2"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
-    "lint-staged": "^10.1.7",
+    "lint-staged": "^10.2.2",
     "prettier": "2.0.5"
   },
   "husky": {
