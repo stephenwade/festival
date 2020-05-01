@@ -87,10 +87,7 @@ export class FestivalUi extends PolymerElement {
       },
       getAudioVisualizerData: Function,
       _error: Boolean,
-      _stalledAlertShown: {
-        type: Boolean,
-        value: false,
-      },
+      _alertShown: Boolean,
       _waitingForAudioContext: {
         type: Boolean,
         computed: '_computeWaitingForAudioContext(audioStatus.status)',
@@ -123,6 +120,10 @@ export class FestivalUi extends PolymerElement {
     };
   }
 
+  static get observers() {
+    return ['_delayChanged(audioStatus.delay)'];
+  }
+
   ready() {
     super.ready();
 
@@ -136,16 +137,17 @@ export class FestivalUi extends PolymerElement {
     const verb = this._showPlaying ? 'playing' : 'loading';
     this.$.toast.text = `There was a problem ${verb} the audio track.`;
     this.$.toast.show();
+    this._alertShown = true;
   }
 
   _audioStalledChanged(audioStalled) {
-    if (this._error || this._stalledAlertShown) return;
+    if (this._alertShown) return;
 
     if (audioStalled) {
       this.$.toast.text =
         'Looks like your internet connection is having trouble.';
       this.$.toast.show();
-      this._stalledAlertShown = true;
+      this._alertShown = true;
     }
   }
 
@@ -177,6 +179,17 @@ export class FestivalUi extends PolymerElement {
     if (_ended) {
       this._stampEnded = true;
       this._hideToast();
+    }
+  }
+
+  _delayChanged(delay) {
+    if (this._alertShown) return;
+
+    if (delay >= 15) {
+      this.$.toast.text =
+        'Looks like your internet connection is having trouble.';
+      this.$.toast.show();
+      this._alertShown = true;
     }
   }
 
