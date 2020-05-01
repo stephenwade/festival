@@ -5,7 +5,6 @@ import '@polymer/paper-button/paper-button.js';
 import './ui-ended.js';
 import './ui-intro.js';
 import './ui-playing.js';
-import './ui-waiting.js';
 
 export class FestivalUi extends PolymerElement {
   static get template() {
@@ -51,16 +50,12 @@ export class FestivalUi extends PolymerElement {
       <template is="dom-if" if="[[_waitingForAudioContext]]">
         <ui-intro></ui-intro>
       </template>
-      <template is="dom-if" if="[[_waitingUntilStart]]">
-        <ui-waiting
-          set="[[audioStatus.set]]"
-          seconds-until-set="[[audioStatus.secondsUntilSet]]"
-        ></ui-waiting>
-      </template>
       <template is="dom-if" if="[[_showPlaying]]">
         <ui-playing
           set="[[audioStatus.set]]"
-          waiting="[[_waiting]]"
+          waiting-until-start="[[_waitingUntilStart]]"
+          seconds-until-set="[[audioStatus.secondsUntilSet]]"
+          waiting-for-network="[[_waitingForNetwork]]"
           current-time="[[audioStatus.currentTime]]"
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
         ></ui-playing>
@@ -96,7 +91,7 @@ export class FestivalUi extends PolymerElement {
         type: Boolean,
         computed: '_computeWaitingUntilStart(audioStatus.status)',
       },
-      _waiting: {
+      _waitingForNetwork: {
         type: Boolean,
         computed: '_computeWaiting(audioStatus.status, audioWaiting)',
       },
@@ -106,7 +101,8 @@ export class FestivalUi extends PolymerElement {
       },
       _showPlaying: {
         type: Boolean,
-        computed: '_computeShowPlaying(_waiting, _playing)',
+        computed:
+          '_computeShowPlaying(_waitingUntilStart, _waitingForNetwork, _playing)',
       },
       _ended: {
         type: Boolean,
@@ -134,7 +130,7 @@ export class FestivalUi extends PolymerElement {
 
   showError() {
     this._error = true;
-    const verb = this._showPlaying ? 'playing' : 'loading';
+    const verb = this._waitingUntilStart ? 'loading' : 'playing';
     this.$.toast.text = `There was a problem ${verb} the audio track.`;
     this.$.toast.show();
     this._alertShown = true;
@@ -167,8 +163,8 @@ export class FestivalUi extends PolymerElement {
     return status === 'PLAYING';
   }
 
-  _computeShowPlaying(_waiting, _playing) {
-    return _waiting || _playing;
+  _computeShowPlaying(_waitingUntilStart, _waitingForNetwork, _playing) {
+    return _waitingUntilStart || _waitingForNetwork || _playing;
   }
 
   _computeEnded(status) {

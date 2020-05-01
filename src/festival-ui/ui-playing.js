@@ -55,6 +55,11 @@ export class UiPlaying extends PolymerElement {
           font-size: initial;
         }
 
+        #nextup {
+          font-size: 2em;
+          margin-bottom: 0.2em;
+        }
+
         #artist-group-outer {
           width: 100vw;
           user-select: text;
@@ -104,13 +109,16 @@ export class UiPlaying extends PolymerElement {
       </style>
       <canvas id="canvas"></canvas>
       <div id="current-time">
-        <template is="dom-if" if="[[waiting]]">
+        <template is="dom-if" if="[[_showSpinner]]">
           <paper-spinner-lite active></paper-spinner-lite>
         </template>
-        <template is="dom-if" if="[[!waiting]]">
+        <template is="dom-if" if="[[!_showSpinner]]">
           [[_currentTimeText]]
         </template>
       </div>
+      <template is="dom-if" if="[[waitingUntilStart]]">
+        <div id="nextup">Next up</div>
+      </template>
       <div id="artist-group-outer">
         <div id="artist-group">
           <div id="artist">[[set.artist]]</div>
@@ -129,7 +137,12 @@ export class UiPlaying extends PolymerElement {
   static get properties() {
     return {
       set: Object,
-      waiting: {
+      waitingUntilStart: {
+        type: Boolean,
+        observer: '_waitingUntilStartChanged',
+      },
+      secondsUntilSet: Number,
+      waitingForNetwork: {
         type: Boolean,
         observer: '_updateTimestamp',
       },
@@ -139,9 +152,14 @@ export class UiPlaying extends PolymerElement {
       },
       _lastUpdateTimestamp: Number,
       getAudioVisualizerData: Function,
+      _showSpinner: {
+        type: Boolean,
+        computed: '_computeShowSpinner(waitingUntilStart, waitingForNetwork)',
+      },
       _currentTimeText: {
         type: String,
-        computed: '_computeCurrentTimeText(currentTime)',
+        computed:
+          '_computeCurrentTimeText(waitingUntilStart, secondsUntilSet, currentTime)',
       },
     };
   }
@@ -178,20 +196,44 @@ export class UiPlaying extends PolymerElement {
   _resizeText() {
     const artistGroup = this.$['artist-group'];
 
-    artistGroup.classList.remove('vertical');
     const rect = artistGroup.getBoundingClientRect();
-    const maxWidth = Math.min(500, window.innerWidth);
-    if (rect.width >= maxWidth) artistGroup.classList.add('vertical');
+    let maxWidth;
+    if (this.waitingUntilStart) {
+      maxWidth = window.innerWidth;
+    } else {
+      maxWidth = Math.min(500, window.innerWidth);
+    }
+    if (rect.width >= maxWidth) {
+      artistGroup.classList.add('vertical');
+    } else {
+      artistGroup.classList.remove('vertical');
+    }
+  }
+
+  _waitingUntilStartChanged(waitingUntilStart) {
+    this._resizeText();
+
+    if (!waitingUntilStart) this._animate();
   }
 
   _updateTimestamp() {
     this._lastUpdateTimestamp = performance.now();
   }
 
-  _computeCurrentTimeText(currentTime) {
-    const currentTimeAdjusted = Math.floor(currentTime + 0.1);
-    const minutes = Math.floor(currentTimeAdjusted / 60);
-    const seconds = currentTimeAdjusted % 60;
+  _computeShowSpinner(waitingUntilStart, waitingForNetwork) {
+    if (waitingUntilStart) return false;
+    return waitingForNetwork;
+  }
+
+  _computeCurrentTimeText(waitingUntilStart, secondsUntilSet, currentTime) {
+    let time;
+    if (waitingUntilStart) {
+      time = secondsUntilSet;
+    } else {
+      time = Math.floor(currentTime + 0.1);
+    }
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
     return minutes.toString() + ':' + seconds.toString().padStart(2, '0');
   }
 
@@ -361,6 +403,8 @@ export class UiPlaying extends PolymerElement {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    if (this.waitingUntilStart) return;
+
     let mult = Math.min(window.innerWidth / 500, window.innerHeight / 800);
     mult = Math.min(1, mult);
 
@@ -391,7 +435,7 @@ export class UiPlaying extends PolymerElement {
 
   _calcProgressPercentage() {
     let currentTime;
-    if (this.waiting) {
+    if (this.waitingForNetwork) {
       currentTime = this.currentTime;
     } else {
       const delayMs = performance.now() - this._lastUpdateTimestamp;
