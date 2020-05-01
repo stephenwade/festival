@@ -1,33 +1,29 @@
-# \<festival\>
+# Festival
 
-Festival
+Festival is a website to host online music festivals. It plays the same audio
+file for all users at the same time based on their system clock, allowing for
+the social aspect of a live broadcast (everyone can react to the same music
+at the same time) without requiring live streaming infrastructure.
 
-## Install the Polymer-CLI
+## Local Development
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
+1. Install the [Polymer CLI](https://www.npmjs.com/package/polymer-cli).
+1. Run `npm install` to install the required npm packages.
+1. Run `npm start` to serve the application locally with [Browsersync](https://www.browsersync.io/).
+   You can also run `npm run serve` to serve the application locally without Browsersync.
 
-## Viewing Your Application
+First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed.
+Then, run `npm install` to install the required npm packages
+and `npm run serve` to serve the application locally.
 
-```
-$ polymer serve
-```
+## Building
 
-## Building Your Application
+There are 3 scripts useful for builds.
 
-```
-$ polymer build
-```
-
-This will create builds of your application in the `build/` directory, optimized to be served in production. You can then serve the built versions by giving `polymer serve` a folder to serve from:
-
-```
-$ polymer serve build/default
-```
-
-## Running Tests
-
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally. [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) is required. Note that if you do not have the `javac` command installed, you will be promted to install Java 10. To uninstall Java, see the direction [here](https://www.java.com/en/download/help/mac_uninstall_java.xml). See [issue #405 for the status of Java 10 support](https://github.com/Polymer/tools/issues/405).
+- `npm run build` will make a standard production-ready build.
+- `npm run build-test` will make the standard build, then copy the contents
+  of your repo's `public/` folder into the build's `public/` folder. This is
+  useful if you want to test the production build with the same audio files
+  you've been using to test locally.
+- `npm run serve-build` will serve the standard build instead of serving the
+  source.
