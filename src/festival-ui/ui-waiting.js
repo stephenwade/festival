@@ -108,8 +108,8 @@ export class UiWaiting extends PolymerElement {
       secondsUntilSet: Number,
       _countdownText: {
         type: String,
-        computed: '_computeCountdownText(secondsUntilSet)'
-      }
+        computed: '_computeCountdownText(secondsUntilSet)',
+      },
     };
   }
 

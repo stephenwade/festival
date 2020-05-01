@@ -47,7 +47,7 @@ export class FestivalApp extends PolymerElement {
       getAudioVisualizerData: Function,
       audioStatus: Object,
       audioWaiting: Boolean,
-      audioStalled: Boolean
+      audioStalled: Boolean,
     };
   }
 

@@ -29,27 +29,27 @@ export class FestivalAudio extends PolymerElement {
       audioContextReady: {
         type: Boolean,
         notify: true,
-        value: false
+        value: false,
       },
       getAudioVisualizerData: {
         type: Function,
-        notify: true
+        notify: true,
       },
       audioStatus: {
         type: Object,
         notify: true,
-        value: () => ({ status: 'WAITING_FOR_AUDIO_CONTEXT' })
+        value: () => ({ status: 'WAITING_FOR_AUDIO_CONTEXT' }),
       },
       audioWaiting: {
         type: Boolean,
         notify: true,
-        value: false
+        value: false,
       },
       audioStalled: {
         type: Boolean,
         notify: true,
-        value: false
-      }
+        value: false,
+      },
     };
   }
 
@@ -174,7 +174,7 @@ export class FestivalAudio extends PolymerElement {
         this.audioStatus = {
           set: change.set,
           status: 'WAITING_UNTIL_START',
-          secondsUntilSet: change.secondsUntilSet
+          secondsUntilSet: change.secondsUntilSet,
         };
         break;
 
@@ -187,7 +187,7 @@ export class FestivalAudio extends PolymerElement {
           this.audioStatus = {
             set: change.set,
             status: 'DELAYING_FOR_INITIAL_SYNC',
-            delayingUntil
+            delayingUntil,
           };
           this.$.audio.src += `#t=${delayingUntil}`;
         } else {
@@ -195,14 +195,14 @@ export class FestivalAudio extends PolymerElement {
           this.audioStatus = {
             set: change.set,
             status: 'PLAYING',
-            currentTime: 0
+            currentTime: 0,
           };
         }
         break;
 
       case 'ENDED':
         this.audioStatus = {
-          status: 'ENDED'
+          status: 'ENDED',
         };
         break;
 
@@ -228,7 +228,7 @@ export class FestivalAudio extends PolymerElement {
           this.audioStatus = {
             set: change.set,
             status: 'PLAYING',
-            currentTime: this.audioStatus.delayingUntil
+            currentTime: this.audioStatus.delayingUntil,
           };
         }
         break;
@@ -275,7 +275,7 @@ export class FestivalAudio extends PolymerElement {
     this.dispatchEvent(
       new CustomEvent('error', {
         bubbles: true,
-        composed: true
+        composed: true,
       })
     );
     this._error = true;

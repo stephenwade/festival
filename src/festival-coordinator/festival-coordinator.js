@@ -1,7 +1,7 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import {
   setDriftlessIntervalEverySecond,
-  clearDriftless
+  clearDriftless,
 } from '../../lib/driftless/driftless.js';
 import moment from 'moment';
 
@@ -14,17 +14,17 @@ export class FestivalCoordinator extends PolymerElement {
     return {
       setsData: {
         type: Object,
-        observer: '_setsDataChanged'
+        observer: '_setsDataChanged',
       },
       targetShowStatus: {
         type: String,
         notify: true,
-        value: 'WAITING_UNTIL_START'
+        value: 'WAITING_UNTIL_START',
       },
       targetAudioStatus: {
         type: Object,
-        notify: true
-      }
+        notify: true,
+      },
     };
   }
 
@@ -49,7 +49,7 @@ export class FestivalCoordinator extends PolymerElement {
   }
 
   _addMomentsToSets() {
-    this.setsData.sets.forEach(set => {
+    this.setsData.sets.forEach((set) => {
       set.startMoment = moment(set.start);
       set.endMoment = set.startMoment
         .clone()
@@ -107,7 +107,7 @@ export class FestivalCoordinator extends PolymerElement {
         return {
           set,
           secondsUntilSet,
-          status: 'WAITING_UNTIL_START'
+          status: 'WAITING_UNTIL_START',
         };
       }
 
@@ -120,13 +120,13 @@ export class FestivalCoordinator extends PolymerElement {
       return {
         set,
         currentTime,
-        status: 'PLAYING'
+        status: 'PLAYING',
       };
     }
 
     return {
       set: null,
-      status: 'ENDED'
+      status: 'ENDED',
     };
   }
 

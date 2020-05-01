@@ -131,18 +131,18 @@ export class UiPlaying extends PolymerElement {
       set: Object,
       waiting: {
         type: Boolean,
-        observer: '_updateTimestamp'
+        observer: '_updateTimestamp',
       },
       currentTime: {
         type: Number,
-        observer: '_updateTimestamp'
+        observer: '_updateTimestamp',
       },
       _lastUpdateTimestamp: Number,
       getAudioVisualizerData: Function,
       _currentTimeText: {
         type: String,
-        computed: '_computeCurrentTimeText(currentTime)'
-      }
+        computed: '_computeCurrentTimeText(currentTime)',
+      },
     };
   }
 
@@ -229,7 +229,7 @@ export class UiPlaying extends PolymerElement {
             options.sizeMultipler *
             0.5 +
             constScaleAdd * options.sizeMultipler) *
-          (grow + 1.5)
+          (grow + 1.5),
     ];
   }
 
@@ -250,7 +250,7 @@ export class UiPlaying extends PolymerElement {
       start: 0,
       end: dataArray.length * 0.63,
       color: '#ffffff',
-      thatOneValue: 0.35
+      thatOneValue: 0.35,
     };
 
     const opts = { ...defaultOptions, ...options };
@@ -376,12 +376,12 @@ export class UiPlaying extends PolymerElement {
           // scaleFactor: 0.1,
           scaleConstAdd: 60,
           thatOneValue: 0.6,
-          sizeMultipler: 2 * window.devicePixelRatio * mult
+          sizeMultipler: 2 * window.devicePixelRatio * mult,
         });
 
         this._drawProgress(canvas, ctx, dataArray, {
           progress: this._calcProgressPercentage(),
-          sizeMultipler: 2 * window.devicePixelRatio * mult
+          sizeMultipler: 2 * window.devicePixelRatio * mult,
         });
       }
 

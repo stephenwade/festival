@@ -10,8 +10,8 @@ export class FestivalLoadSets extends PolymerElement {
     return {
       setsData: {
         type: Object,
-        notify: true
-      }
+        notify: true,
+      },
     };
   }
 
@@ -28,21 +28,15 @@ export class FestivalLoadSets extends PolymerElement {
           audio: '/public/mock/not-enough.mp3',
           artist: 'Anavae',
           members: ['Rebecca Need-Menear', 'Jamie Finch'],
-          start: m
-            .clone()
-            .add(5, 'seconds')
-            .toISOString(),
-          length: 224.03
+          start: m.clone().add(5, 'seconds').toISOString(),
+          length: 224.03,
         },
         {
           audio: '/public/mock/modern.mp3',
           artist: 'bignic',
           members: ['Nic Gorissen', '@tehbignic'],
-          start: m
-            .clone()
-            .add(234, 'seconds')
-            .toISOString(),
-          length: 186.44
+          start: m.clone().add(234, 'seconds').toISOString(),
+          length: 186.44,
         },
         {
           audio: '/public/mock/how-i-love.mp3',
@@ -51,13 +45,10 @@ export class FestivalLoadSets extends PolymerElement {
             'Mayhem',
             'LapFox Trax',
             'Halley Labs',
-            'The Quick Brown Fox'
+            'The Quick Brown Fox',
           ],
-          start: m
-            .clone()
-            .add(637, 'seconds')
-            .toISOString(),
-          length: 192.89
+          start: m.clone().add(637, 'seconds').toISOString(),
+          length: 192.89,
         },
         {
           audio: '/public/mock/wonderland.mp3',
@@ -66,15 +57,12 @@ export class FestivalLoadSets extends PolymerElement {
             'Griffin McElroy',
             'Justin McElroy',
             'Travis McElroy',
-            'Clint McElroy'
+            'Clint McElroy',
           ],
-          start: m
-            .clone()
-            .add(860, 'seconds')
-            .toISOString(),
-          length: 156.92
-        }
-      ]
+          start: m.clone().add(860, 'seconds').toISOString(),
+          length: 156.92,
+        },
+      ],
     };
   }
 }
