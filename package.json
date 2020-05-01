@@ -17,11 +17,11 @@
     "@polymer/paper-toast": "^3.0.1",
     "@polymer/polymer": "^3.0.0",
     "@sentry/browser": "^5.15.5",
+    "@webcomponents/webcomponentsjs": "^2.4.3",
     "moment": "^2.24.0",
     "standardized-audio-context": "^23.1.2"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "^2.4.3",
     "browser-sync": "^2.26.7",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
