@@ -1,20 +1,12 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '../festival-ui/festival-ui.js';
 import '../festival-load-sets/festival-load-sets.js';
 import '../festival-coordinator/festival-coordinator.js';
 import '../festival-audio/festival-audio.js';
+import '../festival-ui/festival-ui.js';
 
 export class FestivalApp extends PolymerElement {
   static get template() {
     return html`
-      <festival-ui
-        id="ui"
-        audio-status="[[audioStatus]]"
-        audio-waiting="[[audioWaiting]]"
-        audio-stalled="[[audioStalled]]"
-        get-audio-visualizer-data="[[getAudioVisualizerData]]"
-        on-listen="_handleListenClicked"
-      ></festival-ui>
       <festival-load-sets
         id="loader"
         sets-data="{{setsData}}"
@@ -35,6 +27,14 @@ export class FestivalApp extends PolymerElement {
         get-audio-visualizer-data="{{getAudioVisualizerData}}"
         on-error="_handleAudioError"
       ></festival-audio>
+      <festival-ui
+        id="ui"
+        audio-status="[[audioStatus]]"
+        audio-waiting="[[audioWaiting]]"
+        audio-stalled="[[audioStalled]]"
+        get-audio-visualizer-data="[[getAudioVisualizerData]]"
+        on-listen="_handleListenClicked"
+      ></festival-ui>
     `;
   }
 
