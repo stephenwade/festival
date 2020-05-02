@@ -1,6 +1,5 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
-import '@polymer/iron-image/iron-image.js';
 import '@polymer/paper-button/paper-button.js';
 
 export class UiIntro extends PolymerElement {
@@ -63,13 +62,12 @@ export class UiIntro extends PolymerElement {
         }
       </style>
       <a href="https://twitter.com/URLFESTIVAL">
-        <iron-image
+        <img
           id="logo"
           src="images/fest2fest-logo.svg"
-          preload
-          loaded="{{_logoLoaded}}"
-        ></iron-image
-      ></a>
+          on-load="_handleLogoLoaded"
+        />
+      </a>
       <template is="dom-if" if="[[_logoLoaded]]">
         <div id="buttons">
           <paper-button id="button-listen" on-click="_handleListenClicked">
@@ -81,6 +79,16 @@ export class UiIntro extends PolymerElement {
         </div>
       </template>
     `;
+  }
+
+  static get properties() {
+    return {
+      _logoLoaded: Boolean,
+    };
+  }
+
+  _handleLogoLoaded() {
+    this._logoLoaded = true;
   }
 
   _handleListenClicked() {

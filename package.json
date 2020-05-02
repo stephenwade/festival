@@ -11,7 +11,6 @@
     "serve-build": "polymer serve build/es6-bundled"
   },
   "dependencies": {
-    "@polymer/iron-image": "^3.0.2",
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-spinner": "^3.0.2",
     "@polymer/paper-toast": "^3.0.1",
