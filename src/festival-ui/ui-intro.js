@@ -18,13 +18,18 @@ export class UiIntro extends PolymerElement {
         :host {
           color: white;
           width: 100%;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          -webkit-transform: translateX(-50%) translateY(-50%);
-          transform: translateX(-50%) translateY(-50%);
-          text-align: center;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
           padding: 0 1em;
+          background: var(--gradient-background);
+          background-size: 100% auto;
+        }
+
+        #logo-link {
+          width: 100%;
         }
 
         #logo {
@@ -35,10 +40,7 @@ export class UiIntro extends PolymerElement {
         }
 
         #buttons {
-          width: 100%;
           font-size: 2em;
-          background: var(--gradient-background);
-          background-size: 100% auto;
           margin-bottom: 0.5em;
         }
 
@@ -61,7 +63,7 @@ export class UiIntro extends PolymerElement {
           -webkit-tap-highlight-color: transparent;
         }
       </style>
-      <a href="https://twitter.com/URLFESTIVAL">
+      <a id="logo-link" href="https://twitter.com/URLFESTIVAL">
         <img
           id="logo"
           src="images/fest2fest-logo.svg"
