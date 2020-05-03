@@ -232,9 +232,21 @@ export class UiPlaying extends PolymerElement {
     } else {
       time = Math.floor(currentTime + 0.1);
     }
-    const minutes = Math.floor(time / 60);
+
+    const hours = Math.floor(time / (60 * 60));
+    const minutesFrac = time % (60 * 60);
+
+    const minutes = Math.floor(minutesFrac / 60);
     const seconds = time % 60;
-    return minutes.toString() + ':' + seconds.toString().padStart(2, '0');
+
+    let result = '';
+    if (hours > 0) {
+      result += hours.toString() + ':' + minutes.toString().padStart(2, '0');
+    } else {
+      result += minutes.toString();
+    }
+    result += ':' + seconds.toString().padStart(2, '0');
+    return result;
   }
 
   _getCirclePoint(
