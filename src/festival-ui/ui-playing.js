@@ -136,7 +136,10 @@ export class UiPlaying extends PolymerElement {
 
   static get properties() {
     return {
-      set: Object,
+      set: {
+        type: Object,
+        observer: '_setChanged',
+      },
       waitingUntilStart: {
         type: Boolean,
         observer: '_waitingUntilStartChanged',
@@ -161,6 +164,7 @@ export class UiPlaying extends PolymerElement {
         computed:
           '_computeCurrentTimeText(waitingUntilStart, secondsUntilSet, currentTime)',
       },
+      _showProgressLine: Boolean,
     };
   }
 
@@ -208,6 +212,10 @@ export class UiPlaying extends PolymerElement {
     } else {
       artistGroup.classList.remove('vertical');
     }
+  }
+
+  _setChanged() {
+    this._showProgressLine = false;
   }
 
   _waitingUntilStartChanged(waitingUntilStart) {
@@ -435,10 +443,15 @@ export class UiPlaying extends PolymerElement {
           sizeMultipler: 2 * window.devicePixelRatio * mult,
         });
 
-        this._drawProgress(canvas, ctx, dataArray, {
-          progress: this._calcProgressPercentage(),
-          sizeMultipler: 2 * window.devicePixelRatio * mult,
-        });
+        if (!this._showProgressLine)
+          if (!this.waitingUntilStart && !this.waitingForNetwork)
+            this._showProgressLine = true;
+
+        if (this._showProgressLine)
+          this._drawProgress(canvas, ctx, dataArray, {
+            progress: this._calcProgressPercentage(),
+            sizeMultipler: 2 * window.devicePixelRatio * mult,
+          });
       }
 
       window.requestAnimationFrame(this._animate.bind(this));
