@@ -18,6 +18,7 @@ export class FestivalAudio extends PolymerElement {
         on-waiting="_handleAudioWaiting"
         on-playing="_handleAudioPlaying"
         on-stalled="_handleAudioStalled"
+        on-loadedmetadata="_handleAudioLoadedMetadata"
       ></audio>
     `;
   }
@@ -299,6 +300,19 @@ export class FestivalAudio extends PolymerElement {
 
   _handleAudioStalled() {
     this.audioStalled = true;
+  }
+
+  _handleAudioLoadedMetadata() {
+    this.dispatchEvent(
+      new CustomEvent('loadedmetadata', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          set: this.audioStatus.set,
+          duration: this.$.audio.duration,
+        },
+      })
+    );
   }
 }
 

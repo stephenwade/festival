@@ -12,6 +12,7 @@ export class FestivalApp extends PolymerElement {
         sets-data="{{setsData}}"
       ></festival-load-sets>
       <festival-coordinator
+        id="coordinator"
         sets-data="[[setsData]]"
         target-show-status="{{targetShowStatus}}"
         target-audio-status="{{targetAudioStatus}}"
@@ -26,6 +27,7 @@ export class FestivalApp extends PolymerElement {
         audio-stalled="{{audioStalled}}"
         get-audio-visualizer-data="{{getAudioVisualizerData}}"
         on-error="_handleAudioError"
+        on-loadedmetadata="_handleAudioLoadedMetadata"
       ></festival-audio>
       <festival-ui
         id="ui"
@@ -67,6 +69,10 @@ export class FestivalApp extends PolymerElement {
 
   _handleAudioError() {
     this.$.ui.showError();
+  }
+
+  _handleAudioLoadedMetadata(e) {
+    this.$.coordinator.updateSetMetadata(e.detail);
   }
 }
 

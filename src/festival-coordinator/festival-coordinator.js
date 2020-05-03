@@ -34,6 +34,20 @@ export class FestivalCoordinator extends PolymerElement {
     this._clearTimer();
   }
 
+  updateSetMetadata(detail) {
+    const sets = this.setsData.sets;
+    for (const set of sets) {
+      if (set === detail.set) {
+        set.length = detail.duration;
+        set.endMoment = set.startMoment
+          .clone()
+          .add(set.length, 'seconds')
+          // make sure next set event is ready before current set ends
+          .subtract(1, 'seconds');
+      }
+    }
+  }
+
   _setsDataChanged(setsData) {
     this._clearTimer();
     if (setsData) {
@@ -54,7 +68,7 @@ export class FestivalCoordinator extends PolymerElement {
       set.endMoment = set.startMoment
         .clone()
         .add(set.length, 'seconds')
-        // subtract 1 second to avoid audio ending before next set is ready
+        // make sure next set event is ready before current set ends
         .subtract(1, 'seconds');
     });
   }
