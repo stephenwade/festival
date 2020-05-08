@@ -12,6 +12,7 @@ export class FestivalAudio extends PolymerElement {
     return html`
       <audio
         id="audio"
+        crossorigin="anonymous"
         on-ended="_handleAudioEnded"
         on-timeupdate="_handleAudioTimeUpdate"
         on-error="_handleAudioError"

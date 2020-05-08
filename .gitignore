@@ -1,5 +1,5 @@
 /node_modules
-/public
+/media
 /build
 *.sublime-workspace
 .DS_Store

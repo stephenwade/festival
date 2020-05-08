@@ -27,3 +27,22 @@ There are 3 scripts useful for builds.
   you've been using to test locally.
 - `npm run serve-build` will serve the standard build instead of serving the
   source.
+
+## Deploying
+
+The site is deployed to a web server via rsync over SSH. The media is deployed
+to Azure blob storage.
+
+1. Make sure that your Azure storage account is set to allow
+   [CORS requests](https://stackoverflow.com/a/41351674)
+   from your site's domain. This is required for the visualizer to work.
+1. Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest).
+1. Add the following environment variables to your profile:
+   - `FESTIVAL_SITE_DEPLOY_LOCATION`: The rsync destination for the site.
+   - `FESTIVAL_AZURE_STORAGE_ACCOUNT`: The name of the Azure storage account
+     for the media.
+   - `FESTIVAL_AZURE_STORAGE_KEY`: The access key for the Azure storage account.
+1. Run `npm run build` to build the site for production.
+1. Run `npm run deploy` to deploy both the site and the media.
+   You can also run `npm run deploy:site` to deploy only the site,
+   or `npm run deploy:media` to deploy only the media.

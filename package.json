@@ -6,9 +6,12 @@
     "start": "npm run serve | npm run watch",
     "serve": "polymer serve --port 8080",
     "watch": "browser-sync start --proxy localhost:8080 --open --files \"**/*\"",
-    "build-test": "polymer build && cp -R public build/es6-bundled/public",
+    "build-test": "polymer build && cp -R media build/es6-bundled/media",
     "build": "polymer build",
-    "serve-build": "polymer serve build/es6-bundled"
+    "serve-build": "polymer serve build/es6-bundled",
+    "deploy": "npm run deploy:site && npm run deploy:media",
+    "deploy:site": "rsync -rltv build/es6-bundled/ $FESTIVAL_SITE_DEPLOY_LOCATION",
+    "deploy:media": "az storage blob sync --container '$web' --source media --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\""
   },
   "dependencies": {
     "@polymer/paper-button": "^3.0.1",
