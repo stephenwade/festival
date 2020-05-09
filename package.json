@@ -10,7 +10,7 @@
     "build": "polymer build",
     "serve-build": "polymer serve build/es6-bundled",
     "deploy": "npm run deploy:site && npm run deploy:media",
-    "deploy:site": "rsync -rltv build/es6-bundled/ $FESTIVAL_SITE_DEPLOY_LOCATION",
+    "deploy:site": "rsync -rltv --delete --exclude=.htaccess --exclude goaccess build/es6-bundled/ $FESTIVAL_SITE_DEPLOY_LOCATION",
     "deploy:media": "az storage blob sync --container '$web' --source media --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\""
   },
   "dependencies": {
