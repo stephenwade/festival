@@ -45,11 +45,11 @@ export class UiEnded extends PolymerElement {
           width: 100%;
         }
       </style>
-      <a href="https://twitter.com/URLFESTIVAL">
-        <img id="logo" src="images/fest2fest-logo.svg" />
+      <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
+        <img id="logo" src="images/fest2fest-logo.svg" alt="FEST2FEST" />
       </a>
-      <a href="https://twitter.com/URLFESTIVAL">
-        <img id="heart" src="images/heart-white.svg" />
+      <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
+        <img id="heart" src="images/heart-white.svg" alt="heart" />
       </a>
     `;
   }

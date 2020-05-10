@@ -63,10 +63,16 @@ export class UiIntro extends PolymerElement {
           -webkit-tap-highlight-color: transparent;
         }
       </style>
-      <a id="logo-link" href="https://twitter.com/URLFESTIVAL">
+      <a
+        id="logo-link"
+        href="https://twitter.com/URLFESTIVAL"
+        target="_blank"
+        rel="noopener"
+      >
         <img
           id="logo"
           src="images/fest2fest-logo.svg"
+          alt="FEST2FEST"
           on-load="_handleLogoLoaded"
         />
       </a>
@@ -75,7 +81,12 @@ export class UiIntro extends PolymerElement {
           <paper-button id="button-listen" on-click="_handleListenClicked">
             Listen Live
           </paper-button>
-          <a href="https://discord.io/festival" target="_blank" tabindex="-1">
+          <a
+            href="https://discord.io/festival"
+            target="_blank"
+            rel="noopener"
+            tabindex="-1"
+          >
             <paper-button id="button-discord">Join Discord</paper-button>
           </a>
         </div>
