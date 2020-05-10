@@ -3,9 +3,7 @@
   "description": "Festival",
   "license": "ISC",
   "scripts": {
-    "start": "npm run serve | npm run watch",
     "serve": "polymer serve --port 8080",
-    "watch": "browser-sync start --proxy localhost:8080 --open --files \"**/*\"",
     "build-test": "polymer build && cp -R media build/es6-bundled/media",
     "build": "polymer build",
     "serve-build": "polymer serve build/es6-bundled",
@@ -24,7 +22,6 @@
     "standardized-audio-context": "^23.1.2"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.7",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.2",
