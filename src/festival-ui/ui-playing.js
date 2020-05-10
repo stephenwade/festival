@@ -165,18 +165,32 @@ export class UiPlaying extends PolymerElement {
           '_computeCurrentTimeText(waitingUntilStart, secondsUntilSet, currentTime)',
       },
       _showProgressLine: Boolean,
+      _sizeMultiplier: Number,
     };
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    // set up resize handler
     const resizeCanvas = () => {
       const canvas = this.$.canvas;
       const scale = window.devicePixelRatio;
 
       canvas.width = window.innerWidth * scale;
       canvas.height = window.innerHeight * scale;
+
+      this._sizeMultiplier =
+        window.devicePixelRatio *
+        Math.min(1, window.innerWidth / 500, window.innerHeight / 800);
+
+      // canvas properties must be reset after canvas is resized
+      const ctx = canvas.getContext('2d');
+
+      ctx.lineWidth = 4 * this._sizeMultiplier;
+      const color = '#fff';
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
     };
 
     this._resize = () => {
@@ -188,6 +202,7 @@ export class UiPlaying extends PolymerElement {
 
     resizeCanvas();
 
+    // start draw loop
     this._animate();
   }
 
@@ -257,160 +272,112 @@ export class UiPlaying extends PolymerElement {
     return result;
   }
 
-  _getCirclePoint(
-    i,
-    midX,
-    midY,
-    dist,
-    grow,
-    mult,
-    scaleFactor,
-    constScaleAdd,
-    options,
-    dataArray
-  ) {
-    let distanceAroundCircle = (i - options.start) / (dist - options.start);
-    distanceAroundCircle = Math.pow(1 - distanceAroundCircle, 1.5);
-    distanceAroundCircle = Math.PI + 2 * distanceAroundCircle * Math.PI;
-
-    return [
-      midX +
-        Math.sin(distanceAroundCircle) *
-          (dataArray[i + 10] *
-            mult *
-            scaleFactor *
-            options.sizeMultipler *
-            0.5 +
-            constScaleAdd * options.sizeMultipler) *
-          (grow + 1.5),
-      midY +
-        Math.cos(distanceAroundCircle) *
-          (dataArray[i + 10] *
-            mult *
-            scaleFactor *
-            options.sizeMultipler *
-            0.5 +
-            constScaleAdd * options.sizeMultipler) *
-          (grow + 1.5),
-    ];
-  }
-
   _calcGrow(dataArray) {
-    return (
-      (dataArray[0] +
-        dataArray[1] +
-        dataArray[2] +
-        dataArray[3] +
-        dataArray[4]) *
-        0.0001 +
-      0.5
-    );
+    const average = dataArray.slice(0, 5).reduce((a, b) => a + b) / 5;
+    return average / 255;
   }
 
-  _drawCircle(canvas, ctx, dataArray, options = {}) {
-    const defaultOptions = {
-      start: 0,
-      end: dataArray.length * 0.63,
-      color: '#ffffff',
-      thatOneValue: 0.35,
-    };
+  _getCirclePoint(i, end, dataArray) {
+    const canvas = this.$.canvas;
+    const midX = canvas.width / 2;
+    const midY = canvas.height / 2;
 
-    const opts = { ...defaultOptions, ...options };
+    const grow = this._calcGrow(dataArray);
+    const loudness = dataArray[i + 10];
+
+    const p1 = 0.1275;
+    const p2 = 2;
+    const p3 = 0.168;
+    const p4 = 0.18;
+    const p5 = 120;
+
+    const distanceFromCenter =
+      (grow * p1 + p2) *
+      (loudness * ((i / end) * p3 + p4) + p5) *
+      this._sizeMultiplier;
+
+    const angleAroundCircle = 2 * Math.PI * (0.5 + Math.pow(1 - i / end, 1.5));
+
+    const x = midX + Math.sin(angleAroundCircle) * distanceFromCenter;
+    const y = midY + Math.cos(angleAroundCircle) * distanceFromCenter;
+
+    return [x, y];
+  }
+
+  _drawCircle(dataArray) {
+    const canvas = this.$.canvas;
+    const ctx = canvas.getContext('2d');
 
     const midX = canvas.width / 2;
     const midY = canvas.height / 2;
 
-    // circle
+    // draw waves
     ctx.beginPath();
-    ctx.strokeStyle = opts.color;
-    ctx.fillStyle = opts.color;
-    const dist = opts.end;
+    const end = dataArray.length * 0.43;
     const grow = this._calcGrow(dataArray);
-    let [x, y] = this._getCirclePoint(
-      opts.start,
-      midX,
-      midY,
-      dist,
-      grow,
-      opts.thatOneValue,
-      opts.scaleFactor,
-      opts.scaleConstAdd,
-      opts,
-      dataArray
-    );
-    let [xNext, yNext] = this._getCirclePoint(
-      opts.start + 1,
-      midX,
-      midY,
-      dist,
-      grow,
-      opts.thatOneValue,
-      opts.scaleFactor,
-      opts.scaleConstAdd,
-      opts,
-      dataArray
-    );
-    for (let i = opts.start + 1; i < dist + 1; i++) {
-      const mult = (i / (dist + opts.start)) * 0.56 + 0.6;
-      // const mult = 1;
+    let [x, y] = this._getCirclePoint(0, end, dataArray);
+    let [xNext, yNext] = this._getCirclePoint(1, end, dataArray);
+    for (let i = 1; i < end + 1; i++) {
       if (i === 0) {
         ctx.moveTo(x, y);
       } else {
         const xc = (x + xNext) / 2;
         const yc = (y + yNext) / 2;
         ctx.quadraticCurveTo(x, y, xc, yc);
-        // ctx.lineTo(x, y);
       }
       [x, y] = [xNext, yNext];
-      [xNext, yNext] = this._getCirclePoint(
-        i + 1,
-        midX,
-        midY,
-        dist,
-        grow,
-        mult,
-        opts.scaleFactor,
-        opts.scaleConstAdd,
-        opts,
-        dataArray
-      );
+      [xNext, yNext] = this._getCirclePoint(i + 1, end, dataArray);
     }
     ctx.fill();
-    // ctx.moveTo(0, 0)
-    ctx.beginPath();
+
+    // clear center of circle
     ctx.save();
-    ctx.arc(midX, midY, (90 * grow + 100) * opts.sizeMultipler, 0, 2 * Math.PI);
+    ctx.beginPath();
+
+    const p1 = 22.95;
+    const p2 = 290;
+
+    const radius = (grow * p1 + p2) * this._sizeMultiplier;
+
+    ctx.arc(midX, midY, radius, 0, 2 * Math.PI);
+
     ctx.clip();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.restore();
   }
 
-  _drawProgress(canvas, ctx, dataArray, options = {}) {
+  _drawProgress(dataArray, progress) {
+    const canvas = this.$.canvas;
+    const ctx = canvas.getContext('2d');
+
     const midX = canvas.width / 2;
     const midY = canvas.height / 2;
 
     const grow = this._calcGrow(dataArray);
-    // const grow = 0.7;
 
-    const angleStart = -Math.PI * 0.5;
-    const distance = (50 * grow + 115) * options.sizeMultipler;
+    const p1 = 12.75;
+    const p2 = 280;
 
-    const progressAngle = Math.PI * 2 * options.progress;
+    const distance = (grow * p1 + p2) * this._sizeMultiplier;
+
+    const angleStart = Math.PI * -0.5;
+    const progressAngle = 2 * Math.PI * progress;
 
     ctx.beginPath();
-    ctx.lineWidth = 2 * options.sizeMultipler;
     ctx.arc(midX, midY, distance, angleStart, angleStart + progressAngle);
     ctx.stroke();
 
+    const dotRadius = 7 * this._sizeMultiplier;
+
     ctx.beginPath();
-    ctx.arc(midX, midY - distance, 3.5 * options.sizeMultipler, 0, 2 * Math.PI);
+    ctx.arc(midX, midY - distance, dotRadius, 0, 2 * Math.PI);
     ctx.fill();
 
     ctx.beginPath();
     ctx.arc(
       midX + Math.sin(progressAngle) * distance,
       midY - Math.cos(progressAngle) * distance,
-      3.5 * options.sizeMultipler,
+      dotRadius,
       0,
       2 * Math.PI
     );
@@ -425,37 +392,28 @@ export class UiPlaying extends PolymerElement {
 
     if (this.waitingUntilStart) return;
 
-    let mult = Math.min(window.innerWidth / 500, window.innerHeight / 800);
-    mult = Math.min(1, mult);
-
     if (this.getAudioVisualizerData) {
       if (!this.delaying) {
         const dataArray = this.getAudioVisualizerData();
 
-        this._drawCircle(canvas, ctx, dataArray, {
-          start: 0,
-          end: dataArray.length * 0.43,
-          color: '#ffffff',
-          scaleFactor: 0.3,
-          // scaleFactor: 0.1,
-          scaleConstAdd: 60,
-          thatOneValue: 0.6,
-          sizeMultipler: 2 * window.devicePixelRatio * mult,
-        });
+        this._drawCircle(dataArray);
 
-        if (!this._showProgressLine)
-          if (!this.waitingUntilStart && !this.waitingForNetwork)
-            this._showProgressLine = true;
+        this._updateShowProgressLine();
 
-        if (this._showProgressLine)
-          this._drawProgress(canvas, ctx, dataArray, {
-            progress: this._calcProgressPercentage(),
-            sizeMultipler: 2 * window.devicePixelRatio * mult,
-          });
+        if (this._showProgressLine) {
+          const progress = this._calcProgressPercentage();
+          this._drawProgress(dataArray, progress);
+        }
       }
-
-      window.requestAnimationFrame(this._animate.bind(this));
     }
+
+    window.requestAnimationFrame(this._animate.bind(this));
+  }
+
+  _updateShowProgressLine() {
+    if (!this._showProgressLine)
+      if (!this.waitingUntilStart && !this.waitingForNetwork)
+        this._showProgressLine = true;
   }
 
   _calcProgressPercentage() {
