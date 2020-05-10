@@ -153,8 +153,8 @@ export class UiPlaying extends PolymerElement {
         type: Number,
         observer: '_updateTimestamp',
       },
-      _lastUpdateTimestamp: Number,
       getAudioVisualizerData: Function,
+      _lastUpdateTimestamp: Number,
       _showSpinner: {
         type: Boolean,
         computed: '_computeShowSpinner(waitingUntilStart, waitingForNetwork)',
