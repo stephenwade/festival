@@ -60,31 +60,29 @@ export class FestivalAudio extends PolymerElement {
   }
 
   initialize() {
+    if (this.targetShowStatus === 'ENDED') return;
+
     // skip setting up AudioContext on iOS
     const iOS = /iPad|iPhone|iPod/u.test(navigator.userAgent);
     if (!iOS) {
-      if (!this.audioContext) {
-        try {
-          this._setupAudioContext();
-        } catch (e) {
-          // ignore errors
-        }
+      try {
+        this._setupAudioContext();
+      } catch (e) {
+        // ignore errors
       }
-      if (this.audioContext && this.audioContext.state !== 'suspended') return;
     }
 
-    if (this.targetShowStatus !== 'ENDED') {
-      this.$.audio.src = undefined;
-      this.$.audio.play().catch(() => {
-        // ignore errors
-      });
-      if (!this.audioContext) {
-        this._handleAudioContextResumed();
-      } else {
-        this.audioContext
-          .resume()
-          .then(this._handleAudioContextResumed.bind(this));
-      }
+    // Safari: activate the audio element by trying to play
+    this.$.audio.play().catch(() => {
+      // ignore errors
+    });
+
+    if (!this.audioContext) {
+      this._handleAudioContextResumed();
+    } else {
+      this.audioContext
+        .resume()
+        .then(this._handleAudioContextResumed.bind(this));
     }
   }
 
