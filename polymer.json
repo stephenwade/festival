@@ -1,9 +1,0 @@
-{
-  "npm": true,
-  "lint": {
-    "rules": ["polymer-3"],
-    "ignoreWarnings": ["not-loadable"]
-  },
-  "sources": ["src/**/*", "images/**/*"],
-  "builds": [{ "preset": "es6-bundled" }]
-}

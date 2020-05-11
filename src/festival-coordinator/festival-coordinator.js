@@ -3,7 +3,7 @@ import {
   setDriftlessIntervalEverySecond,
   clearDriftless,
 } from '../../lib/driftless/driftless.js';
-import moment from 'moment';
+import moment from 'moment/src/moment.js';
 
 export class FestivalCoordinator extends PolymerElement {
   static get template() {

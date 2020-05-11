@@ -3,7 +3,10 @@
     "browser": true,
     "es6": true
   },
-  "extends": "eslint:recommended",
+  // "extends": ["@open-wc/eslint-config", "eslint-config-prettier"],
+  "extends": ["eslint:recommended", "eslint-config-prettier"],
+  "plugins": ["eslint-plugin-html"],
+  // after converting to LitElement, remove this plugin and extend @open-wc/eslint-config
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
