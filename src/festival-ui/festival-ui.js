@@ -138,6 +138,7 @@ export class FestivalUi extends PolymerElement {
 
   _audioStalledChanged(audioStalled) {
     if (this._alertShown) return;
+    if (this._waitingUntilStart || this._ended) return;
 
     if (audioStalled) {
       this.$.toast.text =
@@ -180,10 +181,10 @@ export class FestivalUi extends PolymerElement {
 
   _delayChanged(delay) {
     if (this._alertShown) return;
+    if (this._waitingUntilStart || this._ended) return;
 
     if (delay >= 15) {
-      this.$.toast.text =
-        'Looks like your internet connection is having trouble.';
+      this.$.toast.text = 'Looks like your audio player is out of sync.';
       this.$.toast.show();
       this._alertShown = true;
     }

@@ -262,6 +262,9 @@ export class FestivalAudio extends PolymerElement {
 
     const nextChange = this._changeQueue.shift();
     if (nextChange) this._performStatusChange(nextChange);
+
+    this.audioStalled = false;
+    clearTimeout(this._stalledTimeout);
   }
 
   _handleAudioTimeUpdate() {
@@ -292,12 +295,15 @@ export class FestivalAudio extends PolymerElement {
 
   _handleAudioPlaying() {
     this.audioWaiting = false;
-    this.audioStalled = false;
 
+    this.audioStalled = false;
     clearTimeout(this._stalledTimeout);
   }
 
   _handleAudioStalled() {
+    // Safari: only listen to stalled event if audio is waiting
+    if (!this.audioWaiting) return;
+
     this.audioStalled = true;
   }
 

@@ -3,7 +3,7 @@
   "description": "Festival",
   "license": "ISC",
   "scripts": {
-    "start": "es-dev-server --port 8080 --node-resolve --watch",
+    "start": "es-dev-server --port 8080 --node-resolve --compatibility none --watch",
     "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
     "lint:prettier": "prettier \"**/*.js\" --check --ignore-path .gitignore",
     "lint": "npm run lint:eslint && npm run lint:prettier",
