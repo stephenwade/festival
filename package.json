@@ -3,7 +3,7 @@
   "description": "Festival",
   "license": "ISC",
   "scripts": {
-    "start": "es-dev-server --port 8080 --node-resolve --watch --open",
+    "start": "es-dev-server --port 8080 --node-resolve --watch",
     "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
     "lint:prettier": "prettier \"**/*.js\" --check --ignore-path .gitignore",
     "lint": "npm run lint:eslint && npm run lint:prettier",
@@ -11,7 +11,7 @@
     "format:prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore",
     "format": "npm run format:eslint && npm run format:prettier",
     "build": "rm -rf dist && rollup -c rollup.config.js",
-    "start:build": "npm run build && es-dev-server --port 8080 --root-dir dist --compatibility none --open",
+    "start:build": "npm run build && es-dev-server --port 8080 --root-dir dist --compatibility none",
     "deploy:site": "rsync -rltv --delete --exclude=.htaccess --exclude goaccess dist/ $FESTIVAL_SITE_DEPLOY_LOCATION",
     "deploy:media": "az storage blob sync --container '$web' --source media --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\"",
     "deploy": "npm run deploy:site && npm run deploy:media"
