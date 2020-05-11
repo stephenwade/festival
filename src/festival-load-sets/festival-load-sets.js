@@ -1,6 +1,12 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import moment from 'moment/src/moment.js';
 
+const audioPrefix =
+  // eslint-disable-next-line no-constant-condition
+  '__buildEnv__' === 'production'
+    ? 'https://sndfli.z13.web.core.windows.net'
+    : 'media';
+
 export class FestivalLoadSets extends PolymerElement {
   static get template() {
     return null;
@@ -25,21 +31,21 @@ export class FestivalLoadSets extends PolymerElement {
     return {
       sets: [
         {
-          audio: '/public/mock/not-enough.mp3',
+          audio: `${audioPrefix}/mock/not-enough.mp3`,
           artist: 'Anavae',
           members: ['Rebecca Need-Menear', 'Jamie Finch'],
           start: m.clone().add(5, 'seconds').toISOString(),
           length: 224.03,
         },
         {
-          audio: '/public/mock/modern.mp3',
+          audio: `${audioPrefix}/mock/modern.mp3`,
           artist: 'bignic',
           members: ['Nic Gorissen', '@tehbignic'],
           start: m.clone().add(234, 'seconds').toISOString(),
           length: 186.44,
         },
         {
-          audio: '/public/mock/how-i-love.mp3',
+          audio: `${audioPrefix}/mock/how-i-love.mp3`,
           artist: 'Ren Queenston',
           members: [
             'Mayhem',
@@ -51,7 +57,7 @@ export class FestivalLoadSets extends PolymerElement {
           length: 192.89,
         },
         {
-          audio: '/public/mock/wonderland.mp3',
+          audio: `${audioPrefix}/mock/wonderland.mp3`,
           artist: 'The Adventure Zone',
           members: [
             'Griffin McElroy',
