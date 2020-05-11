@@ -53,7 +53,7 @@ export class FestivalLoadSets extends PolymerElement {
             'Halley Labs',
             'The Quick Brown Fox',
           ],
-          start: m.clone().add(637, 'seconds').toISOString(),
+          start: m.clone().add(425, 'seconds').toISOString(),
           length: 192.89,
         },
         {
@@ -65,7 +65,7 @@ export class FestivalLoadSets extends PolymerElement {
             'Travis McElroy',
             'Clint McElroy',
           ],
-          start: m.clone().add(860, 'seconds').toISOString(),
+          start: m.clone().add(623, 'seconds').toISOString(),
           length: 156.92,
         },
       ],
