@@ -145,14 +145,9 @@ export class UiPlaying extends PolymerElement {
         observer: '_waitingUntilStartChanged',
       },
       secondsUntilSet: Number,
-      waitingForNetwork: {
-        type: Boolean,
-        observer: '_updateTimestamp',
-      },
-      currentTime: {
-        type: Number,
-        observer: '_updateTimestamp',
-      },
+      waitingForNetwork: Boolean,
+      currentTime: Number,
+      audioPaused: Boolean,
       getAudioVisualizerData: Function,
       _lastUpdateTimestamp: Number,
       _showSpinner: {
@@ -167,6 +162,10 @@ export class UiPlaying extends PolymerElement {
       _showProgressLine: Boolean,
       _sizeMultiplier: Number,
     };
+  }
+
+  static get observers() {
+    return ['_updateTimestamp(waitingForNetwork, audioPaused, currentTime)'];
   }
 
   connectedCallback() {
@@ -418,7 +417,7 @@ export class UiPlaying extends PolymerElement {
 
   _calcProgressPercentage() {
     let currentTime;
-    if (this.waitingForNetwork) {
+    if (this.waitingForNetwork || this.audioPaused) {
       currentTime = this.currentTime;
     } else {
       const delayMs = performance.now() - this._lastUpdateTimestamp;

@@ -25,6 +25,7 @@ export class FestivalApp extends PolymerElement {
         audio-status="{{audioStatus}}"
         audio-waiting="{{audioWaiting}}"
         audio-stalled="{{audioStalled}}"
+        audio-paused="{{audioPaused}}"
         get-audio-visualizer-data="{{getAudioVisualizerData}}"
         on-error="_handleAudioError"
         on-loadedmetadata="_handleAudioLoadedMetadata"
@@ -34,6 +35,7 @@ export class FestivalApp extends PolymerElement {
         audio-status="[[audioStatus]]"
         audio-waiting="[[audioWaiting]]"
         audio-stalled="[[audioStalled]]"
+        audio-paused="[[audioPaused]]"
         get-audio-visualizer-data="[[getAudioVisualizerData]]"
         on-listen="_handleListenClicked"
       ></festival-ui>
@@ -50,6 +52,7 @@ export class FestivalApp extends PolymerElement {
       audioStatus: Object,
       audioWaiting: Boolean,
       audioStalled: Boolean,
+      audioPaused: Boolean,
     };
   }
 

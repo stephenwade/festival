@@ -57,6 +57,7 @@ export class FestivalUi extends PolymerElement {
           seconds-until-set="[[audioStatus.secondsUntilSet]]"
           waiting-for-network="[[_waitingForNetwork]]"
           current-time="[[audioStatus.currentTime]]"
+          audio-paused="[[audioPaused]]"
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
         ></ui-playing>
       </template>

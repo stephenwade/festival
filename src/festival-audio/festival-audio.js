@@ -18,6 +18,7 @@ export class FestivalAudio extends PolymerElement {
         on-error="_handleAudioError"
         on-waiting="_handleAudioWaiting"
         on-playing="_handleAudioPlaying"
+        on-pause="_handleAudioPause"
         on-stalled="_handleAudioStalled"
         on-loadedmetadata="_handleAudioLoadedMetadata"
       ></audio>
@@ -48,6 +49,11 @@ export class FestivalAudio extends PolymerElement {
         value: false,
       },
       audioStalled: {
+        type: Boolean,
+        notify: true,
+        value: false,
+      },
+      audioPaused: {
         type: Boolean,
         notify: true,
         value: false,
@@ -265,6 +271,8 @@ export class FestivalAudio extends PolymerElement {
 
     this.audioStalled = false;
     clearTimeout(this._stalledTimeout);
+
+    this.audioPaused = false;
   }
 
   _handleAudioTimeUpdate() {
@@ -298,6 +306,12 @@ export class FestivalAudio extends PolymerElement {
 
     this.audioStalled = false;
     clearTimeout(this._stalledTimeout);
+
+    this.audioPaused = false;
+  }
+
+  _handleAudioPause() {
+    this.audioPaused = true;
   }
 
   _handleAudioStalled() {
