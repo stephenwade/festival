@@ -183,7 +183,7 @@ export class FestivalUi extends PolymerElement {
     if (this._alertShown) return;
     if (this._waitingUntilStart || this._ended) return;
 
-    if (delay >= 15) {
+    if (delay >= 30) {
       this.$.toast.text = 'Looks like your audio player is out of sync.';
       this.$.toast.show();
       this._alertShown = true;
