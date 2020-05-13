@@ -58,6 +58,7 @@ export class FestivalUi extends PolymerElement {
           waiting-for-network="[[_waitingForNetwork]]"
           current-time="[[audioStatus.currentTime]]"
           audio-paused="[[audioPaused]]"
+          reduce-motion="[[_reduceMotion]]"
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
         ></ui-playing>
       </template>
@@ -84,6 +85,7 @@ export class FestivalUi extends PolymerElement {
       getAudioVisualizerData: Function,
       _error: Boolean,
       _alertShown: Boolean,
+      _reduceMotion: Boolean,
       _waitingForAudioContext: {
         type: Boolean,
         computed: '_computeWaitingForAudioContext(audioStatus.status)',
@@ -127,6 +129,31 @@ export class FestivalUi extends PolymerElement {
     setTimeout(() => {
       this._stampEnded = true;
     }, 10 * 1000);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    this._motionMediaQuery = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    );
+    this._motionMediaQueryChanged = () => {
+      this._reduceMotion = this._motionMediaQuery.matches;
+    };
+    this._motionMediaQuery.addEventListener(
+      'change',
+      this._motionMediaQueryChanged
+    );
+    this._motionMediaQueryChanged();
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    this._motionMediaQuery.removeEventListener(
+      'change',
+      this._motionMediaQueryChanged
+    );
   }
 
   showError() {

@@ -148,6 +148,10 @@ export class UiPlaying extends PolymerElement {
       waitingForNetwork: Boolean,
       currentTime: Number,
       audioPaused: Boolean,
+      reduceMotion: {
+        type: Boolean,
+        value: false,
+      },
       getAudioVisualizerData: Function,
       _lastUpdateTimestamp: Number,
       _showSpinner: {
@@ -272,6 +276,8 @@ export class UiPlaying extends PolymerElement {
   }
 
   _calcGrow(dataArray) {
+    if (this.reduceMotion) return 0;
+
     const average = dataArray.slice(0, 5).reduce((a, b) => a + b) / 5;
     return average / 255;
   }
@@ -395,7 +401,7 @@ export class UiPlaying extends PolymerElement {
       if (!this.delaying) {
         const dataArray = this.getAudioVisualizerData();
 
-        this._drawCircle(dataArray);
+        if (!this.reduceMotion) this._drawCircle(dataArray);
 
         this._updateShowProgressLine();
 
