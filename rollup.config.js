@@ -4,7 +4,7 @@ import copy from 'rollup-plugin-copy';
 import replace from '@rollup/plugin-replace';
 
 const baseConfig = createSpaConfig({
-  injectServiceWorker: false,
+  workbox: false,
 });
 
 export default merge(baseConfig, {
