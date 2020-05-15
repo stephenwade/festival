@@ -71,8 +71,8 @@ export class UiIntro extends PolymerElement {
       >
         <img
           id="logo"
-          src="images/fest2fest-logo.svg"
-          alt="FEST2FEST"
+          src="images/festiv4l-logo.svg"
+          alt="FESTIV4L"
           on-load="_handleLogoLoaded"
         />
       </a>
