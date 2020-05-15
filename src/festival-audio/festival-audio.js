@@ -82,6 +82,9 @@ export class FestivalAudio extends PolymerElement {
     this.$.audio.play().catch(() => {
       // ignore errors
     });
+    // Firefox: if you don't pause after trying to play, it will start to play
+    // as soon as src is set
+    this.$.audio.pause();
 
     if (!this.audioContext) {
       this._handleAudioContextResumed();
