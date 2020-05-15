@@ -1,6 +1,5 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
-import '@polymer/polymer/lib/elements/dom-repeat.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
 
 export class UiPlaying extends PolymerElement {
@@ -80,8 +79,7 @@ export class UiPlaying extends PolymerElement {
           text-align: left;
         }
 
-        #artist,
-        #members {
+        #artist {
           display: inline-block;
           vertical-align: top;
         }
@@ -93,18 +91,6 @@ export class UiPlaying extends PolymerElement {
           line-height: 0.9;
           letter-spacing: -0.05em;
           margin-bottom: -0.2rem;
-        }
-
-        #members {
-          font-size: 1.3em;
-          text-align: left;
-          line-height: 1;
-          padding-left: 0.6rem;
-          padding-top: 0.15rem;
-        }
-
-        #members span {
-          display: block;
         }
       </style>
       <canvas id="canvas"></canvas>
@@ -122,13 +108,6 @@ export class UiPlaying extends PolymerElement {
       <div id="artist-group-outer">
         <div id="artist-group">
           <div id="artist">[[set.artist]]</div>
-          <div id="members">
-            <dom-repeat items="[[set.members]]" on-dom-change="_resizeText">
-              <template>
-                <span>[[item]]</span>
-              </template>
-            </dom-repeat>
-          </div>
         </div>
       </div>
     `;
