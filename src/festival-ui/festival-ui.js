@@ -140,10 +140,9 @@ export class FestivalUi extends PolymerElement {
     this._motionMediaQueryChanged = () => {
       this._reduceMotion = this._motionMediaQuery.matches;
     };
-    this._motionMediaQuery.addEventListener(
-      'change',
-      this._motionMediaQueryChanged
-    );
+    // In Safari, MediaQueryList doesn't inherit from EventTarget
+    // This means that we must use addListener instead of addEventListener
+    this._motionMediaQuery.addListener(this._motionMediaQueryChanged);
     this._motionMediaQueryChanged();
   }
 
