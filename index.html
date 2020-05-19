@@ -28,6 +28,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
+      crossorigin="anonymous"
       src="https://www.googletagmanager.com/gtag/js?id=UA-164777555-1"
     ></script>
     <script>
@@ -38,6 +39,7 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-164777555-1');
+      gtag('config', 'GA_MEASUREMENT_ID', { transport_type: 'beacon' });
     </script>
 
     <script type="module" src="/src/festival-app/festival-app.js"></script>
