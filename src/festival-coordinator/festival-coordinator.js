@@ -169,14 +169,14 @@ export class FestivalCoordinator extends PolymerElement {
     switch (this.targetShowStatus) {
       case 'WAITING_UNTIL_START': {
         const firstSet = sets[0];
-        if (now.isSameOrAfter(firstSet.startMoment)) {
+        if (firstSet && now.isSameOrAfter(firstSet.startMoment)) {
           this.targetShowStatus = 'IN_PROGRESS';
         } else break;
       }
       // fallthrough
       case 'IN_PROGRESS': {
         const lastSet = sets.slice(-1)[0];
-        if (now.isAfter(lastSet.endMoment)) {
+        if (lastSet && now.isAfter(lastSet.endMoment)) {
           this.targetShowStatus = 'ENDED';
         } else break;
       }
