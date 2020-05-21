@@ -1,6 +1,9 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import moment from 'moment/src/moment.js';
 
+// In development, serve media from ./media
+// In production, serve media from Azure
+// This is accomplished by @rollup/plugin-replace in rollup.config.js
 const audioPrefix =
   // eslint-disable-next-line no-constant-condition
   '__buildEnv__' === 'production'
