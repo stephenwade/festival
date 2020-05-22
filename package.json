@@ -10,6 +10,7 @@
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
     "format:prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore",
     "format": "npm run format:eslint && npm run format:prettier",
+    "imagemin": "imagemin --plugin.webp.quality=100 images/* --out-dir=images",
     "build": "rm -rf dist && rollup -c rollup.config.js",
     "start:build": "npm run build && es-dev-server --port 8080 --root-dir dist --compatibility none",
     "deploy:site": "rsync -rltv --delete --exclude=.htaccess --exclude goaccess dist/ $FESTIVAL_SITE_DEPLOY_LOCATION",

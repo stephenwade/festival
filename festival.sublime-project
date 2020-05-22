@@ -11,7 +11,8 @@
       "allow_inline_formatting": true,
       "auto_format_on_save": true,
       "additional_cli_args": {
-        "--config": "${project_path}/.prettierrc"
+        "--config": "${project_path}/.prettierrc",
+        "--ignore-path": "${project_path}/.prettierignore"
       }
     }
   }

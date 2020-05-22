@@ -7,8 +7,9 @@ at the same time) without requiring live streaming infrastructure.
 
 ## Local Development
 
-1. Run `npm install` to install the required npm packages.
-1. Run `npm start` to serve the application locally.
+- Run `npm install` to install the required npm packages.
+- Run `npm start` to serve the application locally.
+- If you add images, run `npm run imagemin` to convert them to WEBP.
 
 ## Building
 

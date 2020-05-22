@@ -37,12 +37,16 @@
       gtag('config', 'GA_MEASUREMENT_ID', { transport_type: 'beacon' });
     </script>
 
-    <script type="module" src="/src/festival-app/festival-app.js"></script>
+    <script type="module" src="/src/index.js"></script>
 
     <style>
-      html {
+      html.no-webplossless {
         --gradient-background: url('/images/fest2fest-gradient.png');
       }
+      html.webplossless {
+        --gradient-background: url('/images/fest2fest-gradient.webp');
+      }
+
       html,
       body {
         height: 100%;
@@ -51,8 +55,12 @@
       body {
         margin: 0;
         background: rgb(57, 103, 220);
-        background: var(--gradient-background),
-          linear-gradient(to right, #3e6ae1 0%, #f420fe 100%);
+        background: linear-gradient(to right, #3e6ae1 0%, #f420fe 100%);
+      }
+
+      html.no-webp-lossless body,
+      html.webp-lossless body {
+        background: var(--gradient-background);
         background-size: 100% auto;
       }
     </style>
