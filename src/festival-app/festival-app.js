@@ -7,10 +7,7 @@ import '../festival-ui/festival-ui.js';
 export class FestivalApp extends PolymerElement {
   static get template() {
     return html`
-      <festival-load-sets
-        id="loader"
-        sets-data="{{setsData}}"
-      ></festival-load-sets>
+      <festival-load-sets id="loader"></festival-load-sets>
       <festival-coordinator
         id="coordinator"
         sets-data="[[setsData]]"
@@ -62,8 +59,12 @@ export class FestivalApp extends PolymerElement {
     this._loadData();
   }
 
-  _loadData() {
-    this.$.loader.loadData();
+  async _loadData() {
+    try {
+      this.setsData = await this.$.loader.loadData();
+    } catch (e) {
+      this.$.ui.showLoadingError();
+    }
   }
 
   _handleListenClicked() {
@@ -71,7 +72,7 @@ export class FestivalApp extends PolymerElement {
   }
 
   _handleAudioError() {
-    this.$.ui.showError();
+    this.$.ui.showAudioError();
   }
 
   _handleAudioLoadedMetadata(e) {

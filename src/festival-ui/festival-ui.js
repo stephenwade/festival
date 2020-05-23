@@ -155,10 +155,18 @@ export class FestivalUi extends PolymerElement {
     );
   }
 
-  showError() {
-    this._error = true;
+  showAudioError() {
     const verb = this._waitingUntilStart ? 'loading' : 'playing';
-    this.$.toast.text = `There was a problem ${verb} the audio track.`;
+    this._showError(`There was a problem ${verb} the audio track.`);
+  }
+
+  showLoadingError() {
+    this._showError('There was a problem loading the show data.');
+  }
+
+  _showError(text) {
+    this._error = true;
+    this.$.toast.text = text;
     this.$.toast.show();
     this._alertShown = true;
   }
