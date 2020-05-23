@@ -12,7 +12,10 @@ export default merge(baseConfig, {
   input: './index.html',
   plugins: [
     copy({
-      targets: [{ src: 'images/*', dest: 'dist/images' }],
+      targets: [
+        { src: 'images/*', dest: 'dist/images' },
+        { src: 'media/sets.json', dest: 'dist/media/sets.json' },
+      ],
     }),
     replace({
       __buildEnv__: 'production',
@@ -63,7 +66,10 @@ export default merge(c, {
   input: './index.html',
   plugins: [
     copy({
-      targets: [{ src: 'images/*', dest: 'dist/images' }],
+      targets: [
+        { src: 'images/*', dest: 'dist/images' },
+        { src: 'media/sets.json', dest: 'dist/media' },
+      ],
     }),
     replace({
       __buildEnv__: 'production',

@@ -11,7 +11,7 @@ const audioPrefix =
 
 export class FestivalLoadSets extends HTMLElement {
   async loadData() {
-    const response = await window.fetch(`${audioPrefix}sets.json`);
+    const response = await window.fetch('media/sets.json');
 
     if (!response.ok)
       throw new Error(`Response: ${response.status} ${response.statusText}`);

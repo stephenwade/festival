@@ -14,7 +14,7 @@
     "build": "rm -rf dist && rollup -c rollup.config.js",
     "start:build": "npm run build && es-dev-server --port 8080 --root-dir dist --compatibility none",
     "deploy:site": "rsync -rltv --delete --exclude=.htaccess --exclude goaccess dist/ $FESTIVAL_SITE_DEPLOY_LOCATION",
-    "deploy:media": "az storage blob sync --container '$web' --source media --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\"",
+    "deploy:media": "az storage blob sync --container '$web' --source media --exclude-pattern '*.json' --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\"",
     "deploy": "npm run deploy:site && npm run deploy:media"
   },
   "dependencies": {
