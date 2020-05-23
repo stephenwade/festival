@@ -35,7 +35,7 @@ export class UiPlaying extends PolymerElement {
         }
 
         #current-time,
-        #artist-group-outer {
+        #artist-group {
           z-index: 1;
         }
 
@@ -59,12 +59,8 @@ export class UiPlaying extends PolymerElement {
           margin-bottom: 0.2em;
         }
 
-        #artist-group-outer {
-          width: 100vw;
-          user-select: text;
-        }
-
         #artist-group {
+          user-select: text;
           display: inline-block;
         }
 
@@ -77,6 +73,7 @@ export class UiPlaying extends PolymerElement {
           display: block;
           padding-left: 0;
           text-align: left;
+          max-width: 500px;
         }
 
         #artist {
@@ -105,10 +102,8 @@ export class UiPlaying extends PolymerElement {
       <template is="dom-if" if="[[waitingUntilStart]]">
         <div id="nextup">Next up</div>
       </template>
-      <div id="artist-group-outer">
-        <div id="artist-group">
-          <div id="artist">[[set.artist]]</div>
-        </div>
+      <div id="artist-group">
+        <div id="artist">[[set.artist]]</div>
       </div>
     `;
   }
@@ -182,7 +177,7 @@ export class UiPlaying extends PolymerElement {
 
     window.addEventListener('resize', this._resize);
 
-    resizeCanvas();
+    this._resize();
 
     // start draw loop
     this._animate();
