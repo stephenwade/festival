@@ -8,8 +8,20 @@ at the same time) without requiring live streaming infrastructure.
 ## Local Development
 
 - Run `npm install` to install the required npm packages.
-- Run `npm start` to serve the application locally.
+- Add media files to the `media/` folder and add the information to
+  `media/sets.json`. Use `media/sets-sample.json` as a guide to format
+  your `sets.json` file.
 - If you add images, run `npm run imagemin` to convert them to WEBP.
+- Run `npm start` to serve the application locally.
+
+## Sample Media
+
+- The `media/sets-sample.json` file has references to several sample media
+  files available under
+  [CC0](https://creativecommons.org/share-your-work/public-domain/cc0/).
+  To get the sample media files, download
+  [this ZIP file](https://stephenwade.me/sh/f/sample.zip)
+  and expand it into the `media/` folder.
 
 ## Building
 

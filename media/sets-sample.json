@@ -1,0 +1,35 @@
+{
+  "adjustTimesForTesting": true,
+  "sets": [
+    {
+      "audio": "sample/energy-fix.mp3",
+      "artist": "Computer Music All-stars",
+      "start": "2020-01-01 00:00:00",
+      "length": 181.34
+    },
+    {
+      "audio": "sample/bust-this-bust-that.mp3",
+      "artist": "Professor Kliq",
+      "start": "2020-01-01 00:03:06",
+      "length": 268.64
+    },
+    {
+      "audio": "sample/one-ride.mp3",
+      "artist": "'Etikit",
+      "start": "2020-01-01 00:07:40",
+      "length": 183.72
+    },
+    {
+      "audio": "sample/total-breakdown.mp3",
+      "artist": "Brad Sucks",
+      "start": "2020-01-01 00:10:49",
+      "length": 139.0
+    },
+    {
+      "audio": "sample/distant-thunder-sunday-morning.mp3",
+      "artist": "springtide",
+      "start": "2020-01-01 00:13:13",
+      "length": 226.06
+    }
+  ]
+}
