@@ -3,7 +3,7 @@
   "description": "Festival",
   "license": "ISC",
   "scripts": {
-    "start": "es-dev-server --port 8080 --node-resolve --compatibility none --watch",
+    "start": "es-dev-server --node-resolve",
     "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
     "lint:prettier": "prettier \"**/*.js\" --check --ignore-path .prettierignore",
     "lint": "npm run lint:eslint && npm run lint:prettier",
@@ -12,7 +12,7 @@
     "format": "npm run format:eslint && npm run format:prettier",
     "imagemin": "imagemin --plugin.webp.quality=100 images/* --out-dir=images",
     "build": "rm -rf dist && rollup -c rollup.config.js",
-    "start:build": "npm run build && es-dev-server --port 8080 --root-dir dist --compatibility none",
+    "start:build": "npm run build && es-dev-server --root-dir dist",
     "deploy:site": "rsync -rltv --delete --exclude=.htaccess --exclude goaccess dist/ $FESTIVAL_SITE_DEPLOY_LOCATION",
     "deploy:media": "az storage blob sync --container '$web' --source media --exclude-pattern '*.json' --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\"",
     "deploy": "npm run deploy:site && npm run deploy:media"
@@ -38,6 +38,7 @@
     "imagemin": "^7.0.1",
     "imagemin-cli": "^5.1.0",
     "imagemin-webp": "^5.1.0",
+    "koa-range": "^0.3.0",
     "lint-staged": "^10.2.6",
     "prettier": "2.0.5",
     "rollup": "^2.10.7",
