@@ -130,7 +130,7 @@ export class FestivalCoordinator extends PolymerElement {
           'seconds',
           true /* do not truncate */
         );
-        const secondsUntilSet = Math.round(secondsUntilSetFrac);
+        const secondsUntilSet = Math.ceil(secondsUntilSetFrac);
         return {
           set,
           secondsUntilSet,
@@ -143,7 +143,7 @@ export class FestivalCoordinator extends PolymerElement {
         'seconds',
         true /* do not truncate */
       );
-      const currentTime = Math.round(currentTimeFrac);
+      const currentTime = Math.floor(currentTimeFrac);
       return {
         set,
         currentTime,
