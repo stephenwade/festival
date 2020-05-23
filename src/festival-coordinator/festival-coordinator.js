@@ -39,11 +39,7 @@ export class FestivalCoordinator extends PolymerElement {
     for (const set of sets) {
       if (set === detail.set) {
         set.length = detail.duration;
-        set.endMoment = set.startMoment
-          .clone()
-          .add(set.length, 'seconds')
-          // make sure next set event is ready before current set ends
-          .subtract(1, 'seconds');
+        set.endMoment = set.startMoment.clone().add(set.length, 'seconds');
       }
     }
   }
@@ -69,11 +65,7 @@ export class FestivalCoordinator extends PolymerElement {
   _addMomentsToSets() {
     this.setsData.sets.forEach((set) => {
       set.startMoment = moment(set.start);
-      set.endMoment = set.startMoment
-        .clone()
-        .add(set.length, 'seconds')
-        // make sure next set event is ready before current set ends
-        .subtract(1, 'seconds');
+      set.endMoment = set.startMoment.clone().add(set.length, 'seconds');
     });
   }
 
@@ -179,7 +171,9 @@ export class FestivalCoordinator extends PolymerElement {
     }
 
     let set = this.targetAudioStatus.set;
-    if (now.isAfter(set.endMoment)) set = this._getNextSet();
+    // make sure next set event is ready before current set ends
+    const setCutoff = set.endMoment.clone().subtract(1, 'second');
+    if (now.isAfter(setCutoff)) set = this._getNextSet();
 
     this.targetAudioStatus = this._getTargetAudioStatusForSet(set, now);
   }
