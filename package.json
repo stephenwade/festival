@@ -5,10 +5,10 @@
   "scripts": {
     "start": "es-dev-server --port 8080 --node-resolve --compatibility none --watch",
     "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
-    "lint:prettier": "prettier \"**/*.js\" --check --ignore-path .gitignore",
+    "lint:prettier": "prettier \"**/*.js\" --check --ignore-path .prettierignore",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
-    "format:prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore",
+    "format:prettier": "prettier \"**/*.js\" --write --ignore-path .prettierignore",
     "format": "npm run format:eslint && npm run format:prettier",
     "imagemin": "imagemin --plugin.webp.quality=100 images/* --out-dir=images",
     "build": "rm -rf dist && rollup -c rollup.config.js",
