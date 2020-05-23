@@ -1,14 +1,15 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import moment from 'moment/src/moment.js';
+
+// In production, BUILD_ENV is set to 'production'
+// This is accomplished by @rollup/plugin-replace in rollup.config.js
+const BUILD_ENV = '__buildEnv__';
 
 // In development, serve media from ./media
 // In production, serve media from Azure
-// This is accomplished by @rollup/plugin-replace in rollup.config.js
 const audioPrefix =
-  // eslint-disable-next-line no-constant-condition
-  '__buildEnv__' === 'production'
-    ? 'https://sndfli.z13.web.core.windows.net'
-    : 'media';
+  BUILD_ENV === 'production'
+    ? 'https://sndfli.z13.web.core.windows.net/'
+    : 'media/';
 
 export class FestivalLoadSets extends PolymerElement {
   static get template() {
@@ -24,55 +25,32 @@ export class FestivalLoadSets extends PolymerElement {
     };
   }
 
-  loadData() {
-    // always use mock data for now
-    this.setsData = this._getMockData();
-  }
+  async loadData() {
+    try {
+      const response = await window.fetch(`${audioPrefix}sets.json`);
 
-  _getMockData() {
-    const m = moment().startOf('second');
-    return {
-      sets: [
-        {
-          audio: `${audioPrefix}/mock/not-enough.mp3`,
-          artist: 'Anavae',
-          members: ['Rebecca Need-Menear', 'Jamie Finch'],
-          start: m.clone().add(5, 'seconds').toISOString(),
-          length: 224.03,
-        },
-        {
-          audio: `${audioPrefix}/mock/modern.mp3`,
-          artist: 'bignic',
-          members: ['Nic Gorissen', '@tehbignic'],
-          start: m.clone().add(234, 'seconds').toISOString(),
-          length: 186.44,
-        },
-        {
-          audio: `${audioPrefix}/mock/how-i-love.mp3`,
-          artist: 'Ren Queenston',
-          members: [
-            'Mayhem',
-            'LapFox Trax',
-            'Halley Labs',
-            'The Quick Brown Fox',
-          ],
-          start: m.clone().add(425, 'seconds').toISOString(),
-          length: 192.89,
-        },
-        {
-          audio: `${audioPrefix}/mock/wonderland.mp3`,
-          artist: 'The Adventure Zone',
-          members: [
-            'Griffin McElroy',
-            'Justin McElroy',
-            'Travis McElroy',
-            'Clint McElroy',
-          ],
-          start: m.clone().add(623, 'seconds').toISOString(),
-          length: 156.92,
-        },
-      ],
-    };
+      if (!response.ok)
+        throw new Error(`Response: ${response.status} ${response.statusText}`);
+
+      const data = await response.json();
+
+      data.sets.forEach((set) => {
+        if (set.audio) set.audio = audioPrefix + set.audio;
+      });
+
+      this.setsData = data;
+    } catch (reason) {
+      /* global Sentry */
+      Sentry.captureException(reason);
+
+      this.dispatchEvent(
+        new CustomEvent('error', {
+          bubbles: true,
+          composed: true,
+          detail: reason,
+        })
+      );
+    }
   }
 }
 
