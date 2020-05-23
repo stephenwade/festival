@@ -23,7 +23,7 @@
     "@polymer/paper-toast": "^3.0.1",
     "@polymer/polymer": "^3.4.1",
     "@webcomponents/webcomponentsjs": "^2.4.3",
-    "moment": "^2.25.3",
+    "moment": "^2.26.0",
     "standardized-audio-context": "^23.1.2"
   },
   "devDependencies": {
@@ -31,16 +31,16 @@
     "@open-wc/eslint-config": "^2.0.6",
     "@rollup/plugin-replace": "^2.3.2",
     "deepmerge": "^4.2.2",
-    "es-dev-server": "^1.50.6",
+    "es-dev-server": "^1.50.8",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^4.2.5",
     "imagemin": "^7.0.1",
     "imagemin-cli": "^5.1.0",
     "imagemin-webp": "^5.1.0",
-    "lint-staged": "^10.2.4",
+    "lint-staged": "^10.2.6",
     "prettier": "2.0.5",
-    "rollup": "^2.10.5",
+    "rollup": "^2.10.7",
     "rollup-plugin-copy": "^3.3.0"
   },
   "husky": {
