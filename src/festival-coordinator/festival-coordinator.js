@@ -113,17 +113,18 @@ export class FestivalCoordinator extends PolymerElement {
     return null;
   }
 
-  _getNextSet() {
+  _getNextSet(set) {
     const sets = this.setsData.sets;
-    const currentSet = this.targetAudioStatus.set;
-    const currentSetId = sets.indexOf(currentSet);
-    const nextSetId = currentSetId + 1;
-    if (nextSetId < sets.length) return sets[nextSetId];
+    const setIdx = sets.indexOf(set);
+    const nextSetIdx = setIdx + 1;
+    if (nextSetIdx < sets.length) return sets[nextSetIdx];
     return null;
   }
 
   _getTargetAudioStatusForSet(set, now) {
     if (set) {
+      const nextSet = this._getNextSet(set);
+
       if (now.isBefore(set.startMoment)) {
         const secondsUntilSetFrac = set.startMoment.diff(
           now,
@@ -135,6 +136,7 @@ export class FestivalCoordinator extends PolymerElement {
           set,
           secondsUntilSet,
           status: 'WAITING_UNTIL_START',
+          nextSet,
         };
       }
 
@@ -148,6 +150,7 @@ export class FestivalCoordinator extends PolymerElement {
         set,
         currentTime,
         status: 'PLAYING',
+        nextSet,
       };
     }
 
@@ -173,7 +176,7 @@ export class FestivalCoordinator extends PolymerElement {
     let set = this.targetAudioStatus.set;
     // make sure next set event is ready before current set ends
     const setCutoff = set.endMoment.clone().subtract(1, 'second');
-    if (now.isAfter(setCutoff)) set = this._getNextSet();
+    if (now.isAfter(setCutoff)) set = this._getNextSet(set);
 
     this.targetAudioStatus = this._getTargetAudioStatusForSet(set, now);
   }
