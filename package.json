@@ -4,9 +4,7 @@
   "license": "ISC",
   "scripts": {
     "start": "es-dev-server --node-resolve",
-    "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
-    "lint:prettier": "prettier \"**/*.js\" --check --ignore-path .prettierignore",
-    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "lint": "eslint --ext .js,.html . --ignore-path .gitignore",
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
     "format:prettier": "prettier \"**/*.js\" --write --ignore-path .prettierignore",
     "format": "npm run format:eslint && npm run format:prettier",
