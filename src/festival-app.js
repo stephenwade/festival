@@ -1,8 +1,8 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '../festival-load-sets/festival-load-sets.js';
-import '../festival-coordinator/festival-coordinator.js';
-import '../festival-audio/festival-audio.js';
-import '../festival-ui/festival-ui.js';
+import './festival-load-sets.js';
+import './festival-coordinator.js';
+import './festival-audio.js';
+import './festival-ui.js';
 
 export class FestivalApp extends PolymerElement {
   static get template() {

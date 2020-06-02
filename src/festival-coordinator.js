@@ -2,7 +2,7 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import {
   setDriftlessIntervalEverySecond,
   clearDriftless,
-} from '../../lib/driftless/driftless.js';
+} from '../lib/driftless/driftless.js';
 import moment from 'moment/src/moment.js';
 
 export class FestivalCoordinator extends PolymerElement {
