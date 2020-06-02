@@ -31,8 +31,14 @@ export class FestivalUi extends PolymerElement {
           color: white;
           font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
             'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+          /*
           background: var(--gradient-background);
           background-size: 100% auto;
+          */
+          background: url('/images/dnb-break-67-waves.svg'), var(--background);
+          background-size: calc(50vw + 30em) auto;
+          background-position: center right -20em;
+          background-repeat: no-repeat;
         }
 
         paper-toast paper-button:first-of-type {

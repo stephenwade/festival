@@ -24,8 +24,10 @@ export class UiIntro extends PolymerElement {
           align-items: center;
           justify-content: center;
           padding: 0 1em;
+          /*
           background: var(--gradient-background);
           background-size: 100% auto;
+          */
         }
 
         #logo-link {
@@ -35,8 +37,8 @@ export class UiIntro extends PolymerElement {
         #logo {
           display: block;
           width: 100%;
-          max-width: 900px;
-          margin: 2em auto;
+          max-width: 580px;
+          margin: 2em auto 3em auto;
         }
 
         #buttons {
@@ -50,12 +52,14 @@ export class UiIntro extends PolymerElement {
           border-radius: 5px;
           padding: 0.5em 1em;
           margin-bottom: 0.5em;
-          transform: skew(-10deg);
+          /* transform: skew(-10deg); */
 
-          /* gradient cutout */
-          color: black;
-          --paper-button-ink-color: black;
-          mix-blend-mode: screen;
+          color: #1c1c1c;
+          --paper-button-ink-color: #1c1c1c;
+        }
+
+        #button-listen {
+          background: #e8ff00;
         }
 
         a {
@@ -71,7 +75,7 @@ export class UiIntro extends PolymerElement {
       >
         <img
           id="logo"
-          src="images/festiv4l-logo.svg"
+          src="images/dnb-break-67-logo.svg"
           alt="FESTIV4L"
           on-load="_handleLogoLoaded"
         />
