@@ -390,7 +390,11 @@ export class FestivalAudio extends PolymerElement {
   }
 
   _handleAudioStalled(e) {
-    if (e.target !== this._activeAudio) return;
+    if (
+      e && // this function can be called without an event object
+      e.target !== this._activeAudio
+    )
+      return;
 
     // Safari: only listen to stalled event if audio is waiting
     if (!this.audioWaiting) return;
