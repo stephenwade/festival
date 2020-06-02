@@ -1,5 +1,18 @@
-/node_modules
-/media
-/dist
-*.sublime-workspace
+# editors
+/.idea
+/.vscode
+/festival.sublime-workspace
+
+# system files
 .DS_Store
+
+# npm
+/node_modules/
+/npm-debug.log
+
+# testing
+/coverage/
+
+# build
+/dist/
+/media/
