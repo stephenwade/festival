@@ -26,18 +26,12 @@ export class UiPlaying extends PolymerElement {
           text-align: center;
           padding: 0 1em;
           text-transform: uppercase;
-
-          background: url('/images/dnb-break-67-waves.svg'), var(--background);
-          background-size: 100em auto;
-          background-position: center 40%;
-          background-repeat: no-repeat;
         }
 
         canvas {
           position: absolute;
           width: 100%;
           height: 100%;
-          background: #1c1c1caa;
         }
 
         #current-time,
