@@ -1,13 +1,15 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import './festival-load-sets.js';
+import { connect } from 'pwa-helpers/connect-mixin.js';
+
+import { store } from '../store.js';
+import { loadSets } from '../actions/loadSets.js';
 import './festival-coordinator.js';
 import './festival-audio.js';
 import './festival-ui.js';
 
-export class FestivalApp extends PolymerElement {
+export class FestivalApp extends connect(store)(PolymerElement) {
   static get template() {
     return html`
-      <festival-load-sets id="loader"></festival-load-sets>
       <festival-coordinator
         id="coordinator"
         sets-data="[[setsData]]"
@@ -56,15 +58,12 @@ export class FestivalApp extends PolymerElement {
   ready() {
     super.ready();
 
-    this._loadData();
+    store.dispatch(loadSets());
   }
 
-  async _loadData() {
-    try {
-      this.setsData = await this.$.loader.loadData();
-    } catch (e) {
-      this.$.ui.showLoadingError();
-    }
+  stateChanged(state) {
+    this.setsData = state.setsData;
+    if (state.ui.errorLoading) this.$.ui.showLoadingError();
   }
 
   _handleListenClicked() {

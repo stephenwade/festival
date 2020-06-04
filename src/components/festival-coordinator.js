@@ -46,48 +46,10 @@ export class FestivalCoordinator extends PolymerElement {
 
   _setsDataChanged(setsData) {
     this._clearTimer();
-    if (setsData) {
-      this._prepareSets();
+    if (setsData.sets) {
       this._setInitialTargetAudioStatus();
       this._setupTimer();
     }
-  }
-
-  _prepareSets() {
-    this._addMomentsToSets();
-    this._sortSets();
-
-    if (this.setsData.adjustTimesForTesting) {
-      this._adjustTimesForTesting();
-    }
-  }
-
-  _addMomentsToSets() {
-    this.setsData.sets.forEach((set) => {
-      set.startMoment = moment(set.start);
-      set.endMoment = set.startMoment.clone().add(set.length, 'seconds');
-    });
-  }
-
-  _sortSets() {
-    this.setsData.sets.sort((a, b) => a.startMoment - b.startMoment);
-  }
-
-  _adjustTimesForTesting() {
-    // adjust all start times so the first set starts 5 seconds
-    // after the page is loaded
-
-    const sets = this.setsData.sets;
-    const firstSet = sets[0];
-    if (!firstSet) return;
-
-    const now = moment();
-    const difference = now.diff(firstSet.startMoment);
-    sets.forEach((set) => {
-      [set.startMoment, set.endMoment].forEach((m) =>
-        m.add(difference).add(5, 'seconds')
-      );
-    });
   }
 
   _setupTimer() {

@@ -41,7 +41,6 @@
     "accessor-pairs": "error",
     "array-callback-return": "error",
     "default-case": "warn",
-    "default-param-last": "error",
     "dot-notation": "error",
     "grouped-accessor-pairs": "warn",
     "max-classes-per-file": "error",
