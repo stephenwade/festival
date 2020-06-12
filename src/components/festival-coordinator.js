@@ -1,11 +1,14 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { connect } from 'pwa-helpers/connect-mixin.js';
 import {
   setDriftlessIntervalEverySecond,
   clearDriftless,
 } from '../../lib/driftless/driftless.js';
 import moment from 'moment/src/moment.js';
 
-export class FestivalCoordinator extends PolymerElement {
+import { store } from '../store.js';
+
+export class FestivalCoordinator extends connect(store)(PolymerElement) {
   static get template() {
     return null;
   }
@@ -32,6 +35,10 @@ export class FestivalCoordinator extends PolymerElement {
     super.disconnectedCallback();
 
     this._clearTimer();
+  }
+
+  stateChanged(state) {
+    this.setsData = state.setsData;
   }
 
   updateSetMetadata(detail) {

@@ -12,7 +12,6 @@ export class FestivalApp extends connect(store)(PolymerElement) {
     return html`
       <festival-coordinator
         id="coordinator"
-        sets-data="[[setsData]]"
         target-show-status="{{targetShowStatus}}"
         target-audio-status="{{targetAudioStatus}}"
       ></festival-coordinator>
@@ -43,7 +42,6 @@ export class FestivalApp extends connect(store)(PolymerElement) {
 
   static get properties() {
     return {
-      setsData: Object,
       targetShowStatus: String,
       targetAudioStatus: Object,
       audioContextReady: Boolean,
@@ -62,7 +60,6 @@ export class FestivalApp extends connect(store)(PolymerElement) {
   }
 
   stateChanged(state) {
-    this.setsData = state.setsData;
     if (state.ui.errorLoading) this.$.ui.showLoadingError();
   }
 
