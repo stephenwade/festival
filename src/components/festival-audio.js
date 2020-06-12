@@ -32,10 +32,6 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   static get properties() {
     return {
       targetAudioStatus: Object,
-      getAudioVisualizerData: {
-        type: Function,
-        notify: true,
-      },
       audioStatus: {
         type: Object,
         notify: true,
@@ -151,10 +147,18 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
         .connect(this._audioContext.destination);
     });
 
-    this.getAudioVisualizerData = () => {
+    const getAudioVisualizerData = () => {
       analyserNode.getByteFrequencyData(audioVisualizerData);
       return audioVisualizerData;
     };
+
+    this.dispatchEvent(
+      new CustomEvent('visualizer-data-available', {
+        bubbles: true,
+        composed: true,
+        detail: { getAudioVisualizerData },
+      })
+    );
   }
 
   _handleAudioContextResumed() {
