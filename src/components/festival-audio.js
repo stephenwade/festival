@@ -353,10 +353,7 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
 
   _handleAudioError() {
     this.dispatchEvent(
-      new CustomEvent('error', {
-        bubbles: true,
-        composed: true,
-      })
+      new CustomEvent('error', { bubbles: true, composed: true })
     );
     this._error = true;
   }
