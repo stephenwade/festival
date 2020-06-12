@@ -32,11 +32,6 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   static get properties() {
     return {
       targetAudioStatus: Object,
-      audioContextReady: {
-        type: Boolean,
-        notify: true,
-        value: false,
-      },
       getAudioVisualizerData: {
         type: Function,
         notify: true,
@@ -163,8 +158,6 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   }
 
   _handleAudioContextResumed() {
-    this.audioContextReady = true;
-
     this.set('audioStatus.status', 'WAITING_UNTIL_START');
     this._targetAudioStatusChanged();
   }

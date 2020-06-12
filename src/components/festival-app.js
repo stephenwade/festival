@@ -13,7 +13,6 @@ export class FestivalApp extends connect(store)(PolymerElement) {
       <festival-coordinator id="coordinator"></festival-coordinator>
       <festival-audio
         id="audio"
-        audio-context-ready="{{audioContextReady}}"
         audio-status="{{audioStatus}}"
         audio-waiting="{{audioWaiting}}"
         audio-stalled="{{audioStalled}}"
@@ -36,7 +35,6 @@ export class FestivalApp extends connect(store)(PolymerElement) {
 
   static get properties() {
     return {
-      audioContextReady: Boolean,
       getAudioVisualizerData: Function,
       audioStatus: Object,
       audioWaiting: Boolean,
