@@ -1,12 +1,15 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { connect } from 'pwa-helpers/connect-mixin.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/paper-button/paper-button.js';
+
+import { store } from '../store.js';
 import './ui-ended.js';
 import './ui-intro.js';
 import './ui-playing.js';
 
-export class FestivalUi extends PolymerElement {
+export class FestivalUi extends connect(store)(PolymerElement) {
   static get template() {
     return html`
       <style>
@@ -155,12 +158,16 @@ export class FestivalUi extends PolymerElement {
     );
   }
 
+  stateChanged(state) {
+    if (state.ui.errorLoading) this._showLoadingError();
+  }
+
   showAudioError() {
     const verb = this._waitingUntilStart ? 'loading' : 'playing';
     this._showError(`There was a problem ${verb} the audio track.`);
   }
 
-  showLoadingError() {
+  _showLoadingError() {
     this._showError('There was a problem loading the show data.');
   }
 

@@ -48,10 +48,6 @@ export class FestivalApp extends connect(store)(PolymerElement) {
     store.dispatch(loadSets());
   }
 
-  stateChanged(state) {
-    if (state.ui.errorLoading) this.$.ui.showLoadingError();
-  }
-
   _handleListenClicked() {
     this.$.audio.initialize();
   }
