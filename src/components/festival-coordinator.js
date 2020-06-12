@@ -7,6 +7,7 @@ import {
 import moment from 'moment/src/moment.js';
 
 import { store } from '../store.js';
+import { setTargetShowStatus } from '../actions/targetShowStatus.js';
 
 export class FestivalCoordinator extends connect(store)(PolymerElement) {
   static get template() {
@@ -18,11 +19,6 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
       setsData: {
         type: Object,
         observer: '_setsDataChanged',
-      },
-      targetShowStatus: {
-        type: String,
-        notify: true,
-        value: 'WAITING_UNTIL_START',
       },
       targetAudioStatus: {
         type: Object,
@@ -153,18 +149,18 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
   _updateTargetShowStatus(now) {
     const sets = this.setsData.sets;
 
-    switch (this.targetShowStatus) {
+    switch (store.getState().targetShowStatus) {
       case 'WAITING_UNTIL_START': {
         const firstSet = sets[0];
         if (firstSet && now.isSameOrAfter(firstSet.startMoment)) {
-          this.targetShowStatus = 'IN_PROGRESS';
+          store.dispatch(setTargetShowStatus('IN_PROGRESS'));
         } else break;
       }
       // fallthrough
       case 'IN_PROGRESS': {
         const lastSet = sets.slice(-1)[0];
         if (lastSet && now.isAfter(lastSet.endMoment)) {
-          this.targetShowStatus = 'ENDED';
+          store.dispatch(setTargetShowStatus('ENDED'));
         } else break;
       }
       // fallthrough

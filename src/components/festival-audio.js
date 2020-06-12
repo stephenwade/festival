@@ -1,7 +1,10 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { connect } from 'pwa-helpers/connect-mixin.js';
 import { AudioContext } from 'standardized-audio-context';
 
-export class FestivalAudio extends PolymerElement {
+import { store } from '../store.js';
+
+export class FestivalAudio extends connect(store)(PolymerElement) {
   constructor() {
     super();
 
@@ -28,7 +31,6 @@ export class FestivalAudio extends PolymerElement {
 
   static get properties() {
     return {
-      targetShowStatus: String,
       targetAudioStatus: Object,
       audioContextReady: {
         type: Boolean,
@@ -91,6 +93,10 @@ export class FestivalAudio extends PolymerElement {
         audio.removeEventListener(event, handler);
       });
     });
+  }
+
+  stateChanged(state) {
+    this.targetShowStatus = state.targetShowStatus;
   }
 
   initialize() {

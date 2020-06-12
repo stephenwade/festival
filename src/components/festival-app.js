@@ -12,12 +12,10 @@ export class FestivalApp extends connect(store)(PolymerElement) {
     return html`
       <festival-coordinator
         id="coordinator"
-        target-show-status="{{targetShowStatus}}"
         target-audio-status="{{targetAudioStatus}}"
       ></festival-coordinator>
       <festival-audio
         id="audio"
-        target-show-status="[[targetShowStatus]]"
         target-audio-status="[[targetAudioStatus]]"
         audio-context-ready="{{audioContextReady}}"
         audio-status="{{audioStatus}}"
@@ -42,7 +40,6 @@ export class FestivalApp extends connect(store)(PolymerElement) {
 
   static get properties() {
     return {
-      targetShowStatus: String,
       targetAudioStatus: Object,
       audioContextReady: Boolean,
       getAudioVisualizerData: Function,
