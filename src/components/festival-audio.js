@@ -97,6 +97,7 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
 
   stateChanged(state) {
     this.targetShowStatus = state.targetShowStatus;
+    this.targetAudioStatus = state.targetAudioStatus;
   }
 
   initialize() {

@@ -8,6 +8,7 @@ import moment from 'moment/src/moment.js';
 
 import { store } from '../store.js';
 import { setTargetShowStatus } from '../actions/targetShowStatus.js';
+import { setTargetAudioStatus } from '../actions/targetAudioStatus.js';
 
 export class FestivalCoordinator extends connect(store)(PolymerElement) {
   static get template() {
@@ -19,10 +20,6 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
       setsData: {
         type: Object,
         observer: '_setsDataChanged',
-      },
-      targetAudioStatus: {
-        type: Object,
-        notify: true,
       },
     };
   }
@@ -127,29 +124,37 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
 
   _setInitialTargetAudioStatus() {
     const now = moment();
-    const currentSet = this._getInitialSet(now);
+    const initialSet = this._getInitialSet(now);
 
-    this.targetAudioStatus = this._getTargetAudioStatusForSet(currentSet, now);
+    const newTargetAudioStatus = this._getTargetAudioStatusForSet(
+      initialSet,
+      now
+    );
+    store.dispatch(setTargetAudioStatus(newTargetAudioStatus));
   }
 
   _updateTargetAudioStatus(now) {
-    if (this.targetAudioStatus.status === 'ENDED') {
+    const { targetAudioStatus } = store.getState();
+
+    if (targetAudioStatus.status === 'ENDED') {
       this._clearTimer();
       return;
     }
 
-    let set = this.targetAudioStatus.set;
+    let set = targetAudioStatus.set;
     // make sure next set event is ready before current set ends
     const setCutoff = set.endMoment.clone().subtract(1, 'second');
     if (now.isAfter(setCutoff)) set = this._getNextSet(set);
 
-    this.targetAudioStatus = this._getTargetAudioStatusForSet(set, now);
+    const newTargetAudioStatus = this._getTargetAudioStatusForSet(set, now);
+    store.dispatch(setTargetAudioStatus(newTargetAudioStatus));
   }
 
   _updateTargetShowStatus(now) {
     const sets = this.setsData.sets;
+    const { targetShowStatus } = store.getState();
 
-    switch (store.getState().targetShowStatus) {
+    switch (targetShowStatus) {
       case 'WAITING_UNTIL_START': {
         const firstSet = sets[0];
         if (firstSet && now.isSameOrAfter(firstSet.startMoment)) {

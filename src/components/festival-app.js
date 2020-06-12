@@ -10,13 +10,9 @@ import './festival-ui.js';
 export class FestivalApp extends connect(store)(PolymerElement) {
   static get template() {
     return html`
-      <festival-coordinator
-        id="coordinator"
-        target-audio-status="{{targetAudioStatus}}"
-      ></festival-coordinator>
+      <festival-coordinator id="coordinator"></festival-coordinator>
       <festival-audio
         id="audio"
-        target-audio-status="[[targetAudioStatus]]"
         audio-context-ready="{{audioContextReady}}"
         audio-status="{{audioStatus}}"
         audio-waiting="{{audioWaiting}}"
@@ -40,7 +36,6 @@ export class FestivalApp extends connect(store)(PolymerElement) {
 
   static get properties() {
     return {
-      targetAudioStatus: Object,
       audioContextReady: Boolean,
       getAudioVisualizerData: Function,
       audioStatus: Object,
