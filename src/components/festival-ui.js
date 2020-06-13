@@ -60,7 +60,7 @@ export class FestivalUi extends connect(store)(PolymerElement) {
           seconds-until-set="[[showStatus.secondsUntilSet]]"
           waiting-for-network="[[_waitingForNetwork]]"
           current-time="[[showStatus.currentTime]]"
-          audio-paused="[[audioPaused]]"
+          audio-paused="[[audioStatus.paused]]"
           reduce-motion="[[_reduceMotion]]"
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
         ></ui-playing>
@@ -80,11 +80,7 @@ export class FestivalUi extends connect(store)(PolymerElement) {
   static get properties() {
     return {
       showStatus: Object,
-      audioWaiting: Boolean,
-      audioStalled: {
-        type: Boolean,
-        observer: '_audioStalledChanged',
-      },
+      audioStatus: Object,
       getAudioVisualizerData: Function,
       _error: Boolean,
       _alertShown: Boolean,
@@ -99,7 +95,7 @@ export class FestivalUi extends connect(store)(PolymerElement) {
       },
       _waitingForNetwork: {
         type: Boolean,
-        computed: '_computeWaiting(showStatus.status, audioWaiting)',
+        computed: '_computeWaiting(showStatus.status, audioStatus.waiting)',
       },
       _playing: {
         type: Boolean,
@@ -123,7 +119,10 @@ export class FestivalUi extends connect(store)(PolymerElement) {
   }
 
   static get observers() {
-    return ['_delayChanged(showStatus.delay)'];
+    return [
+      '_delayChanged(showStatus.delay)',
+      '_audioStalledChanged(audioStatus.stalled)',
+    ];
   }
 
   ready() {
@@ -178,11 +177,11 @@ export class FestivalUi extends connect(store)(PolymerElement) {
     this._alertShown = true;
   }
 
-  _audioStalledChanged(audioStalled) {
+  _audioStalledChanged(stalled) {
     if (this._alertShown) return;
     if (this._waitingUntilStart || this._ended) return;
 
-    if (audioStalled) {
+    if (stalled) {
       this.$.toast.text =
         'Looks like your internet connection is having trouble.';
       this.$.toast.show();
@@ -198,8 +197,8 @@ export class FestivalUi extends connect(store)(PolymerElement) {
     return status === 'WAITING_UNTIL_START';
   }
 
-  _computeWaiting(status, audioWaiting) {
-    return status === 'DELAYING_FOR_INITIAL_SYNC' || audioWaiting;
+  _computeWaiting(status, waiting) {
+    return status === 'DELAYING_FOR_INITIAL_SYNC' || waiting;
   }
 
   _computePlaying(status) {

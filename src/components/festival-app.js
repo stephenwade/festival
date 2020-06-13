@@ -14,9 +14,7 @@ export class FestivalApp extends connect(store)(PolymerElement) {
       <festival-audio
         id="audio"
         show-status="{{showStatus}}"
-        audio-waiting="{{audioWaiting}}"
-        audio-stalled="{{audioStalled}}"
-        audio-paused="{{audioPaused}}"
+        audio-status="{{audioStatus}}"
         on-error="_handleAudioError"
         on-loadedmetadata="_handleAudioLoadedMetadata"
         on-visualizer-data-available="_handleAudioVisualizerDataAvailable"
@@ -24,9 +22,7 @@ export class FestivalApp extends connect(store)(PolymerElement) {
       <festival-ui
         id="ui"
         show-status="[[showStatus]]"
-        audio-waiting="[[audioWaiting]]"
-        audio-stalled="[[audioStalled]]"
-        audio-paused="[[audioPaused]]"
+        audio-status="[[audioStatus]]"
         on-listen="_handleListenClicked"
       ></festival-ui>
     `;
@@ -36,9 +32,7 @@ export class FestivalApp extends connect(store)(PolymerElement) {
     return {
       getAudioVisualizerData: Function,
       showStatus: Object,
-      audioWaiting: Boolean,
-      audioStalled: Boolean,
-      audioPaused: Boolean,
+      audioStatus: Object,
     };
   }
 
