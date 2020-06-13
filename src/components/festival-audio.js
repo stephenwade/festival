@@ -87,12 +87,11 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   }
 
   stateChanged(state) {
-    this.targetShowStatus = state.targetShowStatus;
     this.targetAudioStatus = state.targetAudioStatus;
   }
 
   initialize() {
-    if (this.targetShowStatus === 'ENDED') return;
+    if (this.targetAudioStatus.status === 'ENDED') return;
 
     // skip setting up AudioContext on iOS
     const iOS = /iPad|iPhone|iPod/u.test(navigator.userAgent);

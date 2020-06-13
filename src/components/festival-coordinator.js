@@ -7,7 +7,6 @@ import {
 import moment from 'moment/src/moment.js';
 
 import { store } from '../store.js';
-import { setTargetShowStatus } from '../actions/targetShowStatus.js';
 import { setTargetAudioStatus } from '../actions/targetAudioStatus.js';
 
 export class FestivalCoordinator extends connect(store)(PolymerElement) {
@@ -63,7 +62,6 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
 
   _tick() {
     const now = moment();
-    this._updateTargetShowStatus(now);
     this._updateTargetAudioStatus(now);
   }
 
@@ -148,33 +146,6 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
 
     const newTargetAudioStatus = this._getTargetAudioStatusForSet(set, now);
     store.dispatch(setTargetAudioStatus(newTargetAudioStatus));
-  }
-
-  _updateTargetShowStatus(now) {
-    const sets = this.setsData.sets;
-    const { targetShowStatus } = store.getState();
-
-    switch (targetShowStatus) {
-      case 'WAITING_UNTIL_START': {
-        const firstSet = sets[0];
-        if (firstSet && now.isSameOrAfter(firstSet.startMoment)) {
-          store.dispatch(setTargetShowStatus('IN_PROGRESS'));
-        } else break;
-      }
-      // fallthrough
-      case 'IN_PROGRESS': {
-        const lastSet = sets.slice(-1)[0];
-        if (lastSet && now.isAfter(lastSet.endMoment)) {
-          store.dispatch(setTargetShowStatus('ENDED'));
-        } else break;
-      }
-      // fallthrough
-      case 'ENDED':
-        break;
-
-      default:
-        throw new Error('Unknown status');
-    }
   }
 }
 
