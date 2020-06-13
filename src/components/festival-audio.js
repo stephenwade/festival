@@ -4,6 +4,7 @@ import { AudioContext } from 'standardized-audio-context';
 
 import { store } from '../store.js';
 import { setShowStatus } from '../actions/showStatus.js';
+import { setAudioStatus } from '../actions/audioStatus.js';
 
 export class FestivalAudio extends connect(store)(PolymerElement) {
   constructor() {
@@ -33,15 +34,6 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   static get properties() {
     return {
       targetShowStatus: Object,
-      audioStatus: {
-        type: Object,
-        notify: true,
-        value: () => ({
-          waiting: false,
-          stalled: false,
-          paused: false,
-        }),
-      },
     };
   }
 
@@ -348,11 +340,15 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
     const nextChange = this._changeQueue.shift();
     if (nextChange) this._performStatusChange(nextChange);
 
-    this.audioStatus = {
-      ...this.audioStatus,
+    const { audioStatus } = store.getState();
+
+    const newAudioStatus = {
+      ...audioStatus,
       stalled: false,
       paused: false,
     };
+    store.dispatch(setAudioStatus(newAudioStatus));
+
     clearTimeout(this._stalledTimeout);
   }
 
@@ -392,10 +388,13 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   _handleAudioWaiting(e) {
     if (e.target !== this._activeAudio) return;
 
-    this.audioStatus = {
-      ...this.audioStatus,
+    const { audioStatus } = store.getState();
+
+    const newAudioStatus = {
+      ...audioStatus,
       waiting: true,
     };
+    store.dispatch(setAudioStatus(newAudioStatus));
 
     this._stalledTimeout = setTimeout(
       this._handleAudioStalled.bind(this),
@@ -406,22 +405,29 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   _handleAudioPlaying(e) {
     if (e.target !== this._activeAudio) return;
 
-    this.audioStatus = {
-      ...this.audioStatus,
+    const { audioStatus } = store.getState();
+
+    const newAudioStatus = {
+      ...audioStatus,
       waiting: false,
       stalled: false,
       paused: false,
     };
+    store.dispatch(setAudioStatus(newAudioStatus));
+
     clearTimeout(this._stalledTimeout);
   }
 
   _handleAudioPause(e) {
     if (e.target !== this._activeAudio) return;
 
-    this.audioStatus = {
-      ...this.audioStatus,
+    const { audioStatus } = store.getState();
+
+    const newAudioStatus = {
+      ...audioStatus,
       paused: true,
     };
+    store.dispatch(setAudioStatus(newAudioStatus));
   }
 
   _handleAudioStalled(e) {
@@ -434,10 +440,13 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
     // Safari: only listen to stalled event if audio is waiting
     if (!this.audioWaiting) return;
 
-    this.audioStatus = {
-      ...this.audioStatus,
+    const { audioStatus } = store.getState();
+
+    const newAudioStatus = {
+      ...audioStatus,
       stalled: true,
     };
+    store.dispatch(setAudioStatus(newAudioStatus));
   }
 
   _handleAudioLoadedMetadata(e) {

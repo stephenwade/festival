@@ -13,16 +13,11 @@ export class FestivalApp extends connect(store)(PolymerElement) {
       <festival-coordinator id="coordinator"></festival-coordinator>
       <festival-audio
         id="audio"
-        audio-status="{{audioStatus}}"
         on-error="_handleAudioError"
         on-loadedmetadata="_handleAudioLoadedMetadata"
         on-visualizer-data-available="_handleAudioVisualizerDataAvailable"
       ></festival-audio>
-      <festival-ui
-        id="ui"
-        audio-status="[[audioStatus]]"
-        on-listen="_handleListenClicked"
-      ></festival-ui>
+      <festival-ui id="ui" on-listen="_handleListenClicked"></festival-ui>
     `;
   }
 
