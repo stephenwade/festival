@@ -162,7 +162,10 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   }
 
   _handleAudioContextResumed() {
-    this.set('audioStatus.status', 'WAITING_UNTIL_START');
+    this.audioStatus = {
+      ...this.audioStatus,
+      status: 'WAITING_UNTIL_START',
+    };
     this._targetAudioStatusChanged();
   }
 
@@ -273,7 +276,10 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   _updateTime(change) {
     switch (this.audioStatus.status) {
       case 'WAITING_UNTIL_START':
-        this.set('audioStatus.secondsUntilSet', change.secondsUntilSet);
+        this.audioStatus = {
+          ...this.audioStatus,
+          secondsUntilSet: change.secondsUntilSet,
+        };
         break;
 
       case 'DELAYING_FOR_INITIAL_SYNC':
@@ -288,7 +294,10 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
         break;
 
       case 'PLAYING':
-        this.set('audioStatus.delay', this._getDelay(change));
+        this.audioStatus = {
+          ...this.audioStatus,
+          delay: this._getDelay(change),
+        };
         break;
 
       // no default
@@ -323,9 +332,12 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
 
     this._clearAndSwitchActiveAudio();
 
-    delete this.audioStatus.set;
-    delete this.audioStatus.delay;
-    this.set('audioStatus.status', 'WAITING_UNTIL_START');
+    // eslint-disable-next-line no-unused-vars
+    const { set, delay, ...noSetOrDelay } = this.audioStatus;
+    this.audioStatus = {
+      ...noSetOrDelay,
+      status: 'WAITING_UNTIL_START',
+    };
 
     const nextChange = this._changeQueue.shift();
     if (nextChange) this._performStatusChange(nextChange);
@@ -341,7 +353,10 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
 
     if (this.audioStatus.status === 'PLAYING') {
       const currentTime = this._activeAudio.currentTime;
-      this.set('audioStatus.currentTime', currentTime);
+      this.audioStatus = {
+        ...this.audioStatus,
+        currentTime,
+      };
 
       const nextSrcAlreadySet = Boolean(this._inactiveAudio.src);
       const nextSetAvailable = Boolean(this.audioStatus.nextSet);

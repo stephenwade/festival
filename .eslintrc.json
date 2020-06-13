@@ -78,6 +78,7 @@
     "no-multi-assign": "warn",
     "no-nested-ternary": "error",
     "no-new-object": "error",
+    "object-shorthand": "error",
     "prefer-object-spread": "warn",
     "quotes": ["warn", "single"],
     "no-confusing-arrow": "error",
