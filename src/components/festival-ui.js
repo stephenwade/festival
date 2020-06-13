@@ -158,6 +158,8 @@ export class FestivalUi extends connect(store)(PolymerElement) {
   }
 
   stateChanged(state) {
+    this.showStatus = state.showStatus;
+
     if (state.ui.errorLoading) this._showLoadingError();
   }
 
