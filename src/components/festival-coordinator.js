@@ -7,7 +7,7 @@ import {
 import moment from 'moment/src/moment.js';
 
 import { store } from '../store.js';
-import { setTargetAudioStatus } from '../actions/targetAudioStatus.js';
+import { setTargetShowStatus } from '../actions/targetShowStatus.js';
 
 export class FestivalCoordinator extends connect(store)(PolymerElement) {
   static get template() {
@@ -46,7 +46,7 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
   _setsDataChanged(setsData) {
     this._clearTimer();
     if (setsData.sets) {
-      this._setInitialTargetAudioStatus();
+      this._setInitialTargetShowStatus();
       this._setupTimer();
     }
   }
@@ -62,7 +62,7 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
 
   _tick() {
     const now = moment();
-    this._updateTargetAudioStatus(now);
+    this._updateTargetShowStatus(now);
   }
 
   _getInitialSet(now) {
@@ -81,7 +81,7 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
     return null;
   }
 
-  _getTargetAudioStatusForSet(set, now) {
+  _getTargetShowStatusForSet(set, now) {
     if (set) {
       const nextSet = this._getNextSet(set);
 
@@ -120,32 +120,32 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
     };
   }
 
-  _setInitialTargetAudioStatus() {
+  _setInitialTargetShowStatus() {
     const now = moment();
     const initialSet = this._getInitialSet(now);
 
-    const newTargetAudioStatus = this._getTargetAudioStatusForSet(
+    const newTargetShowStatus = this._getTargetShowStatusForSet(
       initialSet,
       now
     );
-    store.dispatch(setTargetAudioStatus(newTargetAudioStatus));
+    store.dispatch(setTargetShowStatus(newTargetShowStatus));
   }
 
-  _updateTargetAudioStatus(now) {
-    const { targetAudioStatus } = store.getState();
+  _updateTargetShowStatus(now) {
+    const { targetShowStatus } = store.getState();
 
-    if (targetAudioStatus.status === 'ENDED') {
+    if (targetShowStatus.status === 'ENDED') {
       this._clearTimer();
       return;
     }
 
-    let set = targetAudioStatus.set;
+    let set = targetShowStatus.set;
     // make sure next set event is ready before current set ends
     const setCutoff = set.endMoment.clone().subtract(1, 'second');
     if (now.isAfter(setCutoff)) set = this._getNextSet(set);
 
-    const newTargetAudioStatus = this._getTargetAudioStatusForSet(set, now);
-    store.dispatch(setTargetAudioStatus(newTargetAudioStatus));
+    const newTargetShowStatus = this._getTargetShowStatusForSet(set, now);
+    store.dispatch(setTargetShowStatus(newTargetShowStatus));
   }
 }
 

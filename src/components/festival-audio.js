@@ -31,8 +31,8 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
 
   static get properties() {
     return {
-      targetAudioStatus: Object,
-      audioStatus: {
+      targetShowStatus: Object,
+      showStatus: {
         type: Object,
         notify: true,
         value: () => ({ status: 'WAITING_FOR_AUDIO_CONTEXT' }),
@@ -56,7 +56,7 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   }
 
   static get observers() {
-    return ['_targetAudioStatusChanged(targetAudioStatus.*)'];
+    return ['_targetShowStatusChanged(targetShowStatus.*)'];
   }
 
   connectedCallback() {
@@ -87,11 +87,11 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   }
 
   stateChanged(state) {
-    this.targetAudioStatus = state.targetAudioStatus;
+    this.targetShowStatus = state.targetShowStatus;
   }
 
   initialize() {
-    if (this.targetAudioStatus.status === 'ENDED') return;
+    if (this.targetShowStatus.status === 'ENDED') return;
 
     // skip setting up AudioContext on iOS
     const iOS = /iPad|iPhone|iPod/u.test(navigator.userAgent);
@@ -161,31 +161,31 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   }
 
   _handleAudioContextResumed() {
-    this.audioStatus = {
-      ...this.audioStatus,
+    this.showStatus = {
+      ...this.showStatus,
       status: 'WAITING_UNTIL_START',
     };
-    this._targetAudioStatusChanged();
+    this._targetShowStatusChanged();
   }
 
-  _targetAudioStatusChanged() {
+  _targetShowStatusChanged() {
     if (this._error) return;
 
-    const thisStatus = { ...this.targetAudioStatus };
+    const thisStatus = { ...this.targetShowStatus };
 
     const ended = thisStatus.status === 'ENDED';
     const waitingForAudioContext =
-      this.audioStatus.status === 'WAITING_FOR_AUDIO_CONTEXT';
+      this.showStatus.status === 'WAITING_FOR_AUDIO_CONTEXT';
 
     if (waitingForAudioContext && !ended) return;
 
-    const firstRun = !this._lastTargetAudioStatus;
+    const firstRun = !this._lastTargetShowStatus;
     if (firstRun) {
       this._queueStatusChange(thisStatus);
     } else {
       const statusChanged =
-        thisStatus.status !== this._lastTargetAudioStatus.status;
-      const setChanged = thisStatus.set !== this._lastTargetAudioStatus.set;
+        thisStatus.status !== this._lastTargetShowStatus.status;
+      const setChanged = thisStatus.set !== this._lastTargetShowStatus.set;
 
       if (statusChanged || setChanged) {
         this._queueStatusChange(thisStatus);
@@ -194,11 +194,11 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
       }
     }
 
-    this._lastTargetAudioStatus = thisStatus;
+    this._lastTargetShowStatus = thisStatus;
   }
 
   _queueStatusChange(change) {
-    switch (this.audioStatus.status) {
+    switch (this.showStatus.status) {
       case 'WAITING_FOR_AUDIO_CONTEXT':
       case 'WAITING_UNTIL_START':
       case 'DELAYING_FOR_INITIAL_SYNC':
@@ -216,7 +216,7 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   }
 
   _performStatusChange(change) {
-    const setChanged = change.set !== this.audioStatus.set;
+    const setChanged = change.set !== this.showStatus.set;
     const nextSrcAlreadySet = Boolean(this._activeAudio.src);
     const shouldChangeSrc = setChanged && !nextSrcAlreadySet;
 
@@ -224,7 +224,7 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
       case 'WAITING_UNTIL_START':
         if (shouldChangeSrc) this._activeAudio.src = change.set.audio;
 
-        this.audioStatus = {
+        this.showStatus = {
           set: change.set,
           status: 'WAITING_UNTIL_START',
           secondsUntilSet: change.secondsUntilSet,
@@ -238,7 +238,7 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
         if (change.currentTime > 0) {
           // delay 2 seconds for audio to load
           const delayingUntil = change.currentTime + 2;
-          this.audioStatus = {
+          this.showStatus = {
             set: change.set,
             status: 'DELAYING_FOR_INITIAL_SYNC',
             delayingUntil,
@@ -247,7 +247,7 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
           this._activeAudio.src += `#t=${delayingUntil}`;
         } else {
           this._activeAudio.play().catch(this._handleAudioError.bind(this));
-          this.audioStatus = {
+          this.showStatus = {
             set: change.set,
             status: 'PLAYING',
             currentTime: 0,
@@ -257,7 +257,7 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
         break;
 
       case 'ENDED':
-        this.audioStatus = {
+        this.showStatus = {
           status: 'ENDED',
         };
         break;
@@ -266,35 +266,35 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
         throw new Error('Unknown status');
     }
 
-    if (this.audioStatus.status !== 'PLAYING') {
+    if (this.showStatus.status !== 'PLAYING') {
       const nextChange = this._changeQueue.shift();
       if (nextChange) this._performStatusChange(nextChange);
     }
   }
 
   _updateTime(change) {
-    switch (this.audioStatus.status) {
+    switch (this.showStatus.status) {
       case 'WAITING_UNTIL_START':
-        this.audioStatus = {
-          ...this.audioStatus,
+        this.showStatus = {
+          ...this.showStatus,
           secondsUntilSet: change.secondsUntilSet,
         };
         break;
 
       case 'DELAYING_FOR_INITIAL_SYNC':
-        if (change.currentTime >= this.audioStatus.delayingUntil) {
+        if (change.currentTime >= this.showStatus.delayingUntil) {
           this._activeAudio.play();
-          this.audioStatus = {
+          this.showStatus = {
             set: change.set,
             status: 'PLAYING',
-            currentTime: this.audioStatus.delayingUntil,
+            currentTime: this.showStatus.delayingUntil,
           };
         }
         break;
 
       case 'PLAYING':
-        this.audioStatus = {
-          ...this.audioStatus,
+        this.showStatus = {
+          ...this.showStatus,
           delay: this._getDelay(change),
         };
         break;
@@ -305,9 +305,9 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
 
   _getDelay(change) {
     let delay = change.currentTime - this._activeAudio.currentTime;
-    if (change.set !== this.audioStatus.set) {
+    if (change.set !== this.showStatus.set) {
       const setDifference = change.set.startMoment.diff(
-        this.audioStatus.set.startMoment,
+        this.showStatus.set.startMoment,
         'seconds'
       );
       delay += setDifference;
@@ -332,8 +332,8 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
     this._clearAndSwitchActiveAudio();
 
     // eslint-disable-next-line no-unused-vars
-    const { set, delay, ...noSetOrDelay } = this.audioStatus;
-    this.audioStatus = {
+    const { set, delay, ...noSetOrDelay } = this.showStatus;
+    this.showStatus = {
       ...noSetOrDelay,
       status: 'WAITING_UNTIL_START',
     };
@@ -350,21 +350,21 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   _handleAudioTimeUpdate(e) {
     if (e.target !== this._activeAudio) return;
 
-    if (this.audioStatus.status === 'PLAYING') {
+    if (this.showStatus.status === 'PLAYING') {
       const currentTime = this._activeAudio.currentTime;
-      this.audioStatus = {
-        ...this.audioStatus,
+      this.showStatus = {
+        ...this.showStatus,
         currentTime,
       };
 
       const nextSrcAlreadySet = Boolean(this._inactiveAudio.src);
-      const nextSetAvailable = Boolean(this.audioStatus.nextSet);
+      const nextSetAvailable = Boolean(this.showStatus.nextSet);
       const lessThanOneMinuteLeft =
-        this.audioStatus.set.length - this.audioStatus.currentTime <= 60;
+        this.showStatus.set.length - this.showStatus.currentTime <= 60;
       const shouldPreloadNextSet =
         !nextSrcAlreadySet && nextSetAvailable && lessThanOneMinuteLeft;
       if (shouldPreloadNextSet) {
-        this._inactiveAudio.src = this.audioStatus.nextSet.audio;
+        this._inactiveAudio.src = this.showStatus.nextSet.audio;
       }
     }
   }
@@ -420,8 +420,8 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
   _handleAudioLoadedMetadata(e) {
     const set =
       e.target === this._activeAudio
-        ? this.audioStatus.set
-        : this.audioStatus.nextSet;
+        ? this.showStatus.set
+        : this.showStatus.nextSet;
 
     this.dispatchEvent(
       new CustomEvent('loadedmetadata', {

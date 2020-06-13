@@ -55,11 +55,11 @@ export class FestivalUi extends connect(store)(PolymerElement) {
       </template>
       <template is="dom-if" if="[[_showPlaying]]">
         <ui-playing
-          set="[[audioStatus.set]]"
+          set="[[showStatus.set]]"
           waiting-until-start="[[_waitingUntilStart]]"
-          seconds-until-set="[[audioStatus.secondsUntilSet]]"
+          seconds-until-set="[[showStatus.secondsUntilSet]]"
           waiting-for-network="[[_waitingForNetwork]]"
-          current-time="[[audioStatus.currentTime]]"
+          current-time="[[showStatus.currentTime]]"
           audio-paused="[[audioPaused]]"
           reduce-motion="[[_reduceMotion]]"
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
@@ -79,7 +79,7 @@ export class FestivalUi extends connect(store)(PolymerElement) {
 
   static get properties() {
     return {
-      audioStatus: Object,
+      showStatus: Object,
       audioWaiting: Boolean,
       audioStalled: {
         type: Boolean,
@@ -91,19 +91,19 @@ export class FestivalUi extends connect(store)(PolymerElement) {
       _reduceMotion: Boolean,
       _waitingForAudioContext: {
         type: Boolean,
-        computed: '_computeWaitingForAudioContext(audioStatus.status)',
+        computed: '_computeWaitingForAudioContext(showStatus.status)',
       },
       _waitingUntilStart: {
         type: Boolean,
-        computed: '_computeWaitingUntilStart(audioStatus.status)',
+        computed: '_computeWaitingUntilStart(showStatus.status)',
       },
       _waitingForNetwork: {
         type: Boolean,
-        computed: '_computeWaiting(audioStatus.status, audioWaiting)',
+        computed: '_computeWaiting(showStatus.status, audioWaiting)',
       },
       _playing: {
         type: Boolean,
-        computed: '_computePlaying(audioStatus.status)',
+        computed: '_computePlaying(showStatus.status)',
       },
       _showPlaying: {
         type: Boolean,
@@ -112,7 +112,7 @@ export class FestivalUi extends connect(store)(PolymerElement) {
       },
       _ended: {
         type: Boolean,
-        computed: '_computeEnded(audioStatus.status)',
+        computed: '_computeEnded(showStatus.status)',
         observer: '_endedChanged',
       },
       _stampEnded: {
@@ -123,7 +123,7 @@ export class FestivalUi extends connect(store)(PolymerElement) {
   }
 
   static get observers() {
-    return ['_delayChanged(audioStatus.delay)'];
+    return ['_delayChanged(showStatus.delay)'];
   }
 
   ready() {
