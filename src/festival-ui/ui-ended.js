@@ -46,7 +46,11 @@ export class UiEnded extends PolymerElement {
         }
       </style>
       <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
-        <img id="logo" src="images/festiv4l-logo.svg" alt="FESTIV4L" />
+        <img
+          id="logo"
+          src="images/funkstival-logo.svg"
+          alt="Festival presents: FUNKSTIVAL"
+        />
       </a>
       <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
         <img id="heart" src="images/heart-white.svg" alt="heart" />

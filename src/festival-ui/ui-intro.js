@@ -24,8 +24,8 @@ export class UiIntro extends PolymerElement {
           align-items: center;
           justify-content: center;
           padding: 0 1em;
-          background: var(--gradient-background);
-          background-size: 100% auto;
+          background: var(--background-image);
+          background-size: cover;
         }
 
         #logo-link {
@@ -50,7 +50,7 @@ export class UiIntro extends PolymerElement {
           border-radius: 5px;
           padding: 0.5em 1em;
           margin-bottom: 0.5em;
-          transform: skew(-10deg);
+          transform: skew(-15deg);
 
           /* gradient cutout */
           color: black;
@@ -71,8 +71,8 @@ export class UiIntro extends PolymerElement {
       >
         <img
           id="logo"
-          src="images/festiv4l-logo.svg"
-          alt="FESTIV4L"
+          src="images/funkstival-logo.svg"
+          alt="Festival presents: FUNKSTIVAL"
           on-load="_handleLogoLoaded"
         />
       </a>
