@@ -342,16 +342,19 @@ export class UiPlaying extends PolymerElement {
     const angleStart = Math.PI * -0.5;
     const progressAngle = 2 * Math.PI * progress;
 
+    // progress line
     ctx.beginPath();
     ctx.arc(midX, midY, distance, angleStart, angleStart + progressAngle);
     ctx.stroke();
 
     const dotRadius = 7 * this._sizeMultiplier;
 
+    // start dot
     ctx.beginPath();
     ctx.arc(midX, midY - distance, dotRadius, 0, 2 * Math.PI);
     ctx.fill();
 
+    // end dot
     ctx.beginPath();
     ctx.arc(
       midX + Math.sin(progressAngle) * distance,
