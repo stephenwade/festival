@@ -1,17 +1,16 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
-import {
-  setDriftlessIntervalEverySecond,
-  clearDriftless,
-} from '../../lib/driftless/driftless.js';
 import moment from 'moment/src/moment.js';
 
 import { store } from '../store.js';
 import { setTargetShowStatus } from '../actions/targetShowStatus.js';
+import './festival-clock.js';
 
 export class FestivalCoordinator extends connect(store)(PolymerElement) {
   static get template() {
-    return null;
+    return html`
+      <festival-clock id="clock" on-clock-tick="_tick"></festival-clock>
+    `;
   }
 
   static get properties() {
@@ -26,7 +25,7 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this._clearTimer();
+    this.$.clock.stopTicking();
   }
 
   stateChanged(state) {
@@ -44,20 +43,11 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
   }
 
   _setsDataChanged(setsData) {
-    this._clearTimer();
+    this.$.clock.stopTicking();
     if (setsData.sets) {
       this._setInitialTargetShowStatus();
-      this._setupTimer();
+      this.$.clock.startTicking();
     }
-  }
-
-  _setupTimer() {
-    this._tick();
-    this._tickInterval = setDriftlessIntervalEverySecond(this._tick.bind(this));
-  }
-
-  _clearTimer() {
-    clearDriftless(this._tickInterval);
   }
 
   _tick() {
@@ -135,7 +125,7 @@ export class FestivalCoordinator extends connect(store)(PolymerElement) {
     const { targetShowStatus } = store.getState();
 
     if (targetShowStatus.status === 'ENDED') {
-      this._clearTimer();
+      this.$.clock.stopTicking();
       return;
     }
 
