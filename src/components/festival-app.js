@@ -2,15 +2,15 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
 import { store } from '../store.js';
-import { loadSets } from '../actions/loadSets.js';
-import './festival-coordinator.js';
+import { loadSets, updateSetMetadata } from '../actions/setsData.js';
+import './festival-clock.js';
 import './festival-audio.js';
 import './festival-ui.js';
 
 export class FestivalApp extends connect(store)(PolymerElement) {
   static get template() {
     return html`
-      <festival-coordinator id="coordinator"></festival-coordinator>
+      <festival-clock></festival-clock>
       <festival-audio
         id="audio"
         on-error="_handleAudioError"
@@ -44,7 +44,7 @@ export class FestivalApp extends connect(store)(PolymerElement) {
   }
 
   _handleAudioLoadedMetadata(e) {
-    this.$.coordinator.updateSetMetadata(e.detail);
+    store.dispatch(updateSetMetadata(e.detail));
   }
 
   _handleAudioVisualizerDataAvailable(e) {

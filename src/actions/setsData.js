@@ -1,6 +1,9 @@
 import moment from 'moment/src/moment.js';
 import { compose } from 'redux/es/redux.mjs';
 
+import { startTicking, stopTicking } from './clock.js';
+import { setInitialTargetShowStatus } from './targetShowStatus.js';
+
 const addAudioPrefixToSets = (setsData) => {
   // In production, BUILD_ENV is set to 'production'
   // This is accomplished by @rollup/plugin-replace in rollup.config.js
@@ -85,10 +88,19 @@ const loadData = async () => {
 export const loadSets = () => async (dispatch) => {
   try {
     const data = await loadData();
+    dispatch(stopTicking());
     dispatch({ type: 'LOAD_SETS_DATA', data });
+    dispatch(setInitialTargetShowStatus());
+    dispatch(startTicking());
     return data;
   } catch (e) {
     dispatch({ type: 'ERROR_LOADING', detail: e.detail });
     throw e;
   }
 };
+
+export const updateSetMetadata = (detail) => ({
+  type: 'UPDATE_SET_END_MOMENT',
+  set: detail.set,
+  duration: detail.duration,
+});

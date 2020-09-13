@@ -1,31 +1,38 @@
+import { connect } from 'pwa-helpers/connect-mixin.js';
 import {
   setDriftlessIntervalEverySecond,
   clearDriftless,
 } from '../../lib/driftless/driftless.js';
 
-export class FestivalClock extends HTMLElement {
+import { store } from '../store.js';
+import { tick } from '../actions/targetShowStatus.js';
+
+export class FestivalClock extends connect(store)(HTMLElement) {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.stopTicking();
+    this._stopTicking();
   }
 
-  startTicking() {
+  stateChanged(state) {
+    if (this._ticking !== state.clock.ticking) {
+      this._ticking = state.clock.ticking;
+      if (this._ticking) this._startTicking();
+      if (!this._ticking) this._stopTicking();
+    }
+  }
+
+  _startTicking() {
     this._tick();
     this._tickInterval = setDriftlessIntervalEverySecond(this._tick.bind(this));
   }
 
-  stopTicking() {
+  _stopTicking() {
     clearDriftless(this._tickInterval);
   }
 
   _tick() {
-    this.dispatchEvent(
-      new CustomEvent('clock-tick', {
-        bubbles: true,
-        composed: true,
-      })
-    );
+    store.dispatch(tick());
   }
 }
 
