@@ -1,6 +1,5 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
-import '@polymer/paper-button/paper-button.js';
 
 export class FestivalUiIntro extends PolymerElement {
   static get template() {
@@ -44,23 +43,20 @@ export class FestivalUiIntro extends PolymerElement {
           margin-bottom: 0.5em;
         }
 
-        paper-button {
+        #buttons a {
+          text-decoration: none;
+          text-transform: uppercase;
+          display: inline-block;
           background: white;
           font-weight: bold;
           border-radius: 5px;
           padding: 0.5em 1em;
-          margin-bottom: 0.5em;
+          margin: 0 0.2em 0.5em 0.2em;
           transform: skew(-10deg);
 
           /* gradient cutout */
           color: black;
-          --paper-button-ink-color: black;
           mix-blend-mode: screen;
-        }
-
-        a {
-          text-decoration: none;
-          -webkit-tap-highlight-color: transparent;
         }
       </style>
       <a
@@ -78,16 +74,9 @@ export class FestivalUiIntro extends PolymerElement {
       </a>
       <template is="dom-if" if="[[_logoLoaded]]">
         <div id="buttons">
-          <paper-button id="button-listen" on-click="_handleListenClicked">
-            Listen Live
-          </paper-button>
-          <a
-            href="https://discord.io/festival"
-            target="_blank"
-            rel="noopener"
-            tabindex="-1"
-          >
-            <paper-button id="button-discord">Join Discord</paper-button>
+          <a href="#" on-click="_handleListenClicked">Listen Live</a>
+          <a href="https://discord.io/festival" target="_blank" rel="noopener">
+            Join Discord
           </a>
         </div>
       </template>

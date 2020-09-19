@@ -1,9 +1,8 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
-import '@polymer/paper-toast/paper-toast.js';
-import '@polymer/paper-button/paper-button.js';
 
+import '../../lib/toast-sk/toast-sk.js';
 import { store } from '../store.js';
 import './festival-ui-ended.js';
 import './festival-ui-intro.js';
@@ -38,18 +37,48 @@ export class FestivalUi extends connect(store)(PolymerElement) {
           background-size: 100% auto;
         }
 
-        paper-toast paper-button:first-of-type {
+        button {
+          font-family: inherit;
+          font-size: inherit;
+          line-height: inherit;
+          text-transform: uppercase;
+          border: none;
+          margin: 0;
+          background-color: inherit;
+          color: inherit;
+          cursor: pointer;
+          padding: 0.7em 0.7em;
+          margin: 0 0.3em;
+          min-width: 5em;
+        }
+        button::-moz-focus-inner {
+          border-style: none;
+          padding: 0;
+        }
+        button:-moz-focusring {
+          outline: 1px dotted ButtonText;
+        }
+
+        toast-sk {
+          background-color: #323232;
+          color: #f1f1f1;
+          border-radius: 3px;
+          padding: 0.7em 1.5em;
+        }
+
+        toast-sk button:first-of-type {
           margin-right: -0.5em;
         }
 
-        paper-toast paper-button + paper-button {
+        toast-sk button + button {
           margin-left: -0.5em;
         }
 
-        paper-toast paper-button:last-child {
+        toast-sk button:last-child {
           margin-right: -1em;
         }
       </style>
+
       <template is="dom-if" if="[[_waitingForAudioContext]]">
         <festival-ui-intro></festival-ui-intro>
       </template>
@@ -68,12 +97,11 @@ export class FestivalUi extends connect(store)(PolymerElement) {
       <template is="dom-if" if="[[_stampEnded]]">
         <festival-ui-ended hidden$="[[!_ended]]"></festival-ui-ended>
       </template>
-      <paper-toast id="toast" duration="0">
-        <paper-button on-click="_reload">Reload</paper-button>
-        <paper-button on-click="_hideToast" hidden$="[[_error]]">
-          Close
-        </paper-button>
-      </paper-toast>
+      <toast-sk id="toast" duration="0">
+        <span id="toast-message"></span>
+        <button on-click="_reload">Reload</button>
+        <button on-click="_hideToast" hidden$="[[_error]]">Close</button>
+      </toast-sk>
     `;
   }
 
@@ -175,7 +203,7 @@ export class FestivalUi extends connect(store)(PolymerElement) {
 
   _showError(text) {
     this._error = true;
-    this.$.toast.text = text;
+    this.$['toast-message'].textContent = text;
     this.$.toast.show();
     this._alertShown = true;
   }
@@ -185,7 +213,7 @@ export class FestivalUi extends connect(store)(PolymerElement) {
     if (this._waitingUntilStart || this._ended) return;
 
     if (stalled) {
-      this.$.toast.text =
+      this.$['toast-message'].textContent =
         'Looks like your internet connection is having trouble.';
       this.$.toast.show();
       this._alertShown = true;
@@ -228,7 +256,8 @@ export class FestivalUi extends connect(store)(PolymerElement) {
     if (this._waitingUntilStart || this._ended) return;
 
     if (delay >= 30) {
-      this.$.toast.text = 'Looks like your audio player is out of sync.';
+      this.$['toast-message'].textContent =
+        'Looks like your audio player is out of sync.';
       this.$.toast.show();
       this._alertShown = true;
     }

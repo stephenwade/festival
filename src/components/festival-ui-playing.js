@@ -1,6 +1,5 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
-import '@polymer/paper-spinner/paper-spinner-lite.js';
 
 export class FestivalUiPlaying extends PolymerElement {
   static get template() {
@@ -46,12 +45,29 @@ export class FestivalUiPlaying extends PolymerElement {
           margin-bottom: 0.2em;
         }
 
-        paper-spinner-lite {
-          --paper-spinner-stroke-width: 3px;
-          --paper-spinner-color: white;
-          width: 4em;
-          height: 4em;
-          font-size: initial;
+        .spinner {
+          display: inline-block;
+          width: 80px;
+          height: 80px;
+        }
+        .spinner:after {
+          content: ' ';
+          display: block;
+          width: 64px;
+          height: 64px;
+          margin: 8px;
+          border-radius: 50%;
+          border: 6px solid #fff;
+          border-color: #fff transparent #fff transparent;
+          animation: spinner 1.2s linear infinite;
+        }
+        @keyframes spinner {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
 
         #nextup {
@@ -93,7 +109,7 @@ export class FestivalUiPlaying extends PolymerElement {
       <canvas id="canvas"></canvas>
       <div id="current-time">
         <template is="dom-if" if="[[_showSpinner]]">
-          <paper-spinner-lite active></paper-spinner-lite>
+          <div class="spinner"></div>
         </template>
         <template is="dom-if" if="[[!_showSpinner]]">
           [[_currentTimeText]]

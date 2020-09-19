@@ -16,9 +16,6 @@
     "deploy": "npm run deploy:site && npm run deploy:media"
   },
   "dependencies": {
-    "@polymer/paper-button": "^3.0.1",
-    "@polymer/paper-spinner": "^3.0.2",
-    "@polymer/paper-toast": "^3.0.1",
     "@polymer/polymer": "^3.4.1",
     "@webcomponents/webcomponentsjs": "^2.4.4",
     "moment": "^2.27.0",
