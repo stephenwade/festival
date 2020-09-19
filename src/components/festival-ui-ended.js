@@ -1,6 +1,6 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 
-export class UiEnded extends PolymerElement {
+export class FestivalUiEnded extends PolymerElement {
   static get template() {
     return html`
       <style>
@@ -55,4 +55,4 @@ export class UiEnded extends PolymerElement {
   }
 }
 
-window.customElements.define('ui-ended', UiEnded);
+window.customElements.define('festival-ui-ended', FestivalUiEnded);

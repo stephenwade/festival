@@ -2,7 +2,7 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 import '@polymer/paper-button/paper-button.js';
 
-export class UiIntro extends PolymerElement {
+export class FestivalUiIntro extends PolymerElement {
   static get template() {
     return html`
       <style>
@@ -111,4 +111,4 @@ export class UiIntro extends PolymerElement {
   }
 }
 
-window.customElements.define('ui-intro', UiIntro);
+window.customElements.define('festival-ui-intro', FestivalUiIntro);

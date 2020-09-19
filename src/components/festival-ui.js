@@ -5,9 +5,9 @@ import '@polymer/paper-toast/paper-toast.js';
 import '@polymer/paper-button/paper-button.js';
 
 import { store } from '../store.js';
-import './ui-ended.js';
-import './ui-intro.js';
-import './ui-playing.js';
+import './festival-ui-ended.js';
+import './festival-ui-intro.js';
+import './festival-ui-playing.js';
 
 export class FestivalUi extends connect(store)(PolymerElement) {
   static get template() {
@@ -51,10 +51,10 @@ export class FestivalUi extends connect(store)(PolymerElement) {
         }
       </style>
       <template is="dom-if" if="[[_waitingForAudioContext]]">
-        <ui-intro></ui-intro>
+        <festival-ui-intro></festival-ui-intro>
       </template>
       <template is="dom-if" if="[[_showPlaying]]">
-        <ui-playing
+        <festival-ui-playing
           set="[[showStatus.set]]"
           waiting-until-start="[[_waitingUntilStart]]"
           seconds-until-set="[[showStatus.secondsUntilSet]]"
@@ -63,10 +63,10 @@ export class FestivalUi extends connect(store)(PolymerElement) {
           audio-paused="[[audioStatus.paused]]"
           reduce-motion="[[_reduceMotion]]"
           get-audio-visualizer-data="[[getAudioVisualizerData]]"
-        ></ui-playing>
+        ></festival-ui-playing>
       </template>
       <template is="dom-if" if="[[_stampEnded]]">
-        <ui-ended hidden$="[[!_ended]]"></ui-ended>
+        <festival-ui-ended hidden$="[[!_ended]]"></festival-ui-ended>
       </template>
       <paper-toast id="toast" duration="0">
         <paper-button on-click="_reload">Reload</paper-button>

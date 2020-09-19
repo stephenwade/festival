@@ -2,7 +2,7 @@ import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
 
-export class UiPlaying extends PolymerElement {
+export class FestivalUiPlaying extends PolymerElement {
   static get template() {
     return html`
       <style>
@@ -412,4 +412,4 @@ export class UiPlaying extends PolymerElement {
   }
 }
 
-window.customElements.define('ui-playing', UiPlaying);
+window.customElements.define('festival-ui-playing', FestivalUiPlaying);
