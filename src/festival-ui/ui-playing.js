@@ -16,7 +16,7 @@ export class UiPlaying extends PolymerElement {
         }
 
         :host {
-          color: #00e61d;
+          color: white;
           width: 100%;
           height: 100%;
           display: flex;
@@ -32,10 +32,6 @@ export class UiPlaying extends PolymerElement {
           position: absolute;
           width: 100%;
           height: 100%;
-          image-rendering: -moz-crisp-edges;
-          image-rendering: -webkit-crisp-edges;
-          image-rendering: pixelated;
-          image-rendering: crisp-edges;
         }
 
         #current-time,
@@ -52,7 +48,7 @@ export class UiPlaying extends PolymerElement {
 
         paper-spinner-lite {
           --paper-spinner-stroke-width: 3px;
-          --paper-spinner-color: #00e61d;
+          --paper-spinner-color: white;
           width: 4em;
           height: 4em;
           font-size: initial;
@@ -156,20 +152,20 @@ export class UiPlaying extends PolymerElement {
     // set up resize handler
     const resizeCanvas = () => {
       const canvas = this.$.canvas;
-      const scale = window.devicePixelRatio / 12;
+      const scale = window.devicePixelRatio;
 
       canvas.width = window.innerWidth * scale;
       canvas.height = window.innerHeight * scale;
 
       this._sizeMultiplier =
-        (window.devicePixelRatio / 12) *
+        window.devicePixelRatio *
         Math.min(1, window.innerWidth / 500, window.innerHeight / 800);
 
       // canvas properties must be reset after canvas is resized
       const ctx = canvas.getContext('2d');
 
-      ctx.lineWidth = 10 * this._sizeMultiplier;
-      const color = '#00e61d';
+      ctx.lineWidth = 4 * this._sizeMultiplier;
+      const color = '#fff';
       ctx.strokeStyle = color;
       ctx.fillStyle = color;
     };
@@ -253,16 +249,11 @@ export class UiPlaying extends PolymerElement {
     return result;
   }
 
-  // _calcGrow(dataArray) {
-  //   return 0;
-  //   if (this.reduceMotion) return 0;
+  _calcGrow(dataArray) {
+    if (this.reduceMotion) return 0;
 
-  //   const average = dataArray.slice(0, 5).reduce((a, b) => a + b) / 5;
-  //   return average / 255;
-  // }
-
-  _calcGrow() {
-    return 0;
+    const average = dataArray.slice(0, 5).reduce((a, b) => a + b) / 5;
+    return average / 255;
   }
 
   _getCirclePoint(i, end, dataArray) {
@@ -344,7 +335,7 @@ export class UiPlaying extends PolymerElement {
     const grow = this._calcGrow(dataArray);
 
     const p1 = 12.75;
-    const p2 = 250;
+    const p2 = 280;
 
     const distance = (grow * p1 + p2) * this._sizeMultiplier;
 

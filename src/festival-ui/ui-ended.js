@@ -29,7 +29,7 @@ export class UiEnded extends PolymerElement {
         #logo {
           display: block;
           width: 100%;
-          max-width: 600px;
+          max-width: 900px;
           margin: 2em auto;
         }
 
@@ -37,26 +37,23 @@ export class UiEnded extends PolymerElement {
           display: block;
           width: 12vw;
           margin: 2em auto;
-
-          image-rendering: -moz-crisp-edges;
-          image-rendering: -webkit-crisp-edges;
-          image-rendering: pixelated;
-          image-rendering: crisp-edges;
         }
 
         a {
-          background: #00e61d;
-
           text-decoration: none;
           -webkit-tap-highlight-color: transparent;
           width: 100%;
         }
       </style>
       <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
-        <img id="logo" src="images/back2skool-logo.svg" alt="BACK 2 SKOOL" />
+        <img
+          id="logo"
+          src="images/funkstival-logo.svg"
+          alt="Festival presents: FUNKSTIVAL"
+        />
       </a>
       <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
-        <img id="heart" src="images/heart-black-pixel.png" alt="heart" />
+        <img id="heart" src="images/heart-white.svg" alt="heart" />
       </a>
     `;
   }

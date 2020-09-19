@@ -28,12 +28,9 @@ export class FestivalUi extends PolymerElement {
           position: absolute;
           width: 100%;
           height: 100%;
-          color: #00e61d;
-          /*
+          color: white;
           font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
             'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-          */
-          font-family: monospace;
           background: var(--background-image);
           background-size: cover;
         }

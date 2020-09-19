@@ -16,7 +16,7 @@ export class UiIntro extends PolymerElement {
         }
 
         :host {
-          color: #00e61d;
+          color: white;
           width: 100%;
           height: 100%;
           display: flex;
@@ -29,46 +29,33 @@ export class UiIntro extends PolymerElement {
         }
 
         #logo-link {
-          padding-left: 2em;
-          padding-right: 2em;
-          background: #00e61d;
-
           width: 100%;
         }
 
         #logo {
           display: block;
           width: 100%;
-          max-width: 600px;
+          max-width: 900px;
           margin: 2em auto;
         }
 
         #buttons {
-          width: 100%;
-          text-align: center;
-          background: #00e61d;
-
           font-size: 2em;
           margin-bottom: 0.5em;
         }
 
         paper-button {
-          background: black;
+          background: white;
           font-weight: bold;
-          font-size: 1.1em;
-          border-radius: 0px;
+          border-radius: 5px;
           padding: 0.5em 1em;
-          margin-bottom: 1em;
-          /*
+          margin-bottom: 0.5em;
           transform: skew(-15deg);
-          */
 
           /* gradient cutout */
-          color: #00e61d;
-          /*
+          color: black;
           --paper-button-ink-color: black;
           mix-blend-mode: screen;
-          */
         }
 
         a {
@@ -84,8 +71,8 @@ export class UiIntro extends PolymerElement {
       >
         <img
           id="logo"
-          src="images/back2skool-logo.svg"
-          alt="BACK 2 SKOOL"
+          src="images/funkstival-logo.svg"
+          alt="Festival presents: FUNKSTIVAL"
           on-load="_handleLogoLoaded"
         />
       </a>
