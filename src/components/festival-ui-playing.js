@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 
+import './loading-spinner.js';
+
 export class FestivalUiPlaying extends LitElement {
   static get styles() {
     return css`
@@ -41,31 +43,6 @@ export class FestivalUiPlaying extends LitElement {
         font-size: 5em;
         font-weight: 900;
         margin-bottom: 0.2em;
-      }
-
-      .spinner {
-        display: inline-block;
-        width: 80px;
-        height: 80px;
-      }
-      .spinner:after {
-        content: ' ';
-        display: block;
-        width: 64px;
-        height: 64px;
-        margin: 8px;
-        border-radius: 50%;
-        border: 6px solid #fff;
-        border-color: #fff transparent #fff transparent;
-        animation: spinner 1.2s linear infinite;
-      }
-      @keyframes spinner {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
       }
 
       #nextup {
@@ -111,7 +88,7 @@ export class FestivalUiPlaying extends LitElement {
       <canvas id="canvas"></canvas>
       <div id="current-time">
         ${this._showSpinner()
-          ? html`<div class="spinner"></div>`
+          ? html`<loading-spinner></loading-spinner>`
           : html`${this._computeCurrentTimeText()}`}
       </div>
       <div id="nextup" ?hidden=${!this.waitingUntilStart}>Next up</div>
