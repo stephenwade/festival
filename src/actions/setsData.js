@@ -1,7 +1,7 @@
 import moment from 'moment/src/moment.js';
 import { compose } from 'redux/es/redux.mjs';
 
-import { startTicking, stopTicking } from './clock.js';
+import { startTicking, stopTicking } from './targetShowStatus.js';
 
 const addAudioPrefixToSets = (setsData) => {
   // In production, BUILD_ENV is set to 'production'
@@ -48,7 +48,7 @@ const adjustTimesForTesting = (setsData) => {
 
   if (!setsData.adjustTimesForTesting) return setsData;
 
-  const sets = setsData.sets;
+  const { sets } = setsData;
   const firstSet = sets[0];
   if (!firstSet) return setsData;
 

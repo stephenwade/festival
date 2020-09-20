@@ -14,7 +14,7 @@ export class FestivalApp extends connect(store)(LitElement) {
       <festival-audio
         id="audio"
         @error="${this._handleAudioError}"
-        @loadedmetadata="${this._handleAudioLoadedMetadata}"
+        @loadedmetadata="${FestivalApp._handleAudioLoadedMetadata}"
         @visualizer-data-available="${this._handleAudioVisualizerDataAvailable}"
       ></festival-audio>
       <festival-ui id="ui" @listen="${this._handleListenClicked}"></festival-ui>
@@ -39,7 +39,7 @@ export class FestivalApp extends connect(store)(LitElement) {
     this.shadowRoot.getElementById('ui').showAudioError();
   }
 
-  _handleAudioLoadedMetadata(e) {
+  static _handleAudioLoadedMetadata(e) {
     store.dispatch(updateSetMetadata(e.detail));
   }
 

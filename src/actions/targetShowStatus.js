@@ -1,7 +1,5 @@
 import moment from 'moment/src/moment.js';
 
-import { stopTicking } from './clock.js';
-
 const getNextSet = (set, sets) => {
   const setIdx = sets.indexOf(set);
   const nextSetIdx = setIdx + 1;
@@ -73,13 +71,14 @@ const setTargetShowStatus = () => (dispatch, getState) => {
   const { targetShowStatus, setsData } = getState();
 
   if (targetShowStatus.status === 'ENDED') {
+    // eslint-disable-next-line no-use-before-define
     dispatch(stopTicking());
     return;
   }
 
   const now = moment();
 
-  let set = targetShowStatus.set;
+  let { set } = targetShowStatus;
   // make sure next set event is ready before current set ends
   const setCutoff = set.endMoment.clone().subtract(1, 'second');
   if (now.isAfter(setCutoff)) set = getNextSet(set, setsData.sets);
@@ -90,3 +89,12 @@ const setTargetShowStatus = () => (dispatch, getState) => {
 export const tick = () => {
   return setTargetShowStatus();
 };
+
+export const startTicking = () => (dispatch) => {
+  dispatch(setInitialTargetShowStatus());
+  dispatch({ type: 'CLOCK_START_TICKING' });
+};
+
+export const stopTicking = () => ({
+  type: 'CLOCK_STOP_TICKING',
+});

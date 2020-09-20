@@ -50,8 +50,7 @@ export class FestivalAudio extends connect(store)(LitElement) {
       });
     });
 
-    this._activeAudio = this._audioElements[0];
-    this._inactiveAudio = this._audioElements[1];
+    [this._activeAudio, this._inactiveAudio] = this._audioElements;
   }
 
   disconnectedCallback() {
@@ -65,7 +64,7 @@ export class FestivalAudio extends connect(store)(LitElement) {
     });
   }
 
-  stateChanged(state) {
+  stateChanged() {
     this._checkTargetShowStatus();
   }
 
@@ -354,7 +353,7 @@ export class FestivalAudio extends connect(store)(LitElement) {
     const { showStatus } = store.getState();
 
     if (showStatus.status === 'PLAYING') {
-      const currentTime = this._activeAudio.currentTime;
+      const { currentTime } = this._activeAudio;
 
       const newShowStatus = {
         ...showStatus,

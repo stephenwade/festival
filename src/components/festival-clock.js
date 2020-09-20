@@ -23,15 +23,15 @@ export class FestivalClock extends connect(store)(HTMLElement) {
   }
 
   _startTicking() {
-    this._tick();
-    this._tickInterval = setDriftlessIntervalEverySecond(this._tick.bind(this));
+    FestivalClock._tick();
+    this._tickInterval = setDriftlessIntervalEverySecond(FestivalClock._tick);
   }
 
   _stopTicking() {
     clearDriftless(this._tickInterval);
   }
 
-  _tick() {
+  static _tick() {
     store.dispatch(tick());
   }
 }

@@ -104,7 +104,7 @@ export class FestivalUi extends connect(store)(LitElement) {
         : null}
       <toast-sk id="toast" duration="0">
         <span id="toast-message">${this._toastMessage}</span>
-        <button @click="${this._reload}">Reload</button>
+        <button @click="${() => window.location.reload()}">Reload</button>
         <button @click="${this._hideToast}" ?hidden="${this._error}">
           Close
         </button>
@@ -227,10 +227,6 @@ export class FestivalUi extends connect(store)(LitElement) {
       this.shadowRoot.getElementById('toast').show();
       this._alertShown = true;
     }
-  }
-
-  _reload() {
-    window.location.reload();
   }
 
   _hideToast() {

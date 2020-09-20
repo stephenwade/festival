@@ -210,11 +210,11 @@ export class FestivalUiPlaying extends LitElement {
 
     let result = '';
     if (hours > 0) {
-      result += hours.toString() + ':' + minutes.toString().padStart(2, '0');
+      result += `${hours.toString()}:${minutes.toString().padStart(2, '0')}`;
     } else {
       result += minutes.toString();
     }
-    result += ':' + seconds.toString().padStart(2, '0');
+    result += `:${seconds.toString().padStart(2, '0')}`;
     return result;
   }
 
@@ -244,7 +244,7 @@ export class FestivalUiPlaying extends LitElement {
       (loudness * ((i / end) * p3 + p4) + p5) *
       this._sizeMultiplier;
 
-    const angleAroundCircle = 2 * Math.PI * (0.5 + Math.pow(1 - i / end, 1.5));
+    const angleAroundCircle = 2 * Math.PI * (0.5 + (1 - i / end) ** 1.5);
 
     const x = midX + Math.sin(angleAroundCircle) * distanceFromCenter;
     const y = midY + Math.cos(angleAroundCircle) * distanceFromCenter;
@@ -265,7 +265,7 @@ export class FestivalUiPlaying extends LitElement {
     const grow = this._calcGrow(dataArray);
     let [x, y] = this._getCirclePoint(0, end, dataArray);
     let [xNext, yNext] = this._getCirclePoint(1, end, dataArray);
-    for (let i = 1; i < end + 1; i++) {
+    for (let i = 1; i < end + 1; i += 1) {
       if (i === 0) {
         ctx.moveTo(x, y);
       } else {
