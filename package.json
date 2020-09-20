@@ -21,11 +21,11 @@
   },
   "dependencies": {
     "lit-element": "^2.4.0",
-    "moment": "^2.27.0",
+    "moment": "^2.28.0",
     "pwa-helpers": "^0.9.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "standardized-audio-context": "^25.0.2"
+    "standardized-audio-context": "^25.0.4"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.9.0",
@@ -33,16 +33,16 @@
     "@rollup/plugin-replace": "^2.3.3",
     "deepmerge": "^4.2.2",
     "es-dev-server": "^1.57.4",
-    "eslint": "^7.8.1",
+    "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^4.3.0",
     "imagemin": "^7.0.1",
     "imagemin-cli": "^6.0.0",
     "imagemin-webp": "^6.0.0",
     "koa-range": "^0.3.0",
-    "lint-staged": "^10.3.0",
-    "prettier": "2.1.1",
-    "rollup": "^2.26.11",
+    "lint-staged": "^10.4.0",
+    "prettier": "2.1.2",
+    "rollup": "^2.27.1",
     "rollup-plugin-copy": "^3.3.0"
   },
   "husky": {
