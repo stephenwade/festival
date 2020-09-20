@@ -2,6 +2,10 @@
   "name": "festival",
   "description": "Festival",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/stephenwade/festival.git"
+  },
   "scripts": {
     "start": "es-dev-server --node-resolve",
     "lint": "eslint --ext .js,.html . --ignore-path .gitignore",
