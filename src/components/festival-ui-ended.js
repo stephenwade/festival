@@ -1,9 +1,8 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { LitElement, html, css } from 'lit-element';
 
-export class FestivalUiEnded extends PolymerElement {
-  static get template() {
-    return html`
-      <style>
+export class FestivalUiEnded extends LitElement {
+  static get styles() {
+    return css`
         :host {
           box-sizing: border-box;
         }
@@ -44,7 +43,11 @@ export class FestivalUiEnded extends PolymerElement {
           -webkit-tap-highlight-color: transparent;
           width: 100%;
         }
-      </style>
+    `;
+  }
+
+  render() {
+    return html`
       <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
         <img id="logo" src="images/festiv4l-logo.svg" alt="FESTIV4L" />
       </a>

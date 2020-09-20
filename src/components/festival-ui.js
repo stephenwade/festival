@@ -1,6 +1,5 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { LitElement, html, css } from 'lit-element';
 import { connect } from 'pwa-helpers/connect-mixin.js';
-import '@polymer/polymer/lib/elements/dom-if.js';
 
 import '../../lib/toast-sk/toast-sk.js';
 import { store } from '../store.js';
@@ -8,10 +7,9 @@ import './festival-ui-ended.js';
 import './festival-ui-intro.js';
 import './festival-ui-playing.js';
 
-export class FestivalUi extends connect(store)(PolymerElement) {
-  static get template() {
-    return html`
-      <style>
+export class FestivalUi extends connect(store)(LitElement) {
+  static get styles() {
+    return css`
         :host {
           box-sizing: border-box;
           user-select: none;
@@ -77,85 +75,73 @@ export class FestivalUi extends connect(store)(PolymerElement) {
         toast-sk button:last-child {
           margin-right: -1em;
         }
-      </style>
+    `;
+  }
 
-      <template is="dom-if" if="[[_waitingForAudioContext]]">
-        <festival-ui-intro></festival-ui-intro>
-      </template>
-      <template is="dom-if" if="[[_showPlaying]]">
-        <festival-ui-playing
-          set="[[showStatus.set]]"
-          waiting-until-start="[[_waitingUntilStart]]"
-          seconds-until-set="[[showStatus.secondsUntilSet]]"
-          waiting-for-network="[[_waitingForNetwork]]"
-          current-time="[[showStatus.currentTime]]"
-          audio-paused="[[audioStatus.paused]]"
-          reduce-motion="[[_reduceMotion]]"
-          get-audio-visualizer-data="[[getAudioVisualizerData]]"
-        ></festival-ui-playing>
-      </template>
-      <template is="dom-if" if="[[_stampEnded]]">
-        <festival-ui-ended hidden$="[[!_ended]]"></festival-ui-ended>
-      </template>
+  render() {
+    return html`
+      ${this._waitingForAudioContext
+        ? html`<festival-ui-intro></festival-ui-intro>`
+        : null}
+      ${this._waitingUntilStart || this._waitingForNetwork || this._playing
+        ? html`
+            <festival-ui-playing
+              .set="${this._showStatus.set}"
+              .waitingUntilStart="${this._waitingUntilStart}"
+              .secondsUntilSet="${this._showStatus.secondsUntilSet}"
+              .waitingForNetwork="${this._waitingForNetwork}"
+              .currentTime="${this._showStatus.currentTime}"
+              .audioPaused="${this._audioStatus.paused}"
+              .reduceMotion="${this._reduceMotion}"
+              .getAudioVisualizerData="${this.getAudioVisualizerData}"
+            ></festival-ui-playing>
+          `
+        : null}
+      ${this._stampEnded || this._ended
+        ? html`
+            <festival-ui-ended ?hidden="${!this._ended}"></festival-ui-ended>
+          `
+        : null}
       <toast-sk id="toast" duration="0">
-        <span id="toast-message"></span>
-        <button on-click="_reload">Reload</button>
-        <button on-click="_hideToast" hidden$="[[_error]]">Close</button>
+        <span id="toast-message">${this._toastMessage}</span>
+        <button @click="${this._reload}">Reload</button>
+        <button @click="${this._hideToast}" ?hidden="${this._error}">
+          Close
+        </button>
       </toast-sk>
     `;
   }
 
   static get properties() {
     return {
-      showStatus: Object,
-      audioStatus: Object,
-      getAudioVisualizerData: Function,
-      _error: Boolean,
-      _alertShown: Boolean,
-      _reduceMotion: Boolean,
-      _waitingForAudioContext: {
-        type: Boolean,
-        computed: '_computeWaitingForAudioContext(showStatus.status)',
-      },
-      _waitingUntilStart: {
-        type: Boolean,
-        computed: '_computeWaitingUntilStart(showStatus.status)',
-      },
-      _waitingForNetwork: {
-        type: Boolean,
-        computed: '_computeWaiting(showStatus.status, audioStatus.waiting)',
-      },
-      _playing: {
-        type: Boolean,
-        computed: '_computePlaying(showStatus.status)',
-      },
-      _showPlaying: {
-        type: Boolean,
-        computed:
-          '_computeShowPlaying(_waitingUntilStart, _waitingForNetwork, _playing)',
-      },
-      _ended: {
-        type: Boolean,
-        computed: '_computeEnded(showStatus.status)',
-        observer: '_endedChanged',
-      },
-      _stampEnded: {
-        type: Boolean,
-        value: false,
-      },
+      _showStatus: { attribute: false },
+      _audioStatus: { attribute: false },
+      getAudioVisualizerData: { attribute: false },
+      _error: { attribute: false },
+      _alertShown: { attribute: false },
+      _reduceMotion: { attribute: false },
+      _waitingForAudioContext: { attribute: false },
+      _waitingUntilStart: { attribute: false },
+      _waitingForNetwork: { attribute: false },
+      _playing: { attribute: false },
+      _ended: { attribute: false },
+      _stampEnded: { attribute: false },
+      _toastMessage: { attribute: false },
     };
   }
 
-  static get observers() {
-    return [
-      '_delayChanged(showStatus.delay)',
-      '_audioStalledChanged(audioStatus.stalled)',
-    ];
+  shouldUpdate() {
+    if (this._showStatus.delay !== this._lastDelay) this._delayChanged();
+    if (this._audioStatus.stalled !== this._lastStalled)
+      this._audioStalledChanged();
+
+    this._lastDelay = this._showStatus.delay;
+    this._lastStalled = this._audioStatus.stalled;
+
+    return true;
   }
 
-  ready() {
-    super.ready();
-
+  firstUpdated() {
     setTimeout(() => {
       this._stampEnded = true;
     }, 10 * 1000);
@@ -186,9 +172,21 @@ export class FestivalUi extends connect(store)(PolymerElement) {
   }
 
   stateChanged(state) {
-    this.showStatus = state.showStatus;
-    this.audioStatus = state.audioStatus;
+    this._showStatus = state.showStatus;
+    this._audioStatus = state.audioStatus;
 
+    this._waitingForAudioContext =
+      this._showStatus.status === 'WAITING_FOR_AUDIO_CONTEXT';
+    this._waitingUntilStart = this._showStatus.status === 'WAITING_UNTIL_START';
+    this._waitingForNetwork =
+      this._showStatus.status === 'DELAYING_FOR_INITIAL_SYNC' ||
+      this._audioStatus.waiting;
+    this._playing = this._showStatus.status === 'PLAYING';
+    this._ended = this._showStatus.status === 'ENDED';
+
+    this.requestUpdate();
+
+    if (this._ended) this._hideToast();
     if (state.ui.errorLoading) this._showLoadingError();
   }
 
@@ -203,62 +201,30 @@ export class FestivalUi extends connect(store)(PolymerElement) {
 
   _showError(text) {
     this._error = true;
-    this.$['toast-message'].textContent = text;
-    this.$.toast.show();
+    this._toastMessage = text;
+    this.shadowRoot.getElementById('toast').show();
     this._alertShown = true;
   }
 
-  _audioStalledChanged(stalled) {
+  _audioStalledChanged() {
     if (this._alertShown) return;
     if (this._waitingUntilStart || this._ended) return;
 
-    if (stalled) {
-      this.$['toast-message'].textContent =
+    if (this._audioStatus.stalled) {
+      this._toastMessage =
         'Looks like your internet connection is having trouble.';
-      this.$.toast.show();
+      this.shadowRoot.getElementById('toast').show();
       this._alertShown = true;
     }
   }
 
-  _computeWaitingForAudioContext(status) {
-    return status === 'WAITING_FOR_AUDIO_CONTEXT';
-  }
-
-  _computeWaitingUntilStart(status) {
-    return status === 'WAITING_UNTIL_START';
-  }
-
-  _computeWaiting(status, waiting) {
-    return status === 'DELAYING_FOR_INITIAL_SYNC' || waiting;
-  }
-
-  _computePlaying(status) {
-    return status === 'PLAYING';
-  }
-
-  _computeShowPlaying(_waitingUntilStart, _waitingForNetwork, _playing) {
-    return _waitingUntilStart || _waitingForNetwork || _playing;
-  }
-
-  _computeEnded(status) {
-    return status === 'ENDED';
-  }
-
-  _endedChanged(_ended) {
-    if (_ended) {
-      this._stampEnded = true;
-      this._hideToast();
-    }
-  }
-
-  _delayChanged(delay) {
+  _delayChanged() {
     if (this._alertShown) return;
     if (this._waitingUntilStart || this._ended) return;
 
-    if (delay >= 30) {
-      this.$['toast-message'].textContent =
-        'Looks like your audio player is out of sync.';
-      this.$.toast.show();
+    if (this._showStatus.delay >= 30) {
+      this._toastMessage = 'Looks like your audio player is out of sync.';
+      this.shadowRoot.getElementById('toast').show();
       this._alertShown = true;
     }
   }
@@ -268,7 +234,7 @@ export class FestivalUi extends connect(store)(PolymerElement) {
   }
 
   _hideToast() {
-    this.$.toast.hide();
+    this.shadowRoot.getElementById('toast').hide();
   }
 }
 

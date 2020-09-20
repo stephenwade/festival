@@ -1,4 +1,4 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { LitElement, html } from 'lit-element';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
 import { store } from '../store.js';
@@ -7,40 +7,36 @@ import './festival-clock.js';
 import './festival-audio.js';
 import './festival-ui.js';
 
-export class FestivalApp extends connect(store)(PolymerElement) {
-  static get template() {
+export class FestivalApp extends connect(store)(LitElement) {
+  render() {
     return html`
       <festival-clock></festival-clock>
       <festival-audio
         id="audio"
-        on-error="_handleAudioError"
-        on-loadedmetadata="_handleAudioLoadedMetadata"
-        on-visualizer-data-available="_handleAudioVisualizerDataAvailable"
+        @error="${this._handleAudioError}"
+        @loadedmetadata="${this._handleAudioLoadedMetadata}"
+        @visualizer-data-available="${this._handleAudioVisualizerDataAvailable}"
       ></festival-audio>
-      <festival-ui id="ui" on-listen="_handleListenClicked"></festival-ui>
+      <festival-ui id="ui" @listen="${this._handleListenClicked}"></festival-ui>
     `;
   }
 
   static get properties() {
     return {
-      getAudioVisualizerData: Function,
-      showStatus: Object,
-      audioStatus: Object,
+      getAudioVisualizerData: { attribute: false },
     };
   }
 
-  ready() {
-    super.ready();
-
+  firstUpdated() {
     store.dispatch(loadSets());
   }
 
   _handleListenClicked() {
-    this.$.audio.initialize();
+    this.shadowRoot.getElementById('audio').init();
   }
 
   _handleAudioError() {
-    this.$.ui.showAudioError();
+    this.shadowRoot.getElementById('ui').showAudioError();
   }
 
   _handleAudioLoadedMetadata(e) {
@@ -48,7 +44,8 @@ export class FestivalApp extends connect(store)(PolymerElement) {
   }
 
   _handleAudioVisualizerDataAvailable(e) {
-    this.$.ui.getAudioVisualizerData = e.detail.getAudioVisualizerData;
+    this.shadowRoot.getElementById('ui').getAudioVisualizerData =
+      e.detail.getAudioVisualizerData;
   }
 }
 

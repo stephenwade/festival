@@ -1,10 +1,8 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@polymer/polymer/lib/elements/dom-if.js';
+import { LitElement, html, css } from 'lit-element';
 
-export class FestivalUiIntro extends PolymerElement {
-  static get template() {
-    return html`
-      <style>
+export class FestivalUiIntro extends LitElement {
+  static get styles() {
+    return css`
         :host {
           box-sizing: border-box;
         }
@@ -58,7 +56,11 @@ export class FestivalUiIntro extends PolymerElement {
           color: black;
           mix-blend-mode: screen;
         }
-      </style>
+    `;
+  }
+
+  render() {
+    return html`
       <a
         id="logo-link"
         href="https://twitter.com/URLFESTIVAL"
@@ -69,23 +71,21 @@ export class FestivalUiIntro extends PolymerElement {
           id="logo"
           src="images/festiv4l-logo.svg"
           alt="FESTIV4L"
-          on-load="_handleLogoLoaded"
+          @load="${this._handleLogoLoaded}"
         />
       </a>
-      <template is="dom-if" if="[[_logoLoaded]]">
-        <div id="buttons">
-          <a href="#" on-click="_handleListenClicked">Listen Live</a>
-          <a href="https://discord.io/festival" target="_blank" rel="noopener">
-            Join Discord
-          </a>
-        </div>
-      </template>
+      <div id="buttons" ?hidden=${!this._logoLoaded}>
+        <a href="#" @click="${this._handleListenClicked}">Listen Live</a>
+        <a href="https://discord.io/festival" target="_blank" rel="noopener">
+          Join Discord
+        </a>
+      </div>
     `;
   }
 
   static get properties() {
     return {
-      _logoLoaded: Boolean,
+      _logoLoaded: { attribute: false },
     };
   }
 

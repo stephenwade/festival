@@ -1,10 +1,8 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@polymer/polymer/lib/elements/dom-if.js';
+import { LitElement, html, css } from 'lit-element';
 
-export class FestivalUiPlaying extends PolymerElement {
-  static get template() {
-    return html`
-      <style>
+export class FestivalUiPlaying extends LitElement {
+  static get styles() {
+    return css`
         :host {
           box-sizing: border-box;
         }
@@ -105,69 +103,56 @@ export class FestivalUiPlaying extends PolymerElement {
           letter-spacing: -0.05em;
           margin-bottom: -0.2rem;
         }
-      </style>
+    `;
+  }
+
+  render() {
+    return html`
       <canvas id="canvas"></canvas>
       <div id="current-time">
-        <template is="dom-if" if="[[_showSpinner]]">
-          <div class="spinner"></div>
-        </template>
-        <template is="dom-if" if="[[!_showSpinner]]">
-          [[_currentTimeText]]
-        </template>
+        ${this._showSpinner()
+          ? html`<div class="spinner"></div>`
+          : html`${this._computeCurrentTimeText()}`}
       </div>
-      <template is="dom-if" if="[[waitingUntilStart]]">
-        <div id="nextup">Next up</div>
-      </template>
+      <div id="nextup" ?hidden=${!this.waitingUntilStart}>Next up</div>
       <div id="artist-group">
-        <div id="artist">[[set.artist]]</div>
+        <div id="artist">${this.set.artist}</div>
       </div>
     `;
   }
 
   static get properties() {
     return {
-      set: {
-        type: Object,
-        observer: '_setChanged',
-      },
-      waitingUntilStart: {
-        type: Boolean,
-        observer: '_waitingUntilStartChanged',
-      },
-      secondsUntilSet: Number,
-      waitingForNetwork: Boolean,
-      currentTime: Number,
-      audioPaused: Boolean,
-      reduceMotion: {
-        type: Boolean,
-        value: false,
-      },
-      getAudioVisualizerData: Function,
-      _lastUpdateTimestamp: Number,
-      _showSpinner: {
-        type: Boolean,
-        computed: '_computeShowSpinner(waitingUntilStart, waitingForNetwork)',
-      },
-      _currentTimeText: {
-        type: String,
-        computed:
-          '_computeCurrentTimeText(waitingUntilStart, secondsUntilSet, currentTime)',
-      },
-      _showProgressLine: Boolean,
-      _sizeMultiplier: Number,
+      set: { type: Object },
+      waitingUntilStart: { type: Boolean },
+      secondsUntilSet: { type: Number },
+      waitingForNetwork: { type: Boolean },
+      currentTime: { type: Number },
+      audioPaused: { type: Boolean },
+      reduceMotion: { type: Boolean },
     };
   }
 
-  static get observers() {
-    return ['_updateTimestamp(waitingForNetwork, audioPaused, currentTime)'];
+  shouldUpdate(changedProps) {
+    if (changedProps.has('set')) this._showProgressLine = false;
+    if (changedProps.has('waitingUntilStart')) {
+      this._resizeText();
+      if (!this.waitingUntilStart) this._animate();
+    }
+    if (
+      changedProps.has('waitingForNetwork') ||
+      changedProps.has('audioPaused') ||
+      changedProps.has('currentTime')
+    )
+      this._updateTimestamp();
+
+    return true;
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-
+  firstUpdated() {
     // set up resize handler
     const resizeCanvas = () => {
-      const canvas = this.$.canvas;
+      const canvas = this.shadowRoot.getElementById('canvas');
       const scale = window.devicePixelRatio;
 
       canvas.width = window.innerWidth * scale;
@@ -206,7 +191,8 @@ export class FestivalUiPlaying extends PolymerElement {
   }
 
   _resizeText() {
-    const artistGroup = this.$['artist-group'];
+    const artistGroup = this.shadowRoot.getElementById('artist-group');
+    if (!artistGroup) return;
 
     const rect = artistGroup.getBoundingClientRect();
     let maxWidth;
@@ -222,31 +208,21 @@ export class FestivalUiPlaying extends PolymerElement {
     }
   }
 
-  _setChanged() {
-    this._showProgressLine = false;
-  }
-
-  _waitingUntilStartChanged(waitingUntilStart) {
-    this._resizeText();
-
-    if (!waitingUntilStart) this._animate();
-  }
-
   _updateTimestamp() {
     this._lastUpdateTimestamp = performance.now();
   }
 
-  _computeShowSpinner(waitingUntilStart, waitingForNetwork) {
-    if (waitingUntilStart) return false;
-    return waitingForNetwork;
+  _showSpinner() {
+    if (this.waitingUntilStart) return false;
+    return this.waitingForNetwork;
   }
 
-  _computeCurrentTimeText(waitingUntilStart, secondsUntilSet, currentTime) {
+  _computeCurrentTimeText() {
     let time;
-    if (waitingUntilStart) {
-      time = secondsUntilSet;
+    if (this.waitingUntilStart) {
+      time = this.secondsUntilSet;
     } else {
-      time = Math.floor(currentTime + 0.1);
+      time = Math.floor(this.currentTime + 0.1);
     }
 
     const hours = Math.floor(time / (60 * 60));
@@ -273,7 +249,7 @@ export class FestivalUiPlaying extends PolymerElement {
   }
 
   _getCirclePoint(i, end, dataArray) {
-    const canvas = this.$.canvas;
+    const canvas = this.shadowRoot.getElementById('canvas');
     const midX = canvas.width / 2;
     const midY = canvas.height / 2;
 
@@ -300,7 +276,7 @@ export class FestivalUiPlaying extends PolymerElement {
   }
 
   _drawCircle(dataArray) {
-    const canvas = this.$.canvas;
+    const canvas = this.shadowRoot.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
     const midX = canvas.width / 2;
@@ -342,7 +318,7 @@ export class FestivalUiPlaying extends PolymerElement {
   }
 
   _drawProgress(dataArray, progress) {
-    const canvas = this.$.canvas;
+    const canvas = this.shadowRoot.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
     const midX = canvas.width / 2;
@@ -383,7 +359,8 @@ export class FestivalUiPlaying extends PolymerElement {
   }
 
   _animate() {
-    const canvas = this.$.canvas;
+    const canvas = this.shadowRoot.getElementById('canvas');
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);

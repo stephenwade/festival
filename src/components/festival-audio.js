@@ -1,4 +1,4 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { LitElement, html } from 'lit-element';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { AudioContext } from 'standardized-audio-context';
 
@@ -12,13 +12,13 @@ import {
   audioWaiting,
 } from '../actions/audioStatus.js';
 
-export class FestivalAudio extends connect(store)(PolymerElement) {
+export class FestivalAudio extends connect(store)(LitElement) {
   constructor() {
     super();
 
     this._changeQueue = [];
 
-    this._audioEvents = {
+    this._boundAudioEvents = {
       ended: this._handleAudioEnded.bind(this),
       error: this._handleAudioError.bind(this),
       loadedmetadata: this._handleAudioLoadedMetadata.bind(this),
@@ -30,31 +30,22 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
     };
   }
 
-  static get template() {
+  render() {
     return html`
       <audio id="audio1" crossorigin="anonymous"></audio>
       <audio id="audio2" crossorigin="anonymous"></audio>
     `;
   }
 
-  static get properties() {
-    return {
-      targetShowStatus: Object,
-    };
-  }
-
-  static get observers() {
-    return ['_targetShowStatusChanged(targetShowStatus.*)'];
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    this._audioElements = [this.$.audio1, this.$.audio2];
+  firstUpdated() {
+    this._audioElements = [
+      this.shadowRoot.getElementById('audio1'),
+      this.shadowRoot.getElementById('audio2'),
+    ];
 
     this._audioElements.forEach((audio) => {
-      Object.keys(this._audioEvents).forEach((event) => {
-        const handler = this._audioEvents[event];
+      Object.keys(this._boundAudioEvents).forEach((event) => {
+        const handler = this._boundAudioEvents[event];
         audio.addEventListener(event, handler);
       });
     });
@@ -67,18 +58,18 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
     super.disconnectedCallback();
 
     this._audioElements.forEach((audio) => {
-      Object.keys(this._audioEvents).forEach((event) => {
-        const handler = this._audioEvents[event];
+      Object.keys(this._boundAudioEvents).forEach((event) => {
+        const handler = this._boundAudioEvents[event];
         audio.removeEventListener(event, handler);
       });
     });
   }
 
   stateChanged(state) {
-    this.targetShowStatus = state.targetShowStatus;
+    this._checkTargetShowStatus();
   }
 
-  initialize() {
+  init() {
     const { targetShowStatus } = store.getState();
     if (targetShowStatus.status === 'ENDED') return;
 
@@ -154,15 +145,15 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
       status: 'WAITING_UNTIL_START',
     };
     store.dispatch(setShowStatus(newShowStatus));
-    this._targetShowStatusChanged();
+    this._checkTargetShowStatus();
   }
 
-  _targetShowStatusChanged() {
+  _checkTargetShowStatus() {
     if (this._error) return;
 
     const { targetShowStatus, showStatus } = store.getState();
 
-    const ended = targetShowStatus.status === 'ENDED';
+    const ended = targetShowStatus && targetShowStatus.status === 'ENDED';
     const waitingForAudioContext =
       showStatus.status === 'WAITING_FOR_AUDIO_CONTEXT';
 
@@ -170,21 +161,27 @@ export class FestivalAudio extends connect(store)(PolymerElement) {
 
     const firstRun = !this._lastTargetShowStatus;
     if (firstRun) {
+      this._lastTargetShowStatus = targetShowStatus;
       this._queueStatusChange(targetShowStatus);
     } else {
       const statusChanged =
         targetShowStatus.status !== this._lastTargetShowStatus.status;
       const setChanged =
         targetShowStatus.set !== this._lastTargetShowStatus.set;
+      const secondsUntilSetChanged =
+        targetShowStatus.secondsUntilSet !==
+        this._lastTargetShowStatus.secondsUntilSet;
+      const currentTimeChanged =
+        targetShowStatus.currentTime !== this._lastTargetShowStatus.currentTime;
+
+      this._lastTargetShowStatus = targetShowStatus;
 
       if (statusChanged || setChanged) {
         this._queueStatusChange(targetShowStatus);
-      } else {
+      } else if (secondsUntilSetChanged || currentTimeChanged) {
         this._updateTime(targetShowStatus);
       }
     }
-
-    this._lastTargetShowStatus = targetShowStatus;
   }
 
   _queueStatusChange(change) {
