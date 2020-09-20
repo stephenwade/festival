@@ -3,46 +3,46 @@ import { LitElement, html, css } from 'lit-element';
 export class FestivalUiEnded extends LitElement {
   static get styles() {
     return css`
-        :host {
-          box-sizing: border-box;
-        }
-        *,
-        *:before,
-        *:after {
-          box-sizing: inherit;
-        }
+      :host {
+        box-sizing: border-box;
+      }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
 
-        :host {
-          color: white;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          padding: 0 1em;
-          text-transform: uppercase;
-        }
+      :host {
+        color: white;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 1em;
+        text-transform: uppercase;
+      }
 
-        #logo {
-          display: block;
-          width: 100%;
-          max-width: 900px;
-          margin: 2em auto;
-        }
+      #logo {
+        display: block;
+        width: 100%;
+        max-width: 900px;
+        margin: 2em auto;
+      }
 
-        #heart {
-          display: block;
-          width: 12vw;
-          margin: 2em auto;
-        }
+      #heart {
+        display: block;
+        width: 12vw;
+        margin: 2em auto;
+      }
 
-        a {
-          text-decoration: none;
-          -webkit-tap-highlight-color: transparent;
-          width: 100%;
-        }
+      a {
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+        width: 100%;
+      }
     `;
   }
 

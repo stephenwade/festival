@@ -10,71 +10,71 @@ import './festival-ui-playing.js';
 export class FestivalUi extends connect(store)(LitElement) {
   static get styles() {
     return css`
-        :host {
-          box-sizing: border-box;
-          user-select: none;
-        }
-        *,
-        *:before,
-        *:after {
-          box-sizing: inherit;
-        }
+      :host {
+        box-sizing: border-box;
+        user-select: none;
+      }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
 
-        [hidden] {
-          display: none !important;
-        }
+      [hidden] {
+        display: none !important;
+      }
 
-        :host {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          color: white;
-          font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
-            'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-          background: var(--gradient-background);
-          background-size: 100% auto;
-        }
+      :host {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        color: white;
+        font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
+          'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+        background: var(--gradient-background);
+        background-size: 100% auto;
+      }
 
-        button {
-          font-family: inherit;
-          font-size: inherit;
-          line-height: inherit;
-          text-transform: uppercase;
-          border: none;
-          margin: 0;
-          background-color: inherit;
-          color: inherit;
-          cursor: pointer;
-          padding: 0.7em 0.7em;
-          margin: 0 0.3em;
-          min-width: 5em;
-        }
-        button::-moz-focus-inner {
-          border-style: none;
-          padding: 0;
-        }
-        button:-moz-focusring {
-          outline: 1px dotted ButtonText;
-        }
+      button {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        text-transform: uppercase;
+        border: none;
+        margin: 0;
+        background-color: inherit;
+        color: inherit;
+        cursor: pointer;
+        padding: 0.7em 0.7em;
+        margin: 0 0.3em;
+        min-width: 5em;
+      }
+      button::-moz-focus-inner {
+        border-style: none;
+        padding: 0;
+      }
+      button:-moz-focusring {
+        outline: 1px dotted ButtonText;
+      }
 
-        toast-sk {
-          background-color: #323232;
-          color: #f1f1f1;
-          border-radius: 3px;
-          padding: 0.7em 1.5em;
-        }
+      toast-sk {
+        background-color: #323232;
+        color: #f1f1f1;
+        border-radius: 3px;
+        padding: 0.7em 1.5em;
+      }
 
-        toast-sk button:first-of-type {
-          margin-right: -0.5em;
-        }
+      toast-sk button:first-of-type {
+        margin-right: -0.5em;
+      }
 
-        toast-sk button + button {
-          margin-left: -0.5em;
-        }
+      toast-sk button + button {
+        margin-left: -0.5em;
+      }
 
-        toast-sk button:last-child {
-          margin-right: -1em;
-        }
+      toast-sk button:last-child {
+        margin-right: -1em;
+      }
     `;
   }
 

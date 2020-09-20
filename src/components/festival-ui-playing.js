@@ -3,106 +3,106 @@ import { LitElement, html, css } from 'lit-element';
 export class FestivalUiPlaying extends LitElement {
   static get styles() {
     return css`
-        :host {
-          box-sizing: border-box;
-        }
-        *,
-        *:before,
-        *:after {
-          box-sizing: inherit;
-        }
+      :host {
+        box-sizing: border-box;
+      }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
 
-        :host {
-          color: white;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          padding: 0 1em;
-          text-transform: uppercase;
-        }
+      :host {
+        color: white;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 1em;
+        text-transform: uppercase;
+      }
 
-        canvas {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-        }
+      canvas {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
 
-        #current-time,
-        #artist-group {
-          z-index: 1;
-        }
+      #current-time,
+      #artist-group {
+        z-index: 1;
+      }
 
-        #current-time {
-          height: 6rem;
-          font-size: 5em;
-          font-weight: 900;
-          margin-bottom: 0.2em;
-        }
+      #current-time {
+        height: 6rem;
+        font-size: 5em;
+        font-weight: 900;
+        margin-bottom: 0.2em;
+      }
 
-        .spinner {
-          display: inline-block;
-          width: 80px;
-          height: 80px;
+      .spinner {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+      }
+      .spinner:after {
+        content: ' ';
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #fff;
+        border-color: #fff transparent #fff transparent;
+        animation: spinner 1.2s linear infinite;
+      }
+      @keyframes spinner {
+        0% {
+          transform: rotate(0deg);
         }
-        .spinner:after {
-          content: ' ';
-          display: block;
-          width: 64px;
-          height: 64px;
-          margin: 8px;
-          border-radius: 50%;
-          border: 6px solid #fff;
-          border-color: #fff transparent #fff transparent;
-          animation: spinner 1.2s linear infinite;
+        100% {
+          transform: rotate(360deg);
         }
-        @keyframes spinner {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
+      }
 
-        #nextup {
-          font-size: 2em;
-          margin-bottom: 0.2em;
-        }
+      #nextup {
+        font-size: 2em;
+        margin-bottom: 0.2em;
+      }
 
-        #artist-group {
-          user-select: text;
-          display: inline-block;
-        }
+      #artist-group {
+        user-select: text;
+        display: inline-block;
+      }
 
-        #artist-group.vertical {
-          max-width: 100vw;
-          padding: 0 1em;
-        }
+      #artist-group.vertical {
+        max-width: 100vw;
+        padding: 0 1em;
+      }
 
-        #artist-group.vertical div {
-          display: block;
-          padding-left: 0;
-          text-align: left;
-          max-width: 500px;
-        }
+      #artist-group.vertical div {
+        display: block;
+        padding-left: 0;
+        text-align: left;
+        max-width: 500px;
+      }
 
-        #artist {
-          display: inline-block;
-          vertical-align: top;
-        }
+      #artist {
+        display: inline-block;
+        vertical-align: top;
+      }
 
-        #artist {
-          font-size: 3em;
-          font-weight: 900;
-          text-align: right;
-          line-height: 0.9;
-          letter-spacing: -0.05em;
-          margin-bottom: -0.2rem;
-        }
+      #artist {
+        font-size: 3em;
+        font-weight: 900;
+        text-align: right;
+        line-height: 0.9;
+        letter-spacing: -0.05em;
+        margin-bottom: -0.2rem;
+      }
     `;
   }
 
