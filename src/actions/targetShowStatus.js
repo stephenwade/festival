@@ -1,4 +1,4 @@
-import moment from 'moment/src/moment.js';
+import { isAfter, isBefore, subSeconds } from 'date-fns';
 
 const getNextSet = (set, sets) => {
   const setIdx = sets.indexOf(set);
@@ -16,12 +16,8 @@ const setTargetShowStatusForSet = (set, sets, now) => {
   if (set) {
     const nextSet = getNextSet(set, sets);
 
-    if (now.isBefore(set.startMoment)) {
-      const secondsUntilSetFrac = set.startMoment.diff(
-        now,
-        'seconds',
-        true /* do not truncate */
-      );
+    if (isBefore(now, set.startDate)) {
+      const secondsUntilSetFrac = (set.startDate - now) / 1000;
       const secondsUntilSet = Math.ceil(secondsUntilSetFrac);
       return newTargetShowStatus({
         set,
@@ -31,11 +27,7 @@ const setTargetShowStatusForSet = (set, sets, now) => {
       });
     }
 
-    const currentTimeFrac = now.diff(
-      set.startMoment,
-      'seconds',
-      true /* do not truncate */
-    );
+    const currentTimeFrac = (now - set.startDate) / 1000;
     const currentTime = Math.floor(currentTimeFrac);
     return newTargetShowStatus({
       set,
@@ -53,7 +45,7 @@ const setTargetShowStatusForSet = (set, sets, now) => {
 
 const getInitialSet = (now, sets) => {
   for (const set of sets) {
-    if (now.isBefore(set.endMoment)) return set;
+    if (isBefore(now, set.endDate)) return set;
   }
   return null;
 };
@@ -61,7 +53,7 @@ const getInitialSet = (now, sets) => {
 export const setInitialTargetShowStatus = () => (dispatch, getState) => {
   const { setsData } = getState();
 
-  const now = moment();
+  const now = new Date();
   const initialSet = getInitialSet(now, setsData.sets);
 
   dispatch(setTargetShowStatusForSet(initialSet, setsData.sets, now));
@@ -76,12 +68,12 @@ const setTargetShowStatus = () => (dispatch, getState) => {
     return;
   }
 
-  const now = moment();
+  const now = new Date();
 
   let { set } = targetShowStatus;
   // make sure next set event is ready before current set ends
-  const setCutoff = set.endMoment.clone().subtract(1, 'second');
-  if (now.isAfter(setCutoff)) set = getNextSet(set, setsData.sets);
+  const setCutoff = subSeconds(set.endDate, 1);
+  if (isAfter(now, setCutoff)) set = getNextSet(set, setsData.sets);
 
   dispatch(setTargetShowStatusForSet(set, setsData.sets, now));
 };

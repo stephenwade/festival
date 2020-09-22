@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit-element';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { AudioContext } from 'standardized-audio-context';
+import { differenceInSeconds } from 'date-fns';
 
 import { store } from '../store.js';
 import { setShowStatus } from '../actions/showStatus.js';
@@ -309,9 +310,9 @@ export class FestivalAudio extends connect(store)(LitElement) {
 
     let delay = change.currentTime - this._activeAudio.currentTime;
     if (change.set !== showStatus.set) {
-      const setDifference = change.set.startMoment.diff(
-        showStatus.set.startMoment,
-        'seconds'
+      const setDifference = differenceInSeconds(
+        change.set.startDate,
+        showStatus.set.startDate
       );
       delay += setDifference;
     }

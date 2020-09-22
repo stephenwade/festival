@@ -1,4 +1,4 @@
-import moment from 'moment/src/moment.js';
+import { parseISO, addMilliseconds, addSeconds } from 'date-fns';
 import { compose } from 'redux/es/redux.mjs';
 
 import { startTicking, stopTicking } from './targetShowStatus.js';
@@ -24,21 +24,21 @@ const addAudioPrefixToSets = (setsData) => {
   };
 };
 
-const addMomentsToSets = (setsData) => {
+const addDatesToSets = (setsData) => {
   return {
     ...setsData,
     sets: setsData.sets.map((set) => ({
       ...set,
-      startMoment: moment(set.start),
-      endMoment: moment(set.start).clone().add(set.length, 'seconds'),
+      startDate: parseISO(set.start),
+      endDate: addSeconds(parseISO(set.start), set.length),
     })),
   };
 };
 
-const sortSetsByMoment = (setsData) => {
+const sortSetsByDate = (setsData) => {
   return {
     ...setsData,
-    sets: setsData.sets.sort((a, b) => a.startMoment - b.startMoment),
+    sets: setsData.sets.sort((a, b) => a.startDate - b.startDate),
   };
 };
 
@@ -52,22 +52,23 @@ const adjustTimesForTesting = (setsData) => {
   const firstSet = sets[0];
   if (!firstSet) return setsData;
 
-  const now = moment();
-  const difference = now.diff(firstSet.startMoment);
-  sets.forEach((set) => {
-    [set.startMoment, set.endMoment].forEach((m) =>
-      m.add(difference).add(5, 'seconds')
-    );
-  });
-
-  return setsData;
+  const now = new Date();
+  const difference = now - firstSet.startDate;
+  return {
+    ...setsData,
+    sets: setsData.sets.map((set) => ({
+      ...set,
+      startDate: addSeconds(addMilliseconds(set.startDate, difference), 5),
+      endDate: addSeconds(addMilliseconds(set.endDate, difference), 5),
+    })),
+  };
 };
 
 const prepareSets = (setsData) => {
   const transform = compose(
     adjustTimesForTesting,
-    sortSetsByMoment,
-    addMomentsToSets,
+    sortSetsByDate,
+    addDatesToSets,
     addAudioPrefixToSets
   );
   return transform(setsData);
@@ -98,7 +99,7 @@ export const loadSets = () => async (dispatch) => {
 };
 
 export const updateSetMetadata = (detail) => ({
-  type: 'UPDATE_SET_END_MOMENT',
+  type: 'UPDATE_SET_END_DATE',
   set: detail.set,
   duration: detail.duration,
 });
