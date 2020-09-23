@@ -1,4 +1,4 @@
-import { isAfter, isBefore, subSeconds } from 'date-fns';
+import { isAfter, isBefore } from 'date-fns';
 
 const getNextSet = (set, sets) => {
   const setIdx = sets.indexOf(set);
@@ -71,9 +71,7 @@ const setTargetShowStatus = () => (dispatch, getState) => {
   const now = new Date();
 
   let { set } = targetShowStatus;
-  // make sure next set event is ready before current set ends
-  const setCutoff = subSeconds(set.endDate, 1);
-  if (isAfter(now, setCutoff)) set = getNextSet(set, setsData.sets);
+  if (isAfter(now, set.endDate)) set = getNextSet(set, setsData.sets);
 
   dispatch(setTargetShowStatusForSet(set, setsData.sets, now));
 };
