@@ -45,6 +45,20 @@ const sortSetsByDate = (setsData) => {
   };
 };
 
+const adjustTimesForClientTimeSkew = (setsData) => {
+  const clientDate = new Date();
+  const { serverDate } = setsData;
+  const clientTimeSkewMs = clientDate - serverDate;
+  return {
+    ...setsData,
+    sets: setsData.sets.map((set) => ({
+      ...set,
+      startDate: addMilliseconds(set.startDate, clientTimeSkewMs),
+      endDate: addMilliseconds(set.endDate, clientTimeSkewMs),
+    })),
+  };
+};
+
 const adjustTimesForTesting = (setsData) => {
   // adjust all start times so the first set starts 5 seconds
   // after the page is loaded
@@ -70,6 +84,7 @@ const adjustTimesForTesting = (setsData) => {
 const prepareSets = (setsData) => {
   const transform = compose(
     adjustTimesForTesting,
+    adjustTimesForClientTimeSkew,
     sortSetsByDate,
     addDatesToSets,
     addAudioPrefixToSets
@@ -83,7 +98,10 @@ const loadData = async () => {
   if (!response.ok)
     throw new Error(`Response: ${response.status} ${response.statusText}`);
 
-  const data = await response.json();
+  const data = {
+    ...(await response.json()),
+    serverDate: new Date(response.headers.get('date')),
+  };
 
   return prepareSets(data);
 };
