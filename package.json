@@ -25,7 +25,7 @@
     "pwa-helpers": "^0.9.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "standardized-audio-context": "^25.0.4"
+    "standardized-audio-context": "^25.0.5"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.9.0",
@@ -42,7 +42,7 @@
     "koa-range": "^0.3.0",
     "lint-staged": "^10.4.0",
     "prettier": "2.1.2",
-    "rollup": "^2.27.1",
+    "rollup": "^2.28.2",
     "rollup-plugin-copy": "^3.3.0"
   },
   "husky": {
