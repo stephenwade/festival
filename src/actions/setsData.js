@@ -1,4 +1,4 @@
-import { parseISO, addMilliseconds, addSeconds } from 'date-fns';
+import { addMilliseconds, addSeconds } from 'date-fns';
 import { compose } from 'redux/es/redux.mjs';
 
 import { startTicking, stopTicking } from './targetShowStatus.js';
@@ -27,11 +27,14 @@ const addAudioPrefixToSets = (setsData) => {
 const addDatesToSets = (setsData) => {
   return {
     ...setsData,
-    sets: setsData.sets.map((set) => ({
-      ...set,
-      startDate: parseISO(set.start),
-      endDate: addSeconds(parseISO(set.start), set.length),
-    })),
+    sets: setsData.sets.map((set) => {
+      const startDate = new Date(set.start);
+      return {
+        ...set,
+        startDate,
+        endDate: addSeconds(startDate, set.length),
+      };
+    }),
   };
 };
 
