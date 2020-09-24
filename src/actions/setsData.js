@@ -19,7 +19,7 @@ const addAudioPrefixToSets = (setsData) => {
     ...setsData,
     sets: setsData.sets.map((set) => ({
       ...set,
-      audio: set.audio && audioPrefix + set.audio,
+      audio: audioPrefix + set.audio,
     })),
   };
 };
