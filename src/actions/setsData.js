@@ -1,4 +1,4 @@
-import { addMilliseconds, addSeconds } from 'date-fns';
+import { addMilliseconds, addSeconds, parseISO } from 'date-fns';
 import { compose } from 'redux/es/redux.mjs';
 
 import { startTicking, stopTicking } from './targetShowStatus.js';
@@ -28,7 +28,7 @@ const addDatesToSets = (setsData) => {
   return {
     ...setsData,
     sets: setsData.sets.map((set) => {
-      const startDate = new Date(set.start);
+      const startDate = parseISO(set.start);
       return {
         ...set,
         startDate,
