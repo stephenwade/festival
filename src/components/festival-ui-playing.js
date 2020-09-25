@@ -93,7 +93,10 @@ export class FestivalUiPlaying extends LitElement {
       </div>
       <div id="nextup" ?hidden=${!this.waitingUntilStart}>Next up</div>
       <div id="artist-group">
-        <div id="artist">${this.set.artist}</div>
+        <div id="artist">
+          ${/* avoid console errors if `this.set` is undefined */
+          this.set && this.set.artist}
+        </div>
       </div>
     `;
   }
