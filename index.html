@@ -7,8 +7,8 @@
       content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"
     />
 
-    <title>BACK 2 SKOOL</title>
-    <meta name="description" content="BACK 2 SKOOL" />
+    <title>FESTIV4L</title>
+    <meta name="description" content="Festival" />
 
     <!-- See https://goo.gl/OOhYW5 -->
     <!-- <link rel="manifest" href="/manifest.json" /> -->
@@ -41,8 +41,11 @@
     <script type="module" src="/src/index.js"></script>
 
     <style>
-      html {
-        --background-image: #000;
+      html.no-webplossless {
+        --gradient-background: url('/images/fest2fest-gradient.png');
+      }
+      html.webplossless {
+        --gradient-background: url('/images/fest2fest-gradient.webp');
       }
 
       html,
@@ -52,12 +55,14 @@
 
       body {
         margin: 0;
-        background: #000;
+        background: rgb(57, 103, 220);
+        background: linear-gradient(to right, #3e6ae1 0%, #f420fe 100%);
       }
 
-      body {
-        background: var(--background-image);
-        background-size: cover;
+      html.no-webp-lossless body,
+      html.webp-lossless body {
+        background: var(--gradient-background);
+        background-size: 100% auto;
       }
     </style>
   </head>

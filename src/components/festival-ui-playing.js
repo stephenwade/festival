@@ -1,175 +1,149 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@polymer/polymer/lib/elements/dom-if.js';
-import '@polymer/paper-spinner/paper-spinner-lite.js';
+import { LitElement, html, css } from 'lit-element';
 
-export class UiPlaying extends PolymerElement {
-  static get template() {
+import './loading-spinner.js';
+
+export class FestivalUiPlaying extends LitElement {
+  static get styles() {
+    return css`
+      :host {
+        box-sizing: border-box;
+      }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      :host {
+        color: white;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 1em;
+        text-transform: uppercase;
+      }
+
+      canvas {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      #current-time,
+      #artist-group {
+        z-index: 1;
+      }
+
+      #current-time {
+        height: 6rem;
+        font-size: 5em;
+        font-weight: 900;
+        margin-bottom: 0.2em;
+      }
+
+      #nextup {
+        font-size: 2em;
+        margin-bottom: 0.2em;
+      }
+
+      #artist-group {
+        user-select: text;
+        display: inline-block;
+      }
+
+      #artist-group.vertical {
+        max-width: 100vw;
+        padding: 0 1em;
+      }
+
+      #artist-group.vertical div {
+        display: block;
+        padding-left: 0;
+        text-align: left;
+        max-width: 500px;
+      }
+
+      #artist {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      #artist {
+        font-size: 3em;
+        font-weight: 900;
+        text-align: right;
+        line-height: 0.9;
+        letter-spacing: -0.05em;
+        margin-bottom: -0.2rem;
+      }
+    `;
+  }
+
+  render() {
     return html`
-      <style>
-        :host {
-          box-sizing: border-box;
-        }
-        *,
-        *:before,
-        *:after {
-          box-sizing: inherit;
-        }
-
-        :host {
-          color: #00e61d;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          padding: 0 1em;
-          text-transform: uppercase;
-        }
-
-        canvas {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          image-rendering: -moz-crisp-edges;
-          image-rendering: -webkit-crisp-edges;
-          image-rendering: pixelated;
-          image-rendering: crisp-edges;
-        }
-
-        #current-time,
-        #artist-group {
-          z-index: 1;
-        }
-
-        #current-time {
-          height: 6rem;
-          font-size: 5em;
-          font-weight: 900;
-          margin-bottom: 0.2em;
-        }
-
-        paper-spinner-lite {
-          --paper-spinner-stroke-width: 3px;
-          --paper-spinner-color: #00e61d;
-          width: 4em;
-          height: 4em;
-          font-size: initial;
-        }
-
-        #nextup {
-          font-size: 2em;
-          margin-bottom: 0.2em;
-        }
-
-        #artist-group {
-          user-select: text;
-          display: inline-block;
-        }
-
-        #artist-group.vertical {
-          max-width: 100vw;
-          padding: 0 1em;
-        }
-
-        #artist-group.vertical div {
-          display: block;
-          padding-left: 0;
-          text-align: left;
-          max-width: 500px;
-        }
-
-        #artist {
-          display: inline-block;
-          vertical-align: top;
-        }
-
-        #artist {
-          font-size: 3em;
-          font-weight: 900;
-          text-align: right;
-          line-height: 0.9;
-          letter-spacing: -0.05em;
-          margin-bottom: -0.2rem;
-        }
-      </style>
       <canvas id="canvas"></canvas>
       <div id="current-time">
-        <template is="dom-if" if="[[_showSpinner]]">
-          <paper-spinner-lite active></paper-spinner-lite>
-        </template>
-        <template is="dom-if" if="[[!_showSpinner]]">
-          [[_currentTimeText]]
-        </template>
+        ${this._showSpinner()
+          ? html`<loading-spinner></loading-spinner>`
+          : html`${this._computeCurrentTimeText()}`}
       </div>
-      <template is="dom-if" if="[[waitingUntilStart]]">
-        <div id="nextup">Next up</div>
-      </template>
+      <div id="nextup" ?hidden=${!this.waitingUntilStart}>Next up</div>
       <div id="artist-group">
-        <div id="artist">[[set.artist]]</div>
+        <div id="artist">${this.set.artist}</div>
       </div>
     `;
   }
 
   static get properties() {
     return {
-      set: {
-        type: Object,
-        observer: '_setChanged',
-      },
-      waitingUntilStart: {
-        type: Boolean,
-        observer: '_waitingUntilStartChanged',
-      },
-      secondsUntilSet: Number,
-      waitingForNetwork: Boolean,
-      currentTime: Number,
-      audioPaused: Boolean,
-      reduceMotion: {
-        type: Boolean,
-        value: false,
-      },
-      getAudioVisualizerData: Function,
-      _lastUpdateTimestamp: Number,
-      _showSpinner: {
-        type: Boolean,
-        computed: '_computeShowSpinner(waitingUntilStart, waitingForNetwork)',
-      },
-      _currentTimeText: {
-        type: String,
-        computed:
-          '_computeCurrentTimeText(waitingUntilStart, secondsUntilSet, currentTime)',
-      },
-      _showProgressLine: Boolean,
-      _sizeMultiplier: Number,
+      set: { type: Object },
+      waitingUntilStart: { type: Boolean },
+      secondsUntilSet: { type: Number },
+      waitingForNetwork: { type: Boolean },
+      currentTime: { type: Number },
+      audioPaused: { type: Boolean },
+      reduceMotion: { type: Boolean },
     };
   }
 
-  static get observers() {
-    return ['_updateTimestamp(waitingForNetwork, audioPaused, currentTime)'];
+  shouldUpdate(changedProps) {
+    if (changedProps.has('set')) this._showProgressLine = false;
+    if (changedProps.has('waitingUntilStart')) {
+      this._resizeText();
+      if (!this.waitingUntilStart) this._animate();
+    }
+    if (
+      changedProps.has('waitingForNetwork') ||
+      changedProps.has('audioPaused') ||
+      changedProps.has('currentTime')
+    )
+      this._updateTimestamp();
+
+    return true;
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-
+  firstUpdated() {
     // set up resize handler
     const resizeCanvas = () => {
-      const canvas = this.$.canvas;
-      const scale = window.devicePixelRatio / 12;
+      const canvas = this.shadowRoot.getElementById('canvas');
+      const scale = window.devicePixelRatio;
 
       canvas.width = window.innerWidth * scale;
       canvas.height = window.innerHeight * scale;
 
       this._sizeMultiplier =
-        (window.devicePixelRatio / 12) *
+        window.devicePixelRatio *
         Math.min(1, window.innerWidth / 500, window.innerHeight / 800);
 
       // canvas properties must be reset after canvas is resized
       const ctx = canvas.getContext('2d');
 
-      ctx.lineWidth = 10 * this._sizeMultiplier;
-      const color = '#00e61d';
+      ctx.lineWidth = 4 * this._sizeMultiplier;
+      const color = '#fff';
       ctx.strokeStyle = color;
       ctx.fillStyle = color;
     };
@@ -194,7 +168,8 @@ export class UiPlaying extends PolymerElement {
   }
 
   _resizeText() {
-    const artistGroup = this.$['artist-group'];
+    const artistGroup = this.shadowRoot.getElementById('artist-group');
+    if (!artistGroup) return;
 
     const rect = artistGroup.getBoundingClientRect();
     let maxWidth;
@@ -210,31 +185,21 @@ export class UiPlaying extends PolymerElement {
     }
   }
 
-  _setChanged() {
-    this._showProgressLine = false;
-  }
-
-  _waitingUntilStartChanged(waitingUntilStart) {
-    this._resizeText();
-
-    if (!waitingUntilStart) this._animate();
-  }
-
   _updateTimestamp() {
     this._lastUpdateTimestamp = performance.now();
   }
 
-  _computeShowSpinner(waitingUntilStart, waitingForNetwork) {
-    if (waitingUntilStart) return false;
-    return waitingForNetwork;
+  _showSpinner() {
+    if (this.waitingUntilStart) return false;
+    return this.waitingForNetwork;
   }
 
-  _computeCurrentTimeText(waitingUntilStart, secondsUntilSet, currentTime) {
+  _computeCurrentTimeText() {
     let time;
-    if (waitingUntilStart) {
-      time = secondsUntilSet;
+    if (this.waitingUntilStart) {
+      time = this.secondsUntilSet;
     } else {
-      time = Math.floor(currentTime + 0.1);
+      time = Math.floor(this.currentTime + 0.1);
     }
 
     const hours = Math.floor(time / (60 * 60));
@@ -245,28 +210,23 @@ export class UiPlaying extends PolymerElement {
 
     let result = '';
     if (hours > 0) {
-      result += hours.toString() + ':' + minutes.toString().padStart(2, '0');
+      result += `${hours.toString()}:${minutes.toString().padStart(2, '0')}`;
     } else {
       result += minutes.toString();
     }
-    result += ':' + seconds.toString().padStart(2, '0');
+    result += `:${seconds.toString().padStart(2, '0')}`;
     return result;
   }
 
-  // _calcGrow(dataArray) {
-  //   return 0;
-  //   if (this.reduceMotion) return 0;
+  _calcGrow(dataArray) {
+    if (this.reduceMotion) return 0;
 
-  //   const average = dataArray.slice(0, 5).reduce((a, b) => a + b) / 5;
-  //   return average / 255;
-  // }
-
-  _calcGrow() {
-    return 0;
+    const average = dataArray.slice(0, 5).reduce((a, b) => a + b) / 5;
+    return average / 255;
   }
 
   _getCirclePoint(i, end, dataArray) {
-    const canvas = this.$.canvas;
+    const canvas = this.shadowRoot.getElementById('canvas');
     const midX = canvas.width / 2;
     const midY = canvas.height / 2;
 
@@ -284,7 +244,7 @@ export class UiPlaying extends PolymerElement {
       (loudness * ((i / end) * p3 + p4) + p5) *
       this._sizeMultiplier;
 
-    const angleAroundCircle = 2 * Math.PI * (0.5 + Math.pow(1 - i / end, 1.5));
+    const angleAroundCircle = 2 * Math.PI * (0.5 + (1 - i / end) ** 1.5);
 
     const x = midX + Math.sin(angleAroundCircle) * distanceFromCenter;
     const y = midY + Math.cos(angleAroundCircle) * distanceFromCenter;
@@ -293,7 +253,7 @@ export class UiPlaying extends PolymerElement {
   }
 
   _drawCircle(dataArray) {
-    const canvas = this.$.canvas;
+    const canvas = this.shadowRoot.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
     const midX = canvas.width / 2;
@@ -305,7 +265,7 @@ export class UiPlaying extends PolymerElement {
     const grow = this._calcGrow(dataArray);
     let [x, y] = this._getCirclePoint(0, end, dataArray);
     let [xNext, yNext] = this._getCirclePoint(1, end, dataArray);
-    for (let i = 1; i < end + 1; i++) {
+    for (let i = 1; i < end + 1; i += 1) {
       if (i === 0) {
         ctx.moveTo(x, y);
       } else {
@@ -335,7 +295,7 @@ export class UiPlaying extends PolymerElement {
   }
 
   _drawProgress(dataArray, progress) {
-    const canvas = this.$.canvas;
+    const canvas = this.shadowRoot.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
     const midX = canvas.width / 2;
@@ -344,7 +304,7 @@ export class UiPlaying extends PolymerElement {
     const grow = this._calcGrow(dataArray);
 
     const p1 = 12.75;
-    const p2 = 250;
+    const p2 = 280;
 
     const distance = (grow * p1 + p2) * this._sizeMultiplier;
 
@@ -376,7 +336,8 @@ export class UiPlaying extends PolymerElement {
   }
 
   _animate() {
-    const canvas = this.$.canvas;
+    const canvas = this.shadowRoot.getElementById('canvas');
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -421,4 +382,4 @@ export class UiPlaying extends PolymerElement {
   }
 }
 
-window.customElements.define('ui-playing', UiPlaying);
+window.customElements.define('festival-ui-playing', FestivalUiPlaying);

@@ -1,13 +1,25 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { LitElement, html } from 'lit-element';
+import { connect } from 'pwa-helpers/connect-mixin.js';
 import { AudioContext } from 'standardized-audio-context';
+import { differenceInSeconds } from 'date-fns';
 
-export class FestivalAudio extends PolymerElement {
+import { store } from '../store.js';
+import { setShowStatus } from '../actions/showStatus.js';
+import {
+  audioEnded,
+  audioPaused,
+  audioPlaying,
+  audioStalled,
+  audioWaiting,
+} from '../actions/audioStatus.js';
+
+export class FestivalAudio extends connect(store)(LitElement) {
   constructor() {
     super();
 
     this._changeQueue = [];
 
-    this._audioEvents = {
+    this._boundAudioEvents = {
       ended: this._handleAudioEnded.bind(this),
       error: this._handleAudioError.bind(this),
       loadedmetadata: this._handleAudioLoadedMetadata.bind(this),
@@ -19,82 +31,47 @@ export class FestivalAudio extends PolymerElement {
     };
   }
 
-  static get template() {
+  render() {
     return html`
       <audio id="audio1" crossorigin="anonymous"></audio>
       <audio id="audio2" crossorigin="anonymous"></audio>
     `;
   }
 
-  static get properties() {
-    return {
-      targetShowStatus: String,
-      targetAudioStatus: Object,
-      audioContextReady: {
-        type: Boolean,
-        notify: true,
-        value: false,
-      },
-      getAudioVisualizerData: {
-        type: Function,
-        notify: true,
-      },
-      audioStatus: {
-        type: Object,
-        notify: true,
-        value: () => ({ status: 'WAITING_FOR_AUDIO_CONTEXT' }),
-      },
-      audioWaiting: {
-        type: Boolean,
-        notify: true,
-        value: false,
-      },
-      audioStalled: {
-        type: Boolean,
-        notify: true,
-        value: false,
-      },
-      audioPaused: {
-        type: Boolean,
-        notify: true,
-        value: false,
-      },
-    };
-  }
-
-  static get observers() {
-    return ['_targetAudioStatusChanged(targetAudioStatus.*)'];
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    this._audioElements = [this.$.audio1, this.$.audio2];
+  firstUpdated() {
+    this._audioElements = [
+      this.shadowRoot.getElementById('audio1'),
+      this.shadowRoot.getElementById('audio2'),
+    ];
 
     this._audioElements.forEach((audio) => {
-      Object.keys(this._audioEvents).forEach((event) => {
-        const handler = this._audioEvents[event];
+      Object.keys(this._boundAudioEvents).forEach((event) => {
+        const handler = this._boundAudioEvents[event];
         audio.addEventListener(event, handler);
       });
     });
 
-    this._activeAudio = this._audioElements[0];
-    this._inactiveAudio = this._audioElements[1];
+    [this._activeAudio, this._inactiveAudio] = this._audioElements;
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
     this._audioElements.forEach((audio) => {
-      Object.keys(this._audioEvents).forEach((event) => {
-        const handler = this._audioEvents[event];
+      Object.keys(this._boundAudioEvents).forEach((event) => {
+        const handler = this._boundAudioEvents[event];
         audio.removeEventListener(event, handler);
       });
     });
   }
 
-  initialize() {
-    if (this.targetShowStatus === 'ENDED') return;
+  stateChanged() {
+    this._checkTargetShowStatus();
+  }
+
+  init() {
+    const { targetShowStatus } = store.getState();
+    if (targetShowStatus.status === 'ENDED') return;
 
     // skip setting up AudioContext on iOS
     const iOS = /iPad|iPhone|iPod/u.test(navigator.userAgent);
@@ -149,50 +126,68 @@ export class FestivalAudio extends PolymerElement {
         .connect(this._audioContext.destination);
     });
 
-    this.getAudioVisualizerData = () => {
+    const getAudioVisualizerData = () => {
       analyserNode.getByteFrequencyData(audioVisualizerData);
       return audioVisualizerData;
     };
+
+    this.dispatchEvent(
+      new CustomEvent('visualizer-data-available', {
+        bubbles: true,
+        composed: true,
+        detail: { getAudioVisualizerData },
+      })
+    );
   }
 
   _handleAudioContextResumed() {
-    this.audioContextReady = true;
-
-    this.set('audioStatus.status', 'WAITING_UNTIL_START');
-    this._targetAudioStatusChanged();
+    const newShowStatus = {
+      status: 'WAITING_UNTIL_START',
+    };
+    store.dispatch(setShowStatus(newShowStatus));
+    this._checkTargetShowStatus();
   }
 
-  _targetAudioStatusChanged() {
+  _checkTargetShowStatus() {
     if (this._error) return;
 
-    const thisStatus = { ...this.targetAudioStatus };
+    const { targetShowStatus, showStatus } = store.getState();
 
-    const ended = thisStatus.status === 'ENDED';
+    const ended = targetShowStatus && targetShowStatus.status === 'ENDED';
     const waitingForAudioContext =
-      this.audioStatus.status === 'WAITING_FOR_AUDIO_CONTEXT';
+      showStatus.status === 'WAITING_FOR_AUDIO_CONTEXT';
 
     if (waitingForAudioContext && !ended) return;
 
-    const firstRun = !this._lastTargetAudioStatus;
+    const firstRun = !this._lastTargetShowStatus;
     if (firstRun) {
-      this._queueStatusChange(thisStatus);
+      this._lastTargetShowStatus = targetShowStatus;
+      this._queueStatusChange(targetShowStatus);
     } else {
       const statusChanged =
-        thisStatus.status !== this._lastTargetAudioStatus.status;
-      const setChanged = thisStatus.set !== this._lastTargetAudioStatus.set;
+        targetShowStatus.status !== this._lastTargetShowStatus.status;
+      const setChanged =
+        targetShowStatus.set !== this._lastTargetShowStatus.set;
+      const secondsUntilSetChanged =
+        targetShowStatus.secondsUntilSet !==
+        this._lastTargetShowStatus.secondsUntilSet;
+      const currentTimeChanged =
+        targetShowStatus.currentTime !== this._lastTargetShowStatus.currentTime;
+
+      this._lastTargetShowStatus = targetShowStatus;
 
       if (statusChanged || setChanged) {
-        this._queueStatusChange(thisStatus);
-      } else {
-        this._updateTime(thisStatus);
+        this._queueStatusChange(targetShowStatus);
+      } else if (secondsUntilSetChanged || currentTimeChanged) {
+        this._updateTime(targetShowStatus);
       }
     }
-
-    this._lastTargetAudioStatus = thisStatus;
   }
 
   _queueStatusChange(change) {
-    switch (this.audioStatus.status) {
+    const { showStatus } = store.getState();
+
+    switch (showStatus.status) {
       case 'WAITING_FOR_AUDIO_CONTEXT':
       case 'WAITING_UNTIL_START':
       case 'DELAYING_FOR_INITIAL_SYNC':
@@ -210,15 +205,19 @@ export class FestivalAudio extends PolymerElement {
   }
 
   _performStatusChange(change) {
-    const setChanged = change.set !== this.audioStatus.set;
+    const { showStatus } = store.getState();
+
+    const setChanged = change.set !== showStatus.set;
     const nextSrcAlreadySet = Boolean(this._activeAudio.src);
     const shouldChangeSrc = setChanged && !nextSrcAlreadySet;
+
+    let newShowStatus;
 
     switch (change.status) {
       case 'WAITING_UNTIL_START':
         if (shouldChangeSrc) this._activeAudio.src = change.set.audio;
 
-        this.audioStatus = {
+        newShowStatus = {
           set: change.set,
           status: 'WAITING_UNTIL_START',
           secondsUntilSet: change.secondsUntilSet,
@@ -232,7 +231,8 @@ export class FestivalAudio extends PolymerElement {
         if (change.currentTime > 0) {
           // delay 2 seconds for audio to load
           const delayingUntil = change.currentTime + 2;
-          this.audioStatus = {
+
+          newShowStatus = {
             set: change.set,
             status: 'DELAYING_FOR_INITIAL_SYNC',
             delayingUntil,
@@ -241,7 +241,8 @@ export class FestivalAudio extends PolymerElement {
           this._activeAudio.src += `#t=${delayingUntil}`;
         } else {
           this._activeAudio.play().catch(this._handleAudioError.bind(this));
-          this.audioStatus = {
+
+          newShowStatus = {
             set: change.set,
             status: 'PLAYING',
             currentTime: 0,
@@ -251,52 +252,67 @@ export class FestivalAudio extends PolymerElement {
         break;
 
       case 'ENDED':
-        this.audioStatus = {
-          status: 'ENDED',
-        };
+        newShowStatus = { status: 'ENDED' };
         break;
 
       default:
         throw new Error('Unknown status');
     }
 
-    if (this.audioStatus.status !== 'PLAYING') {
+    store.dispatch(setShowStatus(newShowStatus));
+
+    if (newShowStatus.status !== 'PLAYING') {
       const nextChange = this._changeQueue.shift();
       if (nextChange) this._performStatusChange(nextChange);
     }
   }
 
   _updateTime(change) {
-    switch (this.audioStatus.status) {
+    const { showStatus } = store.getState();
+
+    let newShowStatus;
+
+    switch (showStatus.status) {
       case 'WAITING_UNTIL_START':
-        this.set('audioStatus.secondsUntilSet', change.secondsUntilSet);
+        newShowStatus = {
+          ...showStatus,
+          secondsUntilSet: change.secondsUntilSet,
+        };
         break;
 
       case 'DELAYING_FOR_INITIAL_SYNC':
-        if (change.currentTime >= this.audioStatus.delayingUntil) {
+        if (change.currentTime >= showStatus.delayingUntil) {
           this._activeAudio.play();
-          this.audioStatus = {
+
+          newShowStatus = {
             set: change.set,
             status: 'PLAYING',
-            currentTime: this.audioStatus.delayingUntil,
+            currentTime: showStatus.delayingUntil,
           };
         }
         break;
 
       case 'PLAYING':
-        this.set('audioStatus.delay', this._getDelay(change));
+        newShowStatus = {
+          ...showStatus,
+          delay: this._getDelay(change),
+        };
         break;
 
       // no default
     }
+
+    if (newShowStatus) store.dispatch(setShowStatus(newShowStatus));
   }
 
   _getDelay(change) {
+    const { showStatus } = store.getState();
+
     let delay = change.currentTime - this._activeAudio.currentTime;
-    if (change.set !== this.audioStatus.set) {
-      const setDifference = change.set.startMoment.diff(
-        this.audioStatus.set.startMoment,
-        'seconds'
+    if (change.set !== showStatus.set) {
+      const setDifference = differenceInSeconds(
+        change.set.startDate,
+        showStatus.set.startDate
       );
       delay += setDifference;
     }
@@ -319,44 +335,48 @@ export class FestivalAudio extends PolymerElement {
 
     this._clearAndSwitchActiveAudio();
 
-    delete this.audioStatus.set;
-    delete this.audioStatus.delay;
-    this.set('audioStatus.status', 'WAITING_UNTIL_START');
+    const newShowStatus = {
+      status: 'WAITING_UNTIL_START',
+    };
+    store.dispatch(setShowStatus(newShowStatus));
 
     const nextChange = this._changeQueue.shift();
     if (nextChange) this._performStatusChange(nextChange);
 
-    this.audioStalled = false;
-    clearTimeout(this._stalledTimeout);
+    store.dispatch(audioEnded());
 
-    this.audioPaused = false;
+    clearTimeout(this._stalledTimeout);
   }
 
   _handleAudioTimeUpdate(e) {
     if (e.target !== this._activeAudio) return;
 
-    if (this.audioStatus.status === 'PLAYING') {
-      const currentTime = this._activeAudio.currentTime;
-      this.set('audioStatus.currentTime', currentTime);
+    const { showStatus } = store.getState();
+
+    if (showStatus.status === 'PLAYING') {
+      const { currentTime } = this._activeAudio;
+
+      const newShowStatus = {
+        ...showStatus,
+        currentTime,
+      };
+      store.dispatch(setShowStatus(newShowStatus));
 
       const nextSrcAlreadySet = Boolean(this._inactiveAudio.src);
-      const nextSetAvailable = Boolean(this.audioStatus.nextSet);
+      const nextSetAvailable = Boolean(showStatus.nextSet);
       const lessThanOneMinuteLeft =
-        this.audioStatus.set.length - this.audioStatus.currentTime <= 60;
+        showStatus.set.length - showStatus.currentTime <= 60;
       const shouldPreloadNextSet =
         !nextSrcAlreadySet && nextSetAvailable && lessThanOneMinuteLeft;
       if (shouldPreloadNextSet) {
-        this._inactiveAudio.src = this.audioStatus.nextSet.audio;
+        this._inactiveAudio.src = showStatus.nextSet.audio;
       }
     }
   }
 
   _handleAudioError() {
     this.dispatchEvent(
-      new CustomEvent('error', {
-        bubbles: true,
-        composed: true,
-      })
+      new CustomEvent('error', { bubbles: true, composed: true })
     );
     this._error = true;
   }
@@ -364,7 +384,7 @@ export class FestivalAudio extends PolymerElement {
   _handleAudioWaiting(e) {
     if (e.target !== this._activeAudio) return;
 
-    this.audioWaiting = true;
+    store.dispatch(audioWaiting());
 
     this._stalledTimeout = setTimeout(
       this._handleAudioStalled.bind(this),
@@ -375,18 +395,15 @@ export class FestivalAudio extends PolymerElement {
   _handleAudioPlaying(e) {
     if (e.target !== this._activeAudio) return;
 
-    this.audioWaiting = false;
+    store.dispatch(audioPlaying());
 
-    this.audioStalled = false;
     clearTimeout(this._stalledTimeout);
-
-    this.audioPaused = false;
   }
 
   _handleAudioPause(e) {
     if (e.target !== this._activeAudio) return;
 
-    this.audioPaused = true;
+    store.dispatch(audioPaused());
   }
 
   _handleAudioStalled(e) {
@@ -399,14 +416,14 @@ export class FestivalAudio extends PolymerElement {
     // Safari: only listen to stalled event if audio is waiting
     if (!this.audioWaiting) return;
 
-    this.audioStalled = true;
+    store.dispatch(audioStalled());
   }
 
   _handleAudioLoadedMetadata(e) {
+    const { showStatus } = store.getState();
+
     const set =
-      e.target === this._activeAudio
-        ? this.audioStatus.set
-        : this.audioStatus.nextSet;
+      e.target === this._activeAudio ? showStatus.set : showStatus.nextSet;
 
     this.dispatchEvent(
       new CustomEvent('loadedmetadata', {
