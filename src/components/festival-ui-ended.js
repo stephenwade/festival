@@ -49,7 +49,7 @@ export class FestivalUiEnded extends LitElement {
   render() {
     return html`
       <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
-        <img id="logo" src="images/festiv4l-logo.svg" alt="FESTIV4L" />
+        <img id="logo" src="images/fe5tival-logo.svg" alt="FE5TIVAL" />
       </a>
       <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
         <img id="heart" src="images/heart-white.svg" alt="heart" />

@@ -69,8 +69,8 @@ export class FestivalUiIntro extends LitElement {
       >
         <img
           id="logo"
-          src="images/festiv4l-logo.svg"
-          alt="FESTIV4L"
+          src="images/fe5tival-logo.svg"
+          alt="FE5TIVAL"
           @load="${this._handleLogoLoaded}"
         />
       </a>
