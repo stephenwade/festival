@@ -158,6 +158,7 @@ export class FestivalUi extends connect(store)(LitElement) {
     };
     // In Safari, MediaQueryList doesn't inherit from EventTarget
     // This means that we must use addListener instead of addEventListener
+    // https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList#Browser_compatibility
     this._motionMediaQuery.addListener(this._motionMediaQueryChanged);
     this._motionMediaQueryChanged();
   }
@@ -165,10 +166,10 @@ export class FestivalUi extends connect(store)(LitElement) {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this._motionMediaQuery.removeEventListener(
-      'change',
-      this._motionMediaQueryChanged
-    );
+    // In Safari, MediaQueryList doesn't inherit from EventTarget
+    // This means that we must use removeListener instead of removeEventListener
+    // https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList#Browser_compatibility
+    this._motionMediaQuery.removeListener(this._motionMediaQueryChanged);
   }
 
   stateChanged(state) {
