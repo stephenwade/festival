@@ -12,6 +12,7 @@ export default merge(baseConfig, {
   plugins: [
     copy({
       targets: [
+        { src: '.htaccess', dest: 'dist' },
         { src: 'images/*', dest: 'dist/images' },
         { src: 'media/sets.json', dest: 'dist/media' },
       ],
