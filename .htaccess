@@ -5,6 +5,7 @@ RewriteRule ^(.*) http://%1/$1 [R=301,NE,L]
 AddType image/webp webp
 
 ExpiresActive On
+ExpiresDefault "access plus 1 minute"
 ExpiresByType application/javascript "access plus 1 year"
 ExpiresByType image/svg+xml "access plus 1 year"
 ExpiresByType image/webp "access plus 1 year"
