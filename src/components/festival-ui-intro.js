@@ -66,6 +66,7 @@ export class FestivalUiIntro extends LitElement {
         href="https://twitter.com/URLFESTIVAL"
         target="_blank"
         rel="noopener"
+        ?hidden=${!this._logoLoaded}
       >
         <img
           id="logo"
