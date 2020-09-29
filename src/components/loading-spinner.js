@@ -15,10 +15,12 @@ export class LoadingSpinner extends LitElement {
       #spinner {
         width: 64px;
         height: 64px;
-        margin: 8px;
+        border-width: 6px;
+        border-style: solid;
+        border-color: #fff transparent;
         border-radius: 50%;
-        border: 6px solid #fff;
-        border-color: #fff transparent #fff transparent;
+        margin: 8px;
+
         animation: spinner 1.2s linear infinite;
       }
 

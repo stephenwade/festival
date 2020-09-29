@@ -6,86 +6,78 @@ import { store } from '../store.js';
 import './festival-ui-ended.js';
 import './festival-ui-intro.js';
 import './festival-ui-playing.js';
+import { boxSizingBorderBox, fullPageClass } from './shared-styles.js';
 
 export class FestivalUi extends connect(store)(LitElement) {
   static get styles() {
-    return css`
-      :host {
-        box-sizing: border-box;
-        user-select: none;
-      }
-      *,
-      *:before,
-      *:after {
-        box-sizing: inherit;
-      }
+    return [
+      boxSizingBorderBox,
+      fullPageClass,
+      css`
+        :host {
+          font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
+            'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 
-      [hidden] {
-        display: none !important;
-      }
+          user-select: none;
+        }
 
-      :host {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        color: white;
-        font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
-          'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-        background: var(--gradient-background);
-        background-size: 100% auto;
-      }
+        [hidden] {
+          display: none !important;
+        }
 
-      button {
-        font-family: inherit;
-        font-size: inherit;
-        line-height: inherit;
-        text-transform: uppercase;
-        border: none;
-        margin: 0;
-        background-color: inherit;
-        color: inherit;
-        cursor: pointer;
-        padding: 0.7em 0.7em;
-        margin: 0 0.3em;
-        min-width: 5em;
-      }
-      button::-moz-focus-inner {
-        border-style: none;
-        padding: 0;
-      }
-      button:-moz-focusring {
-        outline: 1px dotted ButtonText;
-      }
+        toast-sk {
+          padding: 0.7em 1.5em;
+          border-radius: 3px;
 
-      toast-sk {
-        background-color: #323232;
-        color: #f1f1f1;
-        border-radius: 3px;
-        padding: 0.7em 1.5em;
-      }
+          background-color: #323232;
+          color: #f1f1f1;
+        }
 
-      toast-sk button:first-of-type {
-        margin-right: -0.5em;
-      }
+        toast-sk button {
+          min-width: 5em;
+          padding: 0.7em 0.7em;
+          border: none;
+          margin: 0 0.3em;
 
-      toast-sk button + button {
-        margin-left: -0.5em;
-      }
+          background-color: inherit;
+          color: inherit;
+          font-family: inherit;
+          font-size: inherit;
+          line-height: inherit;
+          text-transform: uppercase;
 
-      toast-sk button:last-child {
-        margin-right: -1em;
-      }
-    `;
+          cursor: pointer;
+        }
+        toast-sk button::-moz-focus-inner {
+          padding: 0;
+          border-style: none;
+        }
+        toast-sk button:-moz-focusring {
+          outline: 1px dotted ButtonText;
+        }
+
+        toast-sk button + button {
+          margin-left: -0.5em;
+        }
+        toast-sk button:first-of-type {
+          margin-right: -0.5em;
+        }
+        toast-sk button:last-child {
+          margin-right: -1em;
+        }
+      `,
+    ];
   }
 
   render() {
     return html`
       ${this._waitingForAudioContext
-        ? html`<festival-ui-intro></festival-ui-intro>`
+        ? html`<festival-ui-intro class="full-page"></festival-ui-intro>`
         : null}
       ${this._waitingUntilStart || this._waitingForNetwork || this._playing
         ? html`
             <festival-ui-playing
+              class="full-page"
               .set="${this._showStatus.set}"
               .waitingUntilStart="${this._waitingUntilStart}"
               .secondsUntilSet="${this._showStatus.secondsUntilSet}"
@@ -99,7 +91,10 @@ export class FestivalUi extends connect(store)(LitElement) {
         : null}
       ${this._stampEnded || this._ended
         ? html`
-            <festival-ui-ended ?hidden="${!this._ended}"></festival-ui-ended>
+            <festival-ui-ended
+              class="full-page"
+              ?hidden="${!this._ended}"
+            ></festival-ui-ended>
           `
         : null}
       <toast-sk id="toast" duration="0">

@@ -1,54 +1,45 @@
 import { LitElement, html, css } from 'lit-element';
 
+import { boxSizingBorderBox, flexColumnCenter } from './shared-styles.js';
+
 export class FestivalUiEnded extends LitElement {
   static get styles() {
-    return css`
-      :host {
-        box-sizing: border-box;
-      }
-      *,
-      *:before,
-      *:after {
-        box-sizing: inherit;
-      }
+    return [
+      boxSizingBorderBox,
+      flexColumnCenter,
+      css`
+        :host {
+          padding: 0 1em;
+        }
 
-      :host {
-        color: white;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 0 1em;
-        text-transform: uppercase;
-      }
+        #logo-link {
+          width: 100%;
+          max-width: 900px;
+          margin-bottom: 2em;
+        }
 
-      #logo {
-        display: block;
-        width: 100%;
-        max-width: 900px;
-        margin: 2em auto;
-      }
+        #logo {
+          display: block;
+          width: 100%;
+        }
 
-      #heart {
-        display: block;
-        width: 12vw;
-        margin: 2em auto;
-      }
-
-      a {
-        text-decoration: none;
-        -webkit-tap-highlight-color: transparent;
-        width: 100%;
-      }
-    `;
+        #heart {
+          display: block;
+          width: 12vw;
+          margin-top: 1em;
+        }
+      `,
+    ];
   }
 
   render() {
     return html`
-      <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
+      <a
+        id="logo-link"
+        href="https://twitter.com/URLFESTIVAL"
+        target="_blank"
+        rel="noopener"
+      >
         <img id="logo" src="images/fe5tival-logo.svg" alt="FE5TIVAL" />
       </a>
       <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">

@@ -1,102 +1,72 @@
 import { LitElement, html, css } from 'lit-element';
 
 import './loading-spinner.js';
+import {
+  boxSizingBorderBox,
+  flexColumnCenter,
+  fullPageClass,
+} from './shared-styles.js';
 
 export class FestivalUiPlaying extends LitElement {
   static get styles() {
-    return css`
-      :host {
-        box-sizing: border-box;
-      }
-      *,
-      *:before,
-      *:after {
-        box-sizing: inherit;
-      }
+    return [
+      boxSizingBorderBox,
+      flexColumnCenter,
+      fullPageClass,
+      css`
+        :host {
+          padding: 0 1em;
 
-      :host {
-        color: white;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 0 1em;
-        text-transform: uppercase;
-      }
+          color: white;
+        }
 
-      canvas {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-      }
+        #current-time,
+        #artist {
+          z-index: 1;
+        }
 
-      #current-time,
-      #artist-group {
-        z-index: 1;
-      }
+        #current-time {
+          margin-bottom: 0.2em;
 
-      #current-time {
-        height: 6rem;
-        font-size: 5em;
-        font-weight: 900;
-        margin-bottom: 0.2em;
-      }
+          font-size: 5em;
+          font-weight: 900;
+        }
 
-      #nextup {
-        font-size: 2em;
-        margin-bottom: 0.2em;
-      }
+        #nextup {
+          margin-bottom: 0.2em;
 
-      #artist-group {
-        user-select: text;
-        display: inline-block;
-      }
+          font-size: 2em;
+          text-transform: uppercase;
+        }
 
-      #artist-group.vertical {
-        max-width: 100vw;
-        padding: 0 1em;
-      }
+        #artist {
+          margin-bottom: -0.1em;
 
-      #artist-group.vertical div {
-        display: block;
-        padding-left: 0;
-        text-align: left;
-        max-width: 500px;
-      }
+          font-size: 3em;
+          font-weight: 900;
+          line-height: 0.9;
+          text-align: center;
+          text-transform: uppercase;
+          letter-spacing: -0.05em;
 
-      #artist {
-        display: inline-block;
-        vertical-align: top;
-      }
-
-      #artist {
-        font-size: 3em;
-        font-weight: 900;
-        text-align: right;
-        line-height: 0.9;
-        letter-spacing: -0.05em;
-        margin-bottom: -0.2rem;
-      }
-    `;
+          user-select: text;
+        }
+      `,
+    ];
   }
 
   render() {
     return html`
-      <canvas id="canvas"></canvas>
+      <canvas id="canvas" class="full-page"></canvas>
       <div id="current-time">
         ${this._showSpinner()
           ? html`<loading-spinner></loading-spinner>`
           : html`${this._computeCurrentTimeText()}`}
       </div>
       <div id="nextup" ?hidden=${!this.waitingUntilStart}>Next up</div>
-      <div id="artist-group">
-        <div id="artist">
-          ${/* avoid console errors if `this.set` is undefined */
-          this.set && this.set.artist}
-        </div>
+      <div id="artist">
+        ${/* avoid console errors if `this.set` is undefined */
+        this.set && this.set.artist}
       </div>
     `;
   }
@@ -116,7 +86,6 @@ export class FestivalUiPlaying extends LitElement {
   shouldUpdate(changedProps) {
     if (changedProps.has('set')) this._showProgressLine = false;
     if (changedProps.has('waitingUntilStart')) {
-      this._resizeText();
       if (!this.waitingUntilStart) this._animate();
     }
     if (
@@ -153,7 +122,6 @@ export class FestivalUiPlaying extends LitElement {
 
     this._resize = () => {
       resizeCanvas();
-      this._resizeText();
     };
 
     window.addEventListener('resize', this._resize);
@@ -168,24 +136,6 @@ export class FestivalUiPlaying extends LitElement {
     super.disconnectedCallback();
 
     window.removeEventListener('resize', this._resize);
-  }
-
-  _resizeText() {
-    const artistGroup = this.shadowRoot.getElementById('artist-group');
-    if (!artistGroup) return;
-
-    const rect = artistGroup.getBoundingClientRect();
-    let maxWidth;
-    if (this.waitingUntilStart) {
-      maxWidth = window.innerWidth;
-    } else {
-      maxWidth = Math.min(500, window.innerWidth);
-    }
-    if (rect.width >= maxWidth) {
-      artistGroup.classList.add('vertical');
-    } else {
-      artistGroup.classList.remove('vertical');
-    }
   }
 
   _updateTimestamp() {
