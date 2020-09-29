@@ -56,6 +56,7 @@ export class FestivalUi extends connect(store)(LitElement) {
           outline: 1px dotted ButtonText;
         }
 
+        /* stylelint-disable-next-line no-descending-specificity */
         toast-sk button + button {
           margin-left: -0.5em;
         }
