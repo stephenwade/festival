@@ -6,12 +6,17 @@ import { store } from '../store.js';
 import './festival-ui-ended.js';
 import './festival-ui-intro.js';
 import './festival-ui-playing.js';
-import { boxSizingBorderBox, fullPageClass } from './shared-styles.js';
+import {
+  boxSizingBorderBox,
+  buttonReset,
+  fullPageClass,
+} from './shared-styles.js';
 
 export class FestivalUi extends connect(store)(LitElement) {
   static get styles() {
     return [
       boxSizingBorderBox,
+      buttonReset,
       fullPageClass,
       css`
         :host {
@@ -36,24 +41,7 @@ export class FestivalUi extends connect(store)(LitElement) {
         toast-sk button {
           min-width: 5em;
           padding: 0.7em 0.7em;
-          border: none;
           margin: 0 0.3em;
-
-          background-color: inherit;
-          color: inherit;
-          font-family: inherit;
-          font-size: inherit;
-          line-height: inherit;
-          text-transform: uppercase;
-
-          cursor: pointer;
-        }
-        toast-sk button::-moz-focus-inner {
-          padding: 0;
-          border-style: none;
-        }
-        toast-sk button:-moz-focusring {
-          outline: 1px dotted ButtonText;
         }
 
         /* stylelint-disable-next-line no-descending-specificity */

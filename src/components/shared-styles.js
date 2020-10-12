@@ -12,6 +12,26 @@ export const boxSizingBorderBox = css`
   }
 `;
 
+export const buttonReset = css`
+  button {
+    border: none;
+    background-color: inherit;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  button::-moz-focus-inner {
+    padding: 0;
+    border-style: none;
+  }
+  button:-moz-focusring {
+    outline: 1px dotted ButtonText;
+  }
+`;
+
 export const flexColumnCenter = css`
   :host {
     display: flex;
