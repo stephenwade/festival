@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 
+import './fab-volume-button.js';
 import './loading-spinner.js';
 import {
   boxSizingBorderBox,
@@ -15,6 +16,7 @@ export class FestivalUiPlaying extends LitElement {
       fullPageClass,
       css`
         :host {
+          overflow: hidden; /* <fab-volume-button> causes overflow */
           padding: 0 1em;
 
           color: white;
@@ -51,6 +53,12 @@ export class FestivalUiPlaying extends LitElement {
 
           user-select: text;
         }
+
+        fab-volume-button {
+          position: absolute;
+          right: 1.5em;
+          bottom: 1.5em;
+        }
       `,
     ];
   }
@@ -68,6 +76,10 @@ export class FestivalUiPlaying extends LitElement {
         ${/* avoid console errors if `this.set` is undefined */
         this.set && this.set.artist}
       </div>
+      <fab-volume-button
+        .volume="${this.volume}"
+        @volumechange="${this._handleVolumeChange}"
+      ></fab-volume-button>
     `;
   }
 
@@ -80,6 +92,7 @@ export class FestivalUiPlaying extends LitElement {
       currentTime: { type: Number },
       audioPaused: { type: Boolean },
       reduceMotion: { type: Boolean },
+      volume: { type: Number, reflect: true },
     };
   }
 
@@ -132,10 +145,27 @@ export class FestivalUiPlaying extends LitElement {
     this._animate();
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+
+    this._closeVolumeButton = this._closeVolumeButton.bind(this);
+    this.shadowRoot.addEventListener('click', this._closeVolumeButton);
+  }
+
   disconnectedCallback() {
     super.disconnectedCallback();
 
     window.removeEventListener('resize', this._resize);
+    this.shadowRoot.removeEventListener('click', this._closeVolumeButton);
+  }
+
+  _handleVolumeChange(e) {
+    this.volume = e.detail.volume;
+  }
+
+  _closeVolumeButton(e) {
+    const button = this.shadowRoot.querySelector('fab-volume-button');
+    if (e.target !== button) button.close();
   }
 
   _updateTimestamp() {

@@ -3,6 +3,7 @@ import { connect } from 'pwa-helpers/connect-mixin.js';
 
 import '../../lib/toast-sk/toast-sk.js';
 import { store } from '../store.js';
+import { setVolume } from '../actions/settings.js';
 import './festival-ui-ended.js';
 import './festival-ui-intro.js';
 import './festival-ui-playing.js';
@@ -75,6 +76,8 @@ export class FestivalUi extends connect(store)(LitElement) {
               .audioPaused="${this._audioStatus.paused}"
               .reduceMotion="${this._reduceMotion}"
               .getAudioVisualizerData="${this.getAudioVisualizerData}"
+              .volume="${this._settings.volume}"
+              @volumechange="${this._handleVolumeChange}"
             ></festival-ui-playing>
           `
         : null}
@@ -111,6 +114,7 @@ export class FestivalUi extends connect(store)(LitElement) {
       _ended: { attribute: false },
       _stampEnded: { attribute: false },
       _toastMessage: { attribute: false },
+      _settings: { attribute: false },
     };
   }
 
@@ -171,6 +175,8 @@ export class FestivalUi extends connect(store)(LitElement) {
 
     this.requestUpdate();
 
+    this._settings = state.settings;
+
     if (this._ended) this._hideToast();
     if (state.ui.errorLoading) this._showLoadingError();
   }
@@ -216,6 +222,12 @@ export class FestivalUi extends connect(store)(LitElement) {
 
   _hideToast() {
     this.shadowRoot.getElementById('toast').hide();
+  }
+
+  _handleVolumeChange() {
+    const uiPlaying = this.shadowRoot.querySelector('festival-ui-playing');
+    const { volume } = uiPlaying;
+    store.dispatch(setVolume(volume));
   }
 }
 

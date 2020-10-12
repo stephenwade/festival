@@ -65,8 +65,9 @@ export class FestivalAudio extends connect(store)(LitElement) {
     });
   }
 
-  stateChanged() {
+  stateChanged(state) {
     this._checkTargetShowStatus();
+    if (this._setGain) this._setGain(state.settings.volume / 100);
   }
 
   init() {
@@ -116,13 +117,20 @@ export class FestivalAudio extends connect(store)(LitElement) {
 
     const audioVisualizerData = new Uint8Array(analyserNode.frequencyBinCount);
 
-    // const gainNode = this._audioContext.createGain();
-    // gainNode.gain.value = 0.2;
+    const gainNode = this._audioContext.createGain();
+    this._setGain = (gain) => {
+      if (gain < 0) gainNode.gain.value = 0;
+      else if (gain > 1) gainNode.gain.value = 1;
+      else gainNode.gain.value = gain;
+    };
+
+    const { settings } = store.getState();
+    this._setGain(settings.volume / 100);
 
     tracks.forEach((track) => {
       track
         .connect(analyserNode)
-        // .connect(gainNode)
+        .connect(gainNode)
         .connect(this._audioContext.destination);
     });
 
