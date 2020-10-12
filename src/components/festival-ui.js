@@ -23,7 +23,6 @@ export class FestivalUi extends connect(store)(LitElement) {
         :host {
           font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
             'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-
           user-select: none;
         }
 
@@ -34,15 +33,14 @@ export class FestivalUi extends connect(store)(LitElement) {
         toast-sk {
           padding: 0.7em 1.5em;
           border-radius: 3px;
-
           background-color: #323232;
           color: #f1f1f1;
         }
 
         toast-sk button {
           min-width: 5em;
-          padding: 0.7em 0.7em;
           margin: 0 0.3em;
+          padding: 0.7em 0.7em;
         }
 
         /* stylelint-disable-next-line no-descending-specificity */

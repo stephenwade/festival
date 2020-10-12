@@ -18,7 +18,6 @@ export class FestivalUiPlaying extends LitElement {
         :host {
           overflow: hidden; /* <fab-volume-button> causes overflow */
           padding: 0 1em;
-
           color: white;
         }
 
@@ -29,28 +28,24 @@ export class FestivalUiPlaying extends LitElement {
 
         #current-time {
           margin-bottom: 0.2em;
-
-          font-size: 5em;
           font-weight: 900;
+          font-size: 5em;
         }
 
         #nextup {
           margin-bottom: 0.2em;
-
           font-size: 2em;
           text-transform: uppercase;
         }
 
         #artist {
           margin-bottom: -0.1em;
-
-          font-size: 3em;
           font-weight: 900;
+          font-size: 3em;
           line-height: 0.9;
+          letter-spacing: -0.05em;
           text-align: center;
           text-transform: uppercase;
-          letter-spacing: -0.05em;
-
           user-select: text;
         }
 

@@ -44,7 +44,6 @@ export const flexColumnCenter = css`
 export const fullPageClass = css`
   .full-page {
     position: absolute;
-
     width: 100%;
     height: 100%;
   }

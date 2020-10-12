@@ -29,19 +29,20 @@ export class FestivalUiIntro extends LitElement {
 
         #buttons a {
           display: inline-block;
+          margin: 0 0.2em;
           padding: 0.5em 1em;
           border-radius: 5px;
-          margin: 0 0.2em;
-          transform: skew(-10deg);
-
           background: white;
           font-weight: bold;
           text-decoration: none;
           text-transform: uppercase;
+          transform: skew(-10deg);
 
+          /* stylelint-disable */
           /* gradient cutout */
           color: black;
           mix-blend-mode: screen;
+          /* stylelint-enable */
         }
       `,
     ];
