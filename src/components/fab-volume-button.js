@@ -65,6 +65,11 @@ export class FabVolumeButton extends LitElement {
           transition-duration: 200ms;
           clip-path: inset(0 0 0 0);
         }
+
+        styled-range-input {
+          --range-color-primary: var(--background-color);
+          --range-color-secondary: var(--background-color-lighter);
+        }
       `,
     ];
   }

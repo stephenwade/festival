@@ -2,108 +2,67 @@ import { LitElement, html, css } from 'lit-element';
 
 export class StyledRangeInput extends LitElement {
   static get styles() {
-    return [
-      css`
-        input[type='range'] {
-          position: relative;
-          top: 1px;
-        }
-      `,
-      // http://danielstern.ca/range.css/
-      css`
-        /* stylelint-disable */
-        input[type='range'] {
-          width: 100%;
-          margin: 7px 0;
-          background-color: transparent;
-          -webkit-appearance: none;
-        }
-        input[type='range']:focus {
-          outline: none;
-        }
-        input[type='range']::-webkit-slider-runnable-track {
-          background: #c2c2c2;
-          border: 0;
-          border-radius: 2px;
-          width: 100%;
-          height: 2px;
-          cursor: pointer;
-        }
-        input[type='range']::-webkit-slider-thumb {
-          margin-top: -7px;
-          width: 16px;
-          height: 16px;
-          background: #050595;
-          border: 0;
-          border-radius: 8px;
-          cursor: pointer;
-          -webkit-appearance: none;
-        }
-        input[type='range']:focus::-webkit-slider-runnable-track {
-          background: #c2c2c2;
-        }
-        input[type='range']::-moz-range-track {
-          background: #c2c2c2;
-          border: 0;
-          border-radius: 2px;
-          width: 100%;
-          height: 2px;
-          cursor: pointer;
-        }
-        input[type='range']::-moz-range-thumb {
-          width: 16px;
-          height: 16px;
-          background: #050595;
-          border: 0;
-          border-radius: 8px;
-          cursor: pointer;
-        }
-        input[type='range']::-ms-track {
-          background: transparent;
-          border-color: transparent;
-          border-width: 7px 0;
-          color: transparent;
-          width: 100%;
-          height: 2px;
-          cursor: pointer;
-        }
-        input[type='range']::-ms-fill-lower {
-          background: #c2c2c2;
-          border: 0;
-          border-radius: 4px;
-        }
-        input[type='range']::-ms-fill-upper {
-          background: #c2c2c2;
-          border: 0;
-          border-radius: 4px;
-        }
-        input[type='range']::-ms-thumb {
-          width: 16px;
-          height: 16px;
-          background: #050595;
-          border: 0;
-          border-radius: 8px;
-          cursor: pointer;
-          margin-top: 0px;
-          /*Needed to keep the Edge thumb centred*/
-        }
-        input[type='range']:focus::-ms-fill-lower {
-          background: #c2c2c2;
-        }
-        input[type='range']:focus::-ms-fill-upper {
-          background: #c2c2c2;
-        }
-        /*TODO: Use one of the selectors from https://stackoverflow.com/a/20541859/7077589 and figure out
-how to remove the virtical space around the range input in IE*/
-        @supports (-ms-ime-align: auto) {
-          /* Pre-Chromium Edge only styles, selector taken from hhttps://stackoverflow.com/a/32202953/7077589 */
-          input[type='range'] {
-            margin: 0;
-            /*Edge starts the margin from the thumb, not the track as other browsers do*/
-          }
-        }
-      `,
-    ];
+    // Styles are based on Daniel Stern's range.css
+    // http://danielstern.ca/range.css/
+    return css`
+      input[type='range'] {
+        --sri-color-primary: var(--range-color-primary, #050595);
+        --sri-color-secondary: var(--range-color-secondary, #8383fb);
+
+        position: relative;
+        top: 1px;
+        width: 100%;
+        margin: 7px 0;
+        background-color: transparent;
+        -webkit-appearance: none;
+      }
+
+      input[type='range']:focus {
+        outline: none;
+      }
+
+      input[type='range']::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 2px;
+        border: 0;
+        border-radius: 2px;
+        background: var(--sri-color-secondary);
+        cursor: pointer;
+      }
+
+      input[type='range']::-webkit-slider-thumb {
+        width: 16px;
+        height: 16px;
+        margin-top: -7px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--sri-color-primary);
+        cursor: pointer;
+        -webkit-appearance: none;
+      }
+
+      input[type='range']:focus::-webkit-slider-runnable-track {
+        background: var(--sri-color-secondary);
+      }
+
+      input[type='range']::-moz-range-track {
+        width: 100%;
+        height: 2px;
+        border: 0;
+        border-radius: 2px;
+        background: var(--sri-color-secondary);
+        cursor: pointer;
+      }
+
+      input[type='range']::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--sri-color-primary);
+        cursor: pointer;
+      }
+    `;
   }
 
   render() {
