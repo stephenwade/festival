@@ -433,6 +433,8 @@ export class FestivalAudio extends connect(store)(LitElement) {
     const set =
       e.target === this._activeAudio ? showStatus.set : showStatus.nextSet;
 
+    if (!set) return;
+
     this.dispatchEvent(
       new CustomEvent('loadedmetadata', {
         bubbles: true,
