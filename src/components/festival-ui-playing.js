@@ -97,12 +97,14 @@ export class FestivalUiPlaying extends LitElement {
     if (changedProps.has('waitingUntilStart')) {
       if (!this.waitingUntilStart) this._animate();
     }
+
     if (
       changedProps.has('waitingForNetwork') ||
       changedProps.has('audioPaused') ||
       changedProps.has('currentTime')
-    )
+    ) {
       this._updateTimestamp();
+    }
 
     return true;
   }
