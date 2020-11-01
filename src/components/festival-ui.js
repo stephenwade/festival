@@ -34,33 +34,33 @@ export class FestivalUi extends connect(store)(LitElement) {
           object-fit: cover;
         }
 
-        festival-ui-intro,
-        festival-ui-playing,
-        festival-ui-ended {
+        #intro,
+        #playing,
+        #ended {
           mix-blend-mode: difference;
         }
 
-        toast-sk {
+        #toast {
           padding: 0.7em 1.5em;
           border-radius: 3px;
           background-color: #323232;
           color: #f1f1f1;
         }
 
-        toast-sk button {
+        #toast button {
           min-width: 5em;
           margin: 0 0.3em;
           padding: 0.7em 0.7em;
         }
 
         /* stylelint-disable-next-line no-descending-specificity */
-        toast-sk button + button {
+        #toast button + button {
           margin-left: -0.5em;
         }
-        toast-sk button:first-of-type {
+        #toast button:first-of-type {
           margin-right: -0.5em;
         }
-        toast-sk button:last-child {
+        #toast button:last-child {
           margin-right: -1em;
         }
       `,
@@ -81,11 +81,15 @@ export class FestivalUi extends connect(store)(LitElement) {
         <source src="images/glitch-circle-bg.mp4" type="video/mp4" />
       </video>
       ${this._waitingForAudioContext
-        ? html`<festival-ui-intro class="full-page"></festival-ui-intro>`
+        ? html`<festival-ui-intro
+            id="intro"
+            class="full-page"
+          ></festival-ui-intro>`
         : null}
       ${this._waitingUntilStart || this._waitingForNetwork || this._playing
         ? html`
             <festival-ui-playing
+              id="playing"
               class="full-page"
               .set="${this._showStatus.set}"
               .waitingUntilStart="${this._waitingUntilStart}"
@@ -103,6 +107,7 @@ export class FestivalUi extends connect(store)(LitElement) {
       ${this._stampEnded || this._ended
         ? html`
             <festival-ui-ended
+              id="ended"
               class="full-page"
               ?hidden="${!this._ended}"
             ></festival-ui-ended>
@@ -260,7 +265,7 @@ export class FestivalUi extends connect(store)(LitElement) {
   }
 
   _handleVolumeChange() {
-    const uiPlaying = this.shadowRoot.querySelector('festival-ui-playing');
+    const uiPlaying = this.shadowRoot.getElementById('playing');
     const { volume } = uiPlaying;
     store.dispatch(setVolume(volume));
   }

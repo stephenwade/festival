@@ -118,9 +118,8 @@ export class StyledRangeInput extends LitElement {
     return 0;
   }
 
-  _handleInput() {
-    const input = this.shadowRoot.querySelector('input');
-    this.value = input.value;
+  _handleInput(e) {
+    this.value = e.target.value;
   }
 }
 

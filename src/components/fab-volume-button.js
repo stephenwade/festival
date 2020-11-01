@@ -81,6 +81,7 @@ export class FabVolumeButton extends LitElement {
       </button>
       <div id="slider-container">
         <styled-range-input
+          id="input"
           min="0"
           max="100"
           .value=${this.volume}
@@ -118,7 +119,7 @@ export class FabVolumeButton extends LitElement {
   }
 
   _handleKeyDown(e) {
-    const input = this.shadowRoot.querySelector('styled-range-input');
+    const input = this.shadowRoot.getElementById('input');
     const { step, min, max } = input;
 
     switch (e.key) {
@@ -155,7 +156,7 @@ export class FabVolumeButton extends LitElement {
   }
 
   _handleInput() {
-    const input = this.shadowRoot.querySelector('styled-range-input');
+    const input = this.shadowRoot.getElementById('input');
     this.volume = input.value;
 
     this.dispatchEvent(

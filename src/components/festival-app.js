@@ -32,11 +32,13 @@ export class FestivalApp extends connect(store)(LitElement) {
   }
 
   _handleListenClicked() {
-    this.shadowRoot.getElementById('audio').init();
+    const audio = this.shadowRoot.getElementById('audio');
+    audio.init();
   }
 
   _handleAudioError() {
-    this.shadowRoot.getElementById('ui').showAudioError();
+    const ui = this.shadowRoot.getElementById('ui');
+    ui.showAudioError();
   }
 
   static _handleAudioLoadedMetadata(e) {
@@ -44,8 +46,8 @@ export class FestivalApp extends connect(store)(LitElement) {
   }
 
   _handleAudioVisualizerDataAvailable(e) {
-    this.shadowRoot.getElementById('ui').getAudioVisualizerData =
-      e.detail.getAudioVisualizerData;
+    const ui = this.shadowRoot.getElementById('ui');
+    ui.getAudioVisualizerData = e.detail.getAudioVisualizerData;
   }
 }
 

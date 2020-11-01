@@ -32,7 +32,7 @@ export class FestivalUiPlaying extends LitElement {
           font-size: 5em;
         }
 
-        #nextup {
+        #next-up {
           margin-bottom: 0.2em;
           font-size: 2em;
           text-transform: uppercase;
@@ -49,7 +49,7 @@ export class FestivalUiPlaying extends LitElement {
           user-select: text;
         }
 
-        fab-volume-button {
+        #volume-button {
           position: absolute;
           right: 1.5em;
           bottom: 1.5em;
@@ -66,12 +66,13 @@ export class FestivalUiPlaying extends LitElement {
           ? html`<loading-spinner></loading-spinner>`
           : html`${this._computeCurrentTimeText()}`}
       </div>
-      <div id="nextup" ?hidden=${!this.waitingUntilStart}>Next up</div>
+      <div id="next-up" ?hidden=${!this.waitingUntilStart}>Next up</div>
       <div id="artist">
         ${/* avoid console errors if `this.set` is undefined */
         this.set && this.set.artist}
       </div>
       <fab-volume-button
+        id="volume-button"
         .volume="${this.volume}"
         @volumechange="${this._handleVolumeChange}"
       ></fab-volume-button>
@@ -159,7 +160,7 @@ export class FestivalUiPlaying extends LitElement {
   }
 
   _closeVolumeButton(e) {
-    const button = this.shadowRoot.querySelector('fab-volume-button');
+    const button = this.shadowRoot.getElementById('volume-button');
     if (e.target !== button) button.close();
   }
 
