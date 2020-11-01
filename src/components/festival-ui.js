@@ -30,6 +30,16 @@ export class FestivalUi extends connect(store)(LitElement) {
           display: none !important;
         }
 
+        video {
+          object-fit: cover;
+        }
+
+        festival-ui-intro,
+        festival-ui-playing,
+        festival-ui-ended {
+          mix-blend-mode: difference;
+        }
+
         toast-sk {
           padding: 0.7em 1.5em;
           border-radius: 3px;
@@ -59,6 +69,17 @@ export class FestivalUi extends connect(store)(LitElement) {
 
   render() {
     return html`
+      <video
+        id="video-bg"
+        class="full-page"
+        playsinline
+        muted
+        loop
+        ?autoplay=${!this._reduceMotion}
+      >
+        <source src="images/glitch-circle-bg.webm" type="video/webm" />
+        <source src="images/glitch-circle-bg.mp4" type="video/mp4" />
+      </video>
       ${this._waitingForAudioContext
         ? html`<festival-ui-intro class="full-page"></festival-ui-intro>`
         : null}
@@ -89,7 +110,12 @@ export class FestivalUi extends connect(store)(LitElement) {
         : null}
       <toast-sk id="toast" duration="0">
         <span id="toast-message">${this._toastMessage}</span>
-        <button @click="${() => window.location.reload()}">Reload</button>
+        <button
+          @click="${() => window.location.reload()}"
+          ?hidden="${this._ended}"
+        >
+          Reload
+        </button>
         <button @click="${this._hideToast}" ?hidden="${this._error}">
           Close
         </button>
@@ -116,13 +142,21 @@ export class FestivalUi extends connect(store)(LitElement) {
     };
   }
 
-  shouldUpdate() {
+  shouldUpdate(changedProps) {
     if (this._showStatus.delay !== this._lastDelay) this._delayChanged();
     if (this._audioStatus.stalled !== this._lastStalled)
       this._audioStalledChanged();
 
     this._lastDelay = this._showStatus.delay;
     this._lastStalled = this._audioStatus.stalled;
+
+    if (changedProps.has('_reduceMotion')) {
+      const video = this.shadowRoot.getElementById('video-bg');
+      if (video) {
+        if (this._reduceMotion) video.pause();
+        else video.play();
+      }
+    }
 
     return true;
   }
@@ -175,7 +209,9 @@ export class FestivalUi extends connect(store)(LitElement) {
 
     this._settings = state.settings;
 
-    if (this._ended) this._hideToast();
+    // if (this._ended) this._hideToast();
+    if (this._ended)
+      this._showError('Video background from freestockfootagearchive.com');
     if (state.ui.errorLoading) this._showLoadingError();
   }
 
@@ -191,7 +227,8 @@ export class FestivalUi extends connect(store)(LitElement) {
   _showError(text) {
     this._error = true;
     this._toastMessage = text;
-    this.shadowRoot.getElementById('toast').show();
+    // this.shadowRoot.getElementById('toast').show();
+    window.setTimeout(() => this.shadowRoot.getElementById('toast').show(), 0);
     this._alertShown = true;
   }
 
