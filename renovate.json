@@ -1,0 +1,8 @@
+{
+  "extends": [
+    "config:base",
+    ":githubComToken(gGffB55wfFfkTzEPfK4jRjzgTS0SHlU9Ib/8FrrtVlOfPQoD6iR4F+Vdg6YUZvtXWwqPkh9hrq98o0PMCBsC0BNjedVEF6tQ/DHDVaBgzuwRfX7UgmMOQoh9DPEBgVBo1oowW3NiI1YD62c1gLfoP97ZONv5yJJ78qg3/VtEa4oOeHgydvlLV0WtP62JtA8hxVFXgDmoSdJRx7LmxfvLTXCm7lNavV1XFLg4bqy579fW1FSY78+EitiAyyrd0iRDvn+5fhvu84KMwQfJURb9yq/DCF1q7CA+Nw/C1uJqtZxkvLIumtmibiBlRu1k3IJqpc1sKrbms88vF3Qk6f1BLQ==)"
+  ],
+  "rangeStrategy": "bump",
+  "lockFileMaintenance": { "enabled": true }
+}
