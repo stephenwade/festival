@@ -21,15 +21,17 @@ export class FestivalUiIntro extends LitElement {
         #logo {
           display: block;
           width: 100%;
+          margin-top: 0.5em; /* balance out bottom margin on buttons */
         }
 
         #buttons {
           font-size: 2em;
+          text-align: center;
         }
 
         #buttons a {
           display: inline-block;
-          margin: 0 0.2em;
+          margin: 0 0.2em 0.5em;
           padding: 0.5em 1em;
           border-radius: 5px;
           background: white;
