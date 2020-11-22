@@ -39,6 +39,7 @@ export class FestivalUiPlaying extends LitElement {
         }
 
         #artist {
+          max-width: calc(min(60vh, 10em));
           margin-bottom: -0.1em;
           font-weight: 900;
           font-size: 3em;
