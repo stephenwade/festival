@@ -109,10 +109,6 @@ export class StyledRangeInput extends LitElement {
     this.step = 1;
   }
 
-  firstUpdated() {
-    this._handleInput();
-  }
-
   getTabIndex() {
     if (this.disabled) return -1;
     return 0;
