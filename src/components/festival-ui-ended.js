@@ -25,7 +25,7 @@ export class FestivalUiEnded extends LitElement {
 
         #heart {
           display: block;
-          width: 12vw;
+          width: clamp(5em, 18vmin, 9em);
           margin-top: 1em;
         }
       `,
