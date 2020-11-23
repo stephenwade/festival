@@ -9,5 +9,7 @@ module.exports = {
 
     // disabled because it forbids the :host selector
     'selector-pseudo-element-colon-notation': null,
+
+    'declaration-block-trailing-semicolon': 'always',
   },
 };
