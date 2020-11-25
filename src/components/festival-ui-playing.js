@@ -69,8 +69,10 @@ export class FestivalUiPlaying extends LitElement {
       </div>
       <div id="next-up" ?hidden=${!this.waitingUntilStart}>Next up</div>
       <div id="artist">
-        ${/* avoid console errors if `this.set` is undefined */
-        this.set && this.set.artist}
+        ${
+          /* avoid console errors if `this.set` is undefined */
+          this.set && this.set.artist
+        }
       </div>
       <fab-volume-button
         id="volume-button"
