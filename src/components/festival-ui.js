@@ -3,7 +3,7 @@ import { connect } from 'pwa-helpers/connect-mixin.js';
 
 import '../../lib/toast-sk/toast-sk.js';
 import { store } from '../store.js';
-import { setVolume } from '../actions/settings.js';
+import { setVolume, setLastUnmutedVolume } from '../actions/settings.js';
 import './festival-ui-ended.js';
 import './festival-ui-intro.js';
 import './festival-ui-playing.js';
@@ -79,7 +79,8 @@ export class FestivalUi extends connect(store)(LitElement) {
               .reduceMotion="${this._reduceMotion}"
               .getAudioVisualizerData="${this.getAudioVisualizerData}"
               .volume="${this._settings.volume}"
-              @volumechange="${this._handleVolumeChange}"
+              @volumeinput="${FestivalUi._handleVolumeInput}"
+              @volumechange="${FestivalUi._handleVolumeChange}"
             ></festival-ui-playing>
           `
         : null}
@@ -121,6 +122,12 @@ export class FestivalUi extends connect(store)(LitElement) {
     };
   }
 
+  constructor() {
+    super();
+
+    this._handleKeyDown = this._handleKeyDown.bind(this);
+  }
+
   shouldUpdate() {
     if (this._showStatus.delay !== this._lastDelay) this._delayChanged();
     if (this._audioStatus.stalled !== this._lastStalled)
@@ -152,6 +159,8 @@ export class FestivalUi extends connect(store)(LitElement) {
     // https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList#Browser_compatibility
     this._motionMediaQuery.addListener(this._motionMediaQueryChanged);
     this._motionMediaQueryChanged();
+
+    document.addEventListener('keydown', this._handleKeyDown);
   }
 
   disconnectedCallback() {
@@ -161,6 +170,8 @@ export class FestivalUi extends connect(store)(LitElement) {
     // This means that we must use removeListener instead of removeEventListener
     // https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList#Browser_compatibility
     this._motionMediaQuery.removeListener(this._motionMediaQueryChanged);
+
+    document.removeEventListener('keydown', this._handleKeyDown);
   }
 
   stateChanged(state) {
@@ -227,10 +238,27 @@ export class FestivalUi extends connect(store)(LitElement) {
     this.shadowRoot.getElementById('toast').hide();
   }
 
-  _handleVolumeChange() {
-    const uiPlaying = this.shadowRoot.getElementById('playing');
-    const { volume } = uiPlaying;
+  static _handleVolumeInput(e) {
+    const { volume } = e.detail;
     store.dispatch(setVolume(volume));
+  }
+
+  static _handleVolumeChange(e) {
+    const { volume } = e.detail;
+    if (volume > 0) store.dispatch(setLastUnmutedVolume(volume));
+  }
+
+  _handleKeyDown(e) {
+    if (e.key.toLowerCase() !== 'm') return;
+
+    const { volume, lastUnmutedVolume } = this._settings;
+
+    if (volume > 0) {
+      store.dispatch(setLastUnmutedVolume(volume));
+      store.dispatch(setVolume(0));
+    } else {
+      store.dispatch(setVolume(lastUnmutedVolume));
+    }
   }
 }
 

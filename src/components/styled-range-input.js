@@ -74,6 +74,7 @@ export class StyledRangeInput extends LitElement {
       .value=${this.value}
       tabindex=${this.getTabIndex()}
       @input=${this._handleInput}
+      @change=${this._handleChange}
     />`;
   }
 
@@ -116,6 +117,26 @@ export class StyledRangeInput extends LitElement {
 
   _handleInput(e) {
     this.value = e.target.value;
+
+    e.stopPropagation();
+
+    this.dispatchEvent(
+      new CustomEvent('input', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  _handleChange(e) {
+    e.stopPropagation();
+
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 }
 

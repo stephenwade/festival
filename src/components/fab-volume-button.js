@@ -88,6 +88,7 @@ export class FabVolumeButton extends LitElement {
           step="5"
           ?disabled=${!this.opened}
           @input=${this._handleInput}
+          @change=${this._handleChange}
         ></styled-range-input>
       </div>
     `;
@@ -106,6 +107,24 @@ export class FabVolumeButton extends LitElement {
 
   close() {
     this.opened = false;
+  }
+
+  constructor() {
+    super();
+
+    this._handleKeyDown = this._handleKeyDown.bind(this);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    document.addEventListener('keydown', this._handleKeyDown);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('keydown', this._handleKeyDown);
+
+    super.disconnectedCallback();
   }
 
   _toggleOpen() {
@@ -155,16 +174,37 @@ export class FabVolumeButton extends LitElement {
     this.volume = input.value;
   }
 
-  _handleInput() {
-    const input = this.shadowRoot.getElementById('input');
-    this.volume = input.value;
+  _handleInput(e) {
+    e.stopPropagation();
+
+    const volume = e.target.value;
+
+    this.volume = volume;
+
+    this.dispatchEvent(
+      new CustomEvent('volumeinput', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          volume,
+        },
+      })
+    );
+  }
+
+  _handleChange(e) {
+    e.stopPropagation();
+
+    const volume = e.target.value;
+
+    this.volume = volume;
 
     this.dispatchEvent(
       new CustomEvent('volumechange', {
         bubbles: true,
         composed: true,
         detail: {
-          volume: this.volume,
+          volume,
         },
       })
     );

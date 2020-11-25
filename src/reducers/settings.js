@@ -7,7 +7,9 @@
 import { combineReducers } from 'redux/es/redux.mjs';
 
 import volumeReducer from './settings-volume.js';
+import lastUnmutedVolumeReducer from './settings-lastUnmutedVolume.js';
 
 export default combineReducers({
   volume: volumeReducer,
+  lastUnmutedVolume: lastUnmutedVolumeReducer,
 });

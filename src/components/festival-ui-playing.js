@@ -77,7 +77,7 @@ export class FestivalUiPlaying extends LitElement {
       <fab-volume-button
         id="volume-button"
         .volume="${this.volume}"
-        @volumechange="${this._handleVolumeChange}"
+        @volumeinput="${this._handleVolumeInput}"
       ></fab-volume-button>
     `;
   }
@@ -160,7 +160,7 @@ export class FestivalUiPlaying extends LitElement {
     this.shadowRoot.removeEventListener('click', this._closeVolumeButton);
   }
 
-  _handleVolumeChange(e) {
+  _handleVolumeInput(e) {
     this.volume = e.detail.volume;
   }
 
