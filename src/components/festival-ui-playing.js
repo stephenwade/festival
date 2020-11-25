@@ -146,18 +146,23 @@ export class FestivalUiPlaying extends LitElement {
     this._animate();
   }
 
+  constructor() {
+    super();
+
+    this._closeVolumeButton = this._closeVolumeButton.bind(this);
+  }
+
   connectedCallback() {
     super.connectedCallback();
 
-    this._closeVolumeButton = this._closeVolumeButton.bind(this);
     this.shadowRoot.addEventListener('click', this._closeVolumeButton);
   }
 
   disconnectedCallback() {
-    super.disconnectedCallback();
-
     window.removeEventListener('resize', this._resize);
     this.shadowRoot.removeEventListener('click', this._closeVolumeButton);
+
+    super.disconnectedCallback();
   }
 
   _handleVolumeInput(e) {

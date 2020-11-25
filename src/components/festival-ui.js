@@ -154,7 +154,7 @@ export class FestivalUi extends connect(store)(LitElement) {
     this._motionMediaQueryChanged = () => {
       this._reduceMotion = this._motionMediaQuery.matches;
     };
-    // In Safari, MediaQueryList doesn't inherit from EventTarget
+    // Prior to Safari 14, MediaQueryList didn't inherit from EventTarget
     // This means that we must use addListener instead of addEventListener
     // https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList#Browser_compatibility
     this._motionMediaQuery.addListener(this._motionMediaQueryChanged);
@@ -164,14 +164,14 @@ export class FestivalUi extends connect(store)(LitElement) {
   }
 
   disconnectedCallback() {
-    super.disconnectedCallback();
-
-    // In Safari, MediaQueryList doesn't inherit from EventTarget
+    // Prior to Safari 14, MediaQueryList didn't inherit from EventTarget
     // This means that we must use removeListener instead of removeEventListener
     // https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList#Browser_compatibility
     this._motionMediaQuery.removeListener(this._motionMediaQueryChanged);
 
     document.removeEventListener('keydown', this._handleKeyDown);
+
+    super.disconnectedCallback();
   }
 
   stateChanged(state) {

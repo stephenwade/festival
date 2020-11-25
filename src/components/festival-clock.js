@@ -9,9 +9,9 @@ import { tick } from '../actions/targetShowStatus.js';
 
 export class FestivalClock extends connect(store)(HTMLElement) {
   disconnectedCallback() {
-    super.disconnectedCallback();
-
     this._stopTicking();
+
+    super.disconnectedCallback();
   }
 
   stateChanged(state) {

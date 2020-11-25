@@ -55,14 +55,14 @@ export class FestivalAudio extends connect(store)(LitElement) {
   }
 
   disconnectedCallback() {
-    super.disconnectedCallback();
-
     this._audioElements.forEach((audio) => {
       Object.keys(this._boundAudioEvents).forEach((event) => {
         const handler = this._boundAudioEvents[event];
         audio.removeEventListener(event, handler);
       });
     });
+
+    super.disconnectedCallback();
   }
 
   stateChanged(state) {
