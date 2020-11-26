@@ -92,11 +92,18 @@ const prepareSets = (setsData) => {
   return transform(setsData);
 };
 
+let lastDataText = null;
+
 const loadData = async () => {
   const response = await window.fetch('media/sets.json');
 
   if (!response.ok)
     throw new Error(`Response: ${response.status} ${response.statusText}`);
+
+  // cache data so we can tell whether it changed since last time
+  const thisDataText = await response.clone().text();
+  if (thisDataText === lastDataText) return null;
+  lastDataText = thisDataText;
 
   const data = {
     ...(await response.json()),
@@ -109,10 +116,11 @@ const loadData = async () => {
 export const loadSets = () => async (dispatch) => {
   try {
     const data = await loadData();
+    if (data === null) return;
+
     dispatch(stopTicking());
     dispatch({ type: 'LOAD_SETS_DATA', data });
     dispatch(startTicking());
-    return data;
   } catch (e) {
     dispatch({ type: 'ERROR_LOADING', detail: e.detail });
     throw e;

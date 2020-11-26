@@ -27,8 +27,21 @@ export class FestivalApp extends connect(store)(LitElement) {
     };
   }
 
-  firstUpdated() {
+  connectedCallback() {
+    super.connectedCallback();
+
     store.dispatch(loadSets());
+
+    const minMs = 60 * 1000;
+    this._loadSetsInterval = window.setInterval(() => {
+      store.dispatch(loadSets());
+    }, 1 * minMs);
+  }
+
+  disconnectedCallback() {
+    window.clearInterval(this._loadSetsInterval);
+
+    super.disconnectedCallback();
   }
 
   _handleListenClicked() {

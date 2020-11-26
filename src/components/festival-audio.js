@@ -17,7 +17,7 @@ export class FestivalAudio extends connect(store)(LitElement) {
   constructor() {
     super();
 
-    this._changeQueue = [];
+    this._nextChange = null;
 
     this._boundAudioEvents = {
       ended: this._handleAudioEnded.bind(this),
@@ -182,11 +182,16 @@ export class FestivalAudio extends connect(store)(LitElement) {
       const currentTimeChanged =
         targetShowStatus.currentTime !== this._lastTargetShowStatus.currentTime;
 
+      const timeChanged = secondsUntilSetChanged || currentTimeChanged;
+      const anythingChanged = timeChanged || statusChanged || setChanged;
+
       this._lastTargetShowStatus = targetShowStatus;
 
-      if (statusChanged || setChanged) {
+      if (anythingChanged) {
         this._queueStatusChange(targetShowStatus);
-      } else if (secondsUntilSetChanged || currentTimeChanged) {
+      }
+
+      if (timeChanged) {
         this._updateTime(targetShowStatus);
       }
     }
@@ -198,13 +203,14 @@ export class FestivalAudio extends connect(store)(LitElement) {
     switch (showStatus.status) {
       case 'WAITING_FOR_AUDIO_CONTEXT':
       case 'WAITING_UNTIL_START':
-      case 'DELAYING_FOR_INITIAL_SYNC':
       case 'ENDED':
-        this._performStatusChange(change);
+        this._nextChange = change;
+        this._doNextStatusChange();
         break;
 
+      case 'DELAYING_FOR_INITIAL_SYNC':
       case 'PLAYING':
-        this._changeQueue.push(change);
+        this._nextChange = change;
         break;
 
       default:
@@ -212,7 +218,10 @@ export class FestivalAudio extends connect(store)(LitElement) {
     }
   }
 
-  _performStatusChange(change) {
+  _doNextStatusChange() {
+    const change = this._nextChange;
+    this._nextChange = null;
+
     const { showStatus } = store.getState();
 
     const setChanged = change.set !== showStatus.set;
@@ -269,9 +278,13 @@ export class FestivalAudio extends connect(store)(LitElement) {
 
     store.dispatch(setShowStatus(newShowStatus));
 
-    if (newShowStatus.status !== 'PLAYING') {
-      const nextChange = this._changeQueue.shift();
-      if (nextChange) this._performStatusChange(nextChange);
+    if (
+      newShowStatus.status !== 'PLAYING' &&
+      newShowStatus.status !== 'DELAYING_FOR_INITIAL_SYNC'
+    ) {
+      if (this._nextChange) {
+        this._doNextStatusChange();
+      }
     }
   }
 
@@ -348,8 +361,9 @@ export class FestivalAudio extends connect(store)(LitElement) {
     };
     store.dispatch(setShowStatus(newShowStatus));
 
-    const nextChange = this._changeQueue.shift();
-    if (nextChange) this._performStatusChange(nextChange);
+    if (this._nextChange) {
+      this._doNextStatusChange();
+    }
 
     store.dispatch(audioEnded());
 
