@@ -168,43 +168,41 @@ export class FabVolumeButton extends LitElement {
         input.value = max;
         break;
 
-      // no default
+      default:
+        return;
     }
 
     this.volume = input.value;
+
+    this._dispatchVolumeEvent('volumeinput');
+    this._dispatchVolumeEvent('volumechange');
   }
 
   _handleInput(e) {
     e.stopPropagation();
 
     const volume = e.target.value;
-
     this.volume = volume;
 
-    this.dispatchEvent(
-      new CustomEvent('volumeinput', {
-        bubbles: true,
-        composed: true,
-        detail: {
-          volume,
-        },
-      })
-    );
+    this._dispatchVolumeEvent('volumeinput');
   }
 
   _handleChange(e) {
     e.stopPropagation();
 
     const volume = e.target.value;
-
     this.volume = volume;
 
+    this._dispatchVolumeEvent('volumechange');
+  }
+
+  _dispatchVolumeEvent(eventName) {
     this.dispatchEvent(
-      new CustomEvent('volumechange', {
+      new CustomEvent(eventName, {
         bubbles: true,
         composed: true,
         detail: {
-          volume,
+          volume: this.volume,
         },
       })
     );
