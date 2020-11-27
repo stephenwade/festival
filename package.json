@@ -7,7 +7,7 @@
     "url": "https://gitlab.com/stephenwade/festival.git"
   },
   "scripts": {
-    "start": "es-dev-server --node-resolve",
+    "start": "web-dev-server --node-resolve",
     "lint:js": "eslint --ext .js,.html . --ignore-path .gitignore",
     "lint:css": "npx stylelint \"**/*.js\" --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:css",
@@ -19,7 +19,7 @@
     "imagemin:jpg": "imagemin images/*.jpg --out-dir=images --plugin.webp.quality=80",
     "imagemin": "npm run imagemin:png && npm run imagemin:jpg",
     "build": "rm -rf dist && rollup -c rollup.config.js",
-    "start:build": "es-dev-server --root-dir dist",
+    "start:build": "web-dev-server --root-dir dist",
     "deploy:site": "rsync -rltv --delete --exclude goaccess dist/ $FESTIVAL_SITE_DEPLOY_LOCATION",
     "deploy:media": "az storage blob sync --container '$web' --source media --exclude-pattern '*.json' --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\"",
     "deploy": "npm run deploy:site && npm run deploy:media"
@@ -36,8 +36,8 @@
     "@open-wc/building-rollup": "^1.9.4",
     "@open-wc/eslint-config": "^4.0.1",
     "@rollup/plugin-replace": "^2.3.4",
+    "@web/dev-server": "^0.0.25",
     "deepmerge": "^4.2.2",
-    "es-dev-server": "^1.57.8",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",
     "husky": "^4.3.0",
