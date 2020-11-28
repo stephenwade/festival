@@ -113,7 +113,7 @@ const loadData = async () => {
   return prepareSets(data);
 };
 
-export const loadSets = () => async (dispatch) => {
+export const loadSets = ({ ignoreErrors }) => async (dispatch) => {
   try {
     const data = await loadData();
     if (data === null) return;
@@ -122,6 +122,8 @@ export const loadSets = () => async (dispatch) => {
     dispatch({ type: 'LOAD_SETS_DATA', data });
     dispatch(startTicking());
   } catch (e) {
+    if (ignoreErrors) return;
+
     dispatch({ type: 'ERROR_LOADING', detail: e.detail });
     throw e;
   }

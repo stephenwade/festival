@@ -34,7 +34,7 @@ export class FestivalApp extends connect(store)(LitElement) {
 
     const minMs = 60 * 1000;
     this._loadSetsInterval = window.setInterval(() => {
-      store.dispatch(loadSets());
+      store.dispatch(loadSets({ ignoreErrors: true }));
     }, 1 * minMs);
   }
 
