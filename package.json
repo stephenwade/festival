@@ -14,7 +14,7 @@
     "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
     "format:stylelint": "npx stylelint \"**/*.js\" --fix --ignore-path .gitignore",
     "format:prettier": "prettier \"**/*.js\" --write --ignore-path .prettierignore",
-    "format": "npm run format:eslint && npm run format:stylelint && npm run format:prettier",
+    "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier",
     "imagemin:png": "imagemin images/*.png --out-dir=images --plugin.webp.quality=100",
     "imagemin:jpg": "imagemin images/*.jpg --out-dir=images --plugin.webp.quality=80",
     "imagemin": "npm run imagemin:png && npm run imagemin:jpg",
