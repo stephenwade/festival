@@ -40,7 +40,7 @@
     "@web/dev-server": "^0.0.26",
     "deepmerge": "^4.2.2",
     "eslint": "^7.15.0",
-    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-prettier": "^7.0.0",
     "husky": "^4.3.0",
     "imagemin": "^7.0.1",
     "imagemin-cli": "^6.0.0",

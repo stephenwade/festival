@@ -24,26 +24,22 @@ const addAudioPrefixToSets = (setsData) => {
   };
 };
 
-const addDatesToSets = (setsData) => {
-  return {
-    ...setsData,
-    sets: setsData.sets.map((set) => {
-      const startDate = parseISO(set.start);
-      return {
-        ...set,
-        startDate,
-        endDate: addSeconds(startDate, set.length),
-      };
-    }),
-  };
-};
+const addDatesToSets = (setsData) => ({
+  ...setsData,
+  sets: setsData.sets.map((set) => {
+    const startDate = parseISO(set.start);
+    return {
+      ...set,
+      startDate,
+      endDate: addSeconds(startDate, set.length),
+    };
+  }),
+});
 
-const sortSetsByDate = (setsData) => {
-  return {
-    ...setsData,
-    sets: setsData.sets.sort((a, b) => a.startDate - b.startDate),
-  };
-};
+const sortSetsByDate = (setsData) => ({
+  ...setsData,
+  sets: setsData.sets.sort((a, b) => a.startDate - b.startDate),
+});
 
 const adjustTimesForClientTimeSkew = (setsData) => {
   const clientDate = new Date();

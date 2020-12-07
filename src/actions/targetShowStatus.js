@@ -76,9 +76,7 @@ const setTargetShowStatus = () => (dispatch, getState) => {
   dispatch(setTargetShowStatusForSet(set, setsData.sets, now));
 };
 
-export const tick = () => {
-  return setTargetShowStatus();
-};
+export const tick = () => setTargetShowStatus();
 
 export const startTicking = () => (dispatch) => {
   dispatch(setInitialTargetShowStatus());
