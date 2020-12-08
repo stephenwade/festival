@@ -109,7 +109,8 @@ const loadData = async () => {
   return prepareSets(data);
 };
 
-export const loadSets = ({ ignoreErrors }) => async (dispatch) => {
+// https://exploringjs.com/impatient-js/ch_callables.html#simulating-named-parameters
+export const loadSets = ({ ignoreErrors = false } = {}) => async (dispatch) => {
   try {
     const data = await loadData();
     if (data === null) return;
