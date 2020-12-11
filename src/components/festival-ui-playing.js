@@ -18,7 +18,7 @@ export class FestivalUiPlaying extends LitElement {
         :host {
           overflow: hidden; /* <fab-volume-button> causes overflow */
           padding: 0 1em;
-          color: white;
+          color: #0a1b27;
         }
 
         #current-time,
@@ -129,7 +129,7 @@ export class FestivalUiPlaying extends LitElement {
       const ctx = canvas.getContext('2d');
 
       ctx.lineWidth = 4 * this._sizeMultiplier;
-      const color = '#fff';
+      const color = '#0a1b27';
       ctx.strokeStyle = color;
       ctx.fillStyle = color;
     };

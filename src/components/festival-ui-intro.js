@@ -33,18 +33,14 @@ export class FestivalUiIntro extends LitElement {
           display: inline-block;
           margin: 0 0.2em 0.5em;
           padding: 0.5em 1em;
+          border: 4px solid black;
           border-radius: 5px;
-          background: white;
+          background-color: #adcdd6;
+          color: black;
           font-weight: bold;
           text-decoration: none;
           text-transform: uppercase;
           transform: skew(-10deg);
-
-          /* stylelint-disable */
-          /* gradient cutout */
-          color: black;
-          mix-blend-mode: screen;
-          /* stylelint-enable */
         }
       `,
     ];
@@ -61,8 +57,8 @@ export class FestivalUiIntro extends LitElement {
       >
         <img
           id="logo"
-          src="images/fe5tival-logo.svg"
-          alt="FE5TIVAL"
+          src="images/carpe-noctem-winter-logo.svg"
+          alt="CARPE NOCTEM WINTER"
           @load="${this._handleLogoLoaded}"
         />
       </a>
