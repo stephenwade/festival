@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.9.4",
-    "@open-wc/eslint-config": "^4.0.1",
+    "@open-wc/eslint-config": "^4.2.0",
     "@rollup/plugin-replace": "^2.3.4",
     "@web/dev-server": "^0.0.26",
     "deepmerge": "^4.2.2",
