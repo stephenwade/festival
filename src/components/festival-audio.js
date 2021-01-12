@@ -113,7 +113,7 @@ export class FestivalAudio extends connect(store)(LitElement) {
     const analyserNode = this._audioContext.createAnalyser();
     analyserNode.fftSize = 1024;
     analyserNode.minDecibels = -85;
-    analyserNode.smoothingTimeConstant = 0.7;
+    analyserNode.smoothingTimeConstant = 0.75;
 
     const audioVisualizerData = new Uint8Array(analyserNode.frequencyBinCount);
 
