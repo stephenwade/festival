@@ -56,8 +56,10 @@ const adjustTimesForClientTimeSkew = (setsData) => {
 };
 
 const adjustTimesForTesting = (setsData) => {
-  // adjust all start times so the first set starts 5 seconds
+  // adjust all start times so the first set starts 3 seconds
   // after the page is loaded
+
+  const ADJUST_TIME_IN_SECONDS = 3;
 
   if (!setsData.adjustTimesForTesting) return setsData;
 
@@ -71,8 +73,14 @@ const adjustTimesForTesting = (setsData) => {
     ...setsData,
     sets: setsData.sets.map((set) => ({
       ...set,
-      startDate: addSeconds(addMilliseconds(set.startDate, difference), 5),
-      endDate: addSeconds(addMilliseconds(set.endDate, difference), 5),
+      startDate: addSeconds(
+        addMilliseconds(set.startDate, difference),
+        ADJUST_TIME_IN_SECONDS
+      ),
+      endDate: addSeconds(
+        addMilliseconds(set.endDate, difference),
+        ADJUST_TIME_IN_SECONDS
+      ),
     })),
   };
 };
