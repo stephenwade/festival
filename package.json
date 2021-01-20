@@ -37,7 +37,7 @@
     "@open-wc/building-rollup": "^1.9.4",
     "@open-wc/eslint-config": "^4.2.0",
     "@rollup/plugin-replace": "^2.3.4",
-    "@web/dev-server": "^0.1.4",
+    "@web/dev-server": "^0.1.5",
     "deepmerge": "^4.2.2",
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.1.0",
