@@ -6,9 +6,13 @@
       name="viewport"
       content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"
     />
+    <link rel="preload" href="/images/minecraft.woff" as="font" />
 
-    <title>FE5TIVAL</title>
-    <meta name="description" content="Welcome to FE5TIVAL day 1!" />
+    <title>Fundraiser for OBXIDION</title>
+    <meta
+      name="description"
+      content="BASS HERITAGE presents: Fundraiser For OBXIDION, January 22nd"
+    />
 
     <!-- See https://goo.gl/OOhYW5 -->
     <!-- <link rel="manifest" href="/manifest.json" /> -->
@@ -23,6 +27,12 @@
     <script type="module" src="/src/index.js"></script>
 
     <style>
+      @font-face {
+        font-family: 'Minecraft';
+        src: url('images/minecraft.woff') format('woff');
+        font-display: block;
+      }
+
       html,
       body {
         height: 100%;
@@ -35,15 +45,15 @@
       This determines whether we load the WebP or JPEG format background image.
       */
       html.no-webplossless {
-        --background-image: url('images/fe5tival-day3-background.jpg');
+        --background-image: url('images/obxidion-background.jpg');
       }
       html.webplossless {
-        --background-image: url('images/fe5tival-day3-background.webp');
+        --background-image: url('images/obxidion-background.webp');
       }
 
       body {
-        --background-color: #050595; /* fallback color for --background-image */
-        --background-color-lighter: #8383fb; /* background-color at 75% luminosity */
+        --background-color: #2c518b; /* fallback color for --background-image */
+        --background-color-lighter: #a4b6da; /* background-color at 75% luminosity */
 
         background-color: var(--background-color);
       }
