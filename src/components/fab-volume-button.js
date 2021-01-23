@@ -41,7 +41,7 @@ export class FabVolumeButton extends LitElement {
           vertical-align: middle;
           width: 24px;
           height: 24px;
-          fill: var(--background-color-darker);
+          fill: var(--background-color);
         }
 
         #slider-container {
@@ -67,8 +67,8 @@ export class FabVolumeButton extends LitElement {
         }
 
         styled-range-input {
-          --range-color-primary: var(--background-color-darker);
-          --range-color-secondary: var(--background-color);
+          --range-color-primary: var(--background-color);
+          --range-color-secondary: var(--background-color-lighter);
         }
       `,
     ];
