@@ -1,7 +1,6 @@
 # editors
 /.idea
 /.vscode
-/festival.sublime-workspace
 
 # system files
 .DS_Store
