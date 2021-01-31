@@ -39,7 +39,7 @@
     "@rollup/plugin-replace": "^2.3.4",
     "@web/dev-server": "^0.1.5",
     "deepmerge": "^4.2.2",
-    "eslint": "^7.18.0",
+    "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
     "husky": "^4.3.8",
     "imagemin": "^7.0.1",
