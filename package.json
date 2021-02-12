@@ -46,7 +46,7 @@
     "imagemin-cli": "^6.0.0",
     "imagemin-webp": "^6.0.0",
     "koa-range": "^0.3.0",
-    "lint-staged": "^10.5.3",
+    "lint-staged": "^10.5.4",
     "prettier": "2.2.1",
     "rollup": "^2.39.0",
     "rollup-plugin-copy": "^3.3.0",
