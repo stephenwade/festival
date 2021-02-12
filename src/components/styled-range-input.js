@@ -72,7 +72,7 @@ export class StyledRangeInput extends LitElement {
       max=${this.max}
       step=${this.step}
       .value=${this.value}
-      tabindex=${this.getTabIndex()}
+      tabindex=${this._getTabIndex()}
       @input=${this._handleInput}
       @change=${this._handleChange}
     />`;
@@ -110,7 +110,7 @@ export class StyledRangeInput extends LitElement {
     this.step = 1;
   }
 
-  getTabIndex() {
+  _getTabIndex() {
     if (this.disabled) return -1;
     return 0;
   }

@@ -1,7 +1,7 @@
-import { LitElement, html, css } from 'lit-element';
-
 // Based on a loading spinner licensed under CC0
 // found at https://loading.io/css/
+
+import { LitElement, html, css } from 'lit-element';
 
 export class LoadingSpinner extends LitElement {
   static get styles() {

@@ -14,60 +14,11 @@ import {
 } from '../actions/audioStatus.js';
 
 export class FestivalAudio extends connect(store)(LitElement) {
-  constructor() {
-    super();
-
-    this._nextChange = null;
-
-    this._boundAudioEvents = {
-      ended: this._handleAudioEnded.bind(this),
-      error: this._handleAudioError.bind(this),
-      loadedmetadata: this._handleAudioLoadedMetadata.bind(this),
-      pause: this._handleAudioPause.bind(this),
-      playing: this._handleAudioPlaying.bind(this),
-      stalled: this._handleAudioStalled.bind(this),
-      timeupdate: this._handleAudioTimeUpdate.bind(this),
-      waiting: this._handleAudioWaiting.bind(this),
-    };
-  }
-
   render() {
     return html`
       <audio id="audio1" crossorigin="anonymous"></audio>
       <audio id="audio2" crossorigin="anonymous"></audio>
     `;
-  }
-
-  firstUpdated() {
-    this._audioElements = [
-      this.shadowRoot.getElementById('audio1'),
-      this.shadowRoot.getElementById('audio2'),
-    ];
-
-    this._audioElements.forEach((audio) => {
-      Object.keys(this._boundAudioEvents).forEach((event) => {
-        const handler = this._boundAudioEvents[event];
-        audio.addEventListener(event, handler);
-      });
-    });
-
-    [this._activeAudio, this._inactiveAudio] = this._audioElements;
-  }
-
-  disconnectedCallback() {
-    this._audioElements.forEach((audio) => {
-      Object.keys(this._boundAudioEvents).forEach((event) => {
-        const handler = this._boundAudioEvents[event];
-        audio.removeEventListener(event, handler);
-      });
-    });
-
-    super.disconnectedCallback();
-  }
-
-  stateChanged(state) {
-    this._checkTargetShowStatus();
-    if (this._setGain) this._setGain(state.settings.volume / 100);
   }
 
   init() {
@@ -101,6 +52,55 @@ export class FestivalAudio extends connect(store)(LitElement) {
         .resume()
         .then(this._handleAudioContextResumed.bind(this));
     }
+  }
+
+  constructor() {
+    super();
+
+    this._nextChange = null;
+
+    this._boundAudioEvents = {
+      ended: this._handleAudioEnded.bind(this),
+      error: this._handleAudioError.bind(this),
+      loadedmetadata: this._handleAudioLoadedMetadata.bind(this),
+      pause: this._handleAudioPause.bind(this),
+      playing: this._handleAudioPlaying.bind(this),
+      stalled: this._handleAudioStalled.bind(this),
+      timeupdate: this._handleAudioTimeUpdate.bind(this),
+      waiting: this._handleAudioWaiting.bind(this),
+    };
+  }
+
+  firstUpdated() {
+    this._audioElements = [
+      this.shadowRoot.getElementById('audio1'),
+      this.shadowRoot.getElementById('audio2'),
+    ];
+
+    this._audioElements.forEach((audio) => {
+      Object.keys(this._boundAudioEvents).forEach((event) => {
+        const handler = this._boundAudioEvents[event];
+        audio.addEventListener(event, handler);
+      });
+    });
+
+    [this._activeAudio, this._inactiveAudio] = this._audioElements;
+  }
+
+  disconnectedCallback() {
+    this._audioElements.forEach((audio) => {
+      Object.keys(this._boundAudioEvents).forEach((event) => {
+        const handler = this._boundAudioEvents[event];
+        audio.removeEventListener(event, handler);
+      });
+    });
+
+    super.disconnectedCallback();
+  }
+
+  stateChanged(state) {
+    this._checkTargetShowStatus();
+    if (this._setGain) this._setGain(state.settings.volume / 100);
   }
 
   _setupAudioContext() {

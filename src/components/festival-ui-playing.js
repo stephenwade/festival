@@ -95,6 +95,12 @@ export class FestivalUiPlaying extends LitElement {
     };
   }
 
+  constructor() {
+    super();
+
+    this._closeVolumeButton = this._closeVolumeButton.bind(this);
+  }
+
   shouldUpdate(changedProps) {
     if (changedProps.has('set')) this._showProgressLine = false;
     if (changedProps.has('waitingUntilStart')) {
@@ -144,12 +150,6 @@ export class FestivalUiPlaying extends LitElement {
 
     // start draw loop
     this._animate();
-  }
-
-  constructor() {
-    super();
-
-    this._closeVolumeButton = this._closeVolumeButton.bind(this);
   }
 
   connectedCallback() {
