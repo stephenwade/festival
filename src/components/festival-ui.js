@@ -12,6 +12,7 @@ import {
   buttonReset,
   fullPageClass,
 } from './shared-styles.js';
+import { elevationZ8 } from './shared-styles-elevation.js';
 
 export class FestivalUi extends connect(store)(LitElement) {
   static get styles() {
@@ -19,6 +20,7 @@ export class FestivalUi extends connect(store)(LitElement) {
       boxSizingBorderBox,
       buttonReset,
       fullPageClass,
+      elevationZ8,
       css`
         :host {
           font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
@@ -93,7 +95,7 @@ export class FestivalUi extends connect(store)(LitElement) {
             ></festival-ui-ended>
           `
         : null}
-      <toast-sk id="toast" duration="0">
+      <toast-sk id="toast" class="mdc-elevation--z8" duration="0">
         <span id="toast-message">${this._toastMessage}</span>
         <button @click="${() => window.location.reload()}">Reload</button>
         <button @click="${this._hideToast}" ?hidden="${this._error}">
