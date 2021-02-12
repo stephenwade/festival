@@ -2,6 +2,13 @@ import { LitElement, html, css } from 'lit-element';
 
 import './styled-range-input.js';
 import { boxSizingBorderBox, buttonReset } from './shared-styles.js';
+import {
+  elevationTransition,
+  elevationZ0,
+  elevationZ6,
+  elevationZ12,
+  elevationZ12Rotated90,
+} from './shared-styles-elevation.js';
 import { svgVolumeMute, svgVolumeDown, svgVolumeUp } from './icons.js';
 
 export class FabVolumeButton extends LitElement {
@@ -9,6 +16,11 @@ export class FabVolumeButton extends LitElement {
     return [
       boxSizingBorderBox,
       buttonReset,
+      elevationTransition,
+      elevationZ0,
+      elevationZ6,
+      elevationZ12,
+      elevationZ12Rotated90,
       css`
         :host {
           transform: rotate(-90deg);
@@ -24,7 +36,7 @@ export class FabVolumeButton extends LitElement {
           outline: none;
           transform: rotate(90deg);
         }
-        button:focus::after {
+        button:active::after {
           content: '';
           position: absolute;
           top: 0;
@@ -58,12 +70,12 @@ export class FabVolumeButton extends LitElement {
           transition-duration: 150ms;
           transition-property: left, clip-path;
           transform: translateY(-50%);
-          clip-path: inset(0 0 0 calc(100% - 30px));
+          clip-path: inset(-24px -24px -24px calc(100% - 30px));
         }
         :host([opened]) #slider-container {
           left: calc(100% - 30px);
           transition-duration: 200ms;
-          clip-path: inset(0 0 0 0);
+          clip-path: inset(-24px);
         }
 
         styled-range-input {
@@ -76,10 +88,19 @@ export class FabVolumeButton extends LitElement {
 
   render() {
     return html`
-      <button @click=${this._toggleOpen} @keydown=${this._handleKeyDown}>
+      <button
+        class="mdc-elevation-transition
+          ${this.opened ? 'mdc-elevation--z12' : 'mdc-elevation--z6'}"
+        @click=${this._toggleOpen}
+        @keydown=${this._handleKeyDown}
+      >
         ${this._getVolumeIcon()}
       </button>
-      <div id="slider-container">
+      <div
+        id="slider-container"
+        class="mdc-elevation-transition
+          ${this.opened ? 'mdc-elevation--z12--r90' : 'mdc-elevation--z0'}"
+      >
         <styled-range-input
           id="input"
           min="0"

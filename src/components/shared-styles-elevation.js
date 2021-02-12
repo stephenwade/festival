@@ -93,6 +93,13 @@ export const elevationZ12 = css`
   }
 `;
 
+export const elevationZ12Rotated90 = css`
+  .mdc-elevation--z12--r90 {
+    box-shadow: -7px 0 8px -4px rgba(0, 0, 0, 0.2),
+      -12px 0 17px 2px rgba(0, 0, 0, 0.14), -5px 0 22px 4px rgba(0, 0, 0, 0.12);
+  }
+`;
+
 export const elevationZ13 = css`
   .mdc-elevation--z13 {
     box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
