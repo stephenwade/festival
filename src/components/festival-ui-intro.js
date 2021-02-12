@@ -1,12 +1,14 @@
 import { LitElement, html, css } from 'lit-element';
 
 import { boxSizingBorderBox, flexColumnCenter } from './shared-styles.js';
+import { elevationZ2 } from './shared-styles-elevation.js';
 
 export class FestivalUiIntro extends LitElement {
   static get styles() {
     return [
       boxSizingBorderBox,
       flexColumnCenter,
+      elevationZ2,
       css`
         :host {
           padding: 0 1em;
@@ -29,22 +31,25 @@ export class FestivalUiIntro extends LitElement {
           text-align: center;
         }
 
-        #buttons a {
+        #buttons span {
           display: inline-block;
           margin: 0 0.2em 0.5em;
+          border-radius: 5px;
+          transform: skew(-10deg);
+        }
+
+        #buttons a {
+          display: inline-block;
           padding: 0.5em 1em;
           border-radius: 5px;
-          background: white;
+          background-color: white;
+          color: var(--background-color);
           font-weight: bold;
           text-decoration: none;
           text-transform: uppercase;
-          transform: skew(-10deg);
-
-          /* stylelint-disable */
-          /* gradient cutout */
-          color: black;
-          mix-blend-mode: screen;
-          /* stylelint-enable */
+        }
+        #buttons a:active {
+          background-color: rgba(255, 255, 255, 0.8);
         }
       `,
     ];
@@ -67,10 +72,14 @@ export class FestivalUiIntro extends LitElement {
         />
       </a>
       <div id="buttons" ?hidden=${!this._logoLoaded}>
-        <a href="#" @click="${this._handleListenClicked}">Listen Live</a>
-        <a href="https://discord.io/festival" target="_blank" rel="noopener">
-          Join Discord
-        </a>
+        <span class="mdc-elevation--z2">
+          <a href="#" @click="${this._handleListenClicked}">Listen Live</a>
+        </span>
+        <span class="mdc-elevation--z2">
+          <a href="https://discord.io/festival" target="_blank" rel="noopener">
+            Join Discord
+          </a>
+        </span>
       </div>
     `;
   }
