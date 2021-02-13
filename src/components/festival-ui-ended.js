@@ -40,7 +40,11 @@ export class FestivalUiEnded extends LitElement {
         target="_blank"
         rel="noopener"
       >
-        <img id="logo" src="images/fe5tival-logo.svg" alt="FE5TIVAL" />
+        <img
+          id="logo"
+          src="images/impulse-logo.png"
+          alt="Impulse Music Festival"
+        />
       </a>
       <a href="https://twitter.com/URLFESTIVAL" target="_blank" rel="noopener">
         <img id="heart" src="images/heart-white.svg" alt="heart" />
