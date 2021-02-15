@@ -1,5 +1,6 @@
 import { expect } from '@open-wc/testing';
 
+import { store } from '../../src/store.js';
 import {
   audioEnded,
   audioPlaying,
@@ -8,39 +9,56 @@ import {
   audioWaiting,
 } from '../../src/actions/audioStatus.js';
 
-describe('audio status action creators', () => {
-  describe('audioEnded', () => {
-    it('creates an action to reset the audio status', () => {
-      const result = audioEnded();
-      expect(result.type).to.equal('RESET_AUDIO_STATUS');
+const getState = () => store.getState().audioStatus;
+const initialState = { ...getState() };
+
+describe('audioStatus', () => {
+  describe('initial state', () => {
+    it('is not waiting', () => {
+      expect(initialState.waiting).to.equal(false);
+    });
+
+    it('is not stalled', () => {
+      expect(initialState.stalled).to.equal(false);
+    });
+
+    it('is not paused', () => {
+      expect(initialState.paused).to.equal(false);
     });
   });
 
-  describe('audioPlaying', () => {
-    it('creates an action to reset the audio status', () => {
-      const result = audioPlaying();
-      expect(result.type).to.equal('RESET_AUDIO_STATUS');
+  describe('audioEnded action creator', () => {
+    it('resets the audio status', () => {
+      store.dispatch(audioEnded());
+      expect(getState()).to.deep.equal(initialState);
     });
   });
 
-  describe('audioPaused', () => {
-    it('creates an action to say that the audio is paused', () => {
-      const result = audioPaused();
-      expect(result.type).to.equal('AUDIO_PAUSED');
+  describe('audioPlaying action creator', () => {
+    it('resets the audio status', () => {
+      store.dispatch(audioPlaying());
+      expect(getState()).to.deep.equal(initialState);
     });
   });
 
-  describe('audioStalled', () => {
-    it('creates an action to say that the audio is stalled', () => {
-      const result = audioStalled();
-      expect(result.type).to.equal('AUDIO_STALLED');
+  describe('audioPaused action creator', () => {
+    it('marks the audio status as paused', () => {
+      store.dispatch(audioPaused());
+      expect(getState().paused).to.equal(true);
     });
   });
 
-  describe('audioWaiting', () => {
-    it('creates an action to say that the audio is waiting', () => {
-      const result = audioWaiting();
-      expect(result.type).to.equal('AUDIO_WAITING');
+  describe('audioStalled action creator', () => {
+    it('marks the audio status as stalled', () => {
+      store.dispatch(audioStalled());
+      expect(getState().stalled).to.equal(true);
+    });
+  });
+
+  describe('audioWaiting action creator', () => {
+    it('marks the audio status as waiting', () => {
+      store.dispatch(audioWaiting());
+      expect(getState().waiting).to.equal(true);
     });
   });
 });
