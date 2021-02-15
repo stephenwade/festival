@@ -26,6 +26,7 @@ const getSettingsFromLocalStorage = () => {
     const settingsString = localStorage.getItem('festival-settings');
     return JSON.parse(settingsString);
   }
+  /* c8 ignore next */
   return undefined;
 };
 const preloadedState = { settings: getSettingsFromLocalStorage() || {} };
