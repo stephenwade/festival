@@ -31,16 +31,31 @@ const getSettingsFromLocalStorage = () => {
 };
 const preloadedState = { settings: getSettingsFromLocalStorage() || {} };
 
+const appReducer = combineReducers({
+  clock: clockReducer,
+  setsData: setsDataReducer,
+  targetShowStatus: targetShowStatusReducer,
+  showStatus: showStatusReducer,
+  audioStatus: audioStatusReducer,
+  ui: uiReducer,
+  settings: settingsReducer,
+});
+
+// https://stackoverflow.com/a/35641992
+const rootReducer = (state, action) => {
+  if (action.type === 'RESET_STORE') {
+    return appReducer(undefined, action);
+  }
+
+  return appReducer(state, action);
+};
+
+export const resetStore = () => ({
+  type: 'RESET_STORE',
+});
+
 export const store = createStore(
-  combineReducers({
-    clock: clockReducer,
-    setsData: setsDataReducer,
-    targetShowStatus: targetShowStatusReducer,
-    showStatus: showStatusReducer,
-    audioStatus: audioStatusReducer,
-    ui: uiReducer,
-    settings: settingsReducer,
-  }),
+  rootReducer,
   preloadedState,
   composeEnhancers(applyMiddleware(thunk))
 );

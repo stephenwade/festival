@@ -1,4 +1,4 @@
-export default (state = {}, action) => {
+export default (state = { errorLoading: false }, action) => {
   switch (action.type) {
     case 'ERROR_LOADING':
       return {

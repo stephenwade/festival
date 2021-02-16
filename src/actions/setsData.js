@@ -3,26 +3,32 @@ import { compose } from 'redux/es/redux.mjs';
 
 import { startTicking, stopTicking } from './targetShowStatus.js';
 
-const addAudioPrefixToSets = (setsData) => {
-  // In production, BUILD_ENV is set to 'production'
-  // This is accomplished by @rollup/plugin-replace in rollup.config.js
-  const BUILD_ENV = '__buildEnv__';
+// In production, BUILD_ENV is set to 'production'
+// This is accomplished by @rollup/plugin-replace in rollup.config.js
+const BUILD_ENV = '__buildEnv__';
 
-  // In development, serve media from ./media/
-  // In production, serve media from Azure
-  const audioPrefix =
-    BUILD_ENV === 'production'
-      ? 'https://sndfli.z13.web.core.windows.net/'
-      : 'media/';
+// In development, serve media from ./media/
+// In production, serve media from Azure
+export const AUDIO_PREFIX =
+  BUILD_ENV === 'production'
+    ? /* c8 ignore next */
+      'https://sndfli.z13.web.core.windows.net/'
+    : 'media/';
 
-  return {
-    ...setsData,
-    sets: setsData.sets.map((set) => ({
-      ...set,
-      audio: audioPrefix + set.audio,
-    })),
-  };
-};
+export const TESTING_ADJUST_TIME_IN_SECONDS = 3;
+
+const addEmptySetsArrayIfNeeded = (setsData) => ({
+  sets: [],
+  ...setsData,
+});
+
+const addAudioPrefixToSets = (setsData) => ({
+  ...setsData,
+  sets: setsData.sets.map((set) => ({
+    ...set,
+    audio: AUDIO_PREFIX + set.audio,
+  })),
+});
 
 const addDatesToSets = (setsData) => ({
   ...setsData,
@@ -56,10 +62,8 @@ const adjustTimesForClientTimeSkew = (setsData) => {
 };
 
 const adjustTimesForTesting = (setsData) => {
-  // adjust all start times so the first set starts 3 seconds
+  // adjust all start times so the first set starts a few seconds
   // after the page is loaded
-
-  const ADJUST_TIME_IN_SECONDS = 3;
 
   if (!setsData.adjustTimesForTesting) return setsData;
 
@@ -75,11 +79,11 @@ const adjustTimesForTesting = (setsData) => {
       ...set,
       startDate: addSeconds(
         addMilliseconds(set.startDate, difference),
-        ADJUST_TIME_IN_SECONDS
+        TESTING_ADJUST_TIME_IN_SECONDS
       ),
       endDate: addSeconds(
         addMilliseconds(set.endDate, difference),
-        ADJUST_TIME_IN_SECONDS
+        TESTING_ADJUST_TIME_IN_SECONDS
       ),
     })),
   };
@@ -91,7 +95,8 @@ const prepareSets = (setsData) => {
     adjustTimesForClientTimeSkew,
     sortSetsByDate,
     addDatesToSets,
-    addAudioPrefixToSets
+    addAudioPrefixToSets,
+    addEmptySetsArrayIfNeeded
   );
   return transform(setsData);
 };
