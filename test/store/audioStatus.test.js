@@ -15,15 +15,15 @@ const initialState = { ...getState() };
 describe('audioStatus', () => {
   describe('initial state', () => {
     it('is not waiting', () => {
-      expect(initialState.waiting).to.equal(false);
+      expect(initialState.waiting).to.be.false;
     });
 
     it('is not stalled', () => {
-      expect(initialState.stalled).to.equal(false);
+      expect(initialState.stalled).to.be.false;
     });
 
     it('is not paused', () => {
-      expect(initialState.paused).to.equal(false);
+      expect(initialState.paused).to.be.false;
     });
   });
 
@@ -44,21 +44,21 @@ describe('audioStatus', () => {
   describe('audioPaused action creator', () => {
     it('marks the audio status as paused', () => {
       store.dispatch(audioPaused());
-      expect(getState().paused).to.equal(true);
+      expect(getState().paused).to.be.true;
     });
   });
 
   describe('audioStalled action creator', () => {
     it('marks the audio status as stalled', () => {
       store.dispatch(audioStalled());
-      expect(getState().stalled).to.equal(true);
+      expect(getState().stalled).to.be.true;
     });
   });
 
   describe('audioWaiting action creator', () => {
     it('marks the audio status as waiting', () => {
       store.dispatch(audioWaiting());
-      expect(getState().waiting).to.equal(true);
+      expect(getState().waiting).to.be.true;
     });
   });
 });
