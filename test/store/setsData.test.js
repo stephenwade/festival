@@ -14,11 +14,10 @@ import { store, resetStore } from '../../src/store.js';
 import {
   AUDIO_PREFIX,
   loadSets,
+  SETS_URL,
   TESTING_ADJUST_TIME_IN_SECONDS,
   updateSetMetadata,
 } from '../../src/actions/setsData.js';
-
-const SETS_URL = '/media/sets.json';
 
 const getState = () => store.getState().setsData;
 const initialState = { ...getState() };

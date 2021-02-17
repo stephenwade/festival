@@ -16,6 +16,7 @@ export const AUDIO_PREFIX =
     : 'media/';
 
 export const TESTING_ADJUST_TIME_IN_SECONDS = 3;
+export const SETS_URL = '/media/sets.json';
 
 const addEmptySetsArrayIfNeeded = (setsData) => ({
   sets: [],
@@ -104,7 +105,7 @@ const prepareSets = (setsData) => {
 let lastDataText = null;
 
 const loadData = async () => {
-  const response = await window.fetch('media/sets.json');
+  const response = await window.fetch(SETS_URL);
 
   if (!response.ok)
     throw new Error(`Response: ${response.status} ${response.statusText}`);
