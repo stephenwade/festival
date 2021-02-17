@@ -1,4 +1,4 @@
-import { expect, waitUntil } from '@open-wc/testing';
+import { expect, aTimeout, waitUntil } from '@open-wc/testing';
 import fetchMock from 'fetch-mock/esm/client.js';
 import {
   addMilliseconds,
@@ -9,7 +9,7 @@ import {
   subSeconds,
 } from 'date-fns';
 
-import { isEmpty, sleep } from '../helpers.js';
+import { isEmpty } from '../helpers.js';
 import { store, resetStore } from '../../src/store.js';
 import {
   AUDIO_PREFIX,
@@ -237,7 +237,7 @@ describe('audioStatus', () => {
       fetchMock.getOnce(SETS_URL, 400);
 
       store.dispatch(loadSets({ ignoreErrors: true }));
-      await sleep(500);
+      await aTimeout(500);
       expect(store.getState().ui.errorLoading, 'error loading').to.be.false;
     });
 
@@ -252,7 +252,7 @@ describe('audioStatus', () => {
       await waitUntil(() => isEmpty(getState()));
 
       store.dispatch(loadSets());
-      await sleep(500);
+      await aTimeout(500);
       expect(getState()).to.deep.equal(initialState);
     });
   });
