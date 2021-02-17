@@ -145,6 +145,26 @@ describe('audioStatus', () => {
           ).to.be.true;
         }
       });
+
+      it('stops and starts the clock', async () => {
+        const getClockState = () => store.getState().clock;
+
+        store.dispatch({ type: 'CLOCK_START_TICKING' });
+        expect(getClockState().ticking).to.be.true;
+
+        let stopped = false;
+        const unsubscribe = store.subscribe(() => {
+          if (!getClockState().ticking) stopped = true;
+        });
+
+        store.dispatch(loadSets());
+        await waitUntil(() => stopped === true, "Clock didn't stop");
+        await waitUntil(
+          () => getClockState().ticking === true,
+          'Clock is not running'
+        );
+        unsubscribe();
+      });
     });
 
     describe('testing mode', () => {
