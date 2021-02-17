@@ -22,7 +22,7 @@ import {
 const getState = () => store.getState().setsData;
 const initialState = { ...getState() };
 
-const getMockData = (adjustTimesForTesting = false) => {
+export const getMockData = (adjustTimesForTesting = false) => {
   const data = {
     sets: [
       {
