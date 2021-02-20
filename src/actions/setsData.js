@@ -2,6 +2,7 @@ import { addMilliseconds, addSeconds, parseISO } from 'date-fns';
 import { compose } from 'redux/es/redux.mjs';
 
 import { startTicking, stopTicking } from './targetShowStatus.js';
+import { errorLoading } from './ui.js';
 
 // In production, BUILD_ENV is set to 'production'
 // This is accomplished by @rollup/plugin-replace in rollup.config.js
@@ -135,7 +136,7 @@ export const loadSets = ({ ignoreErrors = false } = {}) => async (dispatch) => {
   } catch (e) {
     if (ignoreErrors) return;
 
-    dispatch({ type: 'ERROR_LOADING', detail: e.detail });
+    dispatch(errorLoading(e.detail));
     throw e;
   }
 };
