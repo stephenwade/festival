@@ -18,7 +18,8 @@ export default merge(baseConfig, {
       ],
     }),
     replace({
-      __buildEnv__: 'production',
+      values: { __buildEnv__: 'production' },
+      preventAssignment: true,
     }),
   ],
 });
