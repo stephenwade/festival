@@ -5,7 +5,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/stephenwade/festival.git"
+    "url": "https://github.com/stephenwade/festival.git"
   },
   "scripts": {
     "start": "web-dev-server --node-resolve",
