@@ -2,6 +2,7 @@
   "name": "festival",
   "description": "Festival",
   "license": "ISC",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/stephenwade/festival.git"
@@ -24,7 +25,8 @@
     "start:build": "web-dev-server --root-dir dist",
     "deploy:site": "rsync -rltv --delete --exclude goaccess dist/ $FESTIVAL_SITE_DEPLOY_LOCATION",
     "deploy:media": "az storage blob sync --container '$web' --source media --exclude-pattern '*.json' --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\"",
-    "deploy": "npm run deploy:site && npm run deploy:media"
+    "deploy": "npm run deploy:site && npm run deploy:media",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "date-fns": "^2.17.0",
@@ -45,7 +47,7 @@
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^8.0.0",
     "fetch-mock": "^9.11.0",
-    "husky": "^4.3.8",
+    "husky": "^5.1.1",
     "imagemin": "^7.0.1",
     "imagemin-cli": "^6.0.0",
     "imagemin-webp": "^6.0.0",
@@ -59,11 +61,6 @@
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.1.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.{js,html}": [
