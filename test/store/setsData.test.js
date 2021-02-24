@@ -9,7 +9,6 @@ import {
   subSeconds,
 } from 'date-fns';
 
-import { isEmpty } from '../helpers.js';
 import { store, resetStore } from '../../src/store.js';
 import {
   AUDIO_PREFIX,
@@ -61,11 +60,9 @@ describe('audioStatus', () => {
   });
 
   describe('loadSets action creator', () => {
-    afterEach(async () => {
+    afterEach(() => {
       fetchMock.reset();
-
       store.dispatch(resetStore());
-      await waitUntil(() => isEmpty(getState()));
     });
 
     describe('not in testing mode', () => {
@@ -248,7 +245,6 @@ describe('audioStatus', () => {
       await waitUntil(() => Array.isArray(getState().sets));
 
       store.dispatch(resetStore());
-      await waitUntil(() => isEmpty(getState()));
 
       store.dispatch(loadSets());
       await aTimeout(500);
@@ -264,11 +260,10 @@ describe('audioStatus', () => {
       await waitUntil(() => Array.isArray(getState().sets));
     });
 
-    afterEach(async () => {
+    afterEach(() => {
       fetchMock.reset();
 
       store.dispatch(resetStore());
-      await waitUntil(() => isEmpty(getState()));
     });
 
     it('updates the length of the set', async () => {
