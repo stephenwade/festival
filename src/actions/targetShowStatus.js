@@ -1,4 +1,4 @@
-import { isAfter, isBefore } from 'date-fns';
+import { isBefore } from 'date-fns';
 
 const getNextSet = (set, sets) => {
   const setIdx = sets.indexOf(set);
@@ -50,7 +50,7 @@ const getInitialSet = (now, sets) => {
   return null;
 };
 
-export const setInitialTargetShowStatus = () => (dispatch, getState) => {
+export const setTargetShowStatus = () => (dispatch, getState) => {
   const { setsData } = getState();
 
   const now = new Date();
@@ -59,30 +59,21 @@ export const setInitialTargetShowStatus = () => (dispatch, getState) => {
   dispatch(setTargetShowStatusForSet(initialSet, setsData.sets, now));
 };
 
-const setTargetShowStatus = () => (dispatch, getState) => {
-  const { targetShowStatus, setsData } = getState();
-
-  if (targetShowStatus.status === 'ENDED') {
-    // eslint-disable-next-line no-use-before-define
-    dispatch(stopTicking());
-    return;
-  }
-
-  const now = new Date();
-
-  let { set } = targetShowStatus;
-  if (isAfter(now, set.endDate)) set = getNextSet(set, setsData.sets);
-
-  dispatch(setTargetShowStatusForSet(set, setsData.sets, now));
-};
-
-export const tick = () => setTargetShowStatus();
-
 export const startTicking = () => (dispatch) => {
-  dispatch(setInitialTargetShowStatus());
   dispatch({ type: 'CLOCK_START_TICKING' });
+  dispatch(setTargetShowStatus());
 };
 
 export const stopTicking = () => ({
   type: 'CLOCK_STOP_TICKING',
 });
+
+export const tick = () => (dispatch, getState) => {
+  const { targetShowStatus } = getState();
+
+  if (targetShowStatus && targetShowStatus.status === 'ENDED') {
+    dispatch(stopTicking());
+  } else {
+    dispatch(setTargetShowStatus());
+  }
+};
