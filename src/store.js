@@ -50,7 +50,7 @@ const rootReducer = (state, action) => {
   return appReducer(state, action);
 };
 
-export const resetStore = () => ({
+export const resetStoreForTesting = () => ({
   type: 'RESET_STORE',
 });
 

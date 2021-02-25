@@ -2,7 +2,7 @@ import { expect, waitUntil } from '@open-wc/testing';
 import fetchMock from 'fetch-mock/esm/client.js';
 import { addSeconds, formatDistanceToNowStrict, subSeconds } from 'date-fns';
 
-import { store, resetStore } from '../../src/store.js';
+import { store, resetStoreForTesting } from '../../src/store.js';
 import { loadSets, SETS_URL } from '../../src/actions/setsData.js';
 import {
   setTargetShowStatus,
@@ -70,7 +70,7 @@ const loadSetsAtOffset = async (offsetSec) => {
 
 afterEach(() => {
   fetchMock.reset();
-  store.dispatch(resetStore());
+  store.dispatch(resetStoreForTesting());
 });
 
 describe('target show status', () => {

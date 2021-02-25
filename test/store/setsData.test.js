@@ -9,7 +9,7 @@ import {
   subSeconds,
 } from 'date-fns';
 
-import { store, resetStore } from '../../src/store.js';
+import { store, resetStoreForTesting } from '../../src/store.js';
 import {
   AUDIO_PREFIX,
   loadSets,
@@ -62,7 +62,7 @@ describe('audioStatus', () => {
   describe('loadSets action creator', () => {
     afterEach(() => {
       fetchMock.reset();
-      store.dispatch(resetStore());
+      store.dispatch(resetStoreForTesting());
     });
 
     describe('not in testing mode', () => {
@@ -244,7 +244,7 @@ describe('audioStatus', () => {
       store.dispatch(loadSets());
       await waitUntil(() => Array.isArray(getState().sets));
 
-      store.dispatch(resetStore());
+      store.dispatch(resetStoreForTesting());
 
       store.dispatch(loadSets());
       await aTimeout(500);
@@ -263,7 +263,7 @@ describe('audioStatus', () => {
     afterEach(() => {
       fetchMock.reset();
 
-      store.dispatch(resetStore());
+      store.dispatch(resetStoreForTesting());
     });
 
     it('updates the length of the set', async () => {

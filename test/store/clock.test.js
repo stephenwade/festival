@@ -1,7 +1,7 @@
 import { expect, waitUntil } from '@open-wc/testing';
 import fetchMock from 'fetch-mock/esm/client.js';
 
-import { store, resetStore } from '../../src/store.js';
+import { store, resetStoreForTesting } from '../../src/store.js';
 import { loadSets, SETS_URL } from '../../src/actions/setsData.js';
 import { stopTicking } from '../../src/actions/targetShowStatus.js';
 
@@ -30,7 +30,7 @@ describe('clock', () => {
 
     afterEach(() => {
       fetchMock.reset();
-      store.dispatch(resetStore());
+      store.dispatch(resetStoreForTesting());
     });
 
     it('starts ticking', async () => {
