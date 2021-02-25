@@ -6,7 +6,7 @@ import {
 } from 'redux/es/redux.mjs';
 import thunk from 'redux-thunk';
 
-import testLocalStorage from '../lib/modernizr/localstorage.js';
+import testLocalStorageModernizr from '../lib/modernizr/localstorage.js';
 
 import clockReducer from './reducers/clock.js';
 import setsDataReducer from './reducers/setsData.js';
@@ -16,6 +16,10 @@ import audioStatusReducer from './reducers/audioStatus.js';
 import uiReducer from './reducers/ui.js';
 import settingsReducer from './reducers/settings.js';
 
+const testLocalStorage = () => {
+  if (window.DISABLE_LOCAL_STORAGE_FOR_TESTING) return false;
+  return testLocalStorageModernizr();
+};
 const localStorageAvailable = testLocalStorage();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -26,7 +30,6 @@ const getSettingsFromLocalStorage = () => {
     const settingsString = localStorage.getItem('festival-settings');
     return JSON.parse(settingsString);
   }
-  /* c8 ignore next */
   return undefined;
 };
 const preloadedState = { settings: getSettingsFromLocalStorage() || {} };

@@ -8,12 +8,12 @@ const initialState = { ...getState() };
 
 describe('settings', () => {
   describe('initial state', () => {
-    it('volume', () => {
-      expect(initialState.volume).to.equal(100);
+    it('has a volume', () => {
+      expect(initialState).to.have.property('volume');
     });
 
-    it('last unmuted volume', () => {
-      expect(initialState.lastUnmutedVolume).to.equal(100);
+    it('has a last unmuted volume', () => {
+      expect(initialState).to.have.property('lastUnmutedVolume');
     });
   });
 
@@ -32,15 +32,6 @@ describe('settings', () => {
         store.dispatch(setLastUnmutedVolume(v));
         expect(getState().lastUnmutedVolume).to.equal(v);
       });
-    });
-  });
-
-  describe('localStorage', () => {
-    it('stores settings in localStorage', () => {
-      expect(
-        JSON.parse(localStorage.getItem('festival-settings')),
-        'settings from localStorage'
-      ).to.deep.equal(getState());
     });
   });
 });
