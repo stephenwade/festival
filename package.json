@@ -44,7 +44,7 @@
     "@web/dev-server": "^0.1.8",
     "@web/test-runner": "^0.12.15",
     "deepmerge": "^4.2.2",
-    "eslint": "^7.20.0",
+    "eslint": "^7.21.0",
     "eslint-config-prettier": "^8.1.0",
     "fetch-mock": "^9.11.0",
     "husky": "^5.1.1",
