@@ -10,6 +10,7 @@
   "scripts": {
     "start": "web-dev-server",
     "test": "web-test-runner test/**/*.test.js",
+    "test:watch": "web-test-runner test/**/*.test.js --watch",
     "lint:js": "eslint --ext .js,.html . --ignore-path .gitignore",
     "lint:css": "npx stylelint \"**/*.js\" --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:css",
