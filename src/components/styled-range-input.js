@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 
-export class StyledRangeInput extends LitElement {
+class StyledRangeInput extends LitElement {
   static get styles() {
     // Styles are based on Daniel Stern's range.css
     // http://danielstern.ca/range.css/

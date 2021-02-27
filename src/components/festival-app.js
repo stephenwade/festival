@@ -7,7 +7,7 @@ import './festival-clock.js';
 import './festival-audio.js';
 import './festival-ui.js';
 
-export class FestivalApp extends connect(store)(LitElement) {
+class FestivalApp extends connect(store)(LitElement) {
   render() {
     return html`
       <festival-clock></festival-clock>

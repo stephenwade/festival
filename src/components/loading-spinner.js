@@ -3,7 +3,7 @@
 
 import { LitElement, html, css } from 'lit-element';
 
-export class LoadingSpinner extends LitElement {
+class LoadingSpinner extends LitElement {
   static get styles() {
     return css`
       :host {

@@ -13,7 +13,7 @@ import {
   audioWaiting,
 } from '../actions/audioStatus.js';
 
-export class FestivalAudio extends connect(store)(LitElement) {
+class FestivalAudio extends connect(store)(LitElement) {
   render() {
     return html`
       <audio id="audio1" crossorigin="anonymous"></audio>

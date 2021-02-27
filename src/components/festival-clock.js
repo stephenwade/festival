@@ -7,7 +7,7 @@ import {
 import { store } from '../store.js';
 import { tick } from '../actions/targetShowStatus.js';
 
-export class FestivalClock extends connect(store)(HTMLElement) {
+class FestivalClock extends connect(store)(HTMLElement) {
   disconnectedCallback() {
     this._stopTicking();
 

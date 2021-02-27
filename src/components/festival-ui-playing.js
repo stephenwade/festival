@@ -8,7 +8,7 @@ import {
   fullPageClass,
 } from './shared-styles.js';
 
-export class FestivalUiPlaying extends LitElement {
+class FestivalUiPlaying extends LitElement {
   static get styles() {
     return [
       boxSizingBorderBox,

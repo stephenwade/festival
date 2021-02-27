@@ -3,7 +3,7 @@ import { LitElement, html, css } from 'lit-element';
 import { boxSizingBorderBox, flexColumnCenter } from './shared-styles.js';
 import { elevationZ2 } from './shared-styles-elevation.js';
 
-export class FestivalUiIntro extends LitElement {
+class FestivalUiIntro extends LitElement {
   static get styles() {
     return [
       boxSizingBorderBox,

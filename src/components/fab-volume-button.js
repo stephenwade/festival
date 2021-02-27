@@ -11,7 +11,7 @@ import {
 } from './shared-styles-elevation.js';
 import { svgVolumeMute, svgVolumeDown, svgVolumeUp } from './icons.js';
 
-export class FabVolumeButton extends LitElement {
+class FabVolumeButton extends LitElement {
   static get styles() {
     return [
       boxSizingBorderBox,

@@ -14,7 +14,7 @@ import {
 } from './shared-styles.js';
 import { elevationZ8 } from './shared-styles-elevation.js';
 
-export class FestivalUi extends connect(store)(LitElement) {
+class FestivalUi extends connect(store)(LitElement) {
   static get styles() {
     return [
       boxSizingBorderBox,
