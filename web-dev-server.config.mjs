@@ -7,4 +7,5 @@ export default {
 
   port: 8080,
   watch: true,
+  nodeResolve: true,
 };

@@ -8,8 +8,8 @@
     "url": "https://github.com/stephenwade/festival.git"
   },
   "scripts": {
-    "start": "web-dev-server --node-resolve",
-    "test": "web-test-runner test/**/*.test.js --coverage --node-resolve",
+    "start": "web-dev-server",
+    "test": "web-test-runner test/**/*.test.js",
     "lint:js": "eslint --ext .js,.html . --ignore-path .gitignore",
     "lint:css": "npx stylelint \"**/*.js\" --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:css",

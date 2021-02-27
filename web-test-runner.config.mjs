@@ -3,4 +3,6 @@ export default {
     report: true,
     exclude: ['lib/**/*'],
   },
+  coverage: true,
+  nodeResolve: true,
 };
