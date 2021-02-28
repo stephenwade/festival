@@ -3,6 +3,6 @@
   "rangeStrategy": "bump",
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": "every weekend"
+    "schedule": "before 5am on sunday"
   }
 }
