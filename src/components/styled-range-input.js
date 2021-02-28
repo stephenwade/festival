@@ -142,4 +142,4 @@ class StyledRangeInput extends LitElement {
   }
 }
 
-window.customElements.define('styled-range-input', StyledRangeInput);
+customElements.define('styled-range-input', StyledRangeInput);

@@ -36,4 +36,4 @@ class FestivalClock extends connect(store)(HTMLElement) {
   }
 }
 
-window.customElements.define('festival-clock', FestivalClock);
+customElements.define('festival-clock', FestivalClock);

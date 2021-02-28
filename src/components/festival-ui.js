@@ -264,4 +264,4 @@ class FestivalUi extends connect(store)(LitElement) {
   }
 }
 
-window.customElements.define('festival-ui', FestivalUi);
+customElements.define('festival-ui', FestivalUi);

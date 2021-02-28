@@ -39,4 +39,4 @@ class LoadingSpinner extends LitElement {
   }
 }
 
-window.customElements.define('loading-spinner', LoadingSpinner);
+customElements.define('loading-spinner', LoadingSpinner);

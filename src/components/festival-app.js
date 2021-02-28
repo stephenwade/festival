@@ -33,13 +33,13 @@ class FestivalApp extends connect(store)(LitElement) {
     store.dispatch(loadSets());
 
     const minMs = 60 * 1000;
-    this._loadSetsInterval = window.setInterval(() => {
+    this._loadSetsInterval = setInterval(() => {
       store.dispatch(loadSets({ ignoreErrors: true }));
     }, 1 * minMs);
   }
 
   disconnectedCallback() {
-    window.clearInterval(this._loadSetsInterval);
+    clearInterval(this._loadSetsInterval);
 
     super.disconnectedCallback();
   }
@@ -64,4 +64,4 @@ class FestivalApp extends connect(store)(LitElement) {
   }
 }
 
-window.customElements.define('festival-app', FestivalApp);
+customElements.define('festival-app', FestivalApp);

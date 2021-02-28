@@ -53,4 +53,4 @@ class FestivalUiEnded extends LitElement {
   }
 }
 
-window.customElements.define('festival-ui-ended', FestivalUiEnded);
+customElements.define('festival-ui-ended', FestivalUiEnded);

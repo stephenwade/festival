@@ -462,4 +462,4 @@ class FestivalAudio extends connect(store)(LitElement) {
   }
 }
 
-window.customElements.define('festival-audio', FestivalAudio);
+customElements.define('festival-audio', FestivalAudio);

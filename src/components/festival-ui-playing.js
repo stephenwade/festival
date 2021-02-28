@@ -348,7 +348,7 @@ class FestivalUiPlaying extends LitElement {
       }
     }
 
-    window.requestAnimationFrame(this._animate.bind(this));
+    requestAnimationFrame(this._animate.bind(this));
   }
 
   _updateShowProgressLine() {
@@ -371,4 +371,4 @@ class FestivalUiPlaying extends LitElement {
   }
 }
 
-window.customElements.define('festival-ui-playing', FestivalUiPlaying);
+customElements.define('festival-ui-playing', FestivalUiPlaying);

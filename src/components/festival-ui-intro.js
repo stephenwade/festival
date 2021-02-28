@@ -101,4 +101,4 @@ class FestivalUiIntro extends LitElement {
   }
 }
 
-window.customElements.define('festival-ui-intro', FestivalUiIntro);
+customElements.define('festival-ui-intro', FestivalUiIntro);

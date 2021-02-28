@@ -106,7 +106,7 @@ const prepareSets = (setsData) => {
 let lastDataText = null;
 
 const loadData = async () => {
-  const response = await window.fetch(SETS_URL);
+  const response = await fetch(SETS_URL);
 
   if (!response.ok)
     throw new Error(`Response: ${response.status} ${response.statusText}`);

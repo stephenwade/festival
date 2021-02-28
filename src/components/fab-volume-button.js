@@ -230,4 +230,4 @@ class FabVolumeButton extends LitElement {
   }
 }
 
-window.customElements.define('fab-volume-button', FabVolumeButton);
+customElements.define('fab-volume-button', FabVolumeButton);
