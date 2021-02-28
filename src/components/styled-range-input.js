@@ -129,6 +129,8 @@ class StyledRangeInput extends LitElement {
   }
 
   _handleChange(e) {
+    this.value = e.target.value;
+
     e.stopPropagation();
 
     this.dispatchEvent(
