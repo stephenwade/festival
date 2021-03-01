@@ -27,7 +27,7 @@
     "deploy:site": "rsync -rltv --delete --exclude goaccess dist/ $FESTIVAL_SITE_DEPLOY_LOCATION",
     "deploy:media": "az storage blob sync --container '$web' --source media --exclude-pattern '*.json' --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\"",
     "deploy": "npm run deploy:site && npm run deploy:media",
-    "postinstall": "husky install"
+    "prepare": "husky install"
   },
   "dependencies": {
     "date-fns": "^2.17.0",
