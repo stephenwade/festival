@@ -30,7 +30,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "date-fns": "^2.18.0",
+    "date-fns": "^2.19.0",
     "lit-element": "^2.4.0",
     "pwa-helpers": "^0.9.1",
     "redux": "^4.0.5",
