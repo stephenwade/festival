@@ -2,14 +2,14 @@ import { expect, fixture, oneEvent } from '@open-wc/testing';
 
 import '../../src/components/festival-ui-intro.js';
 
-describe('festival-ui-intro', async () => {
+describe('festival-ui-intro', () => {
   const template = '<festival-ui-intro></festival-ui-intro>';
 
   it('contains the logo', async () => {
     const el = await fixture(template);
     const logo = el.shadowRoot.querySelector('#logo');
 
-    expect(el.shadowRoot).to.contain(logo);
+    expect(logo).to.be.an.instanceof(HTMLElement);
     expect(logo).to.have.attribute('alt');
   });
 
@@ -19,7 +19,7 @@ describe('festival-ui-intro', async () => {
       (a) => a.innerText === 'Listen Live'
     );
 
-    expect(el.shadowRoot).to.contain(live);
+    expect(live).to.be.an.instanceof(HTMLElement);
 
     setTimeout(() => live.click());
     await oneEvent(el, 'listen');
@@ -31,7 +31,7 @@ describe('festival-ui-intro', async () => {
       'a[href="https://twitter.com/URLFESTIVAL"]'
     );
 
-    expect(el.shadowRoot).to.contain(link);
+    expect(link).to.be.an.instanceof(HTMLElement);
     expect(link).to.have.attribute('rel', 'noopener');
   });
 
@@ -41,7 +41,7 @@ describe('festival-ui-intro', async () => {
       'a[href="https://discord.io/festival"]'
     );
 
-    expect(el.shadowRoot).to.contain(link);
+    expect(link).to.be.an.instanceof(HTMLElement);
     expect(link).to.have.attribute('rel', 'noopener');
   });
 });
