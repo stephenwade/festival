@@ -67,7 +67,7 @@ class FestivalUiPlaying extends LitElement {
           ? html`<loading-spinner></loading-spinner>`
           : html`${this._computeCurrentTimeText()}`}
       </div>
-      <div id="next-up" ?hidden=${!this.waitingUntilStart}>Next up</div>
+      ${this.waitingUntilStart ? html`<div id="next-up">Next up</div>` : null}
       <div id="artist">
         ${
           /* avoid console errors if `this.set` is undefined */
