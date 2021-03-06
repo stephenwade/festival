@@ -1,3 +1,5 @@
+import { importMapsPlugin } from '@web/dev-server-import-maps';
+
 export default {
   coverageConfig: {
     report: true,
@@ -5,4 +7,5 @@ export default {
   },
   coverage: true,
   nodeResolve: true,
+  plugins: [importMapsPlugin()],
 };
