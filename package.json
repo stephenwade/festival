@@ -42,7 +42,7 @@
     "@open-wc/eslint-config": "^4.2.0",
     "@open-wc/testing": "^2.5.32",
     "@rollup/plugin-replace": "^2.4.1",
-    "@web/dev-server": "^0.1.8",
+    "@web/dev-server": "^0.1.10",
     "@web/test-runner": "^0.12.17",
     "deepmerge": "^4.2.2",
     "eslint": "^7.22.0",
