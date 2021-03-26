@@ -46,7 +46,7 @@
     "@web/dev-server-import-maps": "0.0.5",
     "@web/test-runner": "0.12.17",
     "deepmerge": "4.2.2",
-    "eslint": "7.22.0",
+    "eslint": "7.23.0",
     "eslint-config-prettier": "8.1.0",
     "fetch-mock": "9.11.0",
     "husky": "5.2.0",
