@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <script type="importmap">
+      {
+        "imports": {
+          "../../src/store.js": "./festival-clock/store.js",
+          "../../src/actions/targetShowStatus.js": "./festival-clock/targetShowStatus.js"
+        }
+      }
+    </script>
+
+    <script type="module">
+      import '../../src/components/festival-app.js';
+    </script>
+  </head>
+
+  <body>
+    <script type="module">
+      import { runTests } from '@web/test-runner-mocha';
+      import { expect, aTimeout } from '@open-wc/testing';
+      import {
+        fixture,
+        fixtureCleanup,
+      } from '@open-wc/testing-helpers/index-no-side-effects.js';
+
+      import '../../src/components/festival-clock.js';
+      import { store } from './festival-clock/store.js';
+
+      runTests(() => {
+        describe('festival-clock', () => {
+          const template = '<festival-clock></festival-clock>';
+
+          describe('render', () => {
+            afterEach(() => {
+              fixtureCleanup();
+            });
+
+            it('does not render anything', async () => {
+              const el = await fixture(template);
+              expect(el.shadowRoot).to.be.null;
+            });
+          });
+
+          describe('ticking', () => {
+            afterEach(() => {
+              fixtureCleanup();
+              store.resetTicks();
+            });
+
+            it('when ticking, calls the tick function', async () => {
+              await fixture(template);
+              store.startTicking();
+
+              await aTimeout(1100);
+              expect(store.ticks).to.equal(2);
+
+              store.stopTicking();
+            });
+
+            it('when not ticking, does not call the tick function', async () => {
+              await fixture(template);
+
+              await aTimeout(1100);
+              expect(store.ticks).to.equal(0);
+            }).timeout(2500);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
