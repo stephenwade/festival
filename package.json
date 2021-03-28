@@ -3,20 +3,21 @@
   "description": "Festival",
   "license": "ISC",
   "private": true,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/stephenwade/festival.git"
   },
   "scripts": {
     "start": "web-dev-server",
-    "test": "web-test-runner test/**/*.test.js",
-    "test:watch": "web-test-runner test/**/*.test.js --watch",
-    "lint:js": "eslint --ext .js,.html . --ignore-path .gitignore",
-    "lint:css": "npx stylelint \"**/*.js\" --ignore-path .gitignore",
+    "test": "web-test-runner \"test/**/*.test.js\"",
+    "test:watch": "web-test-runner \"test/**/*.test.js\" --watch",
+    "lint:js": "eslint . --ignore-path .gitignore",
+    "lint:css": "stylelint \"**/*.js\" \"**/*.html\" --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:css",
-    "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
-    "format:stylelint": "npx stylelint \"**/*.js\" \"**/*.html\" --fix --ignore-path .gitignore",
-    "format:prettier": "prettier \"**/*.js\" \"**/*.json\" \"**/*.html\" --write --ignore-path .prettierignore",
+    "format:eslint": "eslint . --fix --ignore-path .gitignore",
+    "format:stylelint": "stylelint \"**/*.js\" \"**/*.html\" --fix --ignore-path .gitignore",
+    "format:prettier": "prettier . --write --ignore-path .prettierignore --loglevel warn",
     "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier",
     "imagemin:png": "imagemin images/*.png --out-dir=images --plugin.webp.quality=100",
     "imagemin:jpg": "imagemin images/*.jpg --out-dir=images --plugin.webp.quality=80",
@@ -65,10 +66,8 @@
     "stylelint-order": "4.1.0"
   },
   "lint-staged": {
-    "*.{js,html}": [
-      "eslint --fix",
-      "stylelint --fix"
-    ],
-    "*.{js,json,html,css,md}": "prettier --write"
+    "*.{js,cjs,html}": "eslint --fix",
+    "*.{js,html}": "stylelint --fix",
+    "*.{js,cjs,json,html,css,md}": "prettier --write"
   }
 }

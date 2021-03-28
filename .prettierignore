@@ -1,6 +1,5 @@
 /node_modules
 /dist
 /lib/modernizr
-/package.json
 /package-lock.json
 /coverage
