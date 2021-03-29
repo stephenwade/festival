@@ -237,7 +237,8 @@ class FestivalUi extends connect(store)(LitElement) {
   }
 
   _hideToast() {
-    this.shadowRoot.getElementById('toast').hide();
+    const toast = this.shadowRoot.getElementById('toast');
+    if (toast) toast.hide();
   }
 
   static _handleVolumeInput(e) {

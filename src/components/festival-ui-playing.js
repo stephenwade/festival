@@ -358,6 +358,9 @@ class FestivalUiPlaying extends LitElement {
   }
 
   _calcProgressPercentage() {
+    // avoid console errors if `this.set` is undefined
+    if (!this.set) return 0;
+
     let currentTime;
     if (this.waitingForNetwork || this.audioPaused) {
       currentTime = this.currentTime;
@@ -365,6 +368,7 @@ class FestivalUiPlaying extends LitElement {
       const delayMs = performance.now() - this._lastUpdateTimestamp;
       currentTime = this.currentTime + delayMs / 1000;
     }
+
     const result = currentTime / this.set.length;
     if (result > 1) return 1;
     return result;

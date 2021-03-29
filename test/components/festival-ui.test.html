@@ -1,0 +1,319 @@
+<html>
+  <head>
+    <script type="importmap">
+      {
+        "imports": {
+          "../../src/store.js": "./festival-ui/store.js"
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <script type="module">
+      import { runTests } from '@web/test-runner-mocha';
+      import {
+        expect,
+        aTimeout,
+        nextFrame,
+        elementUpdated,
+      } from '@open-wc/testing';
+      import {
+        fixture,
+        fixtureCleanup,
+      } from '@open-wc/testing-helpers/index-no-side-effects.js';
+
+      import '../../src/components/festival-ui.js';
+      import { store } from './festival-ui/store.js';
+      import {
+        setVolume,
+        setLastUnmutedVolume,
+      } from '../../src/actions/settings.js';
+
+      runTests(() => {
+        describe('festival-ui', () => {
+          const template = '<festival-ui></festival-ui>';
+
+          describe('waiting for audio context', () => {
+            beforeEach(() => {
+              store.extendShowStatus({ status: 'WAITING_FOR_AUDIO_CONTEXT' });
+            });
+
+            afterEach(() => {
+              fixtureCleanup();
+            });
+
+            it('contains <festival-ui-intro>', async () => {
+              const el = await fixture(template);
+              const intro = el.shadowRoot.querySelector('festival-ui-intro');
+
+              expect(intro).to.be.an.instanceof(HTMLElement);
+            });
+
+            it('does not contain <festival-ui-playing> or <festival-ui-ended>', async () => {
+              const el = await fixture(template);
+              const playing = el.shadowRoot.querySelector(
+                'festival-ui-playing'
+              );
+              const ended = el.shadowRoot.querySelector('festival-ui-ended');
+
+              expect(playing).to.be.null;
+              expect(ended).to.be.null;
+            });
+          });
+
+          describe('waiting until start', () => {
+            beforeEach(() => {
+              store.extendShowStatus({ status: 'WAITING_UNTIL_START' });
+            });
+
+            afterEach(() => {
+              fixtureCleanup();
+            });
+
+            it('contains <festival-ui-playing>', async () => {
+              const el = await fixture(template);
+              const playing = el.shadowRoot.querySelector(
+                'festival-ui-playing'
+              );
+
+              expect(playing).to.be.an.instanceof(HTMLElement);
+            });
+
+            it('does not contain <festival-ui-intro> or <festival-ui-ended>', async () => {
+              const el = await fixture(template);
+              const intro = el.shadowRoot.querySelector('festival-ui-intro');
+              const ended = el.shadowRoot.querySelector('festival-ui-ended');
+
+              expect(intro).to.be.null;
+              expect(ended).to.be.null;
+            });
+
+            it('passes properties to <festival-ui-playing>', async () => {
+              const el = await fixture(template);
+              const playing = el.shadowRoot.querySelector(
+                'festival-ui-playing'
+              );
+
+              const state = store.getState();
+              await elementUpdated(playing);
+
+              expect(playing.waitingUntilStart).to.be.true;
+              expect(playing.waitingForNetwork).to.be.false;
+              expect(playing.set).to.equal(state.showStatus.set);
+              expect(playing.secondsUntilSet).to.equal(
+                state.showStatus.secondsUntilSet
+              );
+              expect(playing.volume).to.equal(state.settings.volume);
+
+              el.getAudioVisualizerData = () => Uint8Array.from(new Array(512));
+              await elementUpdated(playing);
+
+              expect(
+                playing.getAudioVisualizerData,
+                'getAudioVisualizerData'
+              ).to.equal(el.getAudioVisualizerData);
+            });
+          });
+
+          [
+            () => {
+              store.extendShowStatus({ status: 'DELAYING_FOR_INITIAL_SYNC' });
+            },
+            () => {
+              store.extendShowStatus({ status: 'PLAYING' });
+              store.extendAudioStatus({ waiting: true });
+            },
+          ].forEach((beforeFn) => {
+            describe('waiting for network', () => {
+              beforeEach(beforeFn);
+
+              afterEach(() => {
+                fixtureCleanup();
+                store.resetAudioStatus();
+              });
+
+              it('contains <festival-ui-playing>', async () => {
+                const el = await fixture(template);
+                const playing = el.shadowRoot.querySelector(
+                  'festival-ui-playing'
+                );
+
+                expect(playing).to.be.an.instanceof(HTMLElement);
+              });
+
+              it('does not contain <festival-ui-intro> or <festival-ui-ended>', async () => {
+                const el = await fixture(template);
+                const intro = el.shadowRoot.querySelector('festival-ui-intro');
+                const ended = el.shadowRoot.querySelector('festival-ui-ended');
+
+                expect(intro).to.be.null;
+                expect(ended).to.be.null;
+              });
+
+              it('passes properties to <festival-ui-playing>', async () => {
+                const el = await fixture(template);
+                const playing = el.shadowRoot.querySelector(
+                  'festival-ui-playing'
+                );
+
+                const state = store.getState();
+                await elementUpdated(playing);
+
+                expect(playing.waitingUntilStart).to.be.false;
+                expect(playing.waitingForNetwork).to.be.true;
+                expect(playing.set).to.equal(state.showStatus.set);
+                expect(playing.volume).to.equal(state.settings.volume);
+
+                el.getAudioVisualizerData = () =>
+                  Uint8Array.from(new Array(512));
+                await elementUpdated(playing);
+
+                expect(
+                  playing.getAudioVisualizerData,
+                  'getAudioVisualizerData'
+                ).to.equal(el.getAudioVisualizerData);
+              });
+            });
+          });
+
+          describe('playing', () => {
+            beforeEach(() => {
+              store.extendShowStatus({ status: 'PLAYING' });
+            });
+
+            afterEach(() => {
+              fixtureCleanup();
+            });
+
+            it('contains <festival-ui-playing>', async () => {
+              const el = await fixture(template);
+              const playing = el.shadowRoot.querySelector(
+                'festival-ui-playing'
+              );
+
+              expect(playing).to.be.an.instanceof(HTMLElement);
+            });
+
+            it('does not contain <festival-ui-intro> or <festival-ui-ended>', async () => {
+              const el = await fixture(template);
+              const intro = el.shadowRoot.querySelector('festival-ui-intro');
+              const ended = el.shadowRoot.querySelector('festival-ui-ended');
+
+              expect(intro).to.be.null;
+              expect(ended).to.be.null;
+            });
+
+            it('passes properties to <festival-ui-playing>', async () => {
+              const el = await fixture(template);
+              const playing = el.shadowRoot.querySelector(
+                'festival-ui-playing'
+              );
+
+              const state = store.getState();
+              await elementUpdated(playing);
+
+              expect(playing.waitingUntilStart).to.be.false;
+              expect(playing.waitingForNetwork).to.be.false;
+              expect(playing.set).to.equal(state.showStatus.set);
+              expect(playing.currentTime).to.equal(
+                state.showStatus.currentTime
+              );
+              expect(playing.volume).to.equal(state.settings.volume);
+
+              el.getAudioVisualizerData = () => Uint8Array.from(new Array(512));
+              await elementUpdated(playing);
+
+              expect(
+                playing.getAudioVisualizerData,
+                'getAudioVisualizerData'
+              ).to.equal(el.getAudioVisualizerData);
+            });
+
+            it('after 10 seconds, it contains <festival-ui-ended> hidden', async () => {
+              const el = await fixture(template);
+
+              await aTimeout(10100);
+
+              const ended = el.shadowRoot.querySelector('festival-ui-ended');
+
+              expect(ended).to.be.an.instanceof(HTMLElement);
+              expect(ended).to.have.attribute('hidden');
+            }).timeout(11000);
+
+            it('responds to volumeinput event on <festival-ui-playing>', async () => {
+              store.resetActions();
+
+              const el = await fixture(template);
+              const playing = el.shadowRoot.querySelector(
+                'festival-ui-playing'
+              );
+
+              const volumeInputEvent = new CustomEvent('volumeinput', {
+                bubbles: true,
+                composed: true,
+                detail: { volume: 70 },
+              });
+              playing.dispatchEvent(volumeInputEvent);
+
+              await nextFrame();
+
+              expect(store.actions.length, 'count of actions').to.equal(1);
+              expect(store.actions[0]).to.deep.equal(setVolume(70));
+            });
+
+            it('responds to volumechange event on <festival-ui-playing>', async () => {
+              store.resetActions();
+
+              const el = await fixture(template);
+              const playing = el.shadowRoot.querySelector(
+                'festival-ui-playing'
+              );
+
+              const volumeChangeEvent = new CustomEvent('volumechange', {
+                bubbles: true,
+                composed: true,
+                detail: { volume: 60 },
+              });
+              playing.dispatchEvent(volumeChangeEvent);
+
+              await nextFrame();
+
+              expect(store.actions.length, 'count of actions').to.equal(1);
+              expect(store.actions[0]).to.deep.equal(setLastUnmutedVolume(60));
+            });
+          });
+
+          describe('ended', () => {
+            beforeEach(() => {
+              store.extendShowStatus({ status: 'ENDED' });
+            });
+
+            afterEach(() => {
+              fixtureCleanup();
+            });
+
+            it('contains <festival-ui-ended>', async () => {
+              const el = await fixture(template);
+              const ended = el.shadowRoot.querySelector('festival-ui-ended');
+
+              expect(ended).to.be.an.instanceof(HTMLElement);
+              expect(ended).to.not.have.attribute('hidden');
+            });
+
+            it('does not contain <festival-ui-intro> or <festival-ui-playing>', async () => {
+              const el = await fixture(template);
+              const intro = el.shadowRoot.querySelector('festival-ui-intro');
+              const playing = el.shadowRoot.querySelector(
+                'festival-ui-playing'
+              );
+
+              expect(intro).to.be.null;
+              expect(playing).to.be.null;
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
