@@ -51,7 +51,7 @@
     "eslint": "7.23.0",
     "eslint-config-prettier": "8.1.0",
     "fetch-mock": "9.11.0",
-    "husky": "5.2.0",
+    "husky": "6.0.0",
     "imagemin": "7.0.1",
     "imagemin-cli": "6.0.0",
     "imagemin-webp": "6.0.0",
