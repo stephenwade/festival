@@ -98,7 +98,11 @@ class FestivalUi extends connect(store)(LitElement) {
       <toast-sk id="toast" class="mdc-elevation--z8" duration="0">
         <span id="toast-message">${this._toastMessage}</span>
         <button @click="${() => window.location.reload()}">Reload</button>
-        <button @click="${this._hideToast}" ?hidden="${this._error}">
+        <button
+          id="toast-close"
+          @click="${this._hideToast}"
+          ?hidden="${this._error}"
+        >
           Close
         </button>
       </toast-sk>
@@ -130,7 +134,13 @@ class FestivalUi extends connect(store)(LitElement) {
     this._handleKeyDown = this._handleKeyDown.bind(this);
   }
 
-  shouldUpdate() {
+  firstUpdated() {
+    setTimeout(() => {
+      this._stampEnded = true;
+    }, 10 * 1000);
+  }
+
+  updated() {
     if (this._showStatus.delay !== this._lastDelay) this._delayChanged();
     if (this._audioStatus.stalled !== this._lastStalled)
       this._audioStalledChanged();
@@ -138,13 +148,8 @@ class FestivalUi extends connect(store)(LitElement) {
     this._lastDelay = this._showStatus.delay;
     this._lastStalled = this._audioStatus.stalled;
 
-    return true;
-  }
-
-  firstUpdated() {
-    setTimeout(() => {
-      this._stampEnded = true;
-    }, 10 * 1000);
+    if (this._ended) this._hideToast();
+    if (this._errorLoading) this._showLoadingError();
   }
 
   connectedCallback() {
@@ -179,6 +184,7 @@ class FestivalUi extends connect(store)(LitElement) {
   stateChanged(state) {
     this._showStatus = state.showStatus;
     this._audioStatus = state.audioStatus;
+    this._errorLoading = state.ui.errorLoading;
 
     this._waitingForAudioContext =
       this._showStatus.status === 'WAITING_FOR_AUDIO_CONTEXT';
@@ -192,9 +198,6 @@ class FestivalUi extends connect(store)(LitElement) {
     this.requestUpdate();
 
     this._settings = state.settings;
-
-    if (this._ended) this._hideToast();
-    if (state.ui.errorLoading) this._showLoadingError();
   }
 
   showAudioError() {
@@ -237,8 +240,7 @@ class FestivalUi extends connect(store)(LitElement) {
   }
 
   _hideToast() {
-    const toast = this.shadowRoot.getElementById('toast');
-    if (toast) toast.hide();
+    this.shadowRoot.getElementById('toast').hide();
   }
 
   static _handleVolumeInput(e) {

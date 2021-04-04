@@ -68,6 +68,11 @@ export const store = {
     if (_callSubscribers) this._callSubscribers();
   },
 
+  extendSettings(obj) {
+    this._settings = { ...this._settings, ...obj };
+    this._callSubscribers();
+  },
+
   resetSettings(_callSubscribers = true) {
     this._settings = {
       volume: 35,
@@ -75,6 +80,11 @@ export const store = {
     };
 
     if (_callSubscribers) this._callSubscribers();
+  },
+
+  extendUi(obj) {
+    this._ui = { ...this._ui, ...obj };
+    this._callSubscribers();
   },
 
   resetUi(_callSubscribers = true) {

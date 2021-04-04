@@ -312,6 +312,133 @@
               expect(playing).to.be.null;
             });
           });
+
+          describe('toast', () => {
+            afterEach(() => {
+              fixtureCleanup();
+            });
+
+            it('does not appear by default', async () => {
+              const el = await fixture(template);
+              const toast = el.shadowRoot.getElementById('toast');
+
+              expect(toast).to.not.have.attribute('shown');
+            });
+
+            it('appears on loading error', async () => {
+              store.extendUi({ errorLoading: true });
+
+              const el = await fixture(template);
+              const toast = el.shadowRoot.getElementById('toast');
+
+              expect(toast).to.have.attribute('shown');
+              expect(toast.innerText).to.satisfy((text) =>
+                text.startsWith('There was a problem loading the show data.')
+              );
+              expect(toast.innerText).to.not.contain('CLOSE');
+
+              store.resetUi();
+            });
+
+            it('appears on audio error', async () => {
+              store.extendShowStatus({ status: 'PLAYING' });
+
+              const el = await fixture(template);
+              const toast = el.shadowRoot.getElementById('toast');
+
+              el.showAudioError();
+              await elementUpdated(toast);
+
+              expect(toast).to.have.attribute('shown');
+              expect(toast.innerText).to.satisfy((text) =>
+                text.startsWith('There was a problem playing the audio track.')
+              );
+              expect(toast.innerText).to.not.contain('CLOSE');
+
+              store.resetShowStatus();
+            });
+
+            it('appears on audio stalled', async () => {
+              store.extendAudioStatus({ stalled: true });
+
+              const el = await fixture(template);
+              const toast = el.shadowRoot.getElementById('toast');
+
+              expect(toast).to.have.attribute('shown');
+              expect(toast.innerText).to.satisfy((text) =>
+                text.startsWith(
+                  'Looks like your internet connection is having trouble.'
+                )
+              );
+              expect(toast.innerText).to.contain('CLOSE');
+
+              store.resetAudioStatus();
+            });
+
+            it('appears on delay', async () => {
+              store.extendShowStatus({ delay: 30 });
+
+              const el = await fixture(template);
+              const toast = el.shadowRoot.getElementById('toast');
+
+              expect(toast).to.have.attribute('shown');
+              expect(toast.innerText).to.satisfy((text) =>
+                text.startsWith('Looks like your audio player is out of sync.')
+              );
+              expect(toast.innerText).to.contain('CLOSE');
+
+              store.resetShowStatus();
+            });
+
+            it('closes on button click', async () => {
+              store.extendAudioStatus({ stalled: true });
+
+              const el = await fixture(template);
+              const toast = el.shadowRoot.getElementById('toast');
+              const close = el.shadowRoot.getElementById('toast-close');
+
+              expect(toast).to.have.attribute('shown');
+
+              close.click();
+              expect(toast).to.not.have.attribute('shown');
+
+              store.resetAudioStatus();
+            });
+          });
+
+          describe("'m' keydown", () => {
+            beforeEach(() => {
+              store.resetActions();
+            });
+
+            afterEach(() => {
+              fixtureCleanup();
+              store.resetSettings();
+            });
+
+            it('mutes if the volume is positive', async () => {
+              store.extendSettings({ volume: 90 });
+
+              await fixture(template);
+
+              const keydownEvent = new KeyboardEvent('keydown', { key: 'm' });
+              document.dispatchEvent(keydownEvent);
+
+              expect(store.actions[0]).to.deep.equal(setLastUnmutedVolume(90));
+              expect(store.actions[1]).to.deep.equal(setVolume(0));
+            });
+
+            it('unmutes if the volume is 0', async () => {
+              store.extendSettings({ volume: 0, lastUnmutedVolume: 25 });
+
+              await fixture(template);
+
+              const keydownEvent = new KeyboardEvent('keydown', { key: 'm' });
+              document.dispatchEvent(keydownEvent);
+
+              expect(store.actions[0]).to.deep.equal(setVolume(25));
+            });
+          });
         });
       });
     </script>
