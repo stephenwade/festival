@@ -159,7 +159,7 @@
             });
 
             it('loads sets again once per minute', async () => {
-              const timer = useFakeTimers();
+              const timer = useFakeTimers({ shouldAdvanceTime: true });
               const loadSetsTest = (action) => action === loadSets();
 
               await fixture(template);

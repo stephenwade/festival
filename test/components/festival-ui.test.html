@@ -22,6 +22,7 @@
         fixture,
         fixtureCleanup,
       } from '@open-wc/testing-helpers/index-no-side-effects.js';
+      import { useFakeTimers } from 'sinon';
 
       import '../../src/components/festival-ui.js';
       import { store } from './festival-ui/store.js';
@@ -231,15 +232,20 @@
             });
 
             it('after 10 seconds, it contains <festival-ui-ended> hidden', async () => {
+              const timer = useFakeTimers({ shouldAdvanceTime: true });
+
               const el = await fixture(template);
 
-              await aTimeout(10100);
+              timer.tick(10 * 1000);
+              await aTimeout();
 
               const ended = el.shadowRoot.querySelector('festival-ui-ended');
 
               expect(ended).to.be.an.instanceof(HTMLElement);
               expect(ended).to.have.attribute('hidden');
-            }).timeout(11000);
+
+              timer.restore();
+            });
 
             it('responds to volumeinput event on <festival-ui-playing>', async () => {
               store.resetActions();
