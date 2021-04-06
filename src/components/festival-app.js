@@ -13,7 +13,7 @@ class FestivalApp extends connect(store)(LitElement) {
       <festival-clock></festival-clock>
       <festival-audio
         id="audio"
-        @error="${this._handleAudioError}"
+        @audioerror="${this._handleAudioError}"
         @loadedmetadata="${FestivalApp._handleAudioLoadedMetadata}"
         @visualizer-data-available="${this._handleAudioVisualizerDataAvailable}"
       ></festival-audio>

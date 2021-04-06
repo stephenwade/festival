@@ -1,0 +1,182 @@
+<html>
+  <head>
+    <script type="importmap">
+      {
+        "imports": {
+          "../../src/store.js": "./festival-app/store.js",
+          "../../src/actions/setsData.js": "./festival-app/setsData.js"
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <script type="module">
+      import { runTests } from '@web/test-runner-mocha';
+      import { expect } from '@open-wc/testing';
+      import {
+        fixture,
+        fixtureCleanup,
+      } from '@open-wc/testing-helpers/index-no-side-effects.js';
+      import { spy, useFakeTimers } from 'sinon';
+
+      import '../../src/components/festival-app.js';
+      import { store } from './festival-app/store.js';
+      import { loadSets, updateSetMetadata } from './festival-app/setsData.js';
+
+      runTests(() => {
+        describe('festival-app', () => {
+          const template = '<festival-app></festival-app>';
+
+          describe('clock', () => {
+            afterEach(() => {
+              fixtureCleanup();
+            });
+
+            it('contains <festival-clock>', async () => {
+              const el = await fixture(template);
+              const clock = el.shadowRoot.querySelector('festival-clock');
+
+              expect(clock).to.be.an.instanceof(HTMLElement);
+            });
+          });
+
+          describe('audio', () => {
+            afterEach(() => {
+              fixtureCleanup();
+            });
+
+            it('contains <festival-audio>', async () => {
+              const el = await fixture(template);
+              const audio = el.shadowRoot.querySelector('festival-audio');
+
+              expect(audio).to.be.an.instanceof(HTMLElement);
+            });
+
+            it('shows error message on `audioerror` event', async () => {
+              const el = await fixture(template);
+              const audio = el.shadowRoot.querySelector('festival-audio');
+              const ui = el.shadowRoot.querySelector('festival-ui');
+
+              expect(ui.showAudioError).to.be.a('function');
+
+              ui.showAudioError = spy();
+
+              const errorEvent = new CustomEvent('audioerror', {
+                bubbles: true,
+                composed: true,
+              });
+              audio.dispatchEvent(errorEvent);
+
+              expect(ui.showAudioError).to.have.been.called;
+            });
+
+            it('fires an action to update the metadata on `loadedmetadata` event', async () => {
+              const el = await fixture(template);
+              const audio = el.shadowRoot.querySelector('festival-audio');
+
+              const detail = {
+                set: 'test set',
+                duration: 80,
+              };
+              const loadedmetadataEvent = new CustomEvent('loadedmetadata', {
+                bubbles: true,
+                composed: true,
+                detail,
+              });
+              audio.dispatchEvent(loadedmetadataEvent);
+
+              expect(store.lastAction()).to.deep.equal(
+                updateSetMetadata(detail)
+              );
+            });
+
+            it('handles the `visualizer-data-available` event', async () => {
+              const el = await fixture(template);
+              const audio = el.shadowRoot.querySelector('festival-audio');
+              const ui = el.shadowRoot.querySelector('festival-ui');
+
+              const visualizerDataEvent = new CustomEvent(
+                'visualizer-data-available',
+                {
+                  bubbles: true,
+                  composed: true,
+                  detail: {
+                    getAudioVisualizerData: () => 'test data',
+                  },
+                }
+              );
+              audio.dispatchEvent(visualizerDataEvent);
+
+              expect(ui.getAudioVisualizerData()).to.equal('test data');
+            });
+          });
+
+          describe('ui', () => {
+            afterEach(() => {
+              fixtureCleanup();
+            });
+
+            it('contains <festival-ui>', async () => {
+              const el = await fixture(template);
+              const ui = el.shadowRoot.querySelector('festival-ui');
+
+              expect(ui).to.be.an.instanceof(HTMLElement);
+            });
+
+            it('initializes audio when listen button is clicked', async () => {
+              const el = await fixture(template);
+              const ui = el.shadowRoot.querySelector('festival-ui');
+              const audio = el.shadowRoot.querySelector('festival-audio');
+
+              audio.init = spy();
+
+              const listenEvent = new CustomEvent('listen', {
+                bubbles: true,
+                composed: true,
+              });
+              ui.dispatchEvent(listenEvent);
+
+              expect(audio.init).to.have.been.called;
+            });
+          });
+
+          describe('loading sets', () => {
+            beforeEach(() => {
+              store.resetActions();
+            });
+
+            afterEach(() => {
+              fixtureCleanup();
+            });
+
+            it('loads sets immediately', async () => {
+              await fixture(template);
+
+              expect(
+                store.actions.filter((action) => action === loadSets())
+              ).to.have.lengthOf(1);
+            });
+
+            it('loads sets again once per minute', async () => {
+              const timer = useFakeTimers();
+              const loadSetsTest = (action) => action === loadSets();
+
+              await fixture(template);
+
+              expect(store.actions.filter(loadSetsTest)).to.have.lengthOf(1);
+
+              timer.tick(60 * 1000);
+              expect(store.actions.filter(loadSetsTest)).to.have.lengthOf(2);
+
+              timer.tick(5 * 60 * 1000);
+              expect(store.actions.filter(loadSetsTest)).to.have.lengthOf(7);
+
+              timer.restore();
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

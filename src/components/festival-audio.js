@@ -398,7 +398,7 @@ class FestivalAudio extends connect(store)(LitElement) {
 
   _handleAudioError() {
     this.dispatchEvent(
-      new CustomEvent('error', { bubbles: true, composed: true })
+      new CustomEvent('audioerror', { bubbles: true, composed: true })
     );
     this._error = true;
   }
