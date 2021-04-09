@@ -48,7 +48,7 @@
     "@web/test-runner": "0.12.19",
     "@web/test-runner-mocha": "0.7.2",
     "deepmerge": "4.2.2",
-    "eslint": "7.23.0",
+    "eslint": "7.24.0",
     "eslint-config-prettier": "8.1.0",
     "fetch-mock": "9.11.0",
     "husky": "6.0.0",
