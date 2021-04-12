@@ -1,5 +1,7 @@
 import { importMapsPlugin } from '@web/dev-server-import-maps';
 
+import { clickPlugin } from './test/clickPlugin.js';
+
 export default {
   coverageConfig: {
     report: true,
@@ -7,5 +9,5 @@ export default {
   },
   coverage: true,
   nodeResolve: true,
-  plugins: [importMapsPlugin()],
+  plugins: [importMapsPlugin(), clickPlugin()],
 };
