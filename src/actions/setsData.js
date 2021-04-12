@@ -52,6 +52,9 @@ const sortSetsByDate = (setsData) => ({
 const adjustTimesForClientTimeSkew = (setsData) => {
   const clientDate = new Date();
   const { serverDate } = setsData;
+
+  if (!serverDate) return setsData;
+
   const clientTimeSkewMs = clientDate - serverDate;
   return {
     ...setsData,
@@ -91,7 +94,7 @@ const adjustTimesForTesting = (setsData) => {
   };
 };
 
-const prepareSets = (setsData) => {
+export const _prepareSets = (setsData) => {
   const transform = compose(
     adjustTimesForTesting,
     adjustTimesForClientTimeSkew,
@@ -121,7 +124,7 @@ const loadData = async () => {
     serverDate: new Date(response.headers.get('date')),
   };
 
-  return prepareSets(data);
+  return _prepareSets(data);
 };
 
 // https://exploringjs.com/impatient-js/ch_callables.html#simulating-named-parameters

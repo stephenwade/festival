@@ -18,7 +18,17 @@ class FestivalAudio extends connect(store)(LitElement) {
     return html`
       <audio id="audio1" crossorigin="anonymous"></audio>
       <audio id="audio2" crossorigin="anonymous"></audio>
+      ${this.showInitButton
+        ? html`<button @click=${this.init}>Initialize</button>`
+        : null}
     `;
+  }
+
+  static get properties() {
+    return {
+      showInitButton: { type: Boolean },
+      skipAudioContext: { type: Boolean },
+    };
   }
 
   init() {
@@ -27,7 +37,8 @@ class FestivalAudio extends connect(store)(LitElement) {
 
     // skip setting up AudioContext on iOS
     const iOS = /iPad|iPhone|iPod/u.test(navigator.userAgent);
-    if (!iOS) {
+
+    if (!(iOS || this.skipAudioContext)) {
       try {
         this._setupAudioContext();
       } catch (e) {
@@ -99,8 +110,12 @@ class FestivalAudio extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    this._checkTargetShowStatus();
-    if (this._setGain) this._setGain(state.settings.volume / 100);
+    if (!this._audioElements) {
+      setTimeout(() => this.stateChanged(state));
+    } else {
+      this._checkTargetShowStatus();
+      if (this._setGain) this._setGain(state.settings.volume / 100);
+    }
   }
 
   _setupAudioContext() {
@@ -225,14 +240,17 @@ class FestivalAudio extends connect(store)(LitElement) {
     const { showStatus } = store.getState();
 
     const setChanged = change.set !== showStatus.set;
-    const nextSrcAlreadySet = Boolean(this._activeAudio.src);
+    const nextSrcAlreadySet = this._activeAudio.mySrc === change.set.audio;
     const shouldChangeSrc = setChanged && !nextSrcAlreadySet;
 
     let newShowStatus;
 
     switch (change.status) {
       case 'WAITING_UNTIL_START':
-        if (shouldChangeSrc) this._activeAudio.src = change.set.audio;
+        if (shouldChangeSrc) {
+          this._activeAudio.src = change.set.audio;
+          this._activeAudio.mySrc = change.set.audio;
+        }
 
         newShowStatus = {
           set: change.set,
@@ -243,7 +261,10 @@ class FestivalAudio extends connect(store)(LitElement) {
         break;
 
       case 'PLAYING':
-        if (shouldChangeSrc) this._activeAudio.src = change.set.audio;
+        if (shouldChangeSrc) {
+          this._activeAudio.src = change.set.audio;
+          this._activeAudio.mySrc = change.set.audio;
+        }
 
         if (change.currentTime > 0) {
           // delay 2 seconds for audio to load
@@ -309,6 +330,7 @@ class FestivalAudio extends connect(store)(LitElement) {
             set: change.set,
             status: 'PLAYING',
             currentTime: showStatus.delayingUntil,
+            nextSet: change.nextSet,
           };
         }
         break;
@@ -344,6 +366,7 @@ class FestivalAudio extends connect(store)(LitElement) {
 
   _clearAndSwitchActiveAudio() {
     this._activeAudio.removeAttribute('src');
+    delete this._activeAudio.mySrc;
 
     // prettier-ignore
     // swap _activeAudio and _inactiveAudio
@@ -384,14 +407,17 @@ class FestivalAudio extends connect(store)(LitElement) {
       };
       store.dispatch(setShowStatus(newShowStatus));
 
-      const nextSrcAlreadySet = Boolean(this._inactiveAudio.src);
       const nextSetAvailable = Boolean(showStatus.nextSet);
+      const nextSrcAlreadySet =
+        nextSetAvailable &&
+        this._inactiveAudio.mySrc === showStatus.nextSet.audio;
       const lessThanOneMinuteLeft =
         showStatus.set.length - showStatus.currentTime <= 60;
       const shouldPreloadNextSet =
         !nextSrcAlreadySet && nextSetAvailable && lessThanOneMinuteLeft;
       if (shouldPreloadNextSet) {
         this._inactiveAudio.src = showStatus.nextSet.audio;
+        this._inactiveAudio.mySrc = showStatus.nextSet.audio;
       }
     }
   }

@@ -8,6 +8,7 @@ import {
 } from '@open-wc/testing';
 
 import '../../src/components/festival-ui-playing.js';
+import hashCode from './festival-audio/hashCode.js';
 
 describe('festival-ui-playing', () => {
   describe('attributes', () => {
@@ -201,17 +202,6 @@ describe('festival-ui-playing', () => {
         'canvas has some non-blank pixels'
       ).to.be.true;
     });
-
-    // used to compare output of huge arrays without clogging up test output
-    // with object diffs
-    const hashCode = (array) => {
-      let hash = 0;
-      array.forEach((item) => {
-        // eslint-disable-next-line no-bitwise
-        hash = (hash << 5) - hash + item;
-      });
-      return hash;
-    };
 
     describe('reduceMotion false', () => {
       it('canvas looks different with sound and no sound', async () => {
