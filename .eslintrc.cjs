@@ -1,5 +1,9 @@
 module.exports = {
-  extends: ['@open-wc/eslint-config', 'eslint-config-prettier'],
+  extends: [
+    '@open-wc/eslint-config',
+    'eslint-config-prettier',
+    'plugin:lit-a11y/recommended',
+  ],
 
   rules: {
     'require-unicode-regexp': 'error',
