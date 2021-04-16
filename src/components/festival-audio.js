@@ -175,6 +175,7 @@ class FestivalAudio extends connect(store)(LitElement) {
     if (this._error) return;
 
     const { targetShowStatus, showStatus } = store.getState();
+    if (!targetShowStatus) return;
 
     const ended = targetShowStatus && targetShowStatus.status === 'ENDED';
     const waitingForAudioContext =

@@ -131,6 +131,7 @@ describe('festival-audio', () => {
         await fixture(template);
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
+        await aTimeout(100);
 
         const { showStatus } = store.getState();
         expect(showStatus.status).to.equal('WAITING_UNTIL_START');
@@ -154,19 +155,19 @@ describe('festival-audio', () => {
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         const audio = el._activeAudio;
 
-        await aTimeout(300);
+        await aTimeout(400);
         expectAudioIsNotPlaying(audio, '2 seconds before the show');
-        await aTimeout(700);
+        await aTimeout(600);
 
         store.dispatch(tick());
-        await aTimeout(300);
+        await aTimeout(400);
         expectAudioIsNotPlaying(audio, '1 second before the show');
-        await aTimeout(700);
+        await aTimeout(600);
 
         store.dispatch(tick());
-        await aTimeout(300);
+        await aTimeout(400);
         expectAudioIsPlaying(audio, 'during the show');
-        expectNumbersAreAlmostEqual(audio.currentTime, 0.3);
+        expectNumbersAreAlmostEqual(audio.currentTime, 0.4);
       }).timeout(3000);
 
       it('fires loadedmetadata event with set and duration', async () => {
@@ -188,7 +189,7 @@ describe('festival-audio', () => {
 
         store.dispatch(loadSets({ alternate: true }));
         store.dispatch(tick());
-        await nextFrame();
+        await aTimeout(100);
 
         const audio = el._activeAudio;
         expect(audio.src).to.satisfy((src) => src.endsWith('?3'));
@@ -210,17 +211,17 @@ describe('festival-audio', () => {
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         const audio = el._activeAudio;
 
-        await aTimeout(300);
+        await aTimeout(400);
         expectAudioIsNotPlaying(audio, 'beginning of delay');
-        await aTimeout(700);
+        await aTimeout(600);
 
         store.dispatch(tick());
-        await aTimeout(300);
+        await aTimeout(400);
         expectAudioIsNotPlaying(audio, '1 second into delay');
-        await aTimeout(700);
+        await aTimeout(600);
 
         store.dispatch(tick());
-        await aTimeout(300);
+        await aTimeout(400);
         expectAudioIsPlaying(audio, 'after delay');
         expectNumbersAreAlmostEqual(audio.currentTime, 7.3);
       }).timeout(3000);
@@ -234,23 +235,23 @@ describe('festival-audio', () => {
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         const nextAudio = el._inactiveAudio;
 
-        await aTimeout(300);
+        await aTimeout(400);
         expect(
           nextAudio,
           '62 seconds before the end of the first set'
         ).to.not.have.attribute('src');
-        await aTimeout(700);
+        await aTimeout(600);
 
         store.dispatch(tick());
-        await aTimeout(300);
+        await aTimeout(400);
         expect(
           nextAudio,
           '61 seconds before the end of the first set'
         ).to.not.have.attribute('src');
-        await aTimeout(700);
+        await aTimeout(600);
 
         store.dispatch(tick());
-        await aTimeout(300);
+        await aTimeout(400);
         expect(
           nextAudio,
           '60 seconds before the end of the first set'
@@ -272,15 +273,15 @@ describe('festival-audio', () => {
         store.dispatch(loadSets({ alternate: true }));
         store.dispatch(tick());
 
-        await aTimeout(300);
+        await aTimeout(400);
         expect(
           audio.src,
           '2 seconds before the end of the first set'
         ).to.satisfy((src) => src.replace(/#t=.*/u, '').endsWith('?1'));
-        await aTimeout(700);
+        await aTimeout(600);
 
         store.dispatch(tick());
-        await aTimeout(300);
+        await aTimeout(400);
         expect(
           audio.src,
           '1 second before the end of the first set'
@@ -309,7 +310,7 @@ describe('festival-audio', () => {
         const el = await fixture(template);
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
-        await nextFrame();
+        await aTimeout(100);
 
         expect(el).to.have.property('_audioContext');
         expect(el._audioContext.state).to.equal('running');
@@ -347,6 +348,7 @@ describe('festival-audio', () => {
         const el = await fixture(template);
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
+        await nextFrame();
 
         expect(el).to.not.have.property('_audioContext');
       });
