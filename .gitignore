@@ -2,12 +2,12 @@
 .DS_Store
 
 # npm
-/node_modules/
-/npm-debug.log
+node_modules/
+npm-debug.log
 
 # testing
-/coverage/
+coverage/
 
 # build
-/dist/
-/media/
+dist/
+media/
