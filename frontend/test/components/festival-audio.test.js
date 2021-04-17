@@ -168,7 +168,7 @@ describe('festival-audio', () => {
         await aTimeout(400);
         expectAudioIsPlaying(audio, 'during the show');
         expectNumbersAreAlmostEqual(audio.currentTime, 0.4);
-      }).timeout(3000);
+      }).timeout(4000);
 
       it('fires loadedmetadata event with set and duration', async () => {
         const el = await fixture(template);
@@ -223,8 +223,8 @@ describe('festival-audio', () => {
         store.dispatch(tick());
         await aTimeout(400);
         expectAudioIsPlaying(audio, 'after delay');
-        expectNumbersAreAlmostEqual(audio.currentTime, 7.3);
-      }).timeout(3000);
+        expectNumbersAreAlmostEqual(audio.currentTime, 7.4);
+      }).timeout(4000);
 
       it('preloads the next set 60 seconds before the end of the first set', async () => {
         store.dispatch(loadSets({ addSeconds: -AUDIO_FILE_LENGTH + 62 }));
@@ -257,10 +257,10 @@ describe('festival-audio', () => {
           '60 seconds before the end of the first set'
         ).to.have.attribute('src');
         expect(nextAudio.src).to.satisfy((src) => src.endsWith('?2'));
-      }).timeout(3000);
+      }).timeout(4000);
 
       it('does not update src if set info is changed', async () => {
-        store.dispatch(loadSets({ addSeconds: -AUDIO_FILE_LENGTH + 2 }));
+        store.dispatch(loadSets({ addSeconds: -AUDIO_FILE_LENGTH + 10 }));
         store.dispatch(tick());
 
         const el = await fixture(template);
@@ -268,7 +268,7 @@ describe('festival-audio', () => {
         await nextFrame();
 
         executeServerCommand('click', 'festival-audio'); // calls el.init()
-        await aTimeout(100);
+        await aTimeout(500);
 
         store.dispatch(loadSets({ alternate: true }));
         store.dispatch(tick());
@@ -276,7 +276,7 @@ describe('festival-audio', () => {
         await aTimeout(400);
         expect(
           audio.src,
-          '2 seconds before the end of the first set'
+          '10 seconds before the end of the first set'
         ).to.satisfy((src) => src.replace(/#t=.*/u, '').endsWith('?1'));
         await aTimeout(600);
 
@@ -284,9 +284,9 @@ describe('festival-audio', () => {
         await aTimeout(400);
         expect(
           audio.src,
-          '1 second before the end of the first set'
+          '9 seconds before the end of the first set'
         ).to.satisfy((src) => src.replace(/#t=.*/u, '').endsWith('?1'));
-      }).timeout(3000);
+      }).timeout(4000);
     });
   };
 
