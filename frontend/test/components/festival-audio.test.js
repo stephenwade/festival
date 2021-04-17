@@ -251,13 +251,15 @@ describe('festival-audio', () => {
         await aTimeout(600);
 
         store.dispatch(tick());
+        await aTimeout(1000);
+        store.dispatch(tick());
         await aTimeout(400);
         expect(
           nextAudio,
-          '60 seconds before the end of the first set'
+          '59 seconds before the end of the first set'
         ).to.have.attribute('src');
         expect(nextAudio.src).to.satisfy((src) => src.endsWith('?2'));
-      }).timeout(4000);
+      }).timeout(5000);
 
       it('does not update src if set info is changed', async () => {
         store.dispatch(loadSets({ addSeconds: -AUDIO_FILE_LENGTH + 10 }));
