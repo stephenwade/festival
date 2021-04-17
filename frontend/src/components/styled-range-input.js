@@ -71,6 +71,7 @@ class StyledRangeInput extends LitElement {
       min=${this.min}
       max=${this.max}
       step=${this.step}
+      aria-label=${this['aria-label']}
       .value=${this.value}
       tabindex=${this._getTabIndex()}
       @input=${this._handleInput}
@@ -85,6 +86,7 @@ class StyledRangeInput extends LitElement {
       max: { type: Number },
       step: { type: Number },
       value: { type: Number, reflect: true },
+      'aria-label': { type: String },
     };
   }
 

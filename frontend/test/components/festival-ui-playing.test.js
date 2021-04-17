@@ -252,5 +252,10 @@ describe('festival-ui-playing', () => {
         expect(hashCode(imageDataSound)).to.equal(hashCode(imageDataNoSound));
       });
     });
+
+    it('is accessible', async () => {
+      const el = await fixture(template);
+      await expect(el).to.be.accessible();
+    });
   });
 });

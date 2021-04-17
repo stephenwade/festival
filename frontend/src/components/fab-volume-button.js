@@ -91,6 +91,7 @@ class FabVolumeButton extends LitElement {
       <button
         class="mdc-elevation-transition
           ${this.opened ? 'mdc-elevation--z12' : 'mdc-elevation--z6'}"
+        aria-label="Volume"
         @click=${this._toggleOpen}
         @keydown=${this._handleKeyDown}
       >
@@ -107,6 +108,7 @@ class FabVolumeButton extends LitElement {
           max="100"
           .value=${this.volume}
           step="5"
+          aria-label="Volume"
           ?disabled=${!this.opened}
           @input=${this._handleInput}
           @change=${this._handleChange}
