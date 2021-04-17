@@ -1,7 +1,32 @@
 {
-  "extends": ["config:base"],
+  "extends": [
+    "config:base",
+    ":separateMultipleMajorReleases",
+    ":separatePatchReleases"
+  ],
+
+  "packageRules": [
+    {
+      "updateTypes": ["patch"],
+
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "updateTypes": ["minor"],
+      "matchCurrentVersion": "!/^[~^]?0/",
+
+      "automerge": true,
+      "automergeType": "branch"
+    }
+  ],
+
+  "rangeStrategy": "bump",
+
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": "before 5am on sunday"
+    "schedule": "before 5am on friday",
+    "automerge": true,
+    "automergeType": "branch"
   }
 }
