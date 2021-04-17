@@ -18,7 +18,9 @@ export default merge(baseConfig, {
       ],
     }),
     replace({
-      values: { __buildEnv__: 'production' },
+      values: {
+        __buildEnv__: process.env.E2E === 'yes' ? 'e2e' : 'production',
+      },
       preventAssignment: true,
     }),
   ],

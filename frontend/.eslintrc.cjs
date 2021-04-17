@@ -10,13 +10,11 @@ module.exports = {
     'no-undef': ['error', { typeof: true }],
   },
 
-  // TODO: remove when https://github.com/open-wc/open-wc/pull/2107 is merged
   overrides: [
     {
       files: [
-        '**/test/**/*.{html,js,mjs,ts}',
-        '**/demo/**/*.{html,js,mjs,ts}',
-        '**/stories/**/*.{html,js,mjs,ts}',
+        '**/test/**/*.{html,js,mjs,cjs}',
+        '**/demo/**/*.{html,js,mjs,cjs}',
       ],
       rules: {
         'no-console': 'off',
