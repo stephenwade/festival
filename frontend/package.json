@@ -41,7 +41,7 @@
     "standardized-audio-context": "25.1.15"
   },
   "devDependencies": {
-    "@open-wc/building-rollup": "1.9.4",
+    "@open-wc/building-rollup": "1.10.0",
     "@open-wc/eslint-config": "4.2.0",
     "@open-wc/testing": "2.5.32",
     "@playwright/test": "0.1101.0",
