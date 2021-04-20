@@ -50,7 +50,7 @@
     "@web/dev-server-import-maps": "0.0.5",
     "@web/test-runner": "0.12.20",
     "@web/test-runner-mocha": "0.7.2",
-    "@web/test-runner-playwright": "0.8.4",
+    "@web/test-runner-playwright": "0.8.5",
     "concurrently": "6.0.2",
     "deepmerge": "4.2.2",
     "eslint": "7.24.0",
