@@ -183,13 +183,12 @@ describe('festival-audio', () => {
       it('updates src immediately if set info is changed', async () => {
         const el = await fixture(template);
         await nextFrame();
-
         executeServerCommand('click', 'festival-audio'); // calls el.init()
-        await aTimeout(100);
+        await aTimeout(200);
 
         store.dispatch(loadSets({ alternate: true }));
         store.dispatch(tick());
-        await aTimeout(100);
+        await aTimeout(200);
 
         const audio = el._activeAudio;
         expect(audio.src).to.satisfy((src) => src.endsWith('?3'));

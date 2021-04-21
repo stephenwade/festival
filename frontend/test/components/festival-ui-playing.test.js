@@ -210,14 +210,14 @@ describe('festival-ui-playing', () => {
 
         el.getAudioVisualizerData = () =>
           Uint8Array.from(new Array(512).fill(100));
-        await aTimeout(100);
+        await aTimeout(200);
         const imageDataSound = canvas
           .getContext('2d')
           .getImageData(0, 0, canvas.width, canvas.height).data;
 
         el.getAudioVisualizerData = () =>
           Uint8Array.from(new Array(512).fill(0));
-        await aTimeout(100);
+        await aTimeout(200);
         const imageDataNoSound = canvas
           .getContext('2d')
           .getImageData(0, 0, canvas.width, canvas.height).data;
@@ -237,14 +237,14 @@ describe('festival-ui-playing', () => {
 
         el.getAudioVisualizerData = () =>
           Uint8Array.from(new Array(512).fill(100));
-        await aTimeout(100);
+        await aTimeout(200);
         const imageDataSound = canvas
           .getContext('2d')
           .getImageData(0, 0, canvas.width, canvas.height).data;
 
         el.getAudioVisualizerData = () =>
           Uint8Array.from(new Array(512).fill(0));
-        await aTimeout(100);
+        await aTimeout(200);
         const imageDataNoSound = canvas
           .getContext('2d')
           .getImageData(0, 0, canvas.width, canvas.height).data;
