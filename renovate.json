@@ -8,16 +8,12 @@
   "packageRules": [
     {
       "updateTypes": ["patch"],
-
-      "automerge": true,
-      "automergeType": "branch"
+      "automerge": true
     },
     {
       "updateTypes": ["minor"],
       "matchCurrentVersion": "!/^[~^]?0/",
-
-      "automerge": true,
-      "automergeType": "branch"
+      "automerge": true
     }
   ],
 
