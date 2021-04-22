@@ -58,7 +58,7 @@
     "eslint-plugin-lit-a11y": "1.0.1",
     "fetch-mock": "9.11.0",
     "husky": "6.0.0",
-    "imagemin": "7.0.1",
+    "imagemin": "8.0.0",
     "imagemin-cli": "6.0.0",
     "imagemin-webp": "6.0.0",
     "koa-range": "0.3.0",
