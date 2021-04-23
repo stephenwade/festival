@@ -53,7 +53,7 @@
     "@web/test-runner-playwright": "0.8.5",
     "concurrently": "6.0.2",
     "deepmerge": "4.2.2",
-    "eslint": "7.24.0",
+    "eslint": "7.25.0",
     "eslint-config-prettier": "8.2.0",
     "eslint-plugin-lit-a11y": "1.0.1",
     "fetch-mock": "9.11.0",
