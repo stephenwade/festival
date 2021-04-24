@@ -54,7 +54,7 @@
     "concurrently": "6.0.2",
     "deepmerge": "4.2.2",
     "eslint": "7.25.0",
-    "eslint-config-prettier": "8.2.0",
+    "eslint-config-prettier": "8.3.0",
     "eslint-plugin-lit-a11y": "1.0.1",
     "fetch-mock": "9.11.0",
     "husky": "6.0.0",
