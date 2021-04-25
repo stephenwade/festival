@@ -1,16 +1,7 @@
-const {
-  ChromiumEnv,
-  FirefoxEnv,
-  test,
-  setConfig,
-} = require('@playwright/test');
+const { folio } = require('@playwright/test');
 
-setConfig({
-  testDir: __dirname,
-  testMatch: /spec.cjs/iu,
+folio.config = {
   timeout: 15 * 1000,
-});
+};
 
-// Run tests in three browsers.
-test.runWith(new ChromiumEnv(), { tag: 'chromium' });
-test.runWith(new FirefoxEnv(), { tag: 'firefox' });
+module.exports.test = folio.test;

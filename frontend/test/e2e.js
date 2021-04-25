@@ -31,18 +31,26 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
   await fs.copyFile(TEST_MEDIA_PATH_FROM, TEST_MEDIA_PATH_TO);
 
   console.log('Testing...');
+  let failed = false;
   try {
     await concurrently(
       [
         // from playwright-test
-        'folio --config=test/e2e/config.cjs',
+        'npx folio test/e2e/e2e.spec.cjs --param browserName=chromium --param browserName=firefox',
 
         'npm run start:build',
       ],
       { killOthers: ['failure', 'success'] }
     );
-  } catch {
-    // ignore failure
+  } catch (e) {
+    if (
+      e.some(
+        ({ command, exitCode }) =>
+          command.command.includes('folio') && exitCode !== 0
+      )
+    ) {
+      failed = true;
+    }
   }
 
   console.log('Cleaning up...');
@@ -52,5 +60,9 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
   if (setsExist) {
     console.log(`Restoring original ${SETS_PATH}...`);
     await fs.rename(`${SETS_PATH}.temp`, SETS_PATH);
+  }
+
+  if (failed) {
+    process.exit(1);
   }
 })();
