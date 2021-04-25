@@ -241,7 +241,8 @@ class FestivalAudio extends connect(store)(LitElement) {
     const { showStatus } = store.getState();
 
     const setChanged = change.set !== showStatus.set;
-    const nextSrcAlreadySet = this._activeAudio.mySrc === change.set.audio;
+    const nextSrcAlreadySet =
+      this._activeAudio.mySrc === (change.set ? change.set.audio : null);
     const shouldChangeSrc = setChanged && !nextSrcAlreadySet;
 
     let newShowStatus;
