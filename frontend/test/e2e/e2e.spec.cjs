@@ -1,5 +1,5 @@
-const { test } = require('@playwright/test');
 const { expect } = require('chai');
+const { test } = require('./config.cjs');
 
 test('e2e', async ({ page }) => {
   await page.goto('http://localhost:8080/');
