@@ -2,9 +2,9 @@ name: Lint frontend
 
 on:
   push:
-    branches-ignore:
-      - 'renovate/*'
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
 
 jobs:
   lint:

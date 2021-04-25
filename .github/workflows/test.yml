@@ -2,9 +2,9 @@ name: Test frontend
 
 on:
   push:
-    branches-ignore:
-      - 'renovate/*'
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
 
 jobs:
   wtr:
