@@ -16,7 +16,11 @@ const AUDIO_FILE_URL = '../test/components/festival-audio/90-sec-silence.mp3';
 const AUDIO_FILE_LENGTH = 90;
 
 describe('festival-audio', () => {
-  const loadSets = ({ addSeconds = 5, alternate = false } = {}) => {
+  const loadSets = ({
+    addSeconds = 5,
+    alternate = false,
+    empty = false,
+  } = {}) => {
     const now = new Date();
 
     const data = {
@@ -38,7 +42,7 @@ describe('festival-audio', () => {
 
     return {
       type: 'LOAD_SETS_DATA',
-      data: prepareSets(data),
+      data: prepareSets(empty ? {} : data),
     };
   };
 
@@ -288,6 +292,46 @@ describe('festival-audio', () => {
           '9 seconds before the end of the first set'
         ).to.satisfy((src) => src.replace(/#t=.*/u, '').endsWith('?1'));
       }).timeout(4000);
+    });
+
+    describe('after the show', () => {
+      afterEach(() => {
+        fixtureCleanup();
+        store.dispatch(resetStoreForTesting());
+      });
+
+      it('sets the show status', async () => {
+        store.dispatch(loadSets({ addSeconds: -AUDIO_FILE_LENGTH * 3 }));
+        store.dispatch(tick());
+
+        await fixture(template);
+        await nextFrame();
+        await executeServerCommand('click', 'festival-audio'); // calls el.init()
+        await aTimeout(100);
+
+        const { showStatus } = store.getState();
+        expect(showStatus.status).to.equal('ENDED');
+      });
+    });
+
+    describe('empty show', () => {
+      afterEach(() => {
+        fixtureCleanup();
+        store.dispatch(resetStoreForTesting());
+      });
+
+      it('sets the show status to ENDED', async () => {
+        store.dispatch(loadSets({ empty: true }));
+        store.dispatch(tick());
+
+        await fixture(template);
+        await nextFrame();
+        await executeServerCommand('click', 'festival-audio'); // calls el.init()
+        await aTimeout(100);
+
+        const { showStatus } = store.getState();
+        expect(showStatus.status).to.equal('ENDED');
+      });
     });
   };
 
