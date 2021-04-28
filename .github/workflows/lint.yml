@@ -1,20 +1,16 @@
-name: Lint frontend
+name: Lint
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   lint:
     name: Lint
 
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: frontend
 
     steps:
       - uses: actions/checkout@v2
@@ -29,6 +25,7 @@ jobs:
       - run: npm run lint
 
       - run: npm run imagemin
+        working-directory: frontend
 
       - name: Check working directory
         run: |

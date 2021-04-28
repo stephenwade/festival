@@ -1,0 +1,41 @@
+{
+  "name": "festival-root",
+  "description": "Festival root package",
+  "license": "ISC",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephenwade/festival.git"
+  },
+  "scripts": {
+    "lint:js": "eslint . --ignore-path .gitignore",
+    "lint:css": "stylelint \"**/*.js\" \"**/*.html\" --ignore-path .gitignore",
+    "lint": "npm run lint:js && npm run lint:css",
+    "format:eslint": "eslint . --fix --ignore-path .gitignore",
+    "format:stylelint": "stylelint \"**/*.js\" \"**/*.html\" --fix --ignore-path .gitignore",
+    "format:prettier": "prettier . --write --ignore-path .prettierignore --loglevel warn",
+    "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier",
+    "prepare:frontend": "cd frontend && npm ci",
+    "prepare:backend": "cd backend && npm ci",
+    "prepare": "npm run prepare:frontend && npm run prepare:backend && husky install"
+  },
+  "devDependencies": {
+    "@open-wc/eslint-config": "^4.3.0",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "6.0.0",
+    "lint-staged": "10.5.4",
+    "prettier": "2.2.1",
+    "stylelint": "13.13.0",
+    "stylelint-config-hudochenkov": "5.0.0",
+    "stylelint-config-prettier": "8.0.2",
+    "stylelint-config-standard": "22.0.0",
+    "stylelint-order": "4.1.0"
+  },
+  "lint-staged": {
+    "*.{js,cjs,html}": "eslint --fix",
+    "*.{js,html}": "stylelint --fix",
+    "*.{js,cjs,json,html,css,md,yml}": "prettier --write"
+  }
+}

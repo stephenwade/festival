@@ -1,9 +1,5 @@
 module.exports = {
-  extends: [
-    '@open-wc/eslint-config',
-    'eslint-config-prettier',
-    'plugin:lit-a11y/recommended',
-  ],
+  extends: ['@open-wc/eslint-config', 'prettier'],
 
   rules: {
     'require-unicode-regexp': 'error',
@@ -12,10 +8,13 @@ module.exports = {
 
   overrides: [
     {
-      files: [
-        '**/test/**/*.{html,js,mjs,cjs}',
-        '**/demo/**/*.{html,js,mjs,cjs}',
-      ],
+      files: ['backend/**/*.js'],
+      rules: {
+        'no-console': 'off',
+      },
+    },
+    {
+      files: ['**/test/**/*.{js,html}'],
       rules: {
         'no-console': 'off',
         'no-unused-expressions': 'off',
