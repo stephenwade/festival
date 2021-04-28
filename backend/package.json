@@ -1,0 +1,23 @@
+{
+  "name": "festival-backend",
+  "description": "Festival backend",
+  "license": "ISC",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephenwade/festival.git"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "lint": "cd .. && npm run lint",
+    "format": "cd .. && npm run format",
+    "test": "echo \"No tests yet\" && exit 1"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@koa/router": "^10.0.0",
+    "koa": "^2.13.1",
+    "koa-send": "^5.0.1"
+  }
+}
