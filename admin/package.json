@@ -1,6 +1,6 @@
 {
-  "name": "festival-backend",
-  "description": "Festival backend",
+  "name": "festival-admin",
+  "description": "Festival admin",
   "license": "ISC",
   "private": true,
   "type": "module",
@@ -9,15 +9,20 @@
     "url": "https://github.com/stephenwade/festival.git"
   },
   "scripts": {
+    "prestart": "npm run build",
     "start": "node index.js",
     "lint": "cd .. && npm run lint",
     "format": "cd .. && npm run format",
-    "test": "echo \"No tests yet\" && exit 1"
+    "test": "echo \"No tests yet\" && exit 1",
+    "build": "cd ui && rollup -c rollup.config.js"
   },
-  "devDependencies": {},
   "dependencies": {
     "@koa/router": "^10.0.0",
+    "@open-wc/building-rollup": "^1.10.0",
+    "deepmerge": "^4.2.2",
     "koa": "^2.13.1",
-    "koa-send": "^5.0.1"
+    "koa-send": "^5.0.1",
+    "koa-static": "^5.0.0",
+    "rollup": "^2.46.0"
   }
 }
