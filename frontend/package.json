@@ -39,7 +39,7 @@
     "@open-wc/testing": "2.5.33",
     "@playwright/test": "0.1102.0",
     "@rollup/plugin-replace": "2.4.2",
-    "@web/dev-server": "0.1.16",
+    "@web/dev-server": "0.1.17",
     "@web/dev-server-import-maps": "0.0.5",
     "@web/test-runner": "0.13.2",
     "@web/test-runner-mocha": "0.7.2",
