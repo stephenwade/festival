@@ -11,18 +11,28 @@
   "scripts": {
     "prestart": "npm run build",
     "start": "node index.js",
+    "start:dev": "nodemon --exec \"npm run start\"",
     "lint": "cd .. && npm run lint",
     "format": "cd .. && npm run format",
     "test": "echo \"No tests yet\" && exit 1",
+    "clean": "rm -rf ui/dist",
+    "prebuild": "npm run clean",
     "build": "cd ui && rollup -c rollup.config.js"
   },
   "dependencies": {
-    "@koa/router": "^10.0.0",
-    "@open-wc/building-rollup": "^1.10.0",
-    "deepmerge": "^4.2.2",
-    "koa": "^2.13.1",
-    "koa-send": "^5.0.1",
-    "koa-static": "^5.0.0",
-    "rollup": "^2.46.0"
+    "@koa/router": "10.0.0",
+    "@magic-sdk/admin": "1.3.0",
+    "@open-wc/building-rollup": "1.10.0",
+    "@rollup/plugin-replace": "2.4.2",
+    "deepmerge": "4.2.2",
+    "koa": "2.13.1",
+    "koa-mount": "4.0.0",
+    "koa-send": "5.0.1",
+    "koa-static": "5.0.0",
+    "lit": "2.0.0-rc.1",
+    "rollup": "2.46.0"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.7"
   }
 }
