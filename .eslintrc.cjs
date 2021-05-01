@@ -14,7 +14,7 @@ module.exports = {
       },
     },
     {
-      files: ['**/test/**/*.{js,html}'],
+      files: ['**/test/**/*.{js,cjs,html}'],
       rules: {
         'no-console': 'off',
         'no-unused-expressions': 'off',
