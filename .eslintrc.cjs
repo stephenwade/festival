@@ -8,7 +8,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ['backend/**/*.js'],
+      files: ['admin/**/*.js'],
       rules: {
         'no-console': 'off',
       },
