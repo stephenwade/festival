@@ -12,6 +12,6 @@ test('e2e', async ({ page }) => {
 
   // Timers are weird in CI
   expect(await page.innerText('#current-time')).to.satisfy(
-    (time) => time === '0:05' || time === '0:06'
+    (time) => time === '0:05' || time === '0:06' || time === '0:07'
   );
 });
