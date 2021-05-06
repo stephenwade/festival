@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "date-fns": "2.21.2",
-    "lit-element": "2.5.0",
+    "lit-element": "2.5.1",
     "pwa-helpers": "0.9.1",
     "redux": "4.1.0",
     "redux-thunk": "2.3.0",
