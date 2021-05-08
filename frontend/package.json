@@ -45,7 +45,7 @@
     "@web/test-runner-mocha": "0.7.2",
     "@web/test-runner-playwright": "0.8.5",
     "chai": "4.3.4",
-    "concurrently": "6.0.2",
+    "concurrently": "6.1.0",
     "deepmerge": "4.2.2",
     "fetch-mock": "9.11.0",
     "imagemin": "8.0.0",
