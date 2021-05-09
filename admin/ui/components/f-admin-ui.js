@@ -4,14 +4,8 @@ import { until } from 'lit/directives/until.js';
 import { fetchWithMagic } from '../magic.js';
 
 const fetchData = async () => {
-  const response = await fetchWithMagic('/api/test', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  });
-  if (response.ok) {
-    return response.text();
-  }
-  throw new Error('Error loading');
+  const response = await fetchWithMagic('/api/test', { method: 'POST' });
+  return response.text();
 };
 
 class AdminUi extends LitElement {

@@ -1,4 +1,4 @@
-// created by the magic-sdk script in index.html
+// the Magic global is created by the magic-sdk script in index.html
 /* global Magic */
 
 export const magic = new Magic('MAGIC_PUBLISHABLE_KEY');
