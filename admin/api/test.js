@@ -1,11 +1,8 @@
-import { magic } from './magic.js';
+import { validateUserLoggedIn } from './auth.js';
 
 export default async (ctx) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
   try {
-    const didToken = ctx.request.headers.authorization.substring(7);
-    await magic.token.validate(didToken);
+    await validateUserLoggedIn(ctx.request);
 
     ctx.body = 'Validation successful';
   } catch {
