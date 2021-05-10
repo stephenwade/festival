@@ -8,3 +8,5 @@ ExpiresByType image/webp "access plus 1 year"
 ExpiresByType image/jpeg "access plus 1 year"
 ExpiresByType image/png "access plus 1 year"
 ExpiresByType application/json "access plus 1 minute"
+
+Redirect /admin /admin/

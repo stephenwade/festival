@@ -38,7 +38,7 @@ to Azure blob storage.
    [CORS requests](https://stackoverflow.com/a/41351674).
    This is required for the visualizer to work.
 1. Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest).
-1. Add the following environment variables to your profile:
+1. Add the following environment variables to your `.env` file:
    - `FESTIVAL_SITE_DEPLOY_LOCATION`: The rsync destination for the site.
    - `FESTIVAL_AZURE_STORAGE_ACCOUNT`: The name of the Azure storage account
      for the media.
