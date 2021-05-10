@@ -1,8 +1,11 @@
 import Koa from 'koa';
 import Router from '@koa/router';
+import dotenv from 'dotenv';
 
 import test from './api/test.js';
 import sets from './api/sets.js';
+
+dotenv.config();
 
 const api = new Koa();
 const router = new Router();

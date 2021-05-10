@@ -22,8 +22,10 @@
     "prebuild": "npm run clean",
     "build": "rollup -c rollup.config.js",
     "start:build": "web-dev-server --root-dir dist",
-    "deploy:site": "rsync -rltv --delete --exclude goaccess dist/ $FESTIVAL_SITE_DEPLOY_LOCATION",
-    "deploy:media": "az storage blob sync --container '$web' --source media --exclude-pattern '*.json' --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\"",
+    "deploy:site:script": "rsync -rltv --delete --exclude goaccess dist/ $FESTIVAL_SITE_DEPLOY_LOCATION",
+    "deploy:site": "dotenv-run-script ../.env -- deploy:site:script",
+    "deploy:media:script": "az storage blob sync --container '$web' --source media --exclude-pattern '*.json' --account-name=\"$FESTIVAL_AZURE_STORAGE_ACCOUNT\" --account-key=\"$FESTIVAL_AZURE_STORAGE_KEY\"",
+    "deploy:media": "dotenv-run-script ../.env -- deploy:media:script",
     "deploy": "npm run deploy:site && npm run deploy:media"
   },
   "dependencies": {
@@ -47,6 +49,8 @@
     "chai": "4.3.4",
     "concurrently": "6.1.0",
     "deepmerge": "4.2.2",
+    "dotenv": "9.0.1",
+    "dotenv-run-script": "0.1.0",
     "fetch-mock": "9.11.0",
     "imagemin": "8.0.0",
     "imagemin-cli": "6.0.0",
