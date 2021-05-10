@@ -128,21 +128,23 @@ const loadData = async () => {
 };
 
 // https://exploringjs.com/impatient-js/ch_callables.html#simulating-named-parameters
-export const loadSets = ({ ignoreErrors = false } = {}) => async (dispatch) => {
-  try {
-    const data = await loadData();
-    if (data === null) return;
+export const loadSets =
+  ({ ignoreErrors = false } = {}) =>
+  async (dispatch) => {
+    try {
+      const data = await loadData();
+      if (data === null) return;
 
-    dispatch(stopTicking());
-    dispatch({ type: 'LOAD_SETS_DATA', data });
-    dispatch(startTicking());
-  } catch (e) {
-    if (ignoreErrors) return;
+      dispatch(stopTicking());
+      dispatch({ type: 'LOAD_SETS_DATA', data });
+      dispatch(startTicking());
+    } catch (e) {
+      if (ignoreErrors) return;
 
-    dispatch(errorLoading(e.detail));
-    throw e;
-  }
-};
+      dispatch(errorLoading(e.detail));
+      throw e;
+    }
+  };
 
 export const updateSetMetadata = (detail) => ({
   type: 'UPDATE_SET_END_DATE',
