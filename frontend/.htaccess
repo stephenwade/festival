@@ -10,3 +10,9 @@ ExpiresByType image/png "access plus 1 year"
 ExpiresByType application/json "access plus 1 minute"
 
 Redirect /admin /admin/
+
+# Add the following lines to your virtual host configuration
+#ProxyPass        /admin/ http://localhost:8000/
+#ProxyPassReverse /admin/ http://localhost:8000/
+#ProxyPass        /api/   http://localhost:8000/api/
+#ProxyPassReverse /api/   http://localhost:8000/api/
