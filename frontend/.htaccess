@@ -16,3 +16,10 @@ Redirect /admin /admin/
 #ProxyPassReverse /admin/ http://localhost:8000/
 #ProxyPass        /api/   http://localhost:8000/api/
 #ProxyPassReverse /api/   http://localhost:8000/api/
+
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
