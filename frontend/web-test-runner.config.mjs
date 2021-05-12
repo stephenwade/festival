@@ -12,6 +12,7 @@ export default {
   },
   coverage: true,
   nodeResolve: true,
+  appIndex: 'index.html',
   plugins: [importMapsPlugin(), clickPlugin()],
   browsers: [
     playwrightLauncher({ product: 'chromium' }),
