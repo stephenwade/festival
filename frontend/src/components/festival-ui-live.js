@@ -14,7 +14,7 @@ import {
 } from './shared-styles.js';
 import { elevationZ8 } from './shared-styles-elevation.js';
 
-class FestivalUi extends connect(store)(LitElement) {
+class FestivalUiLive extends connect(store)(LitElement) {
   static get styles() {
     return [
       boxSizingBorderBox,
@@ -81,8 +81,8 @@ class FestivalUi extends connect(store)(LitElement) {
               .reduceMotion="${this._reduceMotion}"
               .getAudioVisualizerData="${this.getAudioVisualizerData}"
               .volume="${this._settings.volume}"
-              @volumeinput="${FestivalUi._handleVolumeInput}"
-              @volumechange="${FestivalUi._handleVolumeChange}"
+              @volumeinput="${FestivalUiLive._handleVolumeInput}"
+              @volumechange="${FestivalUiLive._handleVolumeChange}"
             ></festival-ui-playing>
           `
         : null}
@@ -267,4 +267,4 @@ class FestivalUi extends connect(store)(LitElement) {
   }
 }
 
-customElements.define('festival-ui', FestivalUi);
+customElements.define('festival-ui-live', FestivalUiLive);

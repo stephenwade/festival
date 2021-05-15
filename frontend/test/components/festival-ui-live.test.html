@@ -3,7 +3,7 @@
     <script type="importmap">
       {
         "imports": {
-          "../../src/store.js": "./festival-ui/store.js"
+          "../../src/store.js": "./festival-ui-live/store.js"
         }
       }
     </script>
@@ -24,16 +24,16 @@
       } from '@open-wc/testing-helpers/index-no-side-effects.js';
       import { useFakeTimers } from 'sinon';
 
-      import '../../src/components/festival-ui.js';
-      import { store } from './festival-ui/store.js';
+      import '../../src/components/festival-ui-live.js';
+      import { store } from './festival-ui-live/store.js';
       import {
         setVolume,
         setLastUnmutedVolume,
       } from '../../src/actions/settings.js';
 
       runTests(() => {
-        describe('festival-ui', () => {
-          const template = '<festival-ui></festival-ui>';
+        describe('festival-ui-live', () => {
+          const template = '<festival-ui-live></festival-ui-live>';
 
           describe('waiting for audio context', () => {
             beforeEach(() => {
