@@ -36,5 +36,5 @@ describe('festival-ui-ended', () => {
   it('is accessible', async () => {
     const el = await fixture(template);
     await expect(el).to.be.accessible();
-  });
+  }).timeout(3000);
 });
