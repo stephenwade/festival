@@ -4,6 +4,12 @@ module.exports = {
   rules: {
     'require-unicode-regexp': 'error',
     'no-undef': ['error', { typeof: true }],
+
+    // remove when https://github.com/benmosher/eslint-plugin-import/issues/1868 is resolved
+    'import/no-unresolved': [
+      'error',
+      { ignore: ['@open-wc/testing-helpers/pure'] },
+    ],
   },
 
   overrides: [

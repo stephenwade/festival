@@ -14,10 +14,7 @@
     <script type="module">
       import { runTests } from '@web/test-runner-mocha';
       import { expect, aTimeout } from '@open-wc/testing';
-      import {
-        fixture,
-        fixtureCleanup,
-      } from '@open-wc/testing-helpers/index-no-side-effects.js';
+      import { fixture, fixtureCleanup } from '@open-wc/testing-helpers/pure';
 
       import '../../src/components/festival-clock.js';
       import { store } from './festival-clock/store.js';

@@ -16,7 +16,7 @@
  *               Defaults to 5000. A value of 0 means to display
  *               forever.
  */
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html, css } from 'lit';
 import { define } from './define';
 import { upgradeProperty } from './upgradeProperty';
 export class ToastSk extends LitElement {

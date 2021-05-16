@@ -1,6 +1,6 @@
 // Based on the styles in @material/elevation, available under the MIT license
 
-import { css } from 'lit-element';
+import { css } from 'lit';
 
 export const elevationZ0 = css`
   .mdc-elevation--z0 {
