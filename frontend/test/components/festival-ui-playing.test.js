@@ -256,6 +256,6 @@ describe('festival-ui-playing', () => {
     it('is accessible', async () => {
       const el = await fixture(template);
       await expect(el).to.be.accessible();
-    });
+    }).timeout(3000);
   });
 });
