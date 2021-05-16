@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html } from 'lit';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { AudioContext } from 'standardized-audio-context';
 import { differenceInSeconds } from 'date-fns';

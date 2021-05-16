@@ -1,8 +1,5 @@
 import { aTimeout, expect, nextFrame, oneEvent } from '@open-wc/testing';
-import {
-  fixture,
-  fixtureCleanup,
-} from '@open-wc/testing-helpers/index-no-side-effects.js';
+import { fixture, fixtureCleanup } from '@open-wc/testing-helpers/pure';
 import { executeServerCommand } from '@web/test-runner-commands';
 import { addSeconds as add } from 'date-fns';
 

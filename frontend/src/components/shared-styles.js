@@ -1,4 +1,4 @@
-import { css } from 'lit-element';
+import { css } from 'lit';
 
 // https://www.paulirish.com/2012/box-sizing-border-box-ftw/
 export const boxSizingBorderBox = css`

@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html, css } from 'lit';
 
 import { boxSizingBorderBox, flexColumnCenter } from './shared-styles.js';
 import { elevationZ2 } from './shared-styles-elevation.js';

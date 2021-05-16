@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html, css } from 'lit';
 
 import './styled-range-input.js';
 import { boxSizingBorderBox, buttonReset } from './shared-styles.js';
