@@ -1,12 +1,17 @@
 import { LitElement, html, css } from 'lit';
 
-import { boxSizingBorderBox, flexColumnCenter } from './shared-styles.js';
+import {
+  boxSizingBorderBox,
+  flexColumnCenter,
+  fullPage,
+} from './shared-styles.js';
 import { elevationZ2 } from './shared-styles-elevation.js';
 
-class FestivalUiIntro extends LitElement {
+class FestivalUiIntroPage extends LitElement {
   static get styles() {
     return [
       boxSizingBorderBox,
+      fullPage,
       flexColumnCenter,
       elevationZ2,
       css`
@@ -73,7 +78,9 @@ class FestivalUiIntro extends LitElement {
       </a>
       <div id="buttons" ?hidden=${!this._logoLoaded}>
         <span class="mdc-elevation--z2">
-          <a href="/" @click="${this._handleListenClicked}">Listen Live</a>
+          <a href="/my-show/live" @click="${this._handleListenClicked}">
+            Listen Live
+          </a>
         </span>
         <span class="mdc-elevation--z2">
           <a href="https://discord.io/festival" target="_blank" rel="noopener">
@@ -94,13 +101,11 @@ class FestivalUiIntro extends LitElement {
     this._logoLoaded = true;
   }
 
-  _handleListenClicked(e) {
-    e.preventDefault();
-
+  _handleListenClicked() {
     this.dispatchEvent(
       new CustomEvent('listen', { bubbles: true, composed: true })
     );
   }
 }
 
-customElements.define('festival-ui-intro', FestivalUiIntro);
+customElements.define('festival-ui-intro-page', FestivalUiIntroPage);

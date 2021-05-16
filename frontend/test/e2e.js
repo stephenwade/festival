@@ -36,7 +36,7 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
     await concurrently(
       [
         // from playwright-test
-        'npx folio test/e2e/e2e.spec.cjs --param browserName=chromium --param browserName=firefox',
+        'npx folio test/e2e/e2e.spec.cjs --param browserName=chromium',
 
         'npm run start:build',
       ],

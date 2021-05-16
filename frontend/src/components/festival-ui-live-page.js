@@ -1,33 +1,30 @@
 import { LitElement, html, css } from 'lit';
 import { connect } from 'pwa-helpers/connect-mixin.js';
+import { Router } from '@vaadin/router';
 
 import '../../lib/toast-sk/toast-sk.js';
 import { store } from '../store.js';
 import { setVolume, setLastUnmutedVolume } from '../actions/settings.js';
 import './festival-ui-ended.js';
-import './festival-ui-intro.js';
+import './festival-ui-intro-page.js';
 import './festival-ui-playing.js';
 import {
   boxSizingBorderBox,
   buttonReset,
+  fullPage,
   fullPageClass,
 } from './shared-styles.js';
 import { elevationZ8 } from './shared-styles-elevation.js';
 
-class FestivalUiLive extends connect(store)(LitElement) {
+class FestivalUiLivePage extends connect(store)(LitElement) {
   static get styles() {
     return [
       boxSizingBorderBox,
       buttonReset,
+      fullPage,
       fullPageClass,
       elevationZ8,
       css`
-        :host {
-          font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
-            'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-          user-select: none;
-        }
-
         [hidden] {
           display: none !important;
         }
@@ -62,10 +59,7 @@ class FestivalUiLive extends connect(store)(LitElement) {
   render() {
     return html`
       ${this._waitingForAudioContext
-        ? html`<festival-ui-intro
-            id="intro"
-            class="full-page"
-          ></festival-ui-intro>`
+        ? /* TODO full page play button */ null
         : null}
       ${this._waitingUntilStart || this._waitingForNetwork || this._playing
         ? html`
@@ -81,8 +75,8 @@ class FestivalUiLive extends connect(store)(LitElement) {
               .reduceMotion="${this._reduceMotion}"
               .getAudioVisualizerData="${this.getAudioVisualizerData}"
               .volume="${this._settings.volume}"
-              @volumeinput="${FestivalUiLive._handleVolumeInput}"
-              @volumechange="${FestivalUiLive._handleVolumeChange}"
+              @volumeinput="${FestivalUiLivePage._handleVolumeInput}"
+              @volumechange="${FestivalUiLivePage._handleVolumeChange}"
             ></festival-ui-playing>
           `
         : null}
@@ -150,6 +144,16 @@ class FestivalUiLive extends connect(store)(LitElement) {
 
     if (this._ended) this._hideToast();
     if (this._errorLoading) this._showLoadingError();
+  }
+
+  onAfterEnter(location) {
+    this.getAudioVisualizerData = location.params.getAudioVisualizerData;
+
+    setTimeout(() => {
+      if (this._waitingForAudioContext) {
+        Router.go('/my-show');
+      }
+    });
   }
 
   connectedCallback() {
@@ -267,4 +271,4 @@ class FestivalUiLive extends connect(store)(LitElement) {
   }
 }
 
-customElements.define('festival-ui-live', FestivalUiLive);
+customElements.define('festival-ui-live-page', FestivalUiLivePage);
