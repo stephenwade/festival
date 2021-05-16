@@ -53,7 +53,7 @@
             it('shows error message on `audioerror` event', async () => {
               const el = await fixture(template);
               const audio = el.shadowRoot.querySelector('festival-audio');
-              const ui = el.shadowRoot.querySelector('festival-ui-live');
+              const ui = el.shadowRoot.querySelector('festival-ui');
 
               expect(ui.showAudioError).to.be.a('function');
 
@@ -91,7 +91,7 @@
             it('handles the `visualizer-data-available` event', async () => {
               const el = await fixture(template);
               const audio = el.shadowRoot.querySelector('festival-audio');
-              const ui = el.shadowRoot.querySelector('festival-ui-live');
+              const ui = el.shadowRoot.querySelector('festival-ui');
 
               const visualizerDataEvent = new CustomEvent(
                 'visualizer-data-available',
@@ -114,16 +114,16 @@
               fixtureCleanup();
             });
 
-            it('contains <festival-ui-live>', async () => {
+            it('contains <festival-ui>', async () => {
               const el = await fixture(template);
-              const ui = el.shadowRoot.querySelector('festival-ui-live');
+              const ui = el.shadowRoot.querySelector('festival-ui');
 
               expect(ui).to.be.an.instanceof(HTMLElement);
             });
 
             it('initializes audio when listen button is clicked', async () => {
               const el = await fixture(template);
-              const ui = el.shadowRoot.querySelector('festival-ui-live');
+              const ui = el.shadowRoot.querySelector('festival-ui');
               const audio = el.shadowRoot.querySelector('festival-audio');
 
               audio.init = spy();

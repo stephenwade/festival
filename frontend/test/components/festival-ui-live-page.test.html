@@ -3,7 +3,8 @@
     <script type="importmap">
       {
         "imports": {
-          "../../src/store.js": "./festival-ui-live/store.js"
+          "@vaadin/router": "./festival-ui-live-page/router.js",
+          "../../src/store.js": "./festival-ui-live-page/store.js"
         }
       }
     </script>
@@ -21,16 +22,17 @@
       import { fixture, fixtureCleanup } from '@open-wc/testing-helpers/pure';
       import { useFakeTimers } from 'sinon';
 
-      import '../../src/components/festival-ui-live.js';
-      import { store } from './festival-ui-live/store.js';
+      import '../../src/components/festival-ui-live-page.js';
+      import { Router } from './festival-ui-live-page/router.js';
+      import { store } from './festival-ui-live-page/store.js';
       import {
         setVolume,
         setLastUnmutedVolume,
       } from '../../src/actions/settings.js';
 
       runTests(() => {
-        describe('festival-ui-live', () => {
-          const template = '<festival-ui-live></festival-ui-live>';
+        describe('festival-ui-live-page', () => {
+          const template = '<festival-ui-live-page></festival-ui-live-page>';
 
           describe('waiting for audio context', () => {
             beforeEach(() => {
@@ -39,13 +41,16 @@
 
             afterEach(() => {
               fixtureCleanup();
+              Router.go.resetHistory();
             });
 
-            it('contains <festival-ui-intro>', async () => {
+            it('redirects to show intro page', async () => {
               const el = await fixture(template);
-              const intro = el.shadowRoot.querySelector('festival-ui-intro');
+              el.onAfterEnter({ params: {} });
+              await nextFrame();
+              await nextFrame();
 
-              expect(intro).to.be.an.instanceof(HTMLElement);
+              expect(Router.go).to.have.been.calledWith('/my-show');
             });
 
             it('does not contain <festival-ui-playing> or <festival-ui-ended>', async () => {
@@ -67,6 +72,7 @@
 
             afterEach(() => {
               fixtureCleanup();
+              Router.go.resetHistory();
             });
 
             it('contains <festival-ui-playing>', async () => {
@@ -78,13 +84,24 @@
               expect(playing).to.be.an.instanceof(HTMLElement);
             });
 
-            it('does not contain <festival-ui-intro> or <festival-ui-ended>', async () => {
+            it('does not contain <festival-ui-ended>', async () => {
               const el = await fixture(template);
-              const intro = el.shadowRoot.querySelector('festival-ui-intro');
+              const intro = el.shadowRoot.querySelector(
+                'festival-ui-intro-page'
+              );
               const ended = el.shadowRoot.querySelector('festival-ui-ended');
 
               expect(intro).to.be.null;
               expect(ended).to.be.null;
+            });
+
+            it('does not redirect', async () => {
+              const el = await fixture(template);
+              el.onAfterEnter({ params: {} });
+              await nextFrame();
+              await nextFrame();
+
+              expect(Router.go).to.not.have.been.called;
             });
 
             it('passes properties to <festival-ui-playing>', async () => {
@@ -129,6 +146,7 @@
               afterEach(() => {
                 fixtureCleanup();
                 store.resetAudioStatus();
+                Router.go.resetHistory();
               });
 
               it('contains <festival-ui-playing>', async () => {
@@ -140,13 +158,24 @@
                 expect(playing).to.be.an.instanceof(HTMLElement);
               });
 
-              it('does not contain <festival-ui-intro> or <festival-ui-ended>', async () => {
+              it('does not contain <festival-ui-ended>', async () => {
                 const el = await fixture(template);
-                const intro = el.shadowRoot.querySelector('festival-ui-intro');
+                const intro = el.shadowRoot.querySelector(
+                  'festival-ui-intro-page'
+                );
                 const ended = el.shadowRoot.querySelector('festival-ui-ended');
 
                 expect(intro).to.be.null;
                 expect(ended).to.be.null;
+              });
+
+              it('does not redirect', async () => {
+                const el = await fixture(template);
+                el.onAfterEnter({ params: {} });
+                await nextFrame();
+                await nextFrame();
+
+                expect(Router.go).to.not.have.been.called;
               });
 
               it('passes properties to <festival-ui-playing>', async () => {
@@ -182,6 +211,7 @@
 
             afterEach(() => {
               fixtureCleanup();
+              Router.go.resetHistory();
             });
 
             it('contains <festival-ui-playing>', async () => {
@@ -193,13 +223,24 @@
               expect(playing).to.be.an.instanceof(HTMLElement);
             });
 
-            it('does not contain <festival-ui-intro> or <festival-ui-ended>', async () => {
+            it('does not contain <festival-ui-ended>', async () => {
               const el = await fixture(template);
-              const intro = el.shadowRoot.querySelector('festival-ui-intro');
+              const intro = el.shadowRoot.querySelector(
+                'festival-ui-intro-page'
+              );
               const ended = el.shadowRoot.querySelector('festival-ui-ended');
 
               expect(intro).to.be.null;
               expect(ended).to.be.null;
+            });
+
+            it('does not redirect', async () => {
+              const el = await fixture(template);
+              el.onAfterEnter({ params: {} });
+              await nextFrame();
+              await nextFrame();
+
+              expect(Router.go).to.not.have.been.called;
             });
 
             it('passes properties to <festival-ui-playing>', async () => {
@@ -294,6 +335,7 @@
 
             afterEach(() => {
               fixtureCleanup();
+              Router.go.resetHistory();
             });
 
             it('contains <festival-ui-ended>', async () => {
@@ -304,15 +346,26 @@
               expect(ended).to.not.have.attribute('hidden');
             });
 
-            it('does not contain <festival-ui-intro> or <festival-ui-playing>', async () => {
+            it('does not contain <festival-ui-playing>', async () => {
               const el = await fixture(template);
-              const intro = el.shadowRoot.querySelector('festival-ui-intro');
+              const intro = el.shadowRoot.querySelector(
+                'festival-ui-intro-page'
+              );
               const playing = el.shadowRoot.querySelector(
                 'festival-ui-playing'
               );
 
               expect(intro).to.be.null;
               expect(playing).to.be.null;
+            });
+
+            it('does not redirect', async () => {
+              const el = await fixture(template);
+              el.onAfterEnter({ params: {} });
+              await nextFrame();
+              await nextFrame();
+
+              expect(Router.go).to.not.have.been.called;
             });
           });
 

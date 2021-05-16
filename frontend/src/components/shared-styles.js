@@ -41,6 +41,14 @@ export const flexColumnCenter = css`
   }
 `;
 
+export const fullPage = css`
+  :host {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 export const fullPageClass = css`
   .full-page {
     position: absolute;

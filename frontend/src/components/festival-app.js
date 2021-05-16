@@ -5,7 +5,7 @@ import { store } from '../store.js';
 import { loadSets, updateSetMetadata } from '../actions/setsData.js';
 import './festival-clock.js';
 import './festival-audio.js';
-import './festival-ui-live.js';
+import './festival-ui.js';
 
 class FestivalApp extends connect(store)(LitElement) {
   render() {
@@ -17,10 +17,7 @@ class FestivalApp extends connect(store)(LitElement) {
         @loadedmetadata="${FestivalApp._handleAudioLoadedMetadata}"
         @visualizer-data-available="${this._handleAudioVisualizerDataAvailable}"
       ></festival-audio>
-      <festival-ui-live
-        id="ui"
-        @listen="${this._handleListenClicked}"
-      ></festival-ui-live>
+      <festival-ui id="ui" @listen="${this._handleListenClicked}"></festival-ui>
     `;
   }
 

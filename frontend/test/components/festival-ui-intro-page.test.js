@@ -1,9 +1,9 @@
 import { expect, fixture, oneEvent } from '@open-wc/testing';
 
-import '../../src/components/festival-ui-intro.js';
+import '../../src/components/festival-ui-intro-page.js';
 
-describe('festival-ui-intro', () => {
-  const template = '<festival-ui-intro></festival-ui-intro>';
+describe('festival-ui-intro-page', () => {
+  const template = '<festival-ui-intro-page></festival-ui-intro-page>';
 
   it('contains the logo', async () => {
     const el = await fixture(template);
@@ -15,12 +15,13 @@ describe('festival-ui-intro', () => {
 
   it('contains a "Listen Live" button', async () => {
     const el = await fixture(template);
-    const live = Array.from(el.shadowRoot.querySelectorAll('a')).find(
-      (a) => a.innerText === 'Listen Live'
+    const live = Array.from(el.shadowRoot.querySelectorAll('a')).find((a) =>
+      a.innerText.includes('Listen Live')
     );
 
     expect(live).to.be.an.instanceof(HTMLElement);
 
+    live.removeAttribute('href');
     setTimeout(() => live.click());
     await oneEvent(el, 'listen');
   });
