@@ -16,7 +16,13 @@ export const validateUserLoggedIn = async (request) => {
     throw new Error('Token invalid');
   }
 
-  const metadata = await magic.users.getMetadataByToken(didToken);
+  let metadata;
+  try {
+    metadata = await magic.users.getMetadataByToken(didToken);
+  } catch {
+    throw new Error('Failed to get metadata from Magic');
+  }
+
   if (metadata.email !== process.env.FESTIVAL_ADMIN_EMAIL) {
     throw new Error('Email address invalid');
   }

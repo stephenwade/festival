@@ -5,7 +5,7 @@ export default async (ctx) => {
     await validateUserLoggedIn(ctx.request);
 
     ctx.body = 'Validation successful';
-  } catch {
-    ctx.throw(401, 'Validation failed!');
+  } catch (e) {
+    ctx.throw(401, e.message);
   }
 };

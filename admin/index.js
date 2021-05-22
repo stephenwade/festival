@@ -3,6 +3,7 @@ import mount from 'koa-mount';
 import serve from 'koa-static';
 import http from 'http';
 
+import './env.js';
 import api from './api.js';
 
 const PORT = 8000;

@@ -3,7 +3,10 @@ import { createSpaConfig } from '@open-wc/building-rollup';
 import replace from '@rollup/plugin-replace';
 import dotenv from 'dotenv';
 
-dotenv.config();
+const result = dotenv.config({ path: '../../.env' });
+if (result.error) {
+  throw result.error;
+}
 
 const baseConfig = createSpaConfig({
   workbox: false,
