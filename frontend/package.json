@@ -45,7 +45,7 @@
     "@rollup/plugin-replace": "2.4.2",
     "@web/dev-server": "0.1.17",
     "@web/dev-server-import-maps": "0.0.5",
-    "@web/test-runner": "0.13.4",
+    "@web/test-runner": "0.13.5",
     "@web/test-runner-mocha": "0.7.2",
     "@web/test-runner-playwright": "0.8.6",
     "chai": "4.3.4",
