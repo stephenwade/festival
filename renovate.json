@@ -21,8 +21,7 @@
 
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": "before 5am on friday",
-    "automerge": true,
-    "automergeType": "branch"
+    "extends": ["schedule:weekly"],
+    "automerge": true
   }
 }
