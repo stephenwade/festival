@@ -35,9 +35,7 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
   try {
     await concurrently(
       [
-        // from playwright-test
-        'npx folio test/e2e/e2e.spec.cjs --param browserName=chromium',
-
+        'npx playwright install && npx playwright test test/e2e/e2e.spec.ts',
         'npm run start:build',
       ],
       { killOthers: ['failure', 'success'] }
@@ -46,7 +44,7 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
     if (
       e.some(
         ({ command, exitCode }) =>
-          command.command.includes('folio') && exitCode !== 0
+          command.command.includes('playwright') && exitCode !== 0
       )
     ) {
       failed = true;
