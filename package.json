@@ -17,7 +17,7 @@
     "format:stylelint": "stylelint \"**/*.js\" \"**/*.html\" --fix --ignore-path .gitignore",
     "format:prettier": "prettier . --write --ignore-path .prettierignore --loglevel warn",
     "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier",
-    "prepare:frontend": "cd frontend && npm ci",
+    "prepare:frontend": "cd frontend && npm ci && npx playwright install",
     "prepare:admin": "cd admin && npm ci",
     "prepare": "npm run prepare:frontend && npm run prepare:admin && husky install"
   },
