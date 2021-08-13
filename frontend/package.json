@@ -46,7 +46,7 @@
     "@web/dev-server": "0.1.20",
     "@web/dev-server-import-maps": "0.0.6",
     "@web/test-runner": "0.13.16",
-    "@web/test-runner-mocha": "0.7.3",
+    "@web/test-runner-mocha": "0.7.4",
     "@web/test-runner-playwright": "0.8.6",
     "chai": "4.3.4",
     "concurrently": "6.2.1",
