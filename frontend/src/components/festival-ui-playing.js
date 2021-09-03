@@ -28,14 +28,19 @@ class FestivalUiPlaying extends LitElement {
 
         #current-time {
           margin-bottom: 0.2em;
-          font-weight: 900;
+          color: #fcfc00;
           font-size: 5em;
+          font-family: 'Minecraft', monospace;
+          letter-spacing: 1.3px;
+          text-shadow: 0.1em 0.1em #3e3e00;
         }
 
         #next-up {
           margin-bottom: 0.2em;
           font-size: 2em;
-          text-transform: uppercase;
+          font-family: 'Minecraft', monospace;
+          letter-spacing: 1.3px;
+          text-shadow: 0.1em 0.1em #3f3f3f;
         }
 
         #artist {
@@ -43,10 +48,12 @@ class FestivalUiPlaying extends LitElement {
           margin-bottom: -0.1em;
           font-weight: 900;
           font-size: 3em;
+          font-family: 'Minecraft', monospace;
           line-height: 0.9;
           letter-spacing: -0.05em;
+          letter-spacing: 1.3px;
           text-align: center;
-          text-transform: uppercase;
+          text-shadow: 0.1em 0.1em #3f3f3f;
           user-select: text;
         }
 
