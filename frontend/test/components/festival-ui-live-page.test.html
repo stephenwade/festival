@@ -494,6 +494,20 @@
 
               expect(store.actions[0]).to.deep.equal(setVolume(25));
             });
+
+            it('does nothing if a modifier key is pressed', async () => {
+              store.extendSettings({ volume: 90 });
+
+              await fixture(template);
+
+              const keydownEvent = new KeyboardEvent('keydown', {
+                key: 'm',
+                metaKey: true,
+              });
+              document.dispatchEvent(keydownEvent);
+
+              expect(store.actions).to.have.length(0);
+            });
           });
         });
       });

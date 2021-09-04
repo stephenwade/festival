@@ -161,6 +161,8 @@ class FabVolumeButton extends LitElement {
   }
 
   _handleKeyDown(e) {
+    if (e.ctrlKey || e.altKey || e.metaKey) return;
+
     const input = this.shadowRoot.getElementById('input');
     const { step, min, max } = input;
 

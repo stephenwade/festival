@@ -258,7 +258,8 @@ class FestivalUiLivePage extends connect(store)(LitElement) {
   }
 
   _handleKeyDown(e) {
-    if (e.key.toLowerCase() !== 'm') return;
+    if (e.key.toLowerCase() !== 'm' || e.ctrlKey || e.altKey || e.metaKey)
+      return;
 
     const { volume, lastUnmutedVolume } = this._settings;
 
