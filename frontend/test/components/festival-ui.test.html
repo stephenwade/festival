@@ -41,13 +41,13 @@
               await fixture(template);
               await nextFrame();
 
-              expect(currentPath()).to.equal('/my-show');
+              expect(currentPath()).to.equal('/cubed');
             });
           });
 
-          describe('/my-show/', () => {
+          describe('/cubed/', () => {
             beforeEach(() => {
-              go('/my-show/');
+              go('/cubed/');
             });
 
             afterEach(() => {
@@ -58,13 +58,13 @@
               await fixture(template);
               await nextFrame();
 
-              expect(currentPath()).to.equal('/my-show');
+              expect(currentPath()).to.equal('/cubed');
             });
           });
 
-          describe('/my-show', () => {
+          describe('/cubed', () => {
             beforeEach(() => {
-              go('/my-show');
+              go('/cubed');
             });
 
             afterEach(() => {
@@ -82,9 +82,9 @@
             });
           });
 
-          describe('/my-show/live/', () => {
+          describe('/cubed/live/', () => {
             beforeEach(() => {
-              go('/my-show/live/');
+              go('/cubed/live/');
               store.extendShowStatus({ status: 'PLAYING' });
             });
 
@@ -96,13 +96,13 @@
               await fixture(template);
               await nextFrame();
 
-              expect(currentPath()).to.equal('/my-show/live');
+              expect(currentPath()).to.equal('/cubed/live');
             });
           });
 
-          describe('/my-show/live', () => {
+          describe('/cubed/live', () => {
             beforeEach(() => {
-              go('/my-show/live');
+              go('/cubed/live');
               store.extendShowStatus({ status: 'PLAYING' });
             });
 
@@ -132,7 +132,7 @@
               await fixture(template);
               await nextFrame();
 
-              expect(currentPath()).to.equal('/my-show');
+              expect(currentPath()).to.equal('/cubed');
             });
           });
         });
