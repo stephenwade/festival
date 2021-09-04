@@ -136,7 +136,7 @@ describe('festival-audio', () => {
 
         const { showStatus } = store.getState();
         expect(showStatus.status).to.equal('WAITING_UNTIL_START');
-      });
+      }).timeout(3000);
     });
 
     describe('before the show', () => {

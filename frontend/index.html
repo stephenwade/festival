@@ -7,9 +7,13 @@
       content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"
     />
     <base href="/" />
+    <link rel="preload" href="/images/minecraft.woff" as="font" />
 
-    <title>Festival</title>
-    <meta name="description" content="Host online music festivals" />
+    <title>FESTIVAL CUBED</title>
+    <meta
+      name="description"
+      content="FESTIVAL CUBED, September 3rd through 5th"
+    />
 
     <!-- See https://goo.gl/OOhYW5 -->
     <!-- <link rel="manifest" href="/manifest.json" /> -->
@@ -24,6 +28,12 @@
     <script type="module" src="/src/index.js"></script>
 
     <style>
+      @font-face {
+        font-family: 'Minecraft';
+        src: url('images/minecraft.woff') format('woff');
+        font-display: block;
+      }
+
       html,
       body {
         height: 100%;
@@ -36,15 +46,15 @@
       This determines whether we load the WebP or JPEG format background image.
       */
       html.no-webplossless {
-        --background-image: url('images/impulse-background.jpg');
+        --background-image: url('images/cubed-background.jpg');
       }
       html.webplossless {
-        --background-image: url('images/impulse-background.webp');
+        --background-image: url('images/cubed-background.webp');
       }
 
       body {
-        --background-color: #131112; /* fallback color for --background-image */
-        --background-color-lighter: #a2bfdc; /* background-color at 75% luminosity */
+        --background-color: #303a21; /* fallback color for --background-image */
+        --background-color-lighter: #c3d1ae; /* background-color at 75% luminosity */
 
         background-color: var(--background-color);
       }

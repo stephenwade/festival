@@ -39,12 +39,12 @@ class FestivalUi extends LitElement {
     };
 
     this._router.setRoutes([
-      { path: '/', redirect: '/my-show' },
-      { path: '/my-show/', redirect: '/my-show' },
-      { path: '/my-show', component: 'festival-ui-intro-page' },
-      { path: '/my-show/live/', redirect: '/my-show/live' },
-      { path: '/my-show/live', action: liveWithVisualizer },
-      { path: '(.*)', redirect: '/my-show' },
+      { path: '/', redirect: '/cubed' },
+      { path: '/cubed/', redirect: '/cubed' },
+      { path: '/cubed', component: 'festival-ui-intro-page' },
+      { path: '/cubed/live/', redirect: '/cubed/live' },
+      { path: '/cubed/live', action: liveWithVisualizer },
+      { path: '(.*)', redirect: '/cubed' },
     ]);
 
     this._outlet = createRef();
