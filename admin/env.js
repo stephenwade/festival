@@ -1,6 +1,10 @@
 import dotenv from 'dotenv';
 
-const result = dotenv.config({ path: '../.env' });
+let result = dotenv.config({ path: '../.env' });
 if (result.error) {
-  throw result.error;
+  result = dotenv.config({ path: '.env' });
+
+  if (result.error) {
+    throw result.error;
+  }
 }
