@@ -8,12 +8,12 @@ at the same time) without requiring live streaming infrastructure.
 ## Local Development
 
 - Run `cd frontend` to change to the frontend directory.
-- Run `npm ci` to install the required npm packages.
+- Run `yarn` to install the required packages.
 - Add media files to the `media/` folder and add the information to
   `media/sets.json`. Use `media/sets-sample.json` as a guide to format
   your `sets.json` file.
-- If you add images, run `npm run imagemin` to convert them to WEBP.
-- Run `npm start` to serve the application locally.
+- If you add images, run `yarn imagemin` to convert them to WEBP.
+- Run `yarn start` to serve the application locally.
 
 ## Sample Media
 
@@ -26,8 +26,8 @@ at the same time) without requiring live streaming infrastructure.
 
 ## Building
 
-- `npm run build` will bundle the application in the `dist/` folder.
-- `npm run start:build` will serve the bundled application.
+- `yarn build` will bundle the application in the `dist/` folder.
+- `yarn start:build` will serve the bundled application.
 
 ## Deploying
 
@@ -43,7 +43,7 @@ to Azure blob storage.
    - `FESTIVAL_AZURE_STORAGE_ACCOUNT`: The name of the Azure storage account
      for the media.
    - `FESTIVAL_AZURE_STORAGE_KEY`: The access key for the Azure storage account.
-1. Run `npm run build` to build the site for production.
-1. Run `npm run deploy` to deploy both the site and the media.
-   You can also run `npm run deploy:site` to deploy only the site,
-   or `npm run deploy:media` to deploy only the media.
+1. Run `yarn build` to build the site for production.
+1. Run `yarn deploy` to deploy both the site and the media.
+   You can also run `yarn deploy:site` to deploy only the site,
+   or `yarn deploy:media` to deploy only the media.

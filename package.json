@@ -3,6 +3,10 @@
   "description": "Festival root package",
   "license": "ISC",
   "private": true,
+  "workspaces": [
+    "frontend",
+    "admin"
+  ],
   "type": "module",
   "repository": {
     "type": "git",
@@ -12,14 +16,12 @@
     "lint:eslint": "eslint . --ignore-path .gitignore",
     "lint:stylelint": "stylelint \"**/*.js\" \"**/*.html\" --ignore-path .gitignore",
     "lint:prettier": "prettier . --check --ignore-path .prettierignore --loglevel warn",
-    "lint": "npm run lint:eslint && npm run lint:stylelint && npm run lint:prettier",
+    "lint": "yarn lint:eslint && yarn lint:stylelint && yarn lint:prettier",
     "format:eslint": "eslint . --fix --ignore-path .gitignore",
     "format:stylelint": "stylelint \"**/*.js\" \"**/*.html\" --fix --ignore-path .gitignore",
     "format:prettier": "prettier . --write --ignore-path .prettierignore --loglevel warn",
-    "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier",
-    "prepare:frontend": "cd frontend && npm ci && npx playwright install",
-    "prepare:admin": "cd admin && npm ci",
-    "prepare": "npm run prepare:frontend && npm run prepare:admin && husky install"
+    "format": "yarn format:eslint; yarn format:stylelint; yarn format:prettier",
+    "postinstall": "npx playwright install"
   },
   "devDependencies": {
     "@open-wc/eslint-config": "4.3.0",
