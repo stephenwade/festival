@@ -19,13 +19,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
-          cache: npm
+          cache: yarn
 
-      - run: npm ci
+      - run: yarn --immutable
 
-      - run: npm run lint
+      - run: yarn lint
 
-      - run: npm run imagemin
+      - run: yarn imagemin
         working-directory: frontend
 
       - name: Check working directory
@@ -45,7 +45,7 @@ jobs:
 
             if status | grep -q images; then
               # shellcheck disable=SC2016
-              echo 'Did you forget to run `npm run imagemin`?'
+              echo 'Did you forget to run `yarn imagemin`?'
             fi
 
             false

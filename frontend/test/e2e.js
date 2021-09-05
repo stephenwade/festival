@@ -25,7 +25,7 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
   await fs.copyFile(TEST_SETS_PATH, SETS_PATH);
 
   console.log('Building...');
-  await concurrently(['E2E=yes npm run build']);
+  await concurrently(['E2E=yes yarn build']);
 
   console.log('Copying test media file...');
   await fs.copyFile(TEST_MEDIA_PATH_FROM, TEST_MEDIA_PATH_TO);
@@ -37,7 +37,7 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
   let failed = false;
   try {
     await concurrently(
-      ['npx playwright test test/e2e/e2e.spec.ts', 'npm run start:build'],
+      ['npx playwright test test/e2e/e2e.spec.ts', 'yarn start:build'],
       { killOthers: ['failure', 'success'] }
     );
   } catch (e) {

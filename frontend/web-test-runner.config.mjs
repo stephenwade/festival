@@ -8,7 +8,7 @@ export default {
   middleware: [range],
   coverageConfig: {
     report: true,
-    exclude: ['lib/**/*', 'node_modules/**/*'],
+    exclude: ['lib/**/*', '**/node_modules/**/*'],
   },
   coverage: true,
   nodeResolve: true,
