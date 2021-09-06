@@ -21,6 +21,8 @@ jobs:
           node-version: 16.x
           cache: yarn
 
+      - run: yarn --immutable
+
       - run: yarn set version latest
 
       - run: yarn format:prettier
