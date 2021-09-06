@@ -47,8 +47,7 @@
             it('redirects to show intro page', async () => {
               const el = await fixture(template);
               el.onAfterEnter({ params: {} });
-              await nextFrame();
-              await nextFrame();
+              await aTimeout(100);
 
               expect(Router.go).to.have.been.calledWith('/cubed');
             });
@@ -275,7 +274,7 @@
               const el = await fixture(template);
 
               timer.tick(10 * 1000);
-              await aTimeout();
+              await nextFrame();
 
               const ended = el.shadowRoot.querySelector('festival-ui-ended');
 
