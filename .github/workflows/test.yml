@@ -17,7 +17,8 @@ jobs:
         working-directory: frontend
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Setup Node.js 16.x
         uses: actions/setup-node@v2

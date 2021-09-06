@@ -12,6 +12,7 @@
     "type": "git",
     "url": "https://github.com/stephenwade/festival.git"
   },
+  "packageManager": "yarn@berry",
   "scripts": {
     "lint:eslint": "eslint . --ignore-path .gitignore",
     "lint:stylelint": "stylelint \"**/*.js\" \"**/*.html\" --ignore-path .gitignore",
