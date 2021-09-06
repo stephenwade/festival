@@ -23,7 +23,9 @@ jobs:
 
       - run: yarn --immutable
 
-      - run: yarn set version latest
+      - run: |
+          yarn set version latest
+          echo "yarn_version=$(yarn --version)" >> $GITHUB_ENV
 
       - run: yarn format:prettier
 
@@ -31,3 +33,8 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.UPDATE_YARN_PAT }}
+          commit-message: yarn set version latest
+          branch: update-yarn
+          title: Update Yarn to ${{ env.yarn_version }}
+          body: |
+            Update Yarn to the latest version with `yarn set version latest`.
