@@ -1241,7 +1241,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.15.3, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.15.4
   resolution: "@babel/runtime@npm:7.15.4"
   dependencies:
@@ -3085,13 +3085,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "automation-events@npm:4.0.6"
+"automation-events@npm:^4.0.7":
+  version: 4.0.7
+  resolution: "automation-events@npm:4.0.7"
   dependencies:
-    "@babel/runtime": ^7.15.3
+    "@babel/runtime": ^7.15.4
     tslib: ^2.3.1
-  checksum: c247f6200710bac5ff3d89804a23d8cb7d262daca5a8f5d45765d02f8ba2757a9709d3d67599f838e9435f290b18e18038922ae8884094dc38ad67d1cb9b4df1
+  checksum: ada3f271959e4eb4d3cc60d257fc43e63dc78689d1a69fa546f3ba378669d4d15591af459b478736943f599087b58fba7667aeaca9e9f3e4fb3b778fda9b628f
   languageName: node
   linkType: hard
 
@@ -5957,7 +5957,7 @@ __metadata:
     rollup: 2.56.3
     rollup-plugin-copy: 3.4.0
     sinon: 11.1.2
-    standardized-audio-context: 25.3.8
+    standardized-audio-context: 25.3.9
   languageName: unknown
   linkType: soft
 
@@ -11846,14 +11846,14 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.8":
-  version: 25.3.8
-  resolution: "standardized-audio-context@npm:25.3.8"
+"standardized-audio-context@npm:25.3.9":
+  version: 25.3.9
+  resolution: "standardized-audio-context@npm:25.3.9"
   dependencies:
     "@babel/runtime": ^7.15.4
-    automation-events: ^4.0.6
+    automation-events: ^4.0.7
     tslib: ^2.3.1
-  checksum: 7ac2ec152d4cde3bc662caa7514feffd4c67f0cfbd3fc1db02aebb2e484d1a8faa7b18732be889bf5bc335b6a237b0866cd37bc671ab9bdbb44c9148fb1ec74f
+  checksum: dea6b44e8eabf64ee61ee1e7f4d1c6e0fda511da142ae2060746269745ce5c98cb960ba42b0f28b4a9820a206b070e83623c0f4c1837bb913e2707a97d8a2e5a
   languageName: node
   linkType: hard
 
