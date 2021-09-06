@@ -1,0 +1,31 @@
+name: Update Yarn
+
+on:
+  schedule:
+    - cron: '27 1 * * 1'
+  workflow_dispatch:
+
+jobs:
+  update-yarn:
+    name: Update Yarn
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: yarn
+
+      - run: yarn set version latest
+
+      - run: yarn format:prettier
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.UPDATE_YARN_PAT }}
