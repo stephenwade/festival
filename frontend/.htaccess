@@ -1,9 +1,7 @@
-AddType application/font-woff woff
 AddType image/webp webp
 
 ExpiresActive On
 ExpiresDefault "access plus 1 minute"
-ExpiresByType application/font-woff "access plus 1 year"
 ExpiresByType application/javascript "access plus 1 year"
 ExpiresByType image/svg+xml "access plus 1 year"
 ExpiresByType image/webp "access plus 1 year"
