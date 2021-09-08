@@ -5,7 +5,7 @@ import { store, resetStoreForTesting } from '../../src/store.js';
 import { loadSets, SETS_URL } from '../../src/actions/setsData.js';
 import { stopTicking } from '../../src/actions/targetShowStatus.js';
 
-import { getMockData } from './setsData.test.js';
+import { getMockData } from './mockData.js';
 
 const getState = () => store.getState().clock;
 const initialState = { ...getState() };
