@@ -29,7 +29,9 @@ jobs:
       - run: yarn --immutable
 
       - name: Install Playwright dependencies
-        run: npx playwright install-deps
+        run: |
+          npx playwright install
+          npx playwright install-deps
 
       - run: yarn test:js
 

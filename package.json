@@ -21,8 +21,7 @@
     "format:eslint": "eslint . --fix --ignore-path .gitignore",
     "format:stylelint": "stylelint \"**/*.js\" \"**/*.html\" --fix --ignore-path .gitignore",
     "format:prettier": "prettier . --write --ignore-path .prettierignore --loglevel warn",
-    "format": "yarn format:eslint; yarn format:stylelint; yarn format:prettier",
-    "postinstall": "npx playwright install"
+    "format": "yarn format:eslint; yarn format:stylelint; yarn format:prettier"
   },
   "devDependencies": {
     "@open-wc/eslint-config": "4.3.0",
