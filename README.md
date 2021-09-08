@@ -29,6 +29,17 @@ at the same time) without requiring live streaming infrastructure.
 - `yarn build` will bundle the application in the `dist/` folder.
 - `yarn start:build` will serve the bundled application.
 
+## Testing
+
+- Run `cd frontend` to change to the frontend directory.
+- Run `npx playwright install` to install the required dependencies for
+  Playwright, the end-to-end test runner.
+- Run `yarn test:js` to run the component and store tests with
+  [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/).
+- Run `yarn test:e2e` to run the end-to-end tests with
+  [Playwright](https://playwright.dev/).
+- You can also run `yarn test` to run all tests at once.
+
 ## Deploying
 
 The site is deployed to a web server via rsync over SSH. The media is deployed
