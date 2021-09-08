@@ -142,7 +142,6 @@ export const loadSets =
       if (ignoreErrors) return;
 
       dispatch(errorLoading(e.detail));
-      throw e;
     }
   };
 
