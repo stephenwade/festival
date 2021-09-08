@@ -32,57 +32,29 @@ class FestivalUiIntroPage extends LitElement {
         }
 
         #buttons {
-          margin-bottom: 0.2em;
           font-size: 2em;
           text-align: center;
         }
 
-        #buttons a {
-          position: relative;
+        #buttons span {
           display: inline-block;
-          width: 12em;
           margin: 0 0.2em 0.5em;
-          padding: 0.2em 1em 0.35em;
-          border-top: 2px solid #afafaf;
-          border-right: 2px solid #565656;
-          border-bottom: 4px solid #565656;
-          border-left: 2px solid #afafaf;
-          background: #757575;
-          color: white;
-          font-family: 'Minecraft', monospace;
-          letter-spacing: 1.3px;
+          border-radius: 5px;
+          transform: skew(-10deg);
+        }
+
+        #buttons a {
+          display: inline-block;
+          padding: 0.5em 1em;
+          border-radius: 5px;
+          background-color: white;
+          color: var(--background-color);
+          font-weight: bold;
           text-decoration: none;
-          text-shadow: 0.1em 0.1em #3f3f3f;
+          text-transform: uppercase;
         }
-        #buttons a::before {
-          content: '';
-          position: absolute;
-          top: -4px;
-          right: -4px;
-          bottom: -6px;
-          left: -4px;
-          display: block;
-          border: 2px solid #000;
-          background: none;
-          pointer-events: none;
-        }
-        #buttons a:hover::before {
-          border-color: #fff;
-        }
-
-        #minecraft {
-          margin: 0 0.2em 0.5em;
-          color: white;
-          font-size: 1.5em;
-          font-family: 'Minecraft', monospace;
-          text-align: center;
-        }
-
-        #minecraft-url {
-          color: #fcfc00;
-          font-size: 1.5em;
-          text-shadow: 0.1em 0.1em #3e3e00;
-          user-select: text;
+        #buttons a:active {
+          background-color: rgba(255, 255, 255, 0.8);
         }
       `,
     ];
@@ -99,14 +71,14 @@ class FestivalUiIntroPage extends LitElement {
       >
         <img
           id="logo"
-          src="images/cubed-logo.png"
-          alt="FESTIVAL CUBED"
+          src="images/impulse-logo.png"
+          alt="Impulse Music Festival"
           @load="${this._handleLogoLoaded}"
         />
       </a>
       <div id="buttons" ?hidden=${!this._logoLoaded}>
         <span class="mdc-elevation--z2">
-          <a href="/cubed/live" @click="${this._handleListenClicked}">
+          <a href="/my-show/live" @click="${this._handleListenClicked}">
             Listen Live
           </a>
         </span>
@@ -115,10 +87,6 @@ class FestivalUiIntroPage extends LitElement {
             Join Discord
           </a>
         </span>
-      </div>
-      <div id="minecraft">
-        <div id="minecraft-label">Join us in Minecraft!</div>
-        <div id="minecraft-url">mc.urlfest.com</div>
       </div>
     `;
   }

@@ -46,7 +46,7 @@ describe('festival-ui-intro-page', () => {
     expect(link).to.have.attribute('rel', 'noopener');
   });
 
-  it.skip('is accessible', async () => {
+  it('is accessible', async () => {
     const el = await fixture(template);
     await expect(el).to.be.accessible();
   }).timeout(3000);

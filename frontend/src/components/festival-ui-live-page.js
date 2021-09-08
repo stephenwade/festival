@@ -151,7 +151,7 @@ class FestivalUiLivePage extends connect(store)(LitElement) {
 
     setTimeout(() => {
       if (this._waitingForAudioContext) {
-        Router.go('/cubed');
+        Router.go('/my-show');
       }
     });
   }

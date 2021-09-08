@@ -49,7 +49,7 @@
               el.onAfterEnter({ params: {} });
               await aTimeout(100);
 
-              expect(Router.go).to.have.been.calledWith('/cubed');
+              expect(Router.go).to.have.been.calledWith('/my-show');
             });
 
             it('does not contain <festival-ui-playing> or <festival-ui-ended>', async () => {
