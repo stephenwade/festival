@@ -4847,7 +4847,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domhandler@npm:^4.0.0, domhandler@npm:^4.2.0":
+"domhandler@npm:^4.0.0, domhandler@npm:^4.2.0, domhandler@npm:^4.2.2":
   version: 4.2.2
   resolution: "domhandler@npm:4.2.2"
   dependencies:
@@ -4866,7 +4866,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domutils@npm:^2.5.2, domutils@npm:^2.6.0":
+"domutils@npm:^2.5.2, domutils@npm:^2.6.0, domutils@npm:^2.8.0":
   version: 2.8.0
   resolution: "domutils@npm:2.8.0"
   dependencies:
@@ -5101,6 +5101,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"entities@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "entities@npm:3.0.1"
+  checksum: aaf7f12033f0939be91f5161593f853f2da55866db55ccbf72f45430b8977e2b79dbd58c53d0fdd2d00bd7d313b75b0968d09f038df88e308aa97e39f9456572
+  languageName: node
+  linkType: hard
+
 "env-paths@npm:^2.2.0":
   version: 2.2.1
   resolution: "env-paths@npm:2.2.1"
@@ -5269,7 +5276,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-html@npm:6.1.2, eslint-plugin-html@npm:^6.0.0":
+"eslint-plugin-html@npm:6.2.0":
+  version: 6.2.0
+  resolution: "eslint-plugin-html@npm:6.2.0"
+  dependencies:
+    htmlparser2: ^7.1.2
+  checksum: 68fac71d0dceb5fc1e71a22456dd9fb1b04e71aa66fe1ec859fea64046007bfd2985181f6ae947f382d3067bcfcb71241168c2a34682dfb1c701222d5baa188f
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-html@npm:^6.0.0":
   version: 6.1.2
   resolution: "eslint-plugin-html@npm:6.1.2"
   dependencies:
@@ -5909,7 +5925,7 @@ __metadata:
     "@open-wc/eslint-config": 4.3.0
     eslint: 7.32.0
     eslint-config-prettier: 8.3.0
-    eslint-plugin-html: 6.1.2
+    eslint-plugin-html: 6.2.0
     eslint-plugin-import: 2.24.2
     eslint-plugin-lit: 1.5.1
     eslint-plugin-lit-a11y: 1.0.1
@@ -6870,6 +6886,18 @@ fsevents@~2.3.2:
     domutils: ^2.5.2
     entities: ^2.0.0
   checksum: 81a7b3d9c3bb9acb568a02fc9b1b81ffbfa55eae7f1c41ae0bf840006d1dbf54cb3aa245b2553e2c94db674840a9f0fdad7027c9a9d01a062065314039058c4e
+  languageName: node
+  linkType: hard
+
+"htmlparser2@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "htmlparser2@npm:7.1.2"
+  dependencies:
+    domelementtype: ^2.0.1
+    domhandler: ^4.2.2
+    domutils: ^2.8.0
+    entities: ^3.0.1
+  checksum: 80374dce981d94ff03155733cda289534878e2d05cb435cc9eddc64716e617abf720938d813f18a16878254c8eb5873c7d9e2964bf240202f0a5b71b8e06069f
   languageName: node
   linkType: hard
 
