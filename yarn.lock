@@ -1414,6 +1414,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lit/reactive-element@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@lit/reactive-element@npm:1.0.0"
+  checksum: 985af076919b18824315f119ab13eae25b0f670e0c8c38866bbe40f59d5a714ce717252db0b1fdd9c1135cad2ca335d62480636557ec54120a17afe2ab979e94
+  languageName: node
+  linkType: hard
+
 "@lit/reactive-element@npm:^1.0.0-rc.1, @lit/reactive-element@npm:^1.0.0-rc.2":
   version: 1.0.0-rc.4
   resolution: "@lit/reactive-element@npm:1.0.0-rc.4"
@@ -5912,7 +5919,7 @@ __metadata:
     koa-mount: 4.0.0
     koa-send: 5.0.1
     koa-static: 5.0.0
-    lit: 2.0.0-rc.4
+    lit: 2.0.0
     nodemon: 2.0.12
     rollup: 2.56.3
   languageName: unknown
@@ -5969,7 +5976,7 @@ __metadata:
     imagemin-cli: 7.0.0
     imagemin-webp: 6.0.0
     koa-range: 0.3.0
-    lit: 2.0.0-rc.4
+    lit: 2.0.0
     pwa-helpers: 0.9.1
     redux: 4.1.1
     redux-thunk: 2.3.0
@@ -8351,6 +8358,16 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"lit-element@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "lit-element@npm:3.0.0"
+  dependencies:
+    "@lit/reactive-element": ^1.0.0
+    lit-html: ^2.0.0
+  checksum: dbc192a20d0bdc02af56205cda714b293c21101a38494e288595f15224ec58d897268ec0418dd0a3817ae1982c79471a0dfc07da25d33a9eab7d57b847709105
+  languageName: node
+  linkType: hard
+
 "lit-element@npm:^3.0.0-rc.2":
   version: 3.0.0-rc.4
   resolution: "lit-element@npm:3.0.0-rc.4"
@@ -8358,6 +8375,15 @@ fsevents@~2.3.2:
     "@lit/reactive-element": ^1.0.0-rc.2
     lit-html: ^2.0.0-rc.4
   checksum: 145c5e8e73f1f6bd8115d0beb57ac903666d07e7163e124d8ae8fac85ae2ad305c4e8dfc3d66c6fa9508e18c721e4f3d3e79f15d538defe32a196f548ef19576
+  languageName: node
+  linkType: hard
+
+"lit-html@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "lit-html@npm:2.0.0"
+  dependencies:
+    "@types/trusted-types": ^2.0.2
+  checksum: c9b932203a8bc8439f4e3da10e8f58d0473b967a8408e3a68a87c643425b4c5c41cca47dbbdb808be1d123839de0a76bd6a23dfbac68b322f57b52f25a1a5151
   languageName: node
   linkType: hard
 
@@ -8370,7 +8396,18 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"lit@npm:2.0.0-rc.4, lit@npm:^2.0.0-rc.1":
+"lit@npm:2.0.0":
+  version: 2.0.0
+  resolution: "lit@npm:2.0.0"
+  dependencies:
+    "@lit/reactive-element": ^1.0.0
+    lit-element: ^3.0.0
+    lit-html: ^2.0.0
+  checksum: f82427f6e5464e4750ff494e95f037961649fa5c189526e81576951a7471a20be373675365468019cc0df32a16cf130f76094ae6a4479f7d15bb690da955bbbb
+  languageName: node
+  linkType: hard
+
+"lit@npm:^2.0.0-rc.1":
   version: 2.0.0-rc.4
   resolution: "lit@npm:2.0.0-rc.4"
   dependencies:
