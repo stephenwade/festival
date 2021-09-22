@@ -6042,7 +6042,7 @@ __metadata:
     rollup: 2.57.0
     rollup-plugin-copy: 3.4.0
     sinon: 11.1.2
-    standardized-audio-context: 25.3.9
+    standardized-audio-context: 25.3.10
   languageName: unknown
   linkType: soft
 
@@ -12011,14 +12011,14 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.9":
-  version: 25.3.9
-  resolution: "standardized-audio-context@npm:25.3.9"
+"standardized-audio-context@npm:25.3.10":
+  version: 25.3.10
+  resolution: "standardized-audio-context@npm:25.3.10"
   dependencies:
     "@babel/runtime": ^7.15.4
     automation-events: ^4.0.7
     tslib: ^2.3.1
-  checksum: dea6b44e8eabf64ee61ee1e7f4d1c6e0fda511da142ae2060746269745ce5c98cb960ba42b0f28b4a9820a206b070e83623c0f4c1837bb913e2707a97d8a2e5a
+  checksum: 927c73052c2667b590528dba809b12c7c60caa75eeff88fb0f6289b23f3d4ac1ecfa7165f0357f15359e4610a3214f4e776a2c6a7a6b44aab11a4e45a98c9d16
   languageName: node
   linkType: hard
 
