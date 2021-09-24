@@ -5972,7 +5972,7 @@ __metadata:
     deepmerge: 4.2.2
     dotenv: 10.0.0
     dotenv-cli: 4.0.0
-    koa: 2.13.2
+    koa: 2.13.3
     koa-mount: 4.0.0
     koa-send: 5.0.1
     koa-static: 5.0.0
@@ -8317,9 +8317,9 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"koa@npm:2.13.2":
-  version: 2.13.2
-  resolution: "koa@npm:2.13.2"
+"koa@npm:2.13.3":
+  version: 2.13.3
+  resolution: "koa@npm:2.13.3"
   dependencies:
     accepts: ^1.3.5
     cache-content-type: ^1.0.0
@@ -8344,7 +8344,7 @@ fsevents@~2.3.2:
     statuses: ^1.5.0
     type-is: ^1.6.16
     vary: ^1.1.2
-  checksum: 8168d209136dc4649966065200dbca705f3e5013ba057a052862c19dfb021dad9b6c5f0df46f8af2aa377e213152ffcae2d0867b20940e0be7bf8b4414c0b92f
+  checksum: 23325dd94606e92774f3822bb3598abf14d9f11b26c7d7267aa54d9dadc6a01f715658aca34ff77e34678431710c128816fd67748646737693bf63c76e8f6707
   languageName: node
   linkType: hard
 
