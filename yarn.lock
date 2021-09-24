@@ -2531,9 +2531,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server-core@npm:^0.3.15":
-  version: 0.3.15
-  resolution: "@web/dev-server-core@npm:0.3.15"
+"@web/dev-server-core@npm:^0.3.16":
+  version: 0.3.16
+  resolution: "@web/dev-server-core@npm:0.3.16"
   dependencies:
     "@types/koa": ^2.11.6
     "@types/ws": ^7.4.0
@@ -2553,7 +2553,7 @@ __metadata:
     parse5: ^6.0.1
     picomatch: ^2.2.2
     ws: ^7.4.2
-  checksum: 4e68cf1c4356753b260e909adf6f63b06c4a6c76197bccd06e33f0342189c54d96dd26362e905840d6e4d8a725fb7c84d7cc288a22aa47dd1825d04ff6f81b9f
+  checksum: fb67ad43e4afa628e87a9adaac0c9083b429eebafe7698300a259e3b380724f4aa94d2682af4c1e866b8115fb49af3dab6575bed4bef150c9f3c225e7920d496
   languageName: node
   linkType: hard
 
@@ -2571,6 +2571,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@web/dev-server-rollup@npm:^0.3.10":
+  version: 0.3.10
+  resolution: "@web/dev-server-rollup@npm:0.3.10"
+  dependencies:
+    "@web/dev-server-core": ^0.3.16
+    nanocolors: ^0.2.1
+    parse5: ^6.0.1
+    rollup: ^2.56.2
+    whatwg-url: ^9.0.0
+  checksum: f0f4dec65923cb32f5f7abd17f5578e8c2c1d68bb836b1b94deaf055e921cc8f6073f09b7425c4098dc2ff5bbfe09b4109678c73ac8f7862ba22e721cbb0ccf5
+  languageName: node
+  linkType: hard
+
 "@web/dev-server-rollup@npm:^0.3.9":
   version: 0.3.9
   resolution: "@web/dev-server-rollup@npm:0.3.9"
@@ -2584,29 +2597,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server@npm:0.1.23":
-  version: 0.1.23
-  resolution: "@web/dev-server@npm:0.1.23"
+"@web/dev-server@npm:0.1.24":
+  version: 0.1.24
+  resolution: "@web/dev-server@npm:0.1.24"
   dependencies:
     "@babel/code-frame": ^7.12.11
     "@rollup/plugin-node-resolve": ^11.0.1
     "@types/command-line-args": ^5.0.0
     "@web/config-loader": ^0.1.3
-    "@web/dev-server-core": ^0.3.15
-    "@web/dev-server-rollup": ^0.3.9
+    "@web/dev-server-core": ^0.3.16
+    "@web/dev-server-rollup": ^0.3.10
     camelcase: ^6.2.0
-    chalk: ^4.1.0
     command-line-args: ^5.1.1
     command-line-usage: ^6.1.1
     debounce: ^1.2.0
     deepmerge: ^4.2.2
     ip: ^1.1.5
+    nanocolors: ^0.2.1
     open: ^8.0.2
     portfinder: ^1.0.28
   bin:
     wds: dist/bin.js
     web-dev-server: dist/bin.js
-  checksum: 902d31f3e022fadaee2f804ae1a9c4cf0e68a9e5318385ae6869ea08a00aa31463df126687468e916ed937930df2fd7b0046c2dabdde4b27b83e69c9da7b672f
+  checksum: 3fc51255e84532dca90981ddcb2f7c876dcff6be5ef11ae047c3d73ff36aec491f27de2278537e5ef0c8b815bbd7635ee960660cc0d9200876006bd33fdf1616
   languageName: node
   linkType: hard
 
@@ -6008,7 +6021,7 @@ __metadata:
     "@playwright/test": 1.14.1
     "@rollup/plugin-replace": 3.0.0
     "@vaadin/router": 1.7.4
-    "@web/dev-server": 0.1.23
+    "@web/dev-server": 0.1.24
     "@web/dev-server-import-maps": 0.0.6
     "@web/test-runner": 0.13.17
     "@web/test-runner-commands": 0.5.12
@@ -9344,6 +9357,13 @@ fsevents@~2.3.2:
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: aa92de608021b242401676e35cfa5aa42dd70cbdc082b916da7fb925c542173e36bce97ea3e804923fe92c0ad991434e4a38327e15a1b5b5f945d66df615ae6d
+  languageName: node
+  linkType: hard
+
+"nanocolors@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "nanocolors@npm:0.2.1"
+  checksum: d310f71eb9beaa58693ad9500404139bcb4494b040cd5b9e705965bdbc475b0be075324a7c7c54d7d71e7c2a2f0871f7c8fc4f5b329f7ca8e61aae550fadd281
   languageName: node
   linkType: hard
 
