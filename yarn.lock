@@ -1421,13 +1421,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lit/reactive-element@npm:^1.0.0-rc.1, @lit/reactive-element@npm:^1.0.0-rc.2":
-  version: 1.0.0-rc.4
-  resolution: "@lit/reactive-element@npm:1.0.0-rc.4"
-  checksum: 89bf91f68e264e5ce12d5bd7e903bca53cd07886e644c5fc5c475b5261a76fd47433f561f2827aa60fc0f92a11936fa60d51cd6690fdd883a32c7053cc9a9314
-  languageName: node
-  linkType: hard
-
 "@magic-sdk/admin@npm:1.3.0":
   version: 1.3.0
   resolution: "@magic-sdk/admin@npm:1.3.0"
@@ -1619,17 +1612,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/scoped-elements@npm:^2.0.0-next.0":
-  version: 2.0.0-next.5
-  resolution: "@open-wc/scoped-elements@npm:2.0.0-next.5"
-  dependencies:
-    "@lit/reactive-element": ^1.0.0-rc.1
-    "@open-wc/dedupe-mixin": ^1.3.0
-    "@webcomponents/scoped-custom-element-registry": 0.0.2
-  checksum: 996f2aaa0e75dece8b46a703a9111a0dbe12ff9c85ae49b7ef53cb4b1a0638b5968cf32897040339535a4c63ee532ad9791b90f6ad6e053e85c483fd482b5227
-  languageName: node
-  linkType: hard
-
 "@open-wc/scoped-elements@npm:^2.0.0-next.6":
   version: 2.0.0-next.6
   resolution: "@open-wc/scoped-elements@npm:2.0.0-next.6"
@@ -1658,17 +1640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/testing-helpers@npm:2.0.0-next.0":
-  version: 2.0.0-next.0
-  resolution: "@open-wc/testing-helpers@npm:2.0.0-next.0"
-  dependencies:
-    "@open-wc/scoped-elements": ^2.0.0-next.0
-    lit: ^2.0.0-rc.1
-  checksum: e7bd8d9b6c3f2bee458d3f81874199997da19dd246a4eaf5e7ac895ef634e1bbe5a7829863aa2163237175211481e1da7d35cab1d0fc599b04362bcd349c5890
-  languageName: node
-  linkType: hard
-
-"@open-wc/testing-helpers@npm:^2.0.0-next.1":
+"@open-wc/testing-helpers@npm:2.0.0-next.1, @open-wc/testing-helpers@npm:^2.0.0-next.1":
   version: 2.0.0-next.1
   resolution: "@open-wc/testing-helpers@npm:2.0.0-next.1"
   dependencies:
@@ -2790,13 +2762,6 @@ __metadata:
     web-test-runner: dist/bin.js
     wtr: dist/bin.js
   checksum: 140d62d70927abecf1355c6f07be002e653a3a7debae8631731d75348d888ad329be619bf6193d61fa7497577c6b3d039fd803b82b68a5c146ea54ea0c63a455
-  languageName: node
-  linkType: hard
-
-"@webcomponents/scoped-custom-element-registry@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@webcomponents/scoped-custom-element-registry@npm:0.0.2"
-  checksum: ff25bd5e9737429b6499de7c38a61cca404082af874002fe6db4ba0586c3ba48e94cfe7d3858f59a4914cc7f1fcfe541d566d1ff2490ded07ef853bdf9a86f95
   languageName: node
   linkType: hard
 
@@ -6011,7 +5976,7 @@ __metadata:
   dependencies:
     "@open-wc/building-rollup": 1.10.0
     "@open-wc/testing": 3.0.0-next.4
-    "@open-wc/testing-helpers": 2.0.0-next.0
+    "@open-wc/testing-helpers": 2.0.0-next.1
     "@playwright/test": 1.14.1
     "@rollup/plugin-replace": 3.0.0
     "@vaadin/router": 1.7.4
@@ -8412,31 +8377,12 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"lit-element@npm:^3.0.0-rc.2":
-  version: 3.0.0-rc.4
-  resolution: "lit-element@npm:3.0.0-rc.4"
-  dependencies:
-    "@lit/reactive-element": ^1.0.0-rc.2
-    lit-html: ^2.0.0-rc.4
-  checksum: 145c5e8e73f1f6bd8115d0beb57ac903666d07e7163e124d8ae8fac85ae2ad305c4e8dfc3d66c6fa9508e18c721e4f3d3e79f15d538defe32a196f548ef19576
-  languageName: node
-  linkType: hard
-
 "lit-html@npm:^2.0.0":
   version: 2.0.0
   resolution: "lit-html@npm:2.0.0"
   dependencies:
     "@types/trusted-types": ^2.0.2
   checksum: c9b932203a8bc8439f4e3da10e8f58d0473b967a8408e3a68a87c643425b4c5c41cca47dbbdb808be1d123839de0a76bd6a23dfbac68b322f57b52f25a1a5151
-  languageName: node
-  linkType: hard
-
-"lit-html@npm:^2.0.0-rc.4":
-  version: 2.0.0-rc.5
-  resolution: "lit-html@npm:2.0.0-rc.5"
-  dependencies:
-    "@types/trusted-types": ^2.0.2
-  checksum: bc722e502e3d919e904b95385338ceade90ece57ed60ca886e9ee3f4821a0e709afadb23de0a5be571d9be5eb8c9fbd355ca2b9da9b6b1ffab037a078fc57f34
   languageName: node
   linkType: hard
 
@@ -8448,17 +8394,6 @@ fsevents@~2.3.2:
     lit-element: ^3.0.0
     lit-html: ^2.0.0
   checksum: f82427f6e5464e4750ff494e95f037961649fa5c189526e81576951a7471a20be373675365468019cc0df32a16cf130f76094ae6a4479f7d15bb690da955bbbb
-  languageName: node
-  linkType: hard
-
-"lit@npm:^2.0.0-rc.1":
-  version: 2.0.0-rc.4
-  resolution: "lit@npm:2.0.0-rc.4"
-  dependencies:
-    "@lit/reactive-element": ^1.0.0-rc.2
-    lit-element: ^3.0.0-rc.2
-    lit-html: ^2.0.0-rc.4
-  checksum: 61a5e86576fa42fb6840ef6fb4bb25b6be0b31970182e8b6e1892db61d6043d0d2f01bfce0d1842e232aa30eba381e16951a2b53aedaa178b307e24ceb479974
   languageName: node
   linkType: hard
 
