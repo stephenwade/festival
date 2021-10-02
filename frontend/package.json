@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@open-wc/building-rollup": "1.10.0",
-    "@open-wc/testing": "3.0.0-next.3",
+    "@open-wc/testing": "3.0.0-next.4",
     "@open-wc/testing-helpers": "2.0.0-next.0",
     "@playwright/test": "1.14.1",
     "@rollup/plugin-replace": "3.0.0",
