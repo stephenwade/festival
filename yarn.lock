@@ -6040,7 +6040,7 @@ __metadata:
     prettier: 2.4.1
     stylelint: 13.13.1
     stylelint-config-hudochenkov: 5.0.0
-    stylelint-config-prettier: 8.0.2
+    stylelint-config-prettier: 9.0.2
     stylelint-config-standard: 22.0.0
     stylelint-order: 4.1.0
   languageName: unknown
@@ -12231,15 +12231,15 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"stylelint-config-prettier@npm:8.0.2":
-  version: 8.0.2
-  resolution: "stylelint-config-prettier@npm:8.0.2"
+"stylelint-config-prettier@npm:9.0.2":
+  version: 9.0.2
+  resolution: "stylelint-config-prettier@npm:9.0.2"
   peerDependencies:
     stylelint: ">=11.0.0"
   bin:
     stylelint-config-prettier: bin/check.js
     stylelint-config-prettier-check: bin/check.js
-  checksum: 6a3bfdf840b7e0b01875e68a0b144d9c02495a1038167c32fc03b0f76d07d989bbe90dec1552b9f5f79119f27b4f1780acde05ee23d5034d7e1ffbdcb362c6d8
+  checksum: 9098f179a8c30a05b8880513837dca1c20e30408111f541e74d1044677cec65ac18406741aaf6dfb08c0e95497a272b68d1f3a3879f950874886cf10dacb6cb0
   languageName: node
   linkType: hard
 
