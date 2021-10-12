@@ -30,14 +30,14 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
   console.log('Copying test media file...');
   await fs.copyFile(TEST_MEDIA_PATH_FROM, TEST_MEDIA_PATH_TO);
 
-  console.log('Installing Playwright binaries...');
-  await concurrently(['npx playwright install']);
-
   console.log('Testing...');
   let failed = false;
   try {
     await concurrently(
-      ['npx playwright test test/e2e/e2e.spec.ts', 'yarn start:build'],
+      [
+        'npx playwright test --config=test/e2e/playwright.config.js test/e2e/e2e.spec.ts',
+        'yarn start:build',
+      ],
       { killOthers: ['failure', 'success'] }
     );
   } catch (e) {
