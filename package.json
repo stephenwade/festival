@@ -45,6 +45,6 @@
   "lint-staged": {
     "*.{js,cjs,html}": "eslint --fix",
     "*.{js,html}": "stylelint --fix",
-    "*.{js,cjs,json,html,css,md,yml}": "prettier --write"
+    "*": "prettier --ignore-unknown --write"
   }
 }
