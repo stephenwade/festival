@@ -46,9 +46,11 @@ class FestivalUiLivePage extends connect(store)(LitElement) {
         #toast button + button {
           margin-left: -0.5em;
         }
+
         #toast button:first-of-type {
           margin-right: -0.5em;
         }
+
         #toast button:last-child {
           margin-right: -1em;
         }

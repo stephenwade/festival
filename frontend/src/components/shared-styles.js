@@ -5,6 +5,7 @@ export const boxSizingBorderBox = css`
   :host {
     box-sizing: border-box;
   }
+
   *,
   *:before,
   *:after {
@@ -23,10 +24,12 @@ export const buttonReset = css`
     text-transform: uppercase;
     cursor: pointer;
   }
+
   button::-moz-focus-inner {
     padding: 0;
     border-style: none;
   }
+
   button:-moz-focusring {
     outline: 1px dotted ButtonText;
   }

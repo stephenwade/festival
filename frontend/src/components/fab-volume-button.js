@@ -36,6 +36,7 @@ class FabVolumeButton extends LitElement {
           outline: none;
           transform: rotate(90deg);
         }
+
         button:active::after {
           content: '';
           position: absolute;
@@ -72,6 +73,7 @@ class FabVolumeButton extends LitElement {
           transform: translateY(-50%);
           clip-path: inset(-24px -24px -24px calc(100% - 30px));
         }
+
         :host([opened]) #slider-container {
           left: calc(100% - 30px);
           transition-duration: 200ms;
