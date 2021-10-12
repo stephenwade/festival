@@ -53,6 +53,7 @@ class FestivalUiIntroPage extends LitElement {
           text-decoration: none;
           text-transform: uppercase;
         }
+
         #buttons a:active {
           background-color: rgba(255, 255, 255, 0.8);
         }
