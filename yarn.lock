@@ -1676,9 +1676,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.14.1":
-  version: 1.14.1
-  resolution: "@playwright/test@npm:1.14.1"
+"@playwright/test@npm:1.15.2":
+  version: 1.15.2
+  resolution: "@playwright/test@npm:1.15.2"
   dependencies:
     "@babel/code-frame": ^7.14.5
     "@babel/core": ^7.14.8
@@ -1707,6 +1707,7 @@ __metadata:
     mime: ^2.4.6
     minimatch: ^3.0.3
     ms: ^2.1.2
+    open: ^8.2.1
     pirates: ^4.0.1
     pixelmatch: ^5.2.1
     pngjs: ^5.0.0
@@ -1720,7 +1721,7 @@ __metadata:
     yazl: ^2.5.1
   bin:
     playwright: lib/cli/cli.js
-  checksum: 8b88e8f1fe509c2e48f5b67a619e766c59c5164938485f5fb6e2b55df3fd394fc2de0b999f296be92a8657be5975102ae3ef06a616fd78440728069ec7fd57fb
+  checksum: 3785c8ae7a7f4e69817d621956add21ae8541d0ec2b5b6d64d823b0e324553a1a38bbb72331a28471c79798fa2dc0cbbabb19b5dd28a53cf901afd47b3e4663f
   languageName: node
   linkType: hard
 
@@ -6053,7 +6054,7 @@ __metadata:
     "@open-wc/building-rollup": 1.10.0
     "@open-wc/testing": 3.0.0-next.5
     "@open-wc/testing-helpers": 2.0.0-next.3
-    "@playwright/test": 1.14.1
+    "@playwright/test": 1.15.2
     "@rollup/plugin-replace": 3.0.0
     "@vaadin/router": 1.7.4
     "@web/dev-server": 0.1.25
@@ -9652,6 +9653,17 @@ fsevents@~2.3.2:
     is-docker: ^2.1.1
     is-wsl: ^2.2.0
   checksum: fcde0059188dd497e080436f81c5240dad0bebd331d1c856a532d4b870808bdc5770ef7c5c4b83143fd0c0577fe2b580e54c03357d695771259aa59f64cf0f40
+  languageName: node
+  linkType: hard
+
+"open@npm:^8.2.1":
+  version: 8.3.0
+  resolution: "open@npm:8.3.0"
+  dependencies:
+    define-lazy-prop: ^2.0.0
+    is-docker: ^2.1.1
+    is-wsl: ^2.2.0
+  checksum: 10fcb7ad453534cc1103ff90e0ebc36e542d67a4ccacf3b3d78c8e6401cec686e2849479cbc4a3386c7a3210064cbcc52e6ac38b788fc5fff1cf1dcbfef3c83b
   languageName: node
   linkType: hard
 
