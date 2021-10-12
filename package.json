@@ -10,7 +10,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stephenwade/festival.git"
+    "url": "git+https://github.com/stephenwade/festival.git"
   },
   "packageManager": "yarn@3.0.2",
   "scripts": {
@@ -45,6 +45,6 @@
   "lint-staged": {
     "*.{js,cjs,html}": "eslint --fix",
     "*.{js,html}": "stylelint --fix",
-    "*.{js,cjs,json,html,css,md,yml}": "prettier --write"
+    "*": "prettier --ignore-unknown --write"
   }
 }

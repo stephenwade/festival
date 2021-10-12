@@ -1,6 +1,5 @@
 {
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.configPath": ".prettierrc"
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

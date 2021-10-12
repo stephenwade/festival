@@ -6,7 +6,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stephenwade/festival.git"
+    "url": "git+https://github.com/stephenwade/festival.git"
   },
   "scripts": {
     "start": "web-dev-server",
