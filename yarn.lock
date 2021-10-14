@@ -2640,17 +2640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-mocha@npm:0.7.4":
-  version: 0.7.4
-  resolution: "@web/test-runner-mocha@npm:0.7.4"
-  dependencies:
-    "@types/mocha": ^8.2.0
-    "@web/test-runner-core": ^0.10.20
-  checksum: 6a11e407de250463072895846b9e07159f68204ac4fcda7e29152991c0da739ea29c4fbb8f5fcf9b841c4bc82fdb0436b86b5697bc061e010a9e3ef79c363d20
-  languageName: node
-  linkType: hard
-
-"@web/test-runner-mocha@npm:^0.7.5":
+"@web/test-runner-mocha@npm:0.7.5, @web/test-runner-mocha@npm:^0.7.5":
   version: 0.7.5
   resolution: "@web/test-runner-mocha@npm:0.7.5"
   dependencies:
@@ -5899,7 +5889,7 @@ __metadata:
     "@web/dev-server-import-maps": 0.0.6
     "@web/test-runner": 0.13.19
     "@web/test-runner-commands": 0.5.13
-    "@web/test-runner-mocha": 0.7.4
+    "@web/test-runner-mocha": 0.7.5
     "@web/test-runner-playwright": 0.8.8
     chai: 4.3.4
     concurrently: 6.3.0
