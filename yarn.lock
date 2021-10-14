@@ -2640,13 +2640,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-mocha@npm:0.7.4, @web/test-runner-mocha@npm:^0.7.4":
+"@web/test-runner-mocha@npm:0.7.4":
   version: 0.7.4
   resolution: "@web/test-runner-mocha@npm:0.7.4"
   dependencies:
     "@types/mocha": ^8.2.0
     "@web/test-runner-core": ^0.10.20
   checksum: 6a11e407de250463072895846b9e07159f68204ac4fcda7e29152991c0da739ea29c4fbb8f5fcf9b841c4bc82fdb0436b86b5697bc061e010a9e3ef79c363d20
+  languageName: node
+  linkType: hard
+
+"@web/test-runner-mocha@npm:^0.7.5":
+  version: 0.7.5
+  resolution: "@web/test-runner-mocha@npm:0.7.5"
+  dependencies:
+    "@types/mocha": ^8.2.0
+    "@web/test-runner-core": ^0.10.20
+  checksum: 12f87299945d230815bb783de2953ac4239306c1a67145ef5b78cfb0b361ae7f659e5d3e5150af2cedc6f2c55adf10652b761f016430a7ac2d7f77b91ecb9cd1
   languageName: node
   linkType: hard
 
@@ -2661,9 +2671,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner@npm:0.13.18":
-  version: 0.13.18
-  resolution: "@web/test-runner@npm:0.13.18"
+"@web/test-runner@npm:0.13.19":
+  version: 0.13.19
+  resolution: "@web/test-runner@npm:0.13.19"
   dependencies:
     "@web/browser-logs": ^0.2.2
     "@web/config-loader": ^0.1.3
@@ -2671,7 +2681,7 @@ __metadata:
     "@web/test-runner-chrome": ^0.10.3
     "@web/test-runner-commands": ^0.5.10
     "@web/test-runner-core": ^0.10.21
-    "@web/test-runner-mocha": ^0.7.4
+    "@web/test-runner-mocha": ^0.7.5
     camelcase: ^6.2.0
     command-line-args: ^5.1.1
     command-line-usage: ^6.1.1
@@ -2684,7 +2694,7 @@ __metadata:
   bin:
     web-test-runner: dist/bin.js
     wtr: dist/bin.js
-  checksum: 140d62d70927abecf1355c6f07be002e653a3a7debae8631731d75348d888ad329be619bf6193d61fa7497577c6b3d039fd803b82b68a5c146ea54ea0c63a455
+  checksum: 3c70440efa05e0c808c87551a8b7209c329e3efc14e3aa4bba2b1a68a98e23687f1283b8b6637f1950da9140c06f20ecf805069c080b0e98813f093f2aaadc54
   languageName: node
   linkType: hard
 
@@ -5887,7 +5897,7 @@ __metadata:
     "@vaadin/router": 1.7.4
     "@web/dev-server": 0.1.25
     "@web/dev-server-import-maps": 0.0.6
-    "@web/test-runner": 0.13.18
+    "@web/test-runner": 0.13.19
     "@web/test-runner-commands": 0.5.13
     "@web/test-runner-mocha": 0.7.4
     "@web/test-runner-playwright": 0.8.8
