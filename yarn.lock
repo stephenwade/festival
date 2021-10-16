@@ -1612,17 +1612,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/scoped-elements@npm:^2.0.0-next.6":
-  version: 2.0.0-next.6
-  resolution: "@open-wc/scoped-elements@npm:2.0.0-next.6"
-  dependencies:
-    "@lit/reactive-element": ^1.0.0
-    "@open-wc/dedupe-mixin": ^1.3.0
-    "@webcomponents/scoped-custom-element-registry": ^0.0.3
-  checksum: 239e08c7837022c0743c0af1cbd261e9af389681e010d371b51da64d66c80ceaa3ee3eea5440fd601faef7a02e70aa2ca13f8613c11844dba4ecab9573b314cc
-  languageName: node
-  linkType: hard
-
 "@open-wc/scoped-elements@npm:^2.0.1":
   version: 2.0.1
   resolution: "@open-wc/scoped-elements@npm:2.0.1"
@@ -1651,17 +1640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/testing-helpers@npm:2.0.0-next.3":
-  version: 2.0.0-next.3
-  resolution: "@open-wc/testing-helpers@npm:2.0.0-next.3"
-  dependencies:
-    "@open-wc/scoped-elements": ^2.0.0-next.6
-    lit: ^2.0.0
-  checksum: f4af2f154539949cb032ce276d66b34624e1edc7a72e4229cdfc7a6973c0e579901a76c18f9c87ab3e58512c2bb7abbbcba8995f747008d09ae9e82321dcb905
-  languageName: node
-  linkType: hard
-
-"@open-wc/testing-helpers@npm:^2.0.1":
+"@open-wc/testing-helpers@npm:2.0.1, @open-wc/testing-helpers@npm:^2.0.1":
   version: 2.0.1
   resolution: "@open-wc/testing-helpers@npm:2.0.1"
   dependencies:
@@ -5957,7 +5936,7 @@ __metadata:
   dependencies:
     "@open-wc/building-rollup": 1.10.0
     "@open-wc/testing": 3.0.1
-    "@open-wc/testing-helpers": 2.0.0-next.3
+    "@open-wc/testing-helpers": 2.0.1
     "@playwright/test": 1.15.2
     "@rollup/plugin-replace": 3.0.0
     "@vaadin/router": 1.7.4
