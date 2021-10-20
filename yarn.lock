@@ -1592,16 +1592,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/eslint-config@npm:6.0.0":
-  version: 6.0.0
-  resolution: "@open-wc/eslint-config@npm:6.0.0"
+"@open-wc/eslint-config@npm:7.0.0":
+  version: 7.0.0
+  resolution: "@open-wc/eslint-config@npm:7.0.0"
   dependencies:
     eslint: ^7.6.0
     eslint-config-airbnb-base: ^14.0.0
     eslint-plugin-html: ^6.0.0
     eslint-plugin-import: ^2.18.2
     eslint-plugin-lit: ^1.2.0
-    eslint-plugin-lit-a11y: ^2.0.0
+    eslint-plugin-lit-a11y: ^2.1.0
     eslint-plugin-no-only-tests: ^2.4.0
     eslint-plugin-wc: ^1.2.0
   peerDependencies:
@@ -1609,10 +1609,10 @@ __metadata:
     eslint-plugin-html: ^6.0.0
     eslint-plugin-import: ^2.18.2
     eslint-plugin-lit: ^1.3.0
-    eslint-plugin-lit-a11y: ^2.0.0
+    eslint-plugin-lit-a11y: ^2.1.0
     eslint-plugin-no-only-tests: ^2.4.0
     eslint-plugin-wc: ^1.2.0
-  checksum: fff34df920b13b4c2081faf8373a398968da674c4e668dbdde32c48554cd08ba840b4a0a53256e5bdb5ba091ce87e2d37c4c35725302ff23bade98fa7839cb57
+  checksum: 615a18b685b4d660a9abeb47428e04a4c8bae1282c421c61680c14b2453fe2aa0a639e2d9e80a8ccaf3fd68eeafbf9ab9356a4c8ae88b1da844275a1b674b8a8
   languageName: node
   linkType: hard
 
@@ -5330,7 +5330,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-lit-a11y@npm:2.1.0":
+"eslint-plugin-lit-a11y@npm:2.1.0, eslint-plugin-lit-a11y@npm:^2.1.0":
   version: 2.1.0
   resolution: "eslint-plugin-lit-a11y@npm:2.1.0"
   dependencies:
@@ -5347,25 +5347,6 @@ __metadata:
   peerDependencies:
     eslint: ">= 5"
   checksum: 444e9263ff57d35bb9cf76219c602f7d6caba18de1e9d164ab8dcd959a105da8303056cd17222fb1efae1e50f4ff96fbce4f2a3c372f99493732425a114195f7
-  languageName: node
-  linkType: hard
-
-"eslint-plugin-lit-a11y@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "eslint-plugin-lit-a11y@npm:2.0.0"
-  dependencies:
-    aria-query: ^4.2.2
-    axe-core: ^4.3.3
-    axobject-query: ^2.2.0
-    dom5: ^3.0.1
-    emoji-regex: ^9.2.0
-    eslint-rule-extender: 0.0.1
-    parse5: ^5.1.1
-    parse5-htmlparser2-tree-adapter: ^6.0.1
-    requireindex: ~1.2.0
-  peerDependencies:
-    eslint: ">= 5"
-  checksum: a5ff751c966385bd4a73dd9332e65a768afeda8e48df345a6a6169272ead593faeb805d2de565e46c662b5e0910c0a0cba0ecc9ba8bc96641b18af15a75472df
   languageName: node
   linkType: hard
 
@@ -6051,7 +6032,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "festival-root@workspace:."
   dependencies:
-    "@open-wc/eslint-config": 6.0.0
+    "@open-wc/eslint-config": 7.0.0
     eslint: 8.0.1
     eslint-config-prettier: 8.3.0
     eslint-plugin-html: 6.2.0
