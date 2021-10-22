@@ -6045,7 +6045,7 @@ __metadata:
     lint-staged: 11.2.3
     prettier: 2.4.1
     stylelint: 13.13.1
-    stylelint-config-hudochenkov: 5.0.0
+    stylelint-config-hudochenkov: 6.0.1
     stylelint-config-prettier: 9.0.3
     stylelint-config-standard: 22.0.0
     stylelint-order: 4.1.0
@@ -12182,12 +12182,12 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"stylelint-config-hudochenkov@npm:5.0.0":
-  version: 5.0.0
-  resolution: "stylelint-config-hudochenkov@npm:5.0.0"
+"stylelint-config-hudochenkov@npm:6.0.1":
+  version: 6.0.1
+  resolution: "stylelint-config-hudochenkov@npm:6.0.1"
   peerDependencies:
-    stylelint: ^13.3.2
-  checksum: 35db4a9d04d73f2995e740fa711cfb88be8b48f02ba63b3ec99853e94af0a717b0915ba477cd258dabf0e353558ff753a7d235b18cdc15916949bd751e527e62
+    stylelint: ^14.0.0
+  checksum: ab6a7d9d5fcdcd960ec1c3f67572c487131a8f351faeb10fe9aab02c05d97dc6a4830be9d7f314dabf425c572e6be927359f98d4e82ff97b62eccd0f8ede03e2
   languageName: node
   linkType: hard
 
