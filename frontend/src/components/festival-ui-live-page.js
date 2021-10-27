@@ -39,7 +39,7 @@ class FestivalUiLivePage extends connect(store)(LitElement) {
         #toast button {
           min-width: 5em;
           margin: 0 0.3em;
-          padding: 0.7em 0.7em;
+          padding: 0.7em;
         }
 
         /* stylelint-disable-next-line no-descending-specificity */

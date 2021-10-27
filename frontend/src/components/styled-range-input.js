@@ -14,7 +14,7 @@ class StyledRangeInput extends LitElement {
         width: 100%;
         margin: 7px 0;
         background-color: transparent;
-        -webkit-appearance: none;
+        appearance: none;
       }
 
       input[type='range']:focus {
@@ -38,7 +38,7 @@ class StyledRangeInput extends LitElement {
         border-radius: 8px;
         background: var(--sri-color-primary);
         cursor: pointer;
-        -webkit-appearance: none;
+        appearance: none;
       }
 
       input[type='range']:focus::-webkit-slider-runnable-track {

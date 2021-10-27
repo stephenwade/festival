@@ -13,7 +13,7 @@ class FestivalUi extends LitElement {
       fullPageClass,
       css`
         :host {
-          font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
+          font-family: HelveticaNeue-Light, 'Helvetica Neue Light',
             'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
           user-select: none;
         }
