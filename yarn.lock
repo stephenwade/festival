@@ -1714,7 +1714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.16.1, @playwright/test@npm:^1.16.1":
+"@playwright/test@npm:1.16.1":
   version: 1.16.1
   resolution: "@playwright/test@npm:1.16.1"
   dependencies:
@@ -6038,7 +6038,7 @@ __metadata:
   resolution: "festival-root@workspace:."
   dependencies:
     "@open-wc/eslint-config": 7.0.0
-    "@playwright/test": ^1.16.1
+    "@playwright/test": 1.16.1
     eslint: 8.1.0
     eslint-config-prettier: 8.3.0
     eslint-plugin-html: 6.2.0
