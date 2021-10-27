@@ -37,7 +37,7 @@
     "standardized-audio-context": "25.3.13"
   },
   "devDependencies": {
-    "@open-wc/building-rollup": "1.10.0",
+    "@open-wc/building-rollup": "2.0.1",
     "@open-wc/testing": "3.0.1",
     "@open-wc/testing-helpers": "2.0.1",
     "@playwright/test": "1.16.1",
