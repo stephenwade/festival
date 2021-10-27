@@ -55,7 +55,7 @@ class FestivalUiIntroPage extends LitElement {
         }
 
         #buttons a:active {
-          background-color: rgba(255, 255, 255, 0.8);
+          background-color: rgb(255 255 255 / 80%);
         }
       `,
     ];

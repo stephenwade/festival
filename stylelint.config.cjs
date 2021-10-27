@@ -1,3 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+const postcssCssInJs = require('@stylelint/postcss-css-in-js')();
+// ^^ requires postcss-syntax to be installed
+
 module.exports = {
   extends: [
     'stylelint-config-standard',
@@ -12,4 +16,5 @@ module.exports = {
 
     'declaration-block-trailing-semicolon': 'always',
   },
+  customSyntax: postcssCssInJs,
 };
