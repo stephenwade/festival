@@ -1645,9 +1645,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/testing@npm:3.0.1":
-  version: 3.0.1
-  resolution: "@open-wc/testing@npm:3.0.1"
+"@open-wc/testing@npm:3.0.2":
+  version: 3.0.2
+  resolution: "@open-wc/testing@npm:3.0.2"
   dependencies:
     "@esm-bundle/chai": ^4.3.4
     "@open-wc/chai-dom-equals": ^0.12.36
@@ -1657,7 +1657,7 @@ __metadata:
     "@types/chai-dom": ^0.0.9
     "@types/sinon-chai": ^3.2.3
     chai-a11y-axe: ^1.3.2
-  checksum: d9caa78f328b5b6df012033feb452336df94f2f39a828371a0f36ede7473b82b2e392ae03900158d3bea7fb7ef6d3b52b0327d26399195a341207c7572b05449
+  checksum: 6b6cd193f0a54def501c4e4dca1a9214ec7f6504d1342e900df601ba10f1b36890026fa7b450a46bc0884527daf35261fdeb7b44d5bb94951363225f3f1d7f9e
   languageName: node
   linkType: hard
 
@@ -5828,7 +5828,7 @@ __metadata:
   resolution: "festival@workspace:frontend"
   dependencies:
     "@open-wc/building-rollup": 2.0.1
-    "@open-wc/testing": 3.0.1
+    "@open-wc/testing": 3.0.2
     "@open-wc/testing-helpers": 2.0.1
     "@playwright/test": 1.16.2
     "@rollup/plugin-replace": 3.0.0
