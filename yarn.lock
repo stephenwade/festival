@@ -2410,6 +2410,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@web/dev-server-core@npm:^0.3.17":
+  version: 0.3.17
+  resolution: "@web/dev-server-core@npm:0.3.17"
+  dependencies:
+    "@types/koa": ^2.11.6
+    "@types/ws": ^7.4.0
+    "@web/parse5-utils": ^1.2.0
+    chokidar: ^3.4.3
+    clone: ^2.1.2
+    es-module-lexer: ^0.9.0
+    get-stream: ^6.0.0
+    is-stream: ^2.0.0
+    isbinaryfile: ^4.0.6
+    koa: ^2.13.0
+    koa-etag: ^4.0.0
+    koa-send: ^5.0.1
+    koa-static: ^5.0.0
+    lru-cache: ^6.0.0
+    mime-types: ^2.1.27
+    parse5: ^6.0.1
+    picomatch: ^2.2.2
+    ws: ^7.4.2
+  checksum: 6d920dbbe2b736736d61ae529ffaff31631ffce2319025f63fc783e842654e92fc3b30c92460d1e656ca6650713c74e722c05e6e0d6add5b740be808525d2680
+  languageName: node
+  linkType: hard
+
 "@web/dev-server-import-maps@npm:0.0.6":
   version: 0.0.6
   resolution: "@web/dev-server-import-maps@npm:0.0.6"
@@ -2450,15 +2476,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server@npm:0.1.26":
-  version: 0.1.26
-  resolution: "@web/dev-server@npm:0.1.26"
+"@web/dev-server@npm:0.1.27":
+  version: 0.1.27
+  resolution: "@web/dev-server@npm:0.1.27"
   dependencies:
     "@babel/code-frame": ^7.12.11
     "@rollup/plugin-node-resolve": ^11.0.1
     "@types/command-line-args": ^5.0.0
     "@web/config-loader": ^0.1.3
-    "@web/dev-server-core": ^0.3.16
+    "@web/dev-server-core": ^0.3.17
     "@web/dev-server-rollup": ^0.3.12
     camelcase: ^6.2.0
     command-line-args: ^5.1.1
@@ -2472,7 +2498,7 @@ __metadata:
   bin:
     wds: dist/bin.js
     web-dev-server: dist/bin.js
-  checksum: 379365841935de99fe07f7fe8a27cc74f9060dc634243c43368f1f17980bf96fb33c4f9f3e4aea07dd41cb7a2e694b7dea251d77962f67f1670300a195dcf304
+  checksum: e7d077da689b98c0030db4cf15455d41f514c3925cf9970527797138f7e9f4f8867c64c4161a96121c28759f05ad96ad3611b5c3a76ffb5cf28ceaee20a1d8d0
   languageName: node
   linkType: hard
 
@@ -5790,7 +5816,7 @@ __metadata:
     "@playwright/test": 1.16.3
     "@rollup/plugin-replace": 3.0.0
     "@vaadin/router": 1.7.4
-    "@web/dev-server": 0.1.26
+    "@web/dev-server": 0.1.27
     "@web/dev-server-import-maps": 0.0.6
     "@web/test-runner": 0.13.21
     "@web/test-runner-commands": 0.5.13
