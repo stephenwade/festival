@@ -1432,15 +1432,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@magic-sdk/admin@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@magic-sdk/admin@npm:1.3.1"
+"@magic-sdk/admin@npm:1.3.2":
+  version: 1.3.2
+  resolution: "@magic-sdk/admin@npm:1.3.2"
   dependencies:
     eth-sig-util: 2.1.2
     ethereumjs-util: ^6.2.0
     express: ^4.17.1
     node-fetch: ^2.6.0
-  checksum: 454fb21121c031b966ce74fd5baa0fbcab854040cec2c42e17004aca8f2505c5bbea216a0ff65df06ebbbee5d452bba1d5507cc9ebf6f0ad4e8b273f1d46b8e5
+  checksum: ef2d079055fd3e6582194601ac8d83c236b53bfdfc67059e29f8edab27d7ff8da51f1d70525c1d02d524149f48a311169be487e661cecf7f639b7591be231865
   languageName: node
   linkType: hard
 
@@ -5775,7 +5775,7 @@ __metadata:
   resolution: "festival-admin@workspace:admin"
   dependencies:
     "@koa/router": 10.1.1
-    "@magic-sdk/admin": 1.3.1
+    "@magic-sdk/admin": 1.3.2
     "@open-wc/building-rollup": 2.0.1
     "@rollup/plugin-replace": 3.0.0
     deepmerge: 4.2.2
