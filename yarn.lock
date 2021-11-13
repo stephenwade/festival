@@ -1266,12 +1266,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.16.0, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.16.0
   resolution: "@babel/runtime@npm:7.16.0"
   dependencies:
     regenerator-runtime: ^0.13.4
   checksum: bfbca3ec52c94de262a3932473bceeead1a088b50194108fa1ff6eda447333f0f7d43fa4e9c5937c6e5d45bf838da8480905d0a227589b257c51f954ea060bac
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.16.3":
+  version: 7.16.3
+  resolution: "@babel/runtime@npm:7.16.3"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: ab8ac887096d76185ddbf291d28fb976cd32473696dc497ad4905b784acbd5aa462533ad83a5c5104e10ead28c2e0e119840ee28ed8eff90dcdde9d57f916eda
   languageName: node
   linkType: hard
 
@@ -3073,13 +3082,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^4.0.9":
-  version: 4.0.9
-  resolution: "automation-events@npm:4.0.9"
+"automation-events@npm:^4.0.10":
+  version: 4.0.10
+  resolution: "automation-events@npm:4.0.10"
   dependencies:
-    "@babel/runtime": ^7.16.0
+    "@babel/runtime": ^7.16.3
     tslib: ^2.3.1
-  checksum: c6ba4d5faaa9eb1f142b9ed58a7dc4c938c80dbe37eddb027a70e9083d64e5c6165124df9cb11e0a84aa5f0917419807f5ad1c91d82e7c1383c20aaebb053089
+  checksum: 62abed0589747c69d6869659646fd9379b8e74a257b101b2641bfa1d6c4db12afe3f68c55ade179692e03490ead3a516c2be688ba7b646257affcbd38521c5be
   languageName: node
   linkType: hard
 
@@ -5852,7 +5861,7 @@ __metadata:
     rollup: 2.60.0
     rollup-plugin-copy: 3.4.0
     sinon: 11.1.2
-    standardized-audio-context: 25.3.14
+    standardized-audio-context: 25.3.15
   languageName: unknown
   linkType: soft
 
@@ -11378,14 +11387,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.14":
-  version: 25.3.14
-  resolution: "standardized-audio-context@npm:25.3.14"
+"standardized-audio-context@npm:25.3.15":
+  version: 25.3.15
+  resolution: "standardized-audio-context@npm:25.3.15"
   dependencies:
-    "@babel/runtime": ^7.16.0
-    automation-events: ^4.0.9
+    "@babel/runtime": ^7.16.3
+    automation-events: ^4.0.10
     tslib: ^2.3.1
-  checksum: abafd918c31193bc024f753249c72dc14ea944d978a06b715aa0401c30fcf09c15d91e4306a8679524585593551e4a356482af920f047d242c3c850668091dba
+  checksum: 7a5068df66d332e120a8e1c0caf468539d013c85cb422779adb82546f231569c1349c1aee054ed8fe8c43d23a1cb12d0e3dd590ec17d40d20be898e8eca50d9c
   languageName: node
   linkType: hard
 
