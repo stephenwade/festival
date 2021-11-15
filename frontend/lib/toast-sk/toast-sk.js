@@ -29,13 +29,13 @@ export class ToastSk extends LitElement {
         z-index: 20;
         display: block;
         padding: 10px 15px;
-        opacity: 0%;
+        opacity: 0;
         visibility: hidden;
       }
 
       :host([shown]) {
         bottom: 10px;
-        opacity: 100%;
+        opacity: 1;
         visibility: visible;
         transition: bottom 0.3s linear, opacity 0.3s linear, visibility 0s;
       }

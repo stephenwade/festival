@@ -47,7 +47,7 @@ class FabVolumeButton extends LitElement {
           height: 56px;
           border-radius: 28px;
           background-color: var(--background-color);
-          opacity: 20%;
+          opacity: 0.2;
         }
 
         svg {
