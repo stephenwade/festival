@@ -52,7 +52,7 @@
     "concurrently": "6.4.0",
     "deepmerge": "4.2.2",
     "dotenv": "10.0.0",
-    "dotenv-run-script": "0.1.0",
+    "dotenv-run-script": "0.2.0",
     "fetch-mock": "9.11.0",
     "imagemin": "8.0.1",
     "imagemin-cli": "7.0.0",

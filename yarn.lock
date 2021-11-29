@@ -4720,15 +4720,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv-run-script@npm:0.1.0":
-  version: 0.1.0
-  resolution: "dotenv-run-script@npm:0.1.0"
+"dotenv-run-script@npm:0.2.0":
+  version: 0.2.0
+  resolution: "dotenv-run-script@npm:0.2.0"
   dependencies:
     dotenv: ^8.2.0
     dotenv-expand: ^5.1.0
   bin:
     dotenv-run-script: bin/dotenv-run-script
-  checksum: d91576e31f6c0285ee00105a995d908904bd5962a579b7585e077513d924601857b77bc13b4cd68236b1838b5fd65593ad23349d66881cd94c5c9edac9d02ded
+  checksum: 7dbcfcd02757185e507449af04d16faa4d7186a531720cf2987adfddec90e6522af3a33b532093b3a8c1f19f245b9b4cd1b8fd1860a00ecfc0ffa1f24c4b02f3
   languageName: node
   linkType: hard
 
@@ -5831,7 +5831,7 @@ __metadata:
     date-fns: 2.26.0
     deepmerge: 4.2.2
     dotenv: 10.0.0
-    dotenv-run-script: 0.1.0
+    dotenv-run-script: 0.2.0
     fetch-mock: 9.11.0
     imagemin: 8.0.1
     imagemin-cli: 7.0.0
