@@ -56,7 +56,7 @@
     "fetch-mock": "9.11.0",
     "imagemin": "8.0.1",
     "imagemin-cli": "7.0.0",
-    "imagemin-webp": "6.0.0",
+    "imagemin-webp": "7.0.0",
     "koa-range": "0.3.0",
     "rollup": "2.61.1",
     "rollup-plugin-copy": "3.4.0",
