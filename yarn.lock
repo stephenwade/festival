@@ -1278,7 +1278,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.16.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.16.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.16.5
   resolution: "@babel/runtime@npm:7.16.5"
   dependencies:
@@ -3072,13 +3072,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^4.0.10":
-  version: 4.0.10
-  resolution: "automation-events@npm:4.0.10"
+"automation-events@npm:^4.0.11":
+  version: 4.0.11
+  resolution: "automation-events@npm:4.0.11"
   dependencies:
-    "@babel/runtime": ^7.16.3
+    "@babel/runtime": ^7.16.5
     tslib: ^2.3.1
-  checksum: 62abed0589747c69d6869659646fd9379b8e74a257b101b2641bfa1d6c4db12afe3f68c55ade179692e03490ead3a516c2be688ba7b646257affcbd38521c5be
+  checksum: c6502918ca7d7a4649b81720e3bb5cccfba9052f4752525097688369dd33d51a0fd82ca8a2f7fda407617abec6015aae8e3ab936df888bf577a232680956b45e
   languageName: node
   linkType: hard
 
@@ -5852,7 +5852,7 @@ __metadata:
     rollup: 2.61.1
     rollup-plugin-copy: 3.4.0
     sinon: 12.0.1
-    standardized-audio-context: 25.3.17
+    standardized-audio-context: 25.3.18
   languageName: unknown
   linkType: soft
 
@@ -11305,14 +11305,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.17":
-  version: 25.3.17
-  resolution: "standardized-audio-context@npm:25.3.17"
+"standardized-audio-context@npm:25.3.18":
+  version: 25.3.18
+  resolution: "standardized-audio-context@npm:25.3.18"
   dependencies:
     "@babel/runtime": ^7.16.5
-    automation-events: ^4.0.10
+    automation-events: ^4.0.11
     tslib: ^2.3.1
-  checksum: 11f9c8fd9548d7fbcea41961d5fd8a6411db6d0bbbae683fbe34f15f9084628156d112ff271a6fcc600d00a74dd15c2453fa94780c6017aa1f668035163cda87
+  checksum: 70e3009716a7bbb413e458b306372719fdb36269f5b05c42bbf1e89fecb92e22bf8963ca1c58f67ea4571e49b76800b284987b5a59d8eec13a924f9c37e12bee
   languageName: node
   linkType: hard
 
