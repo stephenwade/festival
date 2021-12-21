@@ -2564,13 +2564,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-commands@npm:0.5.13, @web/test-runner-commands@npm:^0.5.10, @web/test-runner-commands@npm:^0.5.7":
+"@web/test-runner-commands@npm:0.5.13, @web/test-runner-commands@npm:^0.5.7":
   version: 0.5.13
   resolution: "@web/test-runner-commands@npm:0.5.13"
   dependencies:
     "@web/test-runner-core": ^0.10.20
     mkdirp: ^1.0.4
   checksum: 98821dbc5a036ec5529c2d3c33bd06d949ef6aef97d36c92535f86149330edb4d7c876ed6c94be8e86c5e7f593e6fc93b145696775f3e558e615335001ffda73
+  languageName: node
+  linkType: hard
+
+"@web/test-runner-commands@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@web/test-runner-commands@npm:0.6.0"
+  dependencies:
+    "@web/test-runner-core": ^0.10.20
+    mkdirp: ^1.0.4
+  checksum: 37fa485b30d6e2a63f649d8950856ef0d7d31845631e40142f556032e860c5c801edf3d760a078f8f7895ba1ab4594f27322de8b10c0cca7b7d251fe65f93946
   languageName: node
   linkType: hard
 
@@ -2641,15 +2651,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner@npm:0.13.22":
-  version: 0.13.22
-  resolution: "@web/test-runner@npm:0.13.22"
+"@web/test-runner@npm:0.13.23":
+  version: 0.13.23
+  resolution: "@web/test-runner@npm:0.13.23"
   dependencies:
     "@web/browser-logs": ^0.2.2
     "@web/config-loader": ^0.1.3
     "@web/dev-server": ^0.1.24
     "@web/test-runner-chrome": ^0.10.5
-    "@web/test-runner-commands": ^0.5.10
+    "@web/test-runner-commands": ^0.6.0
     "@web/test-runner-core": ^0.10.22
     "@web/test-runner-mocha": ^0.7.5
     camelcase: ^6.2.0
@@ -2664,7 +2674,7 @@ __metadata:
   bin:
     web-test-runner: dist/bin.js
     wtr: dist/bin.js
-  checksum: f0acddd4a692d7173fe79e98df8c4bc6bb8201f52455cbf23f5d99a31bdb54e3f37e46fa80f356283d3e85e3694b70b0adb7b195937fd588306f3ecd6e2e794e
+  checksum: c0440e09e9813f0e3d2a9a38bf39ea217d2b5c19e384594a757e0b8a578018e647a093e9bfee4db4d54c152059f8c15df9be7e0bba40b86448dd688fe7917bdd
   languageName: node
   linkType: hard
 
@@ -5837,7 +5847,7 @@ __metadata:
     "@vaadin/router": 1.7.4
     "@web/dev-server": 0.1.28
     "@web/dev-server-import-maps": 0.0.6
-    "@web/test-runner": 0.13.22
+    "@web/test-runner": 0.13.23
     "@web/test-runner-commands": 0.5.13
     "@web/test-runner-mocha": 0.7.5
     "@web/test-runner-playwright": 0.8.8
