@@ -25,7 +25,7 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
   await fs.copyFile(TEST_SETS_PATH, SETS_PATH);
 
   console.log('Building...');
-  await concurrently(['E2E=yes yarn build']);
+  await concurrently(['E2E=yes yarn build']).result;
 
   console.log('Copying test media file...');
   await fs.copyFile(TEST_MEDIA_PATH_FROM, TEST_MEDIA_PATH_TO);
@@ -39,7 +39,7 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
         'yarn start:build',
       ],
       { killOthers: ['failure', 'success'] }
-    );
+    ).result;
   } catch (e) {
     if (
       e.some(
@@ -53,7 +53,7 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
 
   console.log('Cleaning up...');
   await fs.unlink(SETS_PATH);
-  await concurrently(['rm -r dist']);
+  await concurrently(['rm -r dist']).result;
 
   if (setsExist) {
     console.log(`Restoring original ${SETS_PATH}...`);
