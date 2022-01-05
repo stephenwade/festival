@@ -1454,6 +1454,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lit/reactive-element@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@lit/reactive-element@npm:1.1.0"
+  checksum: 1858dfdb8ae63a80b1a7a3adca0c1c19e3bbc0c1260e135dc196c28bc51445838fe139be488ebbecca649d37ebd1f40445f33797eb5760f7f9cbc8076a0e8205
+  languageName: node
+  linkType: hard
+
 "@magic-sdk/admin@npm:1.3.4":
   version: 1.3.4
   resolution: "@magic-sdk/admin@npm:1.3.4"
@@ -5898,7 +5905,7 @@ __metadata:
     koa-mount: 4.0.0
     koa-send: 5.0.1
     koa-static: 5.0.0
-    lit: 2.0.2
+    lit: 2.1.0
     nodemon: 2.0.15
     rollup: 2.63.0
   languageName: unknown
@@ -5958,7 +5965,7 @@ __metadata:
     imagemin-cli: 7.0.0
     imagemin-webp: 7.0.0
     koa-range: 0.3.0
-    lit: 2.0.2
+    lit: 2.1.0
     pwa-helpers: 0.9.1
     redux: 4.1.2
     redux-thunk: 2.4.1
@@ -8322,6 +8329,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lit-element@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "lit-element@npm:3.1.0"
+  dependencies:
+    "@lit/reactive-element": ^1.1.0
+    lit-html: ^2.1.0
+  checksum: 8bc8af462c4daf64eb96030d437ca938034329eeb16b28488a87411eef609c825ba6b634c305a27dc1c90f34b56ca8fe8d36d1cebde445e47f4c313dc72f75a5
+  languageName: node
+  linkType: hard
+
 "lit-html@npm:^2.0.0":
   version: 2.0.2
   resolution: "lit-html@npm:2.0.2"
@@ -8331,7 +8348,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:2.0.2, lit@npm:^2.0.0":
+"lit-html@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "lit-html@npm:2.1.0"
+  dependencies:
+    "@types/trusted-types": ^2.0.2
+  checksum: 05bbd05a10d8f9fd153fd4480246917201f63e6174405320f3af7aa02be1bcd8dd3851294c4314ace924db41d8ae4fbb6fb04590acb3f7faa133582a4a3e8eb8
+  languageName: node
+  linkType: hard
+
+"lit@npm:2.1.0":
+  version: 2.1.0
+  resolution: "lit@npm:2.1.0"
+  dependencies:
+    "@lit/reactive-element": ^1.1.0
+    lit-element: ^3.1.0
+    lit-html: ^2.1.0
+  checksum: 4a415430ecc8bb059d2f61b758a3a34d9581b6fb2437e6ca05c943b09ebec36488274ddf9811b24a4e9517b331199d498b75831cd8826927b0d19408f1630ea6
+  languageName: node
+  linkType: hard
+
+"lit@npm:^2.0.0":
   version: 2.0.2
   resolution: "lit@npm:2.0.2"
   dependencies:
