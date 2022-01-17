@@ -4766,10 +4766,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:14.1.0":
-  version: 14.1.0
-  resolution: "dotenv@npm:14.1.0"
-  checksum: 9e7afe54688c6ddd270797766b1f51421cc1d38cce5a470750537d598cc1719e1b6effcb35022fccd949f2da701b5f186d4c0da44a72fb3a8bd1e2513159a9d2
+"dotenv@npm:14.1.1":
+  version: 14.1.1
+  resolution: "dotenv@npm:14.1.1"
+  checksum: fe170e620ac8ec997200337d4378f0040b118bd163d801c74faa07db9a534758ceb984076a7f73c7c7e4e427dd6a9e009a6009485196c284f77bf30b72b98536
   languageName: node
   linkType: hard
 
@@ -5815,7 +5815,7 @@ __metadata:
     "@open-wc/building-rollup": 2.0.1
     "@rollup/plugin-replace": 3.0.1
     deepmerge: 4.2.2
-    dotenv: 14.1.0
+    dotenv: 14.1.1
     dotenv-cli: 4.1.1
     koa: 2.13.4
     koa-mount: 4.0.0
@@ -5874,7 +5874,7 @@ __metadata:
     concurrently: 7.0.0
     date-fns: 2.28.0
     deepmerge: 4.2.2
-    dotenv: 14.1.0
+    dotenv: 14.1.1
     dotenv-run-script: 0.2.0
     fetch-mock: 9.11.0
     imagemin: 8.0.1
