@@ -24,7 +24,7 @@
     "@open-wc/building-rollup": "2.0.1",
     "@rollup/plugin-replace": "3.0.1",
     "deepmerge": "4.2.2",
-    "dotenv": "14.1.0",
+    "dotenv": "14.2.0",
     "koa": "2.13.4",
     "koa-mount": "4.0.0",
     "koa-send": "5.0.1",
