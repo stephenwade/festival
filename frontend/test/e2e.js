@@ -35,7 +35,7 @@ const TEST_MEDIA_PATH_TO = `dist/media/10-sec-silence.mp3`;
   try {
     await concurrently(
       [
-        'npx playwright test --config=test/e2e/playwright.config.js test/e2e/e2e.spec.ts',
+        'npx playwright test --config=test/e2e/playwright.config.js test/e2e/e2e.spec.js',
         'yarn start:build',
       ],
       { killOthers: ['failure', 'success'] }

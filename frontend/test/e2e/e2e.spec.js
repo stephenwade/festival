@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const { test } = require('@playwright/test');
+import { expect } from 'chai';
+import { test } from '@playwright/test';
 
 test('e2e', async ({ page }) => {
   await page.goto('http://localhost:8080/');
