@@ -60,6 +60,6 @@
     "koa-range": "0.3.0",
     "rollup": "2.66.1",
     "rollup-plugin-copy": "3.4.0",
-    "sinon": "12.0.1"
+    "sinon": "13.0.0"
   }
 }
