@@ -6,11 +6,11 @@ __metadata:
   cacheKey: 8
 
 "@ampproject/remapping@npm:^2.0.0":
-  version: 2.0.4
-  resolution: "@ampproject/remapping@npm:2.0.4"
+  version: 2.1.0
+  resolution: "@ampproject/remapping@npm:2.1.0"
   dependencies:
     "@jridgewell/trace-mapping": ^0.3.0
-  checksum: d7c8a8eccd82b9443b345a4f8365dc9c022cd4a53d4404bd005e3574644318d3d5760d98c4733448c486be4a7b50ff251fdc738e8c65ed9c02aa712f66b80685
+  checksum: 10ff0d4a559f930082f1a4c1b68dc521d5b1a75e0b8ab4829e9eedf6621386893e4a008f0db6c716f64db5d8eed49c0abcfbf3bd6ff11d5a00312454a9351ed4
   languageName: node
   linkType: hard
 
@@ -3710,9 +3710,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001286":
-  version: 1.0.30001307
-  resolution: "caniuse-lite@npm:1.0.30001307"
-  checksum: e592d537277e5d453670207ac672ea3df5207c686cbea708427500f4d51d08d295d734e0db852e4aae749e7c6119d01aea21b5666922ab0eaf7a648df6fcc327
+  version: 1.0.30001309
+  resolution: "caniuse-lite@npm:1.0.30001309"
+  checksum: 95093d01dc0880a371fe6aaf54cccb01a979933181a3aad6fc08e80c4601e27e1578a44d8ab6c1d3d58526ed2a917ce5e643c0e8299a0330cdac7bc8a7b5d7f0
   languageName: node
   linkType: hard
 
@@ -4453,7 +4453,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3":
+"debug@npm:4, debug@npm:4.3.3, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.3":
   version: 4.3.3
   resolution: "debug@npm:4.3.3"
   dependencies:
@@ -4462,18 +4462,6 @@ __metadata:
     supports-color:
       optional: true
   checksum: 14472d56fe4a94dbcfaa6dbed2dd3849f1d72ba78104a1a328047bb564643ca49df0224c3a17fa63533fd11dd3d4c8636cd861191232a2c6735af00cc2d4de16
-  languageName: node
-  linkType: hard
-
-"debug@npm:4.3.2":
-  version: 4.3.2
-  resolution: "debug@npm:4.3.2"
-  dependencies:
-    ms: 2.1.2
-  peerDependenciesMeta:
-    supports-color:
-      optional: true
-  checksum: 820ea160e267e23c953c9ed87e7ad93494d8cda2f7349af5e7e3bb236d23707ee3022f477d5a7d2ee86ef2bf7d60aa9ab22d1f58080d7deb9dccd073585e1e43
   languageName: node
   linkType: hard
 
@@ -4700,10 +4688,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devtools-protocol@npm:0.0.948846":
-  version: 0.0.948846
-  resolution: "devtools-protocol@npm:0.0.948846"
-  checksum: add29ebdcc60d2ccb11f8c7125c3d500957da63bac6bc7633041761ea12320febebbc58530e94bc23e0586ce4de2623fb5eaae0971ecbfc778f7159448519b0a
+"devtools-protocol@npm:0.0.960912":
+  version: 0.0.960912
+  resolution: "devtools-protocol@npm:0.0.960912"
+  checksum: e14bb94e2d64a4279b53789f6526e7ae1f03e2a0f5650450d97735b91f12aa501bed185b9b97c902063ac9b74e78df25ed973c12c7968ed8163f438d2dec9944
   languageName: node
   linkType: hard
 
@@ -10296,11 +10284,11 @@ __metadata:
   linkType: hard
 
 "puppeteer-core@npm:^13.1.3":
-  version: 13.1.3
-  resolution: "puppeteer-core@npm:13.1.3"
+  version: 13.2.0
+  resolution: "puppeteer-core@npm:13.2.0"
   dependencies:
-    debug: 4.3.2
-    devtools-protocol: 0.0.948846
+    debug: 4.3.3
+    devtools-protocol: 0.0.960912
     extract-zip: 2.0.1
     https-proxy-agent: 5.0.0
     node-fetch: 2.6.7
@@ -10311,7 +10299,7 @@ __metadata:
     tar-fs: 2.1.1
     unbzip2-stream: 1.4.3
     ws: 8.2.3
-  checksum: 16fa90800d6ef869719e106d1f343b149f2a2434cdecece444273f36e3b061efa5a927a25e8d2573bd213d93dfb81556f60f83f5c4cdcd0f1343da4accbfaf97
+  checksum: 32920f9bbc37620d90e0fcdea3490de67db38dac37b60e0e8568af6c33656e58b5234f943086430528ae88592630ed8c76851955e3c131a82c29332a6e41569e
   languageName: node
   linkType: hard
 
@@ -10922,7 +10910,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:2.67.1":
+"rollup@npm:2.67.1, rollup@npm:^2.43.1, rollup@npm:^2.66.1":
   version: 2.67.1
   resolution: "rollup@npm:2.67.1"
   dependencies:
@@ -10933,20 +10921,6 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 4320927ae9d42abf0a72ccdfd14303f7b6d6908ec94be953900a41bd4c0bbba3131887c3925dec65361a3e394cb572a4fa8e1f1be4db587a775068ad71d42acd
-  languageName: node
-  linkType: hard
-
-"rollup@npm:^2.43.1, rollup@npm:^2.66.1":
-  version: 2.67.0
-  resolution: "rollup@npm:2.67.0"
-  dependencies:
-    fsevents: ~2.3.2
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    rollup: dist/bin/rollup
-  checksum: 300ddb6c63f1bcaadaac98f705e3804d8d22ddbc595e34c0582850dc1f464bde3edc3312a7cdc5f1544e35df80300d7bc7bf81f56575b24c4124924d140ec947
   languageName: node
   linkType: hard
 
