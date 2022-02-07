@@ -5906,7 +5906,7 @@ __metadata:
     koa-static: 5.0.0
     lit: 2.1.2
     nodemon: 2.0.15
-    rollup: 2.67.0
+    rollup: 2.67.1
   languageName: unknown
   linkType: soft
 
@@ -5968,7 +5968,7 @@ __metadata:
     pwa-helpers: 0.9.1
     redux: 4.1.2
     redux-thunk: 2.4.1
-    rollup: 2.67.0
+    rollup: 2.67.1
     rollup-plugin-copy: 3.4.0
     sinon: 13.0.1
     standardized-audio-context: 25.3.20
@@ -10915,7 +10915,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:2.67.0, rollup@npm:^2.43.1, rollup@npm:^2.66.1":
+"rollup@npm:2.67.1":
+  version: 2.67.1
+  resolution: "rollup@npm:2.67.1"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 4320927ae9d42abf0a72ccdfd14303f7b6d6908ec94be953900a41bd4c0bbba3131887c3925dec65361a3e394cb572a4fa8e1f1be4db587a775068ad71d42acd
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^2.43.1, rollup@npm:^2.66.1":
   version: 2.67.0
   resolution: "rollup@npm:2.67.0"
   dependencies:
