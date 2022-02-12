@@ -1866,15 +1866,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-replace@npm:3.0.1, @rollup/plugin-replace@npm:^3.0.0":
-  version: 3.0.1
-  resolution: "@rollup/plugin-replace@npm:3.0.1"
+"@rollup/plugin-replace@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@rollup/plugin-replace@npm:3.1.0"
   dependencies:
     "@rollup/pluginutils": ^3.1.0
     magic-string: ^0.25.7
   peerDependencies:
     rollup: ^1.20.0 || ^2.0.0
-  checksum: 0cd97439783d3d23ba4f0c74146f5cdf0965d57977cc8227a77dfdd9604930905619e405c961ae146a0e68c8239b9a3a817704fa90f7d62d5087ed84d8c33ead
+  checksum: 9f833d40f7ebd6bb32b1c7a118fedd27a6d63e591018543740c78d3bc6fe67efa7048c6457bcadf8f982385b78e33ff8e38a67ddd4d11c15d9c81898a0757c13
   languageName: node
   linkType: hard
 
@@ -1887,6 +1887,18 @@ __metadata:
   peerDependencies:
     rollup: ^1.20.0 || ^2.0.0
   checksum: b2f1618ee5526d288e2f8ae328dcb326e20e8dc8bd1f60d3e14d6708a5832e4aa44811f7d493f4aed2deeadca86e3b6b0503cd39bf50cfb4b595bb9da027fad0
+  languageName: node
+  linkType: hard
+
+"@rollup/plugin-replace@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "@rollup/plugin-replace@npm:3.0.1"
+  dependencies:
+    "@rollup/pluginutils": ^3.1.0
+    magic-string: ^0.25.7
+  peerDependencies:
+    rollup: ^1.20.0 || ^2.0.0
+  checksum: 0cd97439783d3d23ba4f0c74146f5cdf0965d57977cc8227a77dfdd9604930905619e405c961ae146a0e68c8239b9a3a817704fa90f7d62d5087ed84d8c33ead
   languageName: node
   linkType: hard
 
@@ -5942,7 +5954,7 @@ __metadata:
     "@koa/router": 10.1.1
     "@magic-sdk/admin": 1.3.4
     "@open-wc/building-rollup": 2.0.1
-    "@rollup/plugin-replace": 3.0.1
+    "@rollup/plugin-replace": 3.1.0
     deepmerge: 4.2.2
     dotenv: 16.0.0
     dotenv-cli: 5.0.0
@@ -5991,7 +6003,7 @@ __metadata:
     "@open-wc/testing": 3.0.4
     "@open-wc/testing-helpers": 2.0.4
     "@playwright/test": 1.19.0
-    "@rollup/plugin-replace": 3.0.1
+    "@rollup/plugin-replace": 3.1.0
     "@vaadin/router": 1.7.4
     "@web/dev-server": 0.1.29
     "@web/dev-server-import-maps": 0.0.6
