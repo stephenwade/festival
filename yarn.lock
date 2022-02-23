@@ -1723,7 +1723,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/testing-helpers@npm:2.1.0":
+"@open-wc/testing-helpers@npm:2.1.0, @open-wc/testing-helpers@npm:^2.1.0":
   version: 2.1.0
   resolution: "@open-wc/testing-helpers@npm:2.1.0"
   dependencies:
@@ -1734,30 +1734,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/testing-helpers@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "@open-wc/testing-helpers@npm:2.0.4"
-  dependencies:
-    "@open-wc/scoped-elements": ^2.0.1
-    lit: ^2.0.0
-    lit-html: ^2.0.0
-  checksum: dcc6a9555cf04bb3c9ba63d54c2f1f01e05cc27897230070120edf8932366c316c9a7532902f0415726ba912b8f76936ba1a8f5631a48eecbf1d986dc15cb02b
-  languageName: node
-  linkType: hard
-
-"@open-wc/testing@npm:3.0.4":
-  version: 3.0.4
-  resolution: "@open-wc/testing@npm:3.0.4"
+"@open-wc/testing@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@open-wc/testing@npm:3.1.0"
   dependencies:
     "@esm-bundle/chai": ^4.3.4
     "@open-wc/chai-dom-equals": ^0.12.36
     "@open-wc/semantic-dom-diff": ^0.19.5
-    "@open-wc/testing-helpers": ^2.0.4
+    "@open-wc/testing-helpers": ^2.1.0
     "@types/chai": ^4.2.11
     "@types/chai-dom": ^0.0.9
     "@types/sinon-chai": ^3.2.3
     chai-a11y-axe: ^1.3.2
-  checksum: 21abcdefa9f5be1cb5c42848b6690d1621755ed0a58a23a0a01cd2ced25a0e3ce47de053a9e5091d9c2f15dc852f2909668c38fc4d722339415e3dc538905d56
+  checksum: 5cde859b5efaf6e8134cb29d71a81ada2a43f4afed31817035ce93cce0e9e39aa134ad72704c475c3cadf8c957756655a492c0da9ae645606d4f3622962585b2
   languageName: node
   linkType: hard
 
@@ -6023,7 +6012,7 @@ __metadata:
   resolution: "festival@workspace:frontend"
   dependencies:
     "@open-wc/building-rollup": 2.0.1
-    "@open-wc/testing": 3.0.4
+    "@open-wc/testing": 3.1.0
     "@open-wc/testing-helpers": 2.1.0
     "@playwright/test": 1.19.1
     "@rollup/plugin-replace": 4.0.0
