@@ -1723,18 +1723,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/testing-helpers@npm:2.1.1":
-  version: 2.1.1
-  resolution: "@open-wc/testing-helpers@npm:2.1.1"
-  dependencies:
-    "@open-wc/scoped-elements": ^2.0.1
-    lit: ^2.0.0
-    lit-html: ^2.0.0
-  checksum: 8a80c1a16dd1a4bded8f00516f78a489467bc227db5615f36b99d1ceee0230049e69414b9de53c1d2f07e25703281a1e09f7747b9489446eabcf1f03e8440a0a
-  languageName: node
-  linkType: hard
-
-"@open-wc/testing-helpers@npm:^2.1.2":
+"@open-wc/testing-helpers@npm:2.1.2, @open-wc/testing-helpers@npm:^2.1.2":
   version: 2.1.2
   resolution: "@open-wc/testing-helpers@npm:2.1.2"
   dependencies:
@@ -5999,7 +5988,7 @@ __metadata:
   dependencies:
     "@open-wc/building-rollup": 2.0.1
     "@open-wc/testing": 3.1.2
-    "@open-wc/testing-helpers": 2.1.1
+    "@open-wc/testing-helpers": 2.1.2
     "@playwright/test": 1.19.2
     "@rollup/plugin-replace": 4.0.0
     "@vaadin/router": 1.7.4
