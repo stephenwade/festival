@@ -28,7 +28,7 @@
     "@playwright/test": "1.19.2",
     "@stylelint/postcss-css-in-js": "0.37.2",
     "eslint": "8.10.0",
-    "eslint-config-prettier": "8.4.0",
+    "eslint-config-prettier": "8.5.0",
     "eslint-plugin-html": "6.2.0",
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-lit": "1.6.1",
