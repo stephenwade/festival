@@ -58,7 +58,7 @@
     "imagemin-cli": "7.0.0",
     "imagemin-webp": "7.0.0",
     "koa-range": "0.3.0",
-    "rollup": "2.69.0",
+    "rollup": "2.69.1",
     "rollup-plugin-copy": "3.4.0",
     "sinon": "13.0.1"
   }
