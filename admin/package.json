@@ -33,7 +33,7 @@
     "rollup": "2.70.1"
   },
   "devDependencies": {
-    "dotenv-cli": "5.0.0",
+    "dotenv-cli": "5.1.0",
     "nodemon": "2.0.15"
   }
 }
