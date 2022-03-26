@@ -4837,9 +4837,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv-cli@npm:5.0.0":
-  version: 5.0.0
-  resolution: "dotenv-cli@npm:5.0.0"
+"dotenv-cli@npm:5.1.0":
+  version: 5.1.0
+  resolution: "dotenv-cli@npm:5.1.0"
   dependencies:
     cross-spawn: ^7.0.3
     dotenv: ^16.0.0
@@ -4847,7 +4847,7 @@ __metadata:
     minimist: ^1.2.5
   bin:
     dotenv: cli.js
-  checksum: 283238fd23eca018f71b1b044f765e45756defaf7457705ad8ac2e5e602fbf092979d16962508f6ea05a2f004d099ee5573add8dc84cd2abe7d6c999d09521da
+  checksum: dd060623c4b63555effe9c25c073c0c01be1f0d17a0bc35a6b18f98ca8f918a5dfdd0ff2b879152fd2df9d57b207126d04adcb0207b9f66268ba9c788c213578
   languageName: node
   linkType: hard
 
@@ -5927,7 +5927,7 @@ __metadata:
     "@rollup/plugin-replace": 4.0.0
     deepmerge: 4.2.2
     dotenv: 16.0.0
-    dotenv-cli: 5.0.0
+    dotenv-cli: 5.1.0
     koa: 2.13.4
     koa-mount: 4.0.0
     koa-send: 5.0.1
