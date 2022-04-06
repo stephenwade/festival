@@ -29,7 +29,7 @@
     "koa-mount": "4.0.0",
     "koa-send": "5.0.1",
     "koa-static": "5.0.0",
-    "lit": "2.2.1",
+    "lit": "2.2.2",
     "rollup": "2.70.1"
   },
   "devDependencies": {
