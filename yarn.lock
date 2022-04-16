@@ -1525,13 +1525,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@magic-sdk/admin@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@magic-sdk/admin@npm:1.4.0"
+"@magic-sdk/admin@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@magic-sdk/admin@npm:1.4.1"
   dependencies:
+    "@types/atob": ^2.1.2
+    atob: ^2.1.2
     ethereum-cryptography: ^1.0.1
     node-fetch: ^2.6.0
-  checksum: cc77a8ff2867d05468995cb92dcf102641ae9417c932ba3d4f84d6dc89a555f4cffd60ef27efaafdd90e39c4db6f2dca44834649ec8d4b9190d8ff63a86bd2a0
+  checksum: 5ff29ced48429061cbdba57d4e7a65f3018fdf4edbd778e800e2bad9cef72871c78ad245ba5f3ad8025db43b91d77f3f9597d00a36b2f571a88cc2e25e1476c0
   languageName: node
   linkType: hard
 
@@ -2057,6 +2059,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 590b7580570534a640510c071e09074cf63b5958b237a728f94322567350aea4d239f8a9d897a12b15c856b992ee4d7907e9812bb079886af2c00714e7fb3f60
+  languageName: node
+  linkType: hard
+
+"@types/atob@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@types/atob@npm:2.1.2"
+  checksum: 903df6e2d473c51ffff6f8aa2ad11127361a38ac409f30af1fe3c99e7a3b674740a685375097efe649036450822317641d3080c33ee849efca06945bd1386c61
   languageName: node
   linkType: hard
 
@@ -3186,6 +3195,15 @@ __metadata:
   version: 1.0.0
   resolution: "at-least-node@npm:1.0.0"
   checksum: 463e2f8e43384f1afb54bc68485c436d7622acec08b6fad269b421cb1d29cebb5af751426793d0961ed243146fe4dc983402f6d5a51b720b277818dbf6f2e49e
+  languageName: node
+  linkType: hard
+
+"atob@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "atob@npm:2.1.2"
+  bin:
+    atob: bin/atob.js
+  checksum: dfeeeb70090c5ebea7be4b9f787f866686c645d9f39a0d184c817252d0cf08455ed25267d79c03254d3be1f03ac399992a792edcd5ffb9c91e097ab5ef42833a
   languageName: node
   linkType: hard
 
@@ -5663,7 +5681,7 @@ __metadata:
   resolution: "festival-admin@workspace:admin"
   dependencies:
     "@koa/router": 10.1.1
-    "@magic-sdk/admin": 1.4.0
+    "@magic-sdk/admin": 1.4.1
     "@open-wc/building-rollup": 2.0.1
     "@rollup/plugin-replace": 4.0.0
     deepmerge: 4.2.2
