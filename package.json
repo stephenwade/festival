@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@open-wc/eslint-config": "7.0.0",
-    "@playwright/test": "1.21.0",
+    "@playwright/test": "1.21.1",
     "@stylelint/postcss-css-in-js": "0.37.2",
     "eslint": "8.13.0",
     "eslint-config-prettier": "8.5.0",
