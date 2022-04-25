@@ -1818,6 +1818,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/plugin-node-resolve@npm:^13.0.4":
+  version: 13.2.1
+  resolution: "@rollup/plugin-node-resolve@npm:13.2.1"
+  dependencies:
+    "@rollup/pluginutils": ^3.1.0
+    "@types/resolve": 1.17.1
+    builtin-modules: ^3.1.0
+    deepmerge: ^4.2.2
+    is-module: ^1.0.0
+    resolve: ^1.19.0
+  peerDependencies:
+    rollup: ^2.42.0
+  checksum: d0ba3b6f35440b5ebc203a4f62a6c0d2c565491aed9746448288b71d0cd603d1d12fdd9d1381c1be0a4b192f167412e53c34b89fd25413db4ba7d1fa910a29a2
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-node-resolve@npm:^7.1.1":
   version: 7.1.3
   resolution: "@rollup/plugin-node-resolve@npm:7.1.3"
@@ -2556,7 +2572,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server@npm:0.1.30, @web/dev-server@npm:^0.1.24":
+"@web/dev-server-rollup@npm:^0.3.16":
+  version: 0.3.16
+  resolution: "@web/dev-server-rollup@npm:0.3.16"
+  dependencies:
+    "@rollup/plugin-node-resolve": ^13.0.4
+    "@web/dev-server-core": ^0.3.16
+    nanocolors: ^0.2.1
+    parse5: ^6.0.1
+    rollup: ^2.66.1
+    whatwg-url: ^11.0.0
+  checksum: 47df6dba0174f7536b4012ff5b566f8fd39aef57e55b060a4ed2e528dd67669a858ca46e47e04318c7a1c8a165b5aab3c735890122b665464c2b4b1e4c0ca9a8
+  languageName: node
+  linkType: hard
+
+"@web/dev-server@npm:0.1.31":
+  version: 0.1.31
+  resolution: "@web/dev-server@npm:0.1.31"
+  dependencies:
+    "@babel/code-frame": ^7.12.11
+    "@types/command-line-args": ^5.0.0
+    "@web/config-loader": ^0.1.3
+    "@web/dev-server-core": ^0.3.17
+    "@web/dev-server-rollup": ^0.3.16
+    camelcase: ^6.2.0
+    command-line-args: ^5.1.1
+    command-line-usage: ^6.1.1
+    debounce: ^1.2.0
+    deepmerge: ^4.2.2
+    ip: ^1.1.5
+    nanocolors: ^0.2.1
+    open: ^8.0.2
+    portfinder: ^1.0.28
+  bin:
+    wds: dist/bin.js
+    web-dev-server: dist/bin.js
+  checksum: de9684ed19759c3a6931500d0cd3e9295f40ebf7b79c535a815f6924c88ed2ae9ba280caf414e031eca1570894737ecf45c668a2dd269621275fb7b6e035776c
+  languageName: node
+  linkType: hard
+
+"@web/dev-server@npm:^0.1.24":
   version: 0.1.30
   resolution: "@web/dev-server@npm:0.1.30"
   dependencies:
@@ -5688,7 +5743,7 @@ __metadata:
     "@playwright/test": 1.21.1
     "@rollup/plugin-replace": 4.0.0
     "@vaadin/router": 1.7.4
-    "@web/dev-server": 0.1.30
+    "@web/dev-server": 0.1.31
     "@web/dev-server-import-maps": 0.0.6
     "@web/test-runner": 0.13.27
     "@web/test-runner-commands": 0.6.1
