@@ -3219,13 +3219,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^4.0.15":
-  version: 4.0.15
-  resolution: "automation-events@npm:4.0.15"
+"automation-events@npm:^4.0.16":
+  version: 4.0.16
+  resolution: "automation-events@npm:4.0.16"
   dependencies:
     "@babel/runtime": ^7.17.9
-    tslib: ^2.3.1
-  checksum: 7214d768639aa33ae34cc693b077c15a84f5dda6c43309ad6aa10bca3ab9aae5332a6906a1d13037c45b3f49f92b90fb3e0f40c41687262ef77af0d74389d117
+    tslib: ^2.4.0
+  checksum: b24a72927dbbaa3a030e9cb96accad607d72988c41cad144b0253424e6987614bbb37f387eea9798b3eccabe930c8722e55f4294fa5090cb390a4c45bc4b7116
   languageName: node
   linkType: hard
 
@@ -5757,7 +5757,7 @@ __metadata:
     rollup: 2.70.2
     rollup-plugin-copy: 3.4.0
     sinon: 13.0.2
-    standardized-audio-context: 25.3.23
+    standardized-audio-context: 25.3.24
   languageName: unknown
   linkType: soft
 
@@ -11033,14 +11033,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.23":
-  version: 25.3.23
-  resolution: "standardized-audio-context@npm:25.3.23"
+"standardized-audio-context@npm:25.3.24":
+  version: 25.3.24
+  resolution: "standardized-audio-context@npm:25.3.24"
   dependencies:
     "@babel/runtime": ^7.17.9
-    automation-events: ^4.0.15
-    tslib: ^2.3.1
-  checksum: 766a8ed957f1f9b57156acb838936847838510cc9a75ffe53ded56cb3e80aeaa4c14d8cd4cb0af008c1ef30c06c510a38d1cf11ca04c2df88aa3178e3dd30e54
+    automation-events: ^4.0.16
+    tslib: ^2.4.0
+  checksum: 1dfe3f3cdcec15ffcf295d9be4e53e22415305983b8cb008575d5f9a66f724b4aa82e3a14fc8d1da1a73b06d7f027691463c88a4ff69919b6236c99f6a098f8e
   languageName: node
   linkType: hard
 
@@ -11812,10 +11812,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.1":
+"tslib@npm:^2.0.3, tslib@npm:^2.1.0":
   version: 2.3.1
   resolution: "tslib@npm:2.3.1"
   checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "tslib@npm:2.4.0"
+  checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
   languageName: node
   linkType: hard
 
