@@ -2004,15 +2004,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stylelint/postcss-css-in-js@npm:0.37.3":
-  version: 0.37.3
-  resolution: "@stylelint/postcss-css-in-js@npm:0.37.3"
+"@stylelint/postcss-css-in-js@npm:0.38.0":
+  version: 0.38.0
+  resolution: "@stylelint/postcss-css-in-js@npm:0.38.0"
   dependencies:
     "@babel/core": ^7.17.9
   peerDependencies:
     postcss: ">=7.0.0"
     postcss-syntax: ">=0.36.2"
-  checksum: 0597e8f8f7159f9770d4b6e98bf1f36fffd91373b9e6349833a9081843e5a8111e65851fcf626c05922f718682aeb34e4eea990a5da5904c908fd9898b7ddc56
+  checksum: efb32b4aab38a8fcebc07a26bc49afe92e3d9dea63547fd4bb7e2a4a42c4f7534173e696ba61f5e4030961081f210ae52aea3b4829a2fe67acd3c9dc14c91b0f
   languageName: node
   linkType: hard
 
@@ -5690,7 +5690,7 @@ __metadata:
   dependencies:
     "@open-wc/eslint-config": 7.0.0
     "@playwright/test": 1.21.1
-    "@stylelint/postcss-css-in-js": 0.37.3
+    "@stylelint/postcss-css-in-js": 0.38.0
     eslint: 8.14.0
     eslint-config-prettier: 8.5.0
     eslint-plugin-html: 6.2.0
