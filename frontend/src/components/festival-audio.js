@@ -1,10 +1,8 @@
-import { LitElement, html } from 'lit';
+import { differenceInSeconds } from 'date-fns';
+import { html, LitElement } from 'lit';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { AudioContext } from 'standardized-audio-context';
-import { differenceInSeconds } from 'date-fns';
 
-import { store } from '../store.js';
-import { setShowStatus } from '../actions/showStatus.js';
 import {
   audioEnded,
   audioPaused,
@@ -12,6 +10,8 @@ import {
   audioStalled,
   audioWaiting,
 } from '../actions/audioStatus.js';
+import { setShowStatus } from '../actions/showStatus.js';
+import { store } from '../store.js';
 
 class FestivalAudio extends connect(store)(LitElement) {
   render() {

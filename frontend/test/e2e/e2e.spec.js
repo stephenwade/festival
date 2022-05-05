@@ -1,5 +1,5 @@
-import { expect } from 'chai';
 import { test } from '@playwright/test';
+import { expect } from 'chai';
 
 test('e2e', async ({ page }) => {
   await page.goto('http://localhost:8080/');

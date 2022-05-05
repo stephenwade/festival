@@ -1,6 +1,6 @@
-import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
-
 import '../../src/components/styled-range-input.js';
+
+import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
 
 describe('styled-range-input', async () => {
   const template = `<styled-range-input

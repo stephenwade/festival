@@ -1,11 +1,19 @@
 module.exports = {
   extends: ['@open-wc/eslint-config', 'prettier'],
 
+  plugins: ['simple-import-sort'],
+
   rules: {
     'require-unicode-regexp': 'error',
     'no-undef': ['error', { typeof: true }],
 
-    // remove when https://github.com/benmosher/eslint-plugin-import/issues/1868 is resolved
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error',
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+
+    // remove when https://github.com/import-js/eslint-plugin-import/issues/1810 is resolved
     'import/no-unresolved': [
       'error',
       { ignore: ['@open-wc/testing-helpers/pure'] },

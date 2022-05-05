@@ -12,11 +12,12 @@
 
   <body>
     <script type="module">
-      import { runTests } from '@web/test-runner-mocha';
-      import { expect, aTimeout } from '@open-wc/testing';
-      import { fixture, fixtureCleanup } from '@open-wc/testing-helpers/pure';
-
       import '../../src/components/festival-clock.js';
+
+      import { aTimeout, expect } from '@open-wc/testing';
+      import { fixture, fixtureCleanup } from '@open-wc/testing-helpers/pure';
+      import { runTests } from '@web/test-runner-mocha';
+
       import { store } from './festival-clock/store.js';
 
       runTests(() => {

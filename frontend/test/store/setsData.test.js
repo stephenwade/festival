@@ -1,5 +1,4 @@
-import { expect, aTimeout, waitUntil } from '@open-wc/testing';
-import fetchMock from 'fetch-mock/esm/client.js';
+import { aTimeout, expect, waitUntil } from '@open-wc/testing';
 import {
   addMilliseconds,
   addSeconds,
@@ -8,8 +7,8 @@ import {
   parseISO,
   subSeconds,
 } from 'date-fns';
+import fetchMock from 'fetch-mock/esm/client.js';
 
-import { store, resetStoreForTesting } from '../../src/store.js';
 import {
   AUDIO_PREFIX,
   loadSets,
@@ -17,6 +16,7 @@ import {
   TESTING_ADJUST_TIME_IN_SECONDS,
   updateSetMetadata,
 } from '../../src/actions/setsData.js';
+import { resetStoreForTesting, store } from '../../src/store.js';
 import { getMockData } from './mockData.js';
 
 const getState = () => store.getState().setsData;

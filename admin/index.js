@@ -1,9 +1,10 @@
+import './env.js';
+
+import http from 'http';
 import Koa from 'koa';
 import mount from 'koa-mount';
 import serve from 'koa-static';
-import http from 'http';
 
-import './env.js';
 import api from './api.js';
 
 const PORT = 8888;

@@ -1,7 +1,7 @@
 import { expect } from '@open-wc/testing';
 
+import { setLastUnmutedVolume, setVolume } from '../../src/actions/settings.js';
 import { store } from '../../src/store.js';
-import { setVolume, setLastUnmutedVolume } from '../../src/actions/settings.js';
 
 const getState = () => store.getState().settings;
 const initialState = { ...getState() };

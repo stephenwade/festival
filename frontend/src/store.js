@@ -1,20 +1,19 @@
 import {
-  createStore,
+  applyMiddleware,
   combineReducers,
   compose,
-  applyMiddleware,
+  createStore,
 } from 'redux/es/redux.mjs';
 import thunk from 'redux-thunk';
 
 import testLocalStorage from '../lib/modernizr/localstorage.js';
-
+import audioStatusReducer from './reducers/audioStatus.js';
 import clockReducer from './reducers/clock.js';
 import setsDataReducer from './reducers/setsData.js';
-import targetShowStatusReducer from './reducers/targetShowStatus.js';
-import showStatusReducer from './reducers/showStatus.js';
-import audioStatusReducer from './reducers/audioStatus.js';
-import uiReducer from './reducers/ui.js';
 import settingsReducer from './reducers/settings.js';
+import showStatusReducer from './reducers/showStatus.js';
+import targetShowStatusReducer from './reducers/targetShowStatus.js';
+import uiReducer from './reducers/ui.js';
 
 const localStorageAvailable = testLocalStorage();
 

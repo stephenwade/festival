@@ -1,12 +1,13 @@
+import '../../src/components/festival-audio.js';
+
 import { aTimeout, expect, nextFrame, oneEvent } from '@open-wc/testing';
 import { fixture, fixtureCleanup } from '@open-wc/testing-helpers/pure';
 import { executeServerCommand } from '@web/test-runner-commands';
 import { addSeconds as add } from 'date-fns';
 
-import '../../src/components/festival-audio.js';
-import { store, resetStoreForTesting } from '../../src/store.js';
 import { _prepareSets as prepareSets } from '../../src/actions/setsData.js';
 import { tick } from '../../src/actions/targetShowStatus.js';
+import { resetStoreForTesting, store } from '../../src/store.js';
 import hashCode from './festival-audio/hashCode.js';
 
 const AUDIO_FILE_URL = '../test/components/festival-audio/90-sec-silence.mp3';

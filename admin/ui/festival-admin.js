@@ -1,9 +1,10 @@
-import { LitElement, html } from 'lit';
-
-import { magic } from './magic.js';
 import './components/f-admin-ui.js';
 import './components/f-loading.js';
 import './components/f-login.js';
+
+import { html, LitElement } from 'lit';
+
+import { magic } from './magic.js';
 
 class FestivalAdmin extends LitElement {
   render() {

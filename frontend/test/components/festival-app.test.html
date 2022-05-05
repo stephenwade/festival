@@ -12,14 +12,15 @@
 
   <body>
     <script type="module">
-      import { runTests } from '@web/test-runner-mocha';
+      import '../../src/components/festival-app.js';
+
       import { expect } from '@open-wc/testing';
       import { fixture, fixtureCleanup } from '@open-wc/testing-helpers/pure';
+      import { runTests } from '@web/test-runner-mocha';
       import { spy, useFakeTimers } from 'sinon';
 
-      import '../../src/components/festival-app.js';
-      import { store } from './festival-app/store.js';
       import { loadSets, updateSetMetadata } from './festival-app/setsData.js';
+      import { store } from './festival-app/store.js';
 
       runTests(() => {
         describe('festival-app', () => {

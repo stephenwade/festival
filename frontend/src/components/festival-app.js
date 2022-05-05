@@ -1,11 +1,12 @@
-import { LitElement, html } from 'lit';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-
-import { store } from '../store.js';
-import { loadSets, updateSetMetadata } from '../actions/setsData.js';
 import './festival-clock.js';
 import './festival-audio.js';
 import './festival-ui.js';
+
+import { html, LitElement } from 'lit';
+import { connect } from 'pwa-helpers/connect-mixin.js';
+
+import { loadSets, updateSetMetadata } from '../actions/setsData.js';
+import { store } from '../store.js';
 
 class FestivalApp extends connect(store)(LitElement) {
   render() {

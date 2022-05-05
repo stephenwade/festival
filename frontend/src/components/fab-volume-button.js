@@ -1,6 +1,8 @@
-import { LitElement, html, css } from 'lit';
-
 import './styled-range-input.js';
+
+import { css, html, LitElement } from 'lit';
+
+import { svgVolumeDown, svgVolumeMute, svgVolumeUp } from './icons.js';
 import { boxSizingBorderBox, buttonReset } from './shared-styles.js';
 import {
   elevationTransition,
@@ -9,7 +11,6 @@ import {
   elevationZ12,
   elevationZ12Rotated90,
 } from './shared-styles-elevation.js';
-import { svgVolumeMute, svgVolumeDown, svgVolumeUp } from './icons.js';
 
 class FabVolumeButton extends LitElement {
   static get styles() {
