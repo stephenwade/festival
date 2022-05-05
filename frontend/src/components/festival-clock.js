@@ -1,11 +1,11 @@
 import { connect } from 'pwa-helpers/connect-mixin.js';
-import {
-  setDriftlessIntervalEverySecond,
-  clearDriftless,
-} from '../../lib/driftless/driftless.js';
 
-import { store } from '../store.js';
+import {
+  clearDriftless,
+  setDriftlessIntervalEverySecond,
+} from '../../lib/driftless/driftless.js';
 import { tick } from '../actions/targetShowStatus.js';
+import { store } from '../store.js';
 
 class FestivalClock extends connect(store)(HTMLElement) {
   disconnectedCallback() {

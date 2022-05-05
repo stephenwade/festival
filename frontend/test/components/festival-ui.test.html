@@ -11,11 +11,12 @@
 
   <body>
     <script type="module">
-      import { runTests } from '@web/test-runner-mocha';
+      import '../../src/components/festival-ui.js';
+
       import { expect, nextFrame } from '@open-wc/testing';
       import { fixture, fixtureCleanup } from '@open-wc/testing-helpers/pure';
+      import { runTests } from '@web/test-runner-mocha';
 
-      import '../../src/components/festival-ui.js';
       import { store } from './festival-ui-live-page/store.js';
 
       runTests(() => {

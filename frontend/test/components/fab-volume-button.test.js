@@ -1,6 +1,6 @@
-import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
-
 import '../../src/components/fab-volume-button.js';
+
+import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
 
 describe('fab-volume-button', async () => {
   const template = '<fab-volume-button volume="20" opened></fab-volume-button>';

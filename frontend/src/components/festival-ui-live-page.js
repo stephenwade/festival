@@ -1,13 +1,14 @@
-import { LitElement, html, css } from 'lit';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-import { Router } from '@vaadin/router';
-
 import '../../lib/toast-sk/toast-sk.js';
-import { store } from '../store.js';
-import { setVolume, setLastUnmutedVolume } from '../actions/settings.js';
 import './festival-ui-ended.js';
 import './festival-ui-intro-page.js';
 import './festival-ui-playing.js';
+
+import { Router } from '@vaadin/router';
+import { css, html, LitElement } from 'lit';
+import { connect } from 'pwa-helpers/connect-mixin.js';
+
+import { setLastUnmutedVolume, setVolume } from '../actions/settings.js';
+import { store } from '../store.js';
 import {
   boxSizingBorderBox,
   buttonReset,

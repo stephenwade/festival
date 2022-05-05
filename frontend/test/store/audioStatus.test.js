@@ -1,13 +1,13 @@
 import { expect } from '@open-wc/testing';
 
-import { store } from '../../src/store.js';
 import {
   audioEnded,
-  audioPlaying,
   audioPaused,
+  audioPlaying,
   audioStalled,
   audioWaiting,
 } from '../../src/actions/audioStatus.js';
+import { store } from '../../src/store.js';
 
 const getState = () => store.getState().audioStatus;
 const initialState = { ...getState() };

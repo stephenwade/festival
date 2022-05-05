@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { html, LitElement } from 'lit';
 import { until } from 'lit/directives/until.js';
 
 import { fetchWithMagic } from '../magic.js';

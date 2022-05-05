@@ -1,9 +1,10 @@
-import { LitElement, html, css } from 'lit';
-import { ref, createRef } from 'lit/directives/ref.js';
-import { Router } from '@vaadin/router';
-
 import './festival-ui-intro-page.js';
 import './festival-ui-live-page.js';
+
+import { Router } from '@vaadin/router';
+import { css, html, LitElement } from 'lit';
+import { createRef, ref } from 'lit/directives/ref.js';
+
 import { boxSizingBorderBox, fullPageClass } from './shared-styles.js';
 
 class FestivalUi extends LitElement {

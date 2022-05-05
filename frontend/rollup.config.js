@@ -1,7 +1,7 @@
-import merge from 'deepmerge';
 import { createSpaConfig } from '@open-wc/building-rollup';
-import copy from 'rollup-plugin-copy';
 import replace from '@rollup/plugin-replace';
+import merge from 'deepmerge';
+import copy from 'rollup-plugin-copy';
 
 const baseConfig = createSpaConfig({
   workbox: false,

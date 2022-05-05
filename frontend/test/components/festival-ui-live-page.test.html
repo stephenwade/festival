@@ -12,23 +12,24 @@
 
   <body>
     <script type="module">
-      import { runTests } from '@web/test-runner-mocha';
+      import '../../src/components/festival-ui-live-page.js';
+
       import {
-        expect,
         aTimeout,
-        nextFrame,
         elementUpdated,
+        expect,
+        nextFrame,
       } from '@open-wc/testing';
       import { fixture, fixtureCleanup } from '@open-wc/testing-helpers/pure';
+      import { runTests } from '@web/test-runner-mocha';
       import { useFakeTimers } from 'sinon';
 
-      import '../../src/components/festival-ui-live-page.js';
+      import {
+        setLastUnmutedVolume,
+        setVolume,
+      } from '../../src/actions/settings.js';
       import { Router } from './festival-ui-live-page/router.js';
       import { store } from './festival-ui-live-page/store.js';
-      import {
-        setVolume,
-        setLastUnmutedVolume,
-      } from '../../src/actions/settings.js';
 
       runTests(() => {
         describe('festival-ui-live-page', () => {

@@ -1,3 +1,5 @@
+import '../../src/components/festival-ui-playing.js';
+
 import {
   aTimeout,
   elementUpdated,
@@ -7,7 +9,6 @@ import {
   oneEvent,
 } from '@open-wc/testing';
 
-import '../../src/components/festival-ui-playing.js';
 import hashCode from './festival-audio/hashCode.js';
 
 describe('festival-ui-playing', () => {

@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { html, LitElement } from 'lit';
 
 class LoadingSpinner extends LitElement {
   render() {

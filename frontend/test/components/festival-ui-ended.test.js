@@ -1,6 +1,6 @@
-import { expect, fixture } from '@open-wc/testing';
-
 import '../../src/components/festival-ui-ended.js';
+
+import { expect, fixture } from '@open-wc/testing';
 
 describe('festival-ui-ended', () => {
   const template = '<festival-ui-ended></festival-ui-ended>';

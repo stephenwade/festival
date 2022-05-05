@@ -1,8 +1,7 @@
 import { expect, waitUntil } from '@open-wc/testing';
-import fetchMock from 'fetch-mock/esm/client.js';
 import { addSeconds, formatDistanceToNowStrict, subSeconds } from 'date-fns';
+import fetchMock from 'fetch-mock/esm/client.js';
 
-import { store, resetStoreForTesting } from '../../src/store.js';
 import { loadSets, SETS_URL } from '../../src/actions/setsData.js';
 import {
   setTargetShowStatus,
@@ -10,6 +9,7 @@ import {
   stopTicking,
   tick,
 } from '../../src/actions/targetShowStatus.js';
+import { resetStoreForTesting, store } from '../../src/store.js';
 
 const getState = () => store.getState().targetShowStatus;
 const initialState = getState();

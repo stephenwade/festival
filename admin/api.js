@@ -1,8 +1,8 @@
-import Koa from 'koa';
 import Router from '@koa/router';
+import Koa from 'koa';
 
-import test from './api/test.js';
 import sets from './api/sets.js';
+import test from './api/test.js';
 
 const api = new Koa();
 const router = new Router();

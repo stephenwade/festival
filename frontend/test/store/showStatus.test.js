@@ -1,7 +1,7 @@
 import { expect } from '@open-wc/testing';
 
-import { store } from '../../src/store.js';
 import { setShowStatus } from '../../src/actions/showStatus.js';
+import { store } from '../../src/store.js';
 
 const getState = () => store.getState().showStatus;
 const initialState = { ...getState() };

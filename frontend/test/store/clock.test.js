@@ -1,10 +1,9 @@
 import { expect, waitUntil } from '@open-wc/testing';
 import fetchMock from 'fetch-mock/esm/client.js';
 
-import { store, resetStoreForTesting } from '../../src/store.js';
 import { loadSets, SETS_URL } from '../../src/actions/setsData.js';
 import { stopTicking } from '../../src/actions/targetShowStatus.js';
-
+import { resetStoreForTesting, store } from '../../src/store.js';
 import { getMockData } from './mockData.js';
 
 const getState = () => store.getState().clock;

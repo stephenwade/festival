@@ -1,7 +1,8 @@
-import { LitElement, html, css } from 'lit';
-
 import './fab-volume-button.js';
 import './loading-spinner.js';
+
+import { css, html, LitElement } from 'lit';
+
 import {
   boxSizingBorderBox,
   flexColumnCenter,

@@ -1,6 +1,6 @@
-import merge from 'deepmerge';
 import { createSpaConfig } from '@open-wc/building-rollup';
 import replace from '@rollup/plugin-replace';
+import merge from 'deepmerge';
 import dotenv from 'dotenv';
 
 const result = dotenv.config({ path: '../../.env' });
