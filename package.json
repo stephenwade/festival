@@ -27,7 +27,7 @@
     "@open-wc/eslint-config": "7.0.0",
     "@playwright/test": "1.21.1",
     "@stylelint/postcss-css-in-js": "0.38.0",
-    "eslint": "8.14.0",
+    "eslint": "8.15.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-html": "6.2.0",
     "eslint-plugin-import": "2.26.0",
