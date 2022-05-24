@@ -1256,7 +1256,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.17.9, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.18.0, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.18.0
   resolution: "@babel/runtime@npm:7.18.0"
   dependencies:
@@ -3074,13 +3074,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^4.0.16":
-  version: 4.0.16
-  resolution: "automation-events@npm:4.0.16"
+"automation-events@npm:^4.0.17":
+  version: 4.0.17
+  resolution: "automation-events@npm:4.0.17"
   dependencies:
-    "@babel/runtime": ^7.17.9
+    "@babel/runtime": ^7.18.0
     tslib: ^2.4.0
-  checksum: b24a72927dbbaa3a030e9cb96accad607d72988c41cad144b0253424e6987614bbb37f387eea9798b3eccabe930c8722e55f4294fa5090cb390a4c45bc4b7116
+  checksum: c086b41b7003e44915aa905e412e5cab2836f653e1ff11467ce7367634645029102643b2c94b3a0d57c0b62cae4ccea973ba1487d6a311d821e99b33c79f0f85
   languageName: node
   linkType: hard
 
@@ -5588,7 +5588,7 @@ __metadata:
     rollup: 2.74.1
     rollup-plugin-copy: 3.4.0
     sinon: 14.0.0
-    standardized-audio-context: 25.3.25
+    standardized-audio-context: 25.3.26
   languageName: unknown
   linkType: soft
 
@@ -10652,14 +10652,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.25":
-  version: 25.3.25
-  resolution: "standardized-audio-context@npm:25.3.25"
+"standardized-audio-context@npm:25.3.26":
+  version: 25.3.26
+  resolution: "standardized-audio-context@npm:25.3.26"
   dependencies:
-    "@babel/runtime": ^7.17.9
-    automation-events: ^4.0.16
+    "@babel/runtime": ^7.18.0
+    automation-events: ^4.0.17
     tslib: ^2.4.0
-  checksum: fb19854a00d743858064ae0339b856c475211e26c5b93e833d494364054f347ce7b0120c7df40d4d8fff0b270b94a9447bededa17b8d1be70b637e54037d4707
+  checksum: 41e0e5cf71c88aa72c9a9e5341b900e40285fac6770fa8c2d3b9fb75d301c099f02e71864fada6cb71c9f2e9724b3eaed23b4e1a022d858aa4f81bf533c16e96
   languageName: node
   linkType: hard
 
