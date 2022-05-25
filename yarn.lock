@@ -1265,12 +1265,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.18.2":
-  version: 7.18.2
-  resolution: "@babel/runtime@npm:7.18.2"
+"@babel/runtime@npm:^7.18.3":
+  version: 7.18.3
+  resolution: "@babel/runtime@npm:7.18.3"
   dependencies:
     regenerator-runtime: ^0.13.4
-  checksum: bce799f99727daa79fbe682cc87ca23feb635499269e37c4523041d22cf269fe952623b83c7b84bf1e33e65091919ac9e1fdabff95fbeeb70f299a9ea71cc80d
+  checksum: db8526226aa02cfa35a5a7ac1a34b5f303c62a1f000c7db48cb06c6290e616483e5036ab3c4e7a84d0f3be6d4e2148d5fe5cec9564bf955f505c3e764b83d7f1
   languageName: node
   linkType: hard
 
@@ -3083,13 +3083,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^4.0.18":
-  version: 4.0.18
-  resolution: "automation-events@npm:4.0.18"
+"automation-events@npm:^4.0.19":
+  version: 4.0.19
+  resolution: "automation-events@npm:4.0.19"
   dependencies:
-    "@babel/runtime": ^7.18.2
+    "@babel/runtime": ^7.18.3
     tslib: ^2.4.0
-  checksum: 638a68ae6f81ab0a88f8d2bc33f614b9fd53da74e4925077b1deb8a4a88209ee6be85a88e44cc05f92450a01a28226de067fc75e9ccfe73f121e6927e22e9b59
+  checksum: 1c6339820d472f8df71c26303b3e663b3bb59ed52aa9a56dc61f515c712a7936a1064fcb370719cb533be91e2381278b28975bdddb17ab91e0c1c6d389e1b5f4
   languageName: node
   linkType: hard
 
@@ -5597,7 +5597,7 @@ __metadata:
     rollup: 2.74.1
     rollup-plugin-copy: 3.4.0
     sinon: 14.0.0
-    standardized-audio-context: 25.3.27
+    standardized-audio-context: 25.3.28
   languageName: unknown
   linkType: soft
 
@@ -10661,14 +10661,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.27":
-  version: 25.3.27
-  resolution: "standardized-audio-context@npm:25.3.27"
+"standardized-audio-context@npm:25.3.28":
+  version: 25.3.28
+  resolution: "standardized-audio-context@npm:25.3.28"
   dependencies:
-    "@babel/runtime": ^7.18.2
-    automation-events: ^4.0.18
+    "@babel/runtime": ^7.18.3
+    automation-events: ^4.0.19
     tslib: ^2.4.0
-  checksum: 9646633343b7bbe0304584303cc0b7da5905c27c2a90bac2bcec87d7f9ec588503e2728c48ccea7ef28cd8030ba674c437d9ffc68168966169ea93904ce60692
+  checksum: ece981e5e541041b6ea82290809e49f832d6a9e7e878514676fd6698ead8ccf9c2822254309d3a57c9d8d87d0c128d55c2f7f411be240b46192bff020c327cc9
   languageName: node
   linkType: hard
 
