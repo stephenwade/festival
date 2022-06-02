@@ -47,7 +47,7 @@
     "@web/test-runner": "0.13.29",
     "@web/test-runner-commands": "0.6.2",
     "@web/test-runner-mocha": "0.7.5",
-    "@web/test-runner-playwright": "0.8.8",
+    "@web/test-runner-playwright": "0.8.9",
     "chai": "4.3.6",
     "concurrently": "7.2.1",
     "deepmerge": "4.2.2",
