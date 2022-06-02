@@ -2662,14 +2662,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-playwright@npm:0.8.8":
-  version: 0.8.8
-  resolution: "@web/test-runner-playwright@npm:0.8.8"
+"@web/test-runner-playwright@npm:0.8.9":
+  version: 0.8.9
+  resolution: "@web/test-runner-playwright@npm:0.8.9"
   dependencies:
     "@web/test-runner-core": ^0.10.20
     "@web/test-runner-coverage-v8": ^0.4.8
-    playwright: ^1.14.0
-  checksum: a2c11a21fac7a2513070ebd36a0b20c7a5592e5d39f5e49717afa862ba35165f0adc3f695911be12af1d7c30f14069c19eeb876773eb35d944a13b7e505289ad
+    playwright: ^1.22.2
+  checksum: 352a35781cf2a07de4c53c0d2e52e87cb919a1507922b640236e8f06163b30a8dcd02835dd2274add2a12c8c8084a47223fc49308a84ab0e2233bc5d79230346
   languageName: node
   linkType: hard
 
@@ -5612,7 +5612,7 @@ __metadata:
     "@web/test-runner": 0.13.29
     "@web/test-runner-commands": 0.6.2
     "@web/test-runner-mocha": 0.7.5
-    "@web/test-runner-playwright": 0.8.8
+    "@web/test-runner-playwright": 0.8.9
     chai: 4.3.6
     concurrently: 7.2.1
     date-fns: 2.28.0
@@ -9480,7 +9480,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:^1.14.0":
+"playwright@npm:^1.22.2":
   version: 1.22.2
   resolution: "playwright@npm:1.22.2"
   dependencies:
