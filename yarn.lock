@@ -2586,23 +2586,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-commands@npm:0.6.1, @web/test-runner-commands@npm:^0.6.1":
-  version: 0.6.1
-  resolution: "@web/test-runner-commands@npm:0.6.1"
-  dependencies:
-    "@web/test-runner-core": ^0.10.20
-    mkdirp: ^1.0.4
-  checksum: a6cd2f0164561889a11caf9c2c48360be33aaf0296e72378b8163d2754d7b51e675eb7af65dd84beec65eac25fafc6874782502919dce3b368ebbd7a61c75919
-  languageName: node
-  linkType: hard
-
-"@web/test-runner-commands@npm:^0.6.2":
+"@web/test-runner-commands@npm:0.6.2, @web/test-runner-commands@npm:^0.6.2":
   version: 0.6.2
   resolution: "@web/test-runner-commands@npm:0.6.2"
   dependencies:
     "@web/test-runner-core": ^0.10.20
     mkdirp: ^1.0.4
   checksum: aa39dfa328711ec35697a32be2b5f98ed6bc77301847f3a6e73f4c641c0d4f6dbe9bc9fd85b22b4170566ff9188cfce3447deed15f2aab5c8a73c34eceba1fd7
+  languageName: node
+  linkType: hard
+
+"@web/test-runner-commands@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "@web/test-runner-commands@npm:0.6.1"
+  dependencies:
+    "@web/test-runner-core": ^0.10.20
+    mkdirp: ^1.0.4
+  checksum: a6cd2f0164561889a11caf9c2c48360be33aaf0296e72378b8163d2754d7b51e675eb7af65dd84beec65eac25fafc6874782502919dce3b368ebbd7a61c75919
   languageName: node
   linkType: hard
 
@@ -5610,7 +5610,7 @@ __metadata:
     "@web/dev-server": 0.1.31
     "@web/dev-server-import-maps": 0.0.6
     "@web/test-runner": 0.13.29
-    "@web/test-runner-commands": 0.6.1
+    "@web/test-runner-commands": 0.6.2
     "@web/test-runner-mocha": 0.7.5
     "@web/test-runner-playwright": 0.8.8
     chai: 4.3.6
