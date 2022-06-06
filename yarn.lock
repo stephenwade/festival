@@ -2673,9 +2673,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner@npm:0.13.29":
-  version: 0.13.29
-  resolution: "@web/test-runner@npm:0.13.29"
+"@web/test-runner@npm:0.13.30":
+  version: 0.13.30
+  resolution: "@web/test-runner@npm:0.13.30"
   dependencies:
     "@web/browser-logs": ^0.2.2
     "@web/config-loader": ^0.1.3
@@ -2696,7 +2696,7 @@ __metadata:
   bin:
     web-test-runner: dist/bin.js
     wtr: dist/bin.js
-  checksum: 82e90e91a2774e56a11fead003dfbfdcef44ad9547f312ad792bce84f143df92f84b6807c2d7a4457dc50871674dd24b0deb68db5d81302151a7a14d6e1c123a
+  checksum: a701e445ef71fafa999d8a072a6efffaccdca0356e3e982f27711f57d1a4c4d59fe548633706076917a1ea8c1adabff5600c406176c185fb7bc135a1aff54ba5
   languageName: node
   linkType: hard
 
@@ -5609,7 +5609,7 @@ __metadata:
     "@vaadin/router": 1.7.4
     "@web/dev-server": 0.1.31
     "@web/dev-server-import-maps": 0.0.6
-    "@web/test-runner": 0.13.29
+    "@web/test-runner": 0.13.30
     "@web/test-runner-commands": 0.6.2
     "@web/test-runner-mocha": 0.7.5
     "@web/test-runner-playwright": 0.8.9
