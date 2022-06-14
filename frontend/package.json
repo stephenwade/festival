@@ -49,7 +49,7 @@
     "@web/test-runner-mocha": "0.7.5",
     "@web/test-runner-playwright": "0.8.9",
     "chai": "4.3.6",
-    "concurrently": "7.2.1",
+    "concurrently": "7.2.2",
     "deepmerge": "4.2.2",
     "dotenv": "16.0.1",
     "dotenv-run-script": "0.2.0",
