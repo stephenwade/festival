@@ -30,7 +30,7 @@
   "dependencies": {
     "@vaadin/router": "1.7.4",
     "date-fns": "2.28.0",
-    "lit": "2.2.6",
+    "lit": "2.2.7",
     "pwa-helpers": "0.9.1",
     "redux": "4.2.0",
     "redux-thunk": "2.4.1",
