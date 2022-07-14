@@ -1726,15 +1726,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.23.2":
-  version: 1.23.2
-  resolution: "@playwright/test@npm:1.23.2"
+"@playwright/test@npm:1.23.3":
+  version: 1.23.3
+  resolution: "@playwright/test@npm:1.23.3"
   dependencies:
     "@types/node": "*"
-    playwright-core: 1.23.2
+    playwright-core: 1.23.3
   bin:
     playwright: cli.js
-  checksum: 3f01cc25d9e2095ee31a272cead11de859303f7c2e4ccdbd5a01985d51dd0d946da2b284b43fb0bcd6780e80939ef4b67215650572a3124a84339c760faa8460
+  checksum: 77e1ac3064c05cfb9d7ea165a2654433711f653cdf63e5040c08779002d1bdfcac4d55f4abd932e086d400fb4a84e37c5023f9535967d005f96b99aed4d3b858
   languageName: node
   linkType: hard
 
@@ -5476,7 +5476,7 @@ __metadata:
   resolution: "festival-root@workspace:."
   dependencies:
     "@open-wc/eslint-config": 7.0.0
-    "@playwright/test": 1.23.2
+    "@playwright/test": 1.23.3
     "@stylelint/postcss-css-in-js": 0.38.0
     eslint: 8.19.0
     eslint-config-prettier: 8.5.0
@@ -5506,7 +5506,7 @@ __metadata:
     "@open-wc/building-rollup": 2.0.1
     "@open-wc/testing": 3.1.6
     "@open-wc/testing-helpers": 2.1.2
-    "@playwright/test": 1.23.2
+    "@playwright/test": 1.23.3
     "@rollup/plugin-replace": 4.0.0
     "@vaadin/router": 1.7.4
     "@web/dev-server": 0.1.32
@@ -9205,6 +9205,15 @@ __metadata:
   bin:
     playwright: cli.js
   checksum: 7e5c7adbc436c68e5de8535508746c2734393f77948c08ff1df7d21eaa518cd00d82f49c936b2776be6958dc2d7f18985582d72690ffeee7a59006267e22a391
+  languageName: node
+  linkType: hard
+
+"playwright-core@npm:1.23.3":
+  version: 1.23.3
+  resolution: "playwright-core@npm:1.23.3"
+  bin:
+    playwright: cli.js
+  checksum: e83cf0b05d791ded54e155fc8cb5689dcb57e02f315f23f5955d769fbb40685ce085218debbc6e617280b0d432e857631762c010586dfd19a6f14a5149384ecd
   languageName: node
   linkType: hard
 
