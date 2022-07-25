@@ -4917,12 +4917,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-html@npm:7.0.0":
-  version: 7.0.0
-  resolution: "eslint-plugin-html@npm:7.0.0"
+"eslint-plugin-html@npm:7.1.0":
+  version: 7.1.0
+  resolution: "eslint-plugin-html@npm:7.1.0"
   dependencies:
     htmlparser2: ^8.0.1
-  checksum: 94a61803885d6aed6898d9851cce2ec9c6e772b07eb4ea315176366d2ac318c5b3116758ff8132b664dd40805894b255df53e6dfe7edbeed2b362bbe233c9090
+  checksum: e92b0cf759c8d8aecff8fdea259fdc801fcff775096756d0b5a24f0c846012232fe74eaf44ea9b31b88e695605a8eff437e5fa440a4beed79c35dfaac190db79
   languageName: node
   linkType: hard
 
@@ -5525,7 +5525,7 @@ __metadata:
     "@stylelint/postcss-css-in-js": 0.38.0
     eslint: 8.20.0
     eslint-config-prettier: 8.5.0
-    eslint-plugin-html: 7.0.0
+    eslint-plugin-html: 7.1.0
     eslint-plugin-import: 2.26.0
     eslint-plugin-lit: 1.6.1
     eslint-plugin-lit-a11y: 2.2.1
