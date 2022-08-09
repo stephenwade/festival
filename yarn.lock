@@ -2401,7 +2401,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server-core@npm:^0.3.18, @web/dev-server-core@npm:^0.3.19, @web/dev-server-core@npm:^0.3.3":
+"@web/dev-server-core@npm:^0.3.18, @web/dev-server-core@npm:^0.3.19":
   version: 0.3.19
   resolution: "@web/dev-server-core@npm:0.3.19"
   dependencies:
@@ -2427,17 +2427,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server-import-maps@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@web/dev-server-import-maps@npm:0.0.6"
+"@web/dev-server-import-maps@npm:0.0.7":
+  version: 0.0.7
+  resolution: "@web/dev-server-import-maps@npm:0.0.7"
   dependencies:
     "@import-maps/resolve": ^1.0.1
     "@types/parse5": ^6.0.1
-    "@web/dev-server-core": ^0.3.3
+    "@web/dev-server-core": ^0.3.19
     "@web/parse5-utils": ^1.3.0
     parse5: ^6.0.1
     picomatch: ^2.2.2
-  checksum: 0dfae7ca3aeab1ab4979408bbd321e317f6fe3bab8ad4521a30b966c04b516186a35873150e2156ff7aefbca38fc6bf949a4c6bcf8b05da24ba159757ae5ddd4
+  checksum: 7d7b7ff726cfb1b37b4ca57f3a18083d04c46f8907b8c0f62bb10c31041c55171b1144f70b90da3031b63b34a25bff43b1dbfa3188e97f15d031536cd4f8f8ec
   languageName: node
   linkType: hard
 
@@ -5399,7 +5399,7 @@ __metadata:
     "@rollup/plugin-replace": 4.0.0
     "@vaadin/router": 1.7.4
     "@web/dev-server": 0.1.33
-    "@web/dev-server-import-maps": 0.0.6
+    "@web/dev-server-import-maps": 0.0.7
     "@web/test-runner": 0.13.31
     "@web/test-runner-commands": 0.6.4
     "@web/test-runner-mocha": 0.7.5
