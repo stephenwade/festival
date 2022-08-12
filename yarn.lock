@@ -1460,6 +1460,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lit/reactive-element@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@lit/reactive-element@npm:1.4.0"
+  checksum: 288ff17745aac415731769c8a9d6dc038d778529a61d93f2b6273288e26fc57eda6bb3b8d9a60b0c105d6b2ea512ec24eec6cd2014851355979ac350062e5546
+  languageName: node
+  linkType: hard
+
 "@magic-sdk/admin@npm:1.4.1":
   version: 1.4.1
   resolution: "@magic-sdk/admin@npm:1.4.1"
@@ -5336,7 +5343,7 @@ __metadata:
     koa-mount: 4.0.0
     koa-send: 5.0.1
     koa-static: 5.0.0
-    lit: 2.2.8
+    lit: 2.3.0
     nodemon: 2.0.19
     rollup: 2.77.3
   languageName: unknown
@@ -5397,7 +5404,7 @@ __metadata:
     imagemin-cli: 7.0.0
     imagemin-webp: 7.0.0
     koa-range: 0.3.0
-    lit: 2.2.8
+    lit: 2.3.0
     pwa-helpers: 0.9.1
     redux: 4.2.0
     redux-thunk: 2.4.1
@@ -7553,7 +7560,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:2.2.8, lit@npm:^2.0.0":
+"lit-html@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "lit-html@npm:2.3.0"
+  dependencies:
+    "@types/trusted-types": ^2.0.2
+  checksum: 71b86f28461c61e1bf595a605409e4ce79edd2f70257e365899cddf64902c4879d4a05619a8f5026847046e92e26739a1e10e9460b3967e5974387ec10991723
+  languageName: node
+  linkType: hard
+
+"lit@npm:2.3.0":
+  version: 2.3.0
+  resolution: "lit@npm:2.3.0"
+  dependencies:
+    "@lit/reactive-element": ^1.4.0
+    lit-element: ^3.2.0
+    lit-html: ^2.3.0
+  checksum: 6f791b82c936eac14e9088c9f9233b957eff6e513b1699e36b5359af4fae57d0fd760a6bf4305291148c2ee150fb1cdddd0ff83c61bfa88638f7bad54b6c69a2
+  languageName: node
+  linkType: hard
+
+"lit@npm:^2.0.0":
   version: 2.2.8
   resolution: "lit@npm:2.2.8"
   dependencies:
