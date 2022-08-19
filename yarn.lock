@@ -5337,7 +5337,7 @@ __metadata:
     koa-mount: 4.0.0
     koa-send: 5.0.1
     koa-static: 5.0.0
-    lit: 2.3.0
+    lit: 2.3.1
     nodemon: 2.0.19
     rollup: 2.78.0
   languageName: unknown
@@ -5398,7 +5398,7 @@ __metadata:
     imagemin-cli: 7.0.0
     imagemin-webp: 7.0.0
     koa-range: 0.3.0
-    lit: 2.3.0
+    lit: 2.3.1
     pwa-helpers: 0.9.1
     redux: 4.2.0
     redux-thunk: 2.4.1
@@ -7545,7 +7545,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:2.3.0, lit@npm:^2.0.0":
+"lit@npm:2.3.1":
+  version: 2.3.1
+  resolution: "lit@npm:2.3.1"
+  dependencies:
+    "@lit/reactive-element": ^1.4.0
+    lit-element: ^3.2.0
+    lit-html: ^2.3.0
+  checksum: 0af92e606ec35fc1931ef4a6fa6aaa9c186e6329cefcba8feb14507187653ae94e0d0cf554530d969c411ae7b9256b4e5c5d0bf373caf02f2147047aeeac946a
+  languageName: node
+  linkType: hard
+
+"lit@npm:^2.0.0":
   version: 2.3.0
   resolution: "lit@npm:2.3.0"
   dependencies:
