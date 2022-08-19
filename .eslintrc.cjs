@@ -28,6 +28,12 @@ module.exports = {
       },
     },
     {
+      files: ['frontend/src/reducers/*.js'],
+      rules: {
+        'default-param-last': 'off',
+      },
+    },
+    {
       files: ['**/test/**/*.{js,cjs,html}'],
       rules: {
         'no-console': 'off',
