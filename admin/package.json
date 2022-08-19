@@ -30,7 +30,7 @@
     "koa-send": "5.0.1",
     "koa-static": "5.0.0",
     "lit": "2.3.1",
-    "rollup": "2.78.0"
+    "rollup": "2.78.1"
   },
   "devDependencies": {
     "dotenv-cli": "6.0.0",
