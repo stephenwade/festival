@@ -1440,16 +1440,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@koa/router@npm:10.1.1":
-  version: 10.1.1
-  resolution: "@koa/router@npm:10.1.1"
+"@koa/router@npm:11.0.1":
+  version: 11.0.1
+  resolution: "@koa/router@npm:11.0.1"
   dependencies:
-    debug: ^4.1.1
-    http-errors: ^1.7.3
+    http-errors: ^2.0.0
     koa-compose: ^4.1.0
     methods: ^1.1.2
-    path-to-regexp: ^6.1.0
-  checksum: 3475f4235576d24eaa218d55e845fb81946288d65b87aa8aeda1a23b11b5556a02b9a8ff1ea520bb988ec7201523c41cff5abce9285fd12b9e839d7590cd2ce1
+    path-to-regexp: ^6.2.1
+  checksum: 5e4a89dde7ef236e270757859d3eb90162c703d30a9a7d69ef8be1dba67cbb3475d2ac293e1a7a6024fb5d2474d7549cbb84d2ae639eac2c0aafdcb8a6a1c09f
   languageName: node
   linkType: hard
 
@@ -5327,7 +5326,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "festival-admin@workspace:admin"
   dependencies:
-    "@koa/router": 10.1.1
+    "@koa/router": 11.0.1
     "@magic-sdk/admin": 1.4.1
     "@open-wc/building-rollup": 2.0.2
     "@rollup/plugin-replace": 4.0.0
@@ -6279,7 +6278,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-errors@npm:2.0.0":
+"http-errors@npm:2.0.0, http-errors@npm:^2.0.0":
   version: 2.0.0
   resolution: "http-errors@npm:2.0.0"
   dependencies:
@@ -8899,7 +8898,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-to-regexp@npm:^6.1.0":
+"path-to-regexp@npm:^6.2.1":
   version: 6.2.1
   resolution: "path-to-regexp@npm:6.2.1"
   checksum: f0227af8284ea13300f4293ba111e3635142f976d4197f14d5ad1f124aebd9118783dd2e5f1fe16f7273743cc3dbeddfb7493f237bb27c10fdae07020cc9b698
