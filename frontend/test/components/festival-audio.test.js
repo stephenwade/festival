@@ -133,6 +133,8 @@ describe('festival-audio', () => {
         await fixture(template);
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
+        // The first click sometimes doesn't register in Firefox, so click again
+        await executeServerCommand('click', 'festival-audio');
         await aTimeout(100);
 
         const { showStatus } = store.getState();
