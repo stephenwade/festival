@@ -3,10 +3,6 @@
   "description": "Festival root package",
   "license": "ISC",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "admin"
-  ],
   "type": "module",
   "repository": {
     "type": "git",

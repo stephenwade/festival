@@ -22,7 +22,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ['frontend/src/reducers/*.js'],
+      files: ['old-frontend/src/reducers/*.js'],
       rules: {
         'default-param-last': 'off',
       },
