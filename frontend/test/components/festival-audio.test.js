@@ -132,7 +132,6 @@ describe('festival-audio', () => {
       it('sets the show status', async () => {
         await fixture(template);
         await nextFrame();
-        await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         await aTimeout(100);
 
@@ -155,7 +154,6 @@ describe('festival-audio', () => {
       it('does not play audio until the show starts', async () => {
         const el = await fixture(template);
         await nextFrame();
-        await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         const audio = el._activeAudio;
 
@@ -177,7 +175,6 @@ describe('festival-audio', () => {
       it('fires loadedmetadata event with set and duration', async () => {
         const el = await fixture(template);
         await nextFrame();
-        await nextFrame();
 
         executeServerCommand('click', 'festival-audio'); // calls el.init()
         const { detail } = await oneEvent(el, 'loadedmetadata');
@@ -187,7 +184,6 @@ describe('festival-audio', () => {
 
       it('updates src immediately if set info is changed', async () => {
         const el = await fixture(template);
-        await nextFrame();
         await nextFrame();
         executeServerCommand('click', 'festival-audio'); // calls el.init()
         await aTimeout(200);
@@ -213,7 +209,6 @@ describe('festival-audio', () => {
 
         const el = await fixture(template);
         await nextFrame();
-        await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         const audio = el._activeAudio;
 
@@ -237,7 +232,6 @@ describe('festival-audio', () => {
         store.dispatch(tick());
 
         const el = await fixture(template);
-        await nextFrame();
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         const nextAudio = el._inactiveAudio;
@@ -275,7 +269,6 @@ describe('festival-audio', () => {
         const el = await fixture(template);
         const audio = el._activeAudio;
         await nextFrame();
-        await nextFrame();
 
         executeServerCommand('click', 'festival-audio'); // calls el.init()
         await aTimeout(500);
@@ -311,7 +304,6 @@ describe('festival-audio', () => {
 
         await fixture(template);
         await nextFrame();
-        await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         await aTimeout(100);
 
@@ -331,7 +323,6 @@ describe('festival-audio', () => {
         store.dispatch(tick());
 
         await fixture(template);
-        await nextFrame();
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         await aTimeout(100);
@@ -361,7 +352,6 @@ describe('festival-audio', () => {
       it('creates and resumes an audio context', async () => {
         const el = await fixture(template);
         await nextFrame();
-        await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         await aTimeout(100);
 
@@ -371,7 +361,6 @@ describe('festival-audio', () => {
 
       it('fires visualizer-data-available with function', async () => {
         const el = await fixture(template);
-        await nextFrame();
         await nextFrame();
         executeServerCommand('click', 'festival-audio'); // calls el.init()
 
@@ -400,7 +389,6 @@ describe('festival-audio', () => {
 
       it('does not create an audio context', async () => {
         const el = await fixture(template);
-        await nextFrame();
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
         await nextFrame();
