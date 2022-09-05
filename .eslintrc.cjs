@@ -22,12 +22,6 @@ module.exports = {
 
   overrides: [
     {
-      files: ['admin/**/*.js'],
-      rules: {
-        'no-console': 'off',
-      },
-    },
-    {
       files: ['frontend/src/reducers/*.js'],
       rules: {
         'default-param-last': 'off',
