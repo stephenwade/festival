@@ -133,7 +133,7 @@ describe('festival-audio', () => {
         await fixture(template);
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
-        await aTimeout(100);
+        await aTimeout(200);
 
         const { showStatus } = store.getState();
         expect(showStatus.status).to.equal('WAITING_UNTIL_START');
@@ -305,7 +305,7 @@ describe('festival-audio', () => {
         await fixture(template);
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
-        await aTimeout(100);
+        await aTimeout(200);
 
         const { showStatus } = store.getState();
         expect(showStatus.status).to.equal('ENDED');
@@ -325,7 +325,7 @@ describe('festival-audio', () => {
         await fixture(template);
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
-        await aTimeout(100);
+        await aTimeout(200);
 
         const { showStatus } = store.getState();
         expect(showStatus.status).to.equal('ENDED');
@@ -353,7 +353,7 @@ describe('festival-audio', () => {
         const el = await fixture(template);
         await nextFrame();
         await executeServerCommand('click', 'festival-audio'); // calls el.init()
-        await aTimeout(100);
+        await aTimeout(200);
 
         expect(el).to.have.property('_audioContext');
         expect(el._audioContext.state).to.equal('running');
