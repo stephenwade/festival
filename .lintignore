@@ -1,0 +1,7 @@
+/node_modules/
+/.yarn/
+/.cache/
+/build/
+/public/build/
+/media/
+old-frontend/

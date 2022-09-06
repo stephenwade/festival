@@ -10,4 +10,4 @@ export default () => {
   } catch (e) {
     return false;
   }
-}
+};

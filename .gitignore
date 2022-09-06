@@ -15,6 +15,6 @@ node_modules/
 coverage/
 
 # build
-dist/
-media/
+.cache/
+build/
 .env

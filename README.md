@@ -5,6 +5,8 @@ file for all users at the same time based on their system clock, allowing for
 the social aspect of a live broadcast (everyone can react to the same music
 at the same time) without requiring live streaming infrastructure.
 
+# Remix – Under Construction
+
 ## Local Development
 
 - Run `cd frontend` to change to the frontend directory.
