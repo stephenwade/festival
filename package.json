@@ -13,13 +13,11 @@
     "dev": "remix dev",
     "start": "remix-serve build",
     "lint:eslint": "eslint . --ignore-path .lintignore --max-warnings 0",
-    "lint:stylelint:disabled": "stylelint \"**/*.css\" --ignore-path .lintignore --max-warnings 0",
-    "lint:stylelint": "echo No CSS yet",
+    "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .lintignore --max-warnings 0",
     "lint:prettier": "prettier . --check --ignore-path .lintignore --loglevel warn",
     "lint": "yarn lint:eslint && yarn lint:stylelint && yarn lint:prettier",
     "format:eslint": "eslint . --fix --ignore-path .lintignore",
-    "format:stylelint:disabled": "stylelint \"**/*.css\" --fix --ignore-path .lintignore",
-    "format:stylelint": "echo No CSS yet",
+    "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .lintignore",
     "format:prettier": "prettier . --write --ignore-path .lintignore --loglevel warn",
     "format": "yarn format:eslint; yarn format:stylelint; yarn format:prettier"
   },
@@ -29,7 +27,8 @@
     "@remix-run/serve": "1.7.0",
     "isbot": "3.5.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "supports-webp": "2.0.1"
   },
   "devDependencies": {
     "@playwright/test": "1.25.1",

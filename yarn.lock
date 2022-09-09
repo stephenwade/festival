@@ -4871,6 +4871,7 @@ __metadata:
     stylelint-config-prettier: 9.0.3
     stylelint-config-standard: 28.0.0
     stylelint-order: 5.0.0
+    supports-webp: 2.0.1
     typescript: 4.8.2
   languageName: unknown
   linkType: soft
@@ -9743,6 +9744,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 53b1e247e68e05db7b3808b99b892bd36fb096e6fba213a06da7fab22045e97597db425c724f2bbd6c99a3c295e1e73f3e4de78592289f38431049e1277ca0ae
+  languageName: node
+  linkType: hard
+
+"supports-webp@npm:2.0.1":
+  version: 2.0.1
+  resolution: "supports-webp@npm:2.0.1"
+  checksum: b6d97e56092a54ab543a58f68291533c00806f9e90203fb60093c5025c2e71bd826876bd2c83c94576060c084db071370c31a3539a0194c05a8a113c77449b53
   languageName: node
   linkType: hard
 
