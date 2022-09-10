@@ -15,12 +15,14 @@ module.exports = {
   plugins: ['import', 'jsx-a11y', 'no-only-tests', 'simple-import-sort'],
 
   rules: {
-    quotes: ['error', 'single', { avoidEscape: true }],
-    'require-unicode-regexp': 'error',
-    'import/first': 'error',
-    'import/newline-after-import': 'error',
-    'import/no-duplicates': 'error',
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
+    quotes: ['warn', 'single', { avoidEscape: true }],
+    'require-unicode-regexp': 'warn',
+    'import/first': 'warn',
+    'import/newline-after-import': 'warn',
+    'import/no-duplicates': 'warn',
+    'simple-import-sort/imports': 'warn',
+    'simple-import-sort/exports': 'warn',
   },
+
+  ignorePatterns: ['old-frontend/*'],
 };

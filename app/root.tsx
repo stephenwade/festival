@@ -8,10 +8,12 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 
-import stylesUrl from './styles/global.css';
+import elevationStylesUrl from './styles/elevation.css';
+import globalStylesUrl from './styles/global.css';
 
 export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: stylesUrl },
+  { rel: 'stylesheet', href: globalStylesUrl },
+  { rel: 'stylesheet', href: elevationStylesUrl },
 ];
 
 export const meta: MetaFunction = () => ({
