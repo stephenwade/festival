@@ -25,16 +25,16 @@
     "@remix-run/node": "1.7.0",
     "@remix-run/react": "1.7.0",
     "@remix-run/serve": "1.7.0",
-    "isbot": "3.5.2",
+    "isbot": "3.5.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "supports-webp": "2.0.1"
+    "supports-webp": "3.0.0"
   },
   "devDependencies": {
-    "@playwright/test": "1.25.1",
+    "@playwright/test": "1.25.2",
     "@remix-run/dev": "1.7.0",
     "@remix-run/eslint-config": "1.7.0",
-    "@types/react": "18.0.18",
+    "@types/react": "18.0.19",
     "@types/react-dom": "18.0.6",
     "esbuild-register": "3.3.3",
     "eslint": "8.23.0",
@@ -51,7 +51,7 @@
     "stylelint-config-prettier": "9.0.3",
     "stylelint-config-standard": "28.0.0",
     "stylelint-order": "5.0.0",
-    "typescript": "4.8.2"
+    "typescript": "4.8.3"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint --fix",
