@@ -10,12 +10,12 @@ at the same time) without requiring live streaming infrastructure.
 ## Local Development
 
 - Run `cd frontend` to change to the frontend directory.
-- Run `yarn` to install the required packages.
+- Run `npm ci` to install the required packages.
 - Add media files to the `media/` folder and add the information to
   `media/sets.json`. Use `media/sets-sample.json` as a guide to format
   your `sets.json` file.
-- If you add images, run `yarn imagemin` to convert them to WEBP.
-- Run `yarn start` to serve the application locally.
+- If you add images, run `npm run imagemin` to convert them to WebP.
+- Run `npm start` to serve the application locally.
 
 ## Sample Media
 
@@ -28,19 +28,19 @@ at the same time) without requiring live streaming infrastructure.
 
 ## Building
 
-- `yarn build` will bundle the application in the `dist/` folder.
-- `yarn start:build` will serve the bundled application.
+- `npm run build` will bundle the application in the `dist/` folder.
+- `npm run start:build` will serve the bundled application.
 
 ## Testing
 
 - Run `cd frontend` to change to the frontend directory.
 - Run `npx playwright install` to install the required dependencies for
   Playwright, the end-to-end test runner.
-- Run `yarn test:js` to run the component and store tests with
+- Run `npm run test:js` to run the component and store tests with
   [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/).
-- Run `yarn test:e2e` to run the end-to-end tests with
+- Run `npm run test:e2e` to run the end-to-end tests with
   [Playwright](https://playwright.dev/).
-- You can also run `yarn test` to run all tests at once.
+- You can also run `npm run test` to run all tests at once.
 
 ## Deploying
 
@@ -56,7 +56,7 @@ to Azure blob storage.
    - `FESTIVAL_AZURE_STORAGE_ACCOUNT`: The name of the Azure storage account
      for the media.
    - `FESTIVAL_AZURE_STORAGE_KEY`: The access key for the Azure storage account.
-1. Run `yarn build` to build the site for production.
-1. Run `yarn deploy` to deploy both the site and the media.
-   You can also run `yarn deploy:site` to deploy only the site,
-   or `yarn deploy:media` to deploy only the media.
+1. Run `npm run build` to build the site for production.
+1. Run `npm run deploy` to deploy both the site and the media.
+   You can also run `npm run deploy:site` to deploy only the site,
+   or `npm run deploy:media` to deploy only the media.

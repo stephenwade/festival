@@ -7,7 +7,6 @@
     "type": "git",
     "url": "git+https://github.com/stephenwade/festival.git"
   },
-  "packageManager": "yarn@3.2.3",
   "scripts": {
     "build": "remix build",
     "dev": "remix dev",
@@ -15,11 +14,11 @@
     "lint:eslint": "eslint . --ignore-path .lintignore --max-warnings 0",
     "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .lintignore --max-warnings 0",
     "lint:prettier": "prettier . --check --ignore-path .lintignore --loglevel warn",
-    "lint": "yarn lint:eslint && yarn lint:stylelint && yarn lint:prettier",
+    "lint": "npm run lint:eslint && npm run lint:stylelint && npm run lint:prettier",
     "format:eslint": "eslint . --fix --ignore-path .lintignore",
     "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .lintignore",
     "format:prettier": "prettier . --write --ignore-path .lintignore --loglevel warn",
-    "format": "yarn format:eslint; yarn format:stylelint; yarn format:prettier"
+    "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier"
   },
   "dependencies": {
     "@remix-run/node": "1.7.0",

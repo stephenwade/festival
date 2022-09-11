@@ -24,11 +24,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: yarn
+          cache: npm
 
-      - run: yarn --immutable
+      - run: npm ci
 
-      - run: yarn test:js
+      - run: npm run test:js
 
   e2e:
     name: End to End
@@ -46,8 +46,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: yarn
+          cache: npm
 
-      - run: yarn --immutable
+      - run: npm ci
 
-      - run: yarn test:e2e
+      - run: npm run test:e2e
