@@ -12,16 +12,28 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
 
-  plugins: ['import', 'jsx-a11y', 'no-only-tests', 'simple-import-sort'],
+  plugins: [
+    'import',
+    'jsx-a11y',
+    'no-only-tests',
+    'simple-import-sort',
+    'unused-imports',
+  ],
 
   rules: {
     quotes: ['warn', 'single', { avoidEscape: true }],
     'require-unicode-regexp': 'warn',
+
     'import/first': 'warn',
     'import/newline-after-import': 'warn',
     'import/no-duplicates': 'warn',
+
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
+
+    '@typescript-eslint/no-unused-vars': 'off',
+    'unused-imports/no-unused-imports': 'warn',
+    'unused-imports/no-unused-vars': 'warn',
   },
 
   ignorePatterns: ['old-frontend/*'],

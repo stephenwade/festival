@@ -4,7 +4,10 @@ import { useState } from 'react';
 
 import stylesUrl from '~/styles/show-playing.css';
 
+import { links as volumeLinks, VolumeFab } from '../VolumeFab';
+
 export const links: LinksFunction = () => [
+  ...volumeLinks(),
   { rel: 'stylesheet', href: stylesUrl },
 ];
 
@@ -19,6 +22,7 @@ type Props = {
 export const ShowPlaying: FC<Props> = ({ onShowEnded }) => {
   const [showSpinner] = useState(false);
   const [waitingUntilStart] = useState(true);
+  const volume = 100;
   const set = { artist: "'Etikit" };
 
   const currentTime = '0:05';
@@ -31,11 +35,10 @@ export const ShowPlaying: FC<Props> = ({ onShowEnded }) => {
       </div>
       {waitingUntilStart ? <div className="next-up">Next up</div> : null}
       <div className="artist">{set.artist}</div>
-      {/* <fab-volume-button
-        className="volume-button"
-        .volume="${this.volume}"
-        @volumeinput="${this._handleVolumeInput}"
-      ></fab-volume-button> */}
+      <VolumeFab
+        volume={volume}
+        // @volumeinput="${this._handleVolumeInput}"
+      />
     </div>
   );
 };
