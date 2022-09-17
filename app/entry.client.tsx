@@ -1,8 +1,14 @@
 import { RemixBrowser } from '@remix-run/react';
+import { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import checkWebP from 'supports-webp';
 
-hydrateRoot(document, <RemixBrowser />);
+hydrateRoot(
+  document,
+  <StrictMode>
+    <RemixBrowser />
+  </StrictMode>
+);
 
 function webPSupported() {
   document.documentElement.classList.add('webp');
