@@ -1,6 +1,5 @@
 import type { LinksFunction } from '@remix-run/node';
 import type { FC } from 'react';
-import { useState } from 'react';
 
 import stylesUrl from '~/styles/show-intro.css';
 
@@ -13,8 +12,6 @@ type Props = {
 };
 
 export const ShowIntro: FC<Props> = ({ onListenClicked }) => {
-  const [logoLoaded, setLogoLoaded] = useState(false);
-
   return (
     <div className="intro-container">
       <a
@@ -22,18 +19,14 @@ export const ShowIntro: FC<Props> = ({ onListenClicked }) => {
         href="https://twitter.com/URLFESTIVAL"
         target="_blank"
         rel="noopener noreferrer"
-        hidden={!logoLoaded}
       >
         <img
           className="logo"
           src="/images/impulse-logo.png"
           alt="Impulse Music Festival"
-          onLoad={() => {
-            setLogoLoaded(true);
-          }}
         />
       </a>
-      <div className="buttons" hidden={!logoLoaded}>
+      <div className="buttons">
         <span className="elevation-z2">
           <button onClick={onListenClicked}>Listen Live</button>
         </span>
