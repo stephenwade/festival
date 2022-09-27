@@ -5,7 +5,7 @@ type UseClockProps = {
   enabled?: boolean;
 };
 
-export const useClock = ({ onTick, enabled = true }: UseClockProps): void => {
+export function useClock({ onTick, enabled = true }: UseClockProps): void {
   const getCurrentSecond = () => Math.floor(Date.now() / 1000);
 
   const lastSecond = useRef(getCurrentSecond());
@@ -25,4 +25,4 @@ export const useClock = ({ onTick, enabled = true }: UseClockProps): void => {
       };
     }
   }, [enabled, onTick]);
-};
+}
