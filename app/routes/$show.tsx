@@ -1,4 +1,4 @@
-import type { LinksFunction } from '@remix-run/node';
+import type { LinksFunction, MetaFunction } from '@remix-run/node';
 import type { FC } from 'react';
 import { useState } from 'react';
 
@@ -6,6 +6,9 @@ import { links as endedLinks, ShowEnded } from '~/components/ShowEnded';
 import { links as introLinks, ShowIntro } from '~/components/ShowIntro';
 import { links as playingLinks, ShowPlaying } from '~/components/ShowPlaying';
 import showStylesUrl from '~/styles/show.css';
+import type { ShowData } from '~/types/ShowData';
+
+import { loader as showInfoLoader } from './$show.info';
 
 export const links: LinksFunction = () => [
   ...introLinks(),
@@ -13,6 +16,15 @@ export const links: LinksFunction = () => [
   ...endedLinks(),
   { rel: 'stylesheet', href: showStylesUrl },
 ];
+
+export const loader = showInfoLoader;
+
+export const meta: MetaFunction = ({ data }: { data: ShowData }) => {
+  return {
+    title: `${data.name} | Festival`,
+    description: data.description,
+  };
+};
 
 enum ShowStatus {
   Intro,
