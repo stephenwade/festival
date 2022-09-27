@@ -7,4 +7,5 @@ module.exports = {
   // assetsBuildDirectory: 'public/build',
   // publicPath: '/build/',
   // serverBuildPath: 'build/index.js',
+  serverDependenciesToBundle: ['supports-webp'],
 };
