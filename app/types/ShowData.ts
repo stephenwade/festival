@@ -10,6 +10,7 @@ export type ShowData = {
   name: string;
   description: string;
   sets: SetData[];
+  serverDate: string;
 };
 
 type SetStatus = Omit<SetData, 'start'> & {
@@ -17,7 +18,7 @@ type SetStatus = Omit<SetData, 'start'> & {
   end: Date;
 };
 
-export type ShowStatus = Omit<ShowData, 'sets'> & {
+export type ShowStatus = Omit<ShowData, 'sets' | 'serverDate'> & {
   sets: SetStatus[];
   onLoadedMetadata: (params: { audioUrl: string; duration: number }) => void;
 };

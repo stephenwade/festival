@@ -1,5 +1,6 @@
 import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
+import { formatISO } from 'date-fns';
 
 import type { ShowData } from '~/types/ShowData';
 
@@ -44,6 +45,7 @@ export const loader: LoaderFunction = () => {
         duration: 226.06,
       },
     ],
+    serverDate: formatISO(new Date()),
   };
 
   return json(data);

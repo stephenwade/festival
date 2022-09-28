@@ -1,5 +1,5 @@
 import { useFetcher } from '@remix-run/react';
-import { addSeconds, parseISO } from 'date-fns';
+import { addMilliseconds, addSeconds, parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { ShowData, ShowStatus } from '~/types/ShowData';
@@ -41,20 +41,30 @@ export function useShowStatus({ loaderData }: UseShowStatusProps): ShowStatus {
 
   const data = loaderData || fetcher.data;
 
-  const showStatus = useMemo(
-    () => ({
+  const showStatus = useMemo(() => {
+    const serverDate = parseISO(data.serverDate);
+
+    const clientTimeSkewMs = Date.now() - serverDate.valueOf();
+
+    return {
       ...data,
-      sets: data.sets.map((set) => {
-        const start = parseISO(set.start);
+      sets: data.sets
+        .map(function parseDates(set) {
+          const start = parseISO(set.start);
 
-        const length = audioDurations[set.audioUrl] ?? set.duration;
-        const end = addSeconds(start, length);
+          const length = audioDurations[set.audioUrl] ?? set.duration;
+          const end = addSeconds(start, length);
 
-        return { ...set, start, end };
-      }),
-    }),
-    [audioDurations, data]
-  );
+          return { ...set, start, end };
+        })
+        .map(function adjustForClientTimeSkew(set) {
+          const start = addMilliseconds(set.start, clientTimeSkewMs);
+          const end = addMilliseconds(set.end, clientTimeSkewMs);
+
+          return { ...set, start, end };
+        }),
+    };
+  }, [audioDurations, data]);
 
   return { ...showStatus, onLoadedMetadata };
 }
