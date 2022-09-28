@@ -41,30 +41,30 @@ export function useShowStatus({ loaderData }: UseShowStatusProps): ShowStatus {
 
   const data = loaderData || fetcher.data;
 
-  const showStatus = useMemo(() => {
+  const sets = useMemo(() => {
     const serverDate = parseISO(data.serverDate);
 
     const clientTimeSkewMs = Date.now() - serverDate.valueOf();
 
-    return {
-      ...data,
-      sets: data.sets
-        .map(function parseDates(set) {
-          const start = parseISO(set.start);
+    return data.sets
+      .map(function parseDates(set) {
+        const start = parseISO(set.start);
 
-          const length = audioDurations[set.audioUrl] ?? set.duration;
-          const end = addSeconds(start, length);
+        const length = audioDurations[set.audioUrl] ?? set.duration;
+        const end = addSeconds(start, length);
 
-          return { ...set, start, end };
-        })
-        .map(function adjustForClientTimeSkew(set) {
-          const start = addMilliseconds(set.start, clientTimeSkewMs);
-          const end = addMilliseconds(set.end, clientTimeSkewMs);
+        return { ...set, start, end };
+      })
+      .map(function adjustForClientTimeSkew(set) {
+        const start = addMilliseconds(set.start, clientTimeSkewMs);
+        const end = addMilliseconds(set.end, clientTimeSkewMs);
 
-          return { ...set, start, end };
-        }),
-    };
+        return { ...set, start, end };
+      })
+      .sort(function byDate(a, b) {
+        return a.start.valueOf() - b.start.valueOf();
+      });
   }, [audioDurations, data]);
 
-  return { ...showStatus, onLoadedMetadata };
+  return { ...data, sets, onLoadedMetadata };
 }
