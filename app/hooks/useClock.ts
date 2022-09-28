@@ -1,11 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-type UseClockProps = {
-  onTick: () => void;
-  enabled?: boolean;
-};
+export function useClock(enabled = true): void {
+  const [, forceUpdate] = useState(0);
 
-export function useClock({ onTick, enabled = true }: UseClockProps): void {
   const getCurrentSecond = () => Math.floor(Date.now() / 1000);
 
   const lastSecond = useRef(getCurrentSecond());
@@ -16,7 +13,7 @@ export function useClock({ onTick, enabled = true }: UseClockProps): void {
         const now = getCurrentSecond();
         if (lastSecond.current !== now) {
           lastSecond.current = now;
-          onTick();
+          forceUpdate((x) => x + 1);
         }
       }, 200);
 
@@ -24,5 +21,5 @@ export function useClock({ onTick, enabled = true }: UseClockProps): void {
         clearInterval(interval);
       };
     }
-  }, [enabled, onTick]);
+  }, [enabled]);
 }

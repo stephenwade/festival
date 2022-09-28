@@ -1,4 +1,4 @@
-type SetData = {
+export type SetData = {
   id: string;
   audioUrl: string;
   artist: string;
@@ -11,14 +11,4 @@ export type ShowData = {
   description: string;
   sets: SetData[];
   serverDate: string;
-};
-
-type SetStatus = Omit<SetData, 'start'> & {
-  start: Date;
-  end: Date;
-};
-
-export type ShowStatus = Omit<ShowData, 'sets' | 'serverDate'> & {
-  sets: SetStatus[];
-  onLoadedMetadata: (params: { audioUrl: string; duration: number }) => void;
 };
