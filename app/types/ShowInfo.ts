@@ -5,18 +5,21 @@ type SetInfo = Omit<SetData, 'start'> & {
   end: Date;
 };
 
-export enum TargetStatus {
-  WaitingUntilStart = 'WAITING_UNTIL_START',
-  Playing = 'PLAYING',
-  Ended = 'ENDED',
-}
+type SetsInfo = {
+  currentSet?: SetInfo;
+  nextSet?: SetInfo;
+};
+
+export type TargetTimeInfo =
+  | { status: 'WAITING_UNTIL_START'; secondsUntilSet?: number }
+  | { status: 'PLAYING'; currentTime: number; delay?: number }
+  | { status: 'ENDED' };
+
+export type TargetShowInfo = TargetTimeInfo & SetsInfo;
 
 export type TimeInfo =
-  | { status: TargetStatus.WaitingUntilStart; secondsUntilSet: number }
-  | { status: TargetStatus.Playing; currentTime: number }
-  | { status: TargetStatus.Ended };
+  | TargetTimeInfo
+  | { status: 'WAITING_FOR_AUDIO_CONTEXT' }
+  | { status: 'DELAYING_FOR_INITIAL_SYNC'; delayingUntil: number };
 
-export type ShowInfo = TimeInfo & {
-  currentSet: SetInfo | undefined;
-  nextSet: SetInfo | undefined;
-};
+export type ShowInfo = TimeInfo & SetsInfo;

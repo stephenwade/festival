@@ -1,10 +1,13 @@
 import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
-import { useState } from 'react';
+import useLocalStorageState from 'use-local-storage-state';
 
+import { AudioController } from '~/components/AudioController';
 import { links as endedLinks, ShowEnded } from '~/components/ShowEnded';
 import { links as introLinks, ShowIntro } from '~/components/ShowIntro';
 import { links as playingLinks, ShowPlaying } from '~/components/ShowPlaying';
+import { useShowInfo } from '~/hooks/useShowInfo';
 import showStylesUrl from '~/styles/show.css';
 import type { ShowData } from '~/types/ShowData';
 
@@ -26,36 +29,49 @@ export const meta: MetaFunction = ({ data }: { data: ShowData }) => {
   };
 };
 
-enum ShowStatus {
-  Intro,
-  Playing,
-  Ended,
-}
-
 const Show: FC = () => {
-  const [showStatus, setShowStatus] = useState(ShowStatus.Intro);
+  const loaderData: ShowData = useLoaderData();
 
-  if (showStatus === ShowStatus.Intro) {
-    return (
-      <ShowIntro
-        onListenClicked={() => {
-          setShowStatus(ShowStatus.Playing);
-        }}
-      />
-    );
-  }
+  const { targetShowInfo, onLoadedMetadata } = useShowInfo({
+    loaderData,
+  });
 
-  if (showStatus === ShowStatus.Playing) {
-    return (
-      <ShowPlaying
-        onShowEnded={() => {
-          setShowStatus(ShowStatus.Ended);
-        }}
-      />
-    );
-  }
+  const [volume, setVolume] = useLocalStorageState('volume', {
+    defaultValue: 100,
+    storageSync: false,
+  });
 
-  return <ShowEnded />;
+  return (
+    <AudioController
+      targetShowInfo={targetShowInfo}
+      volume={volume}
+      onLoadedMetadata={onLoadedMetadata}
+    >
+      {({
+        showInfo,
+        // audioStatus,
+        // audioError,
+        initializeAudio,
+        // getAudioVisualizerData,
+      }) => {
+        if (showInfo.status === 'WAITING_FOR_AUDIO_CONTEXT') {
+          return (
+            <ShowIntro
+              onListenClicked={() => {
+                void initializeAudio();
+              }}
+            />
+          );
+        }
+
+        if (showInfo.status === 'ENDED') {
+          return <ShowEnded />;
+        }
+
+        return <ShowPlaying onVolumeInput={setVolume} />;
+      }}
+    </AudioController>
+  );
 };
 
 export default Show;

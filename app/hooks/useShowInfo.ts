@@ -3,8 +3,7 @@ import { addMilliseconds, addSeconds, isBefore, parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { ShowData } from '~/types/ShowData';
-import type { ShowInfo, TimeInfo } from '~/types/ShowInfo';
-import { TargetStatus } from '~/types/ShowInfo';
+import type { TargetShowInfo, TargetTimeInfo } from '~/types/ShowInfo';
 
 import { useClock } from './useClock';
 import { useCurrentShowId } from './useCurrentShowId';
@@ -14,15 +13,15 @@ type UseShowStatusProps = {
 };
 
 export function useShowInfo({ loaderData }: UseShowStatusProps) {
-  const [audioDurations, setAudioLengths] = useState<{
+  const [audioDurations, setAudioDurations] = useState<{
     [audioUrl: string]: number;
   }>({});
 
   const onLoadedMetadata = useCallback(
-    ({ audioUrl, duration }: { audioUrl: string; duration: number }) => {
-      setAudioLengths((audioLengths) => ({
+    ({ id, duration }: { id: string; duration: number }) => {
+      setAudioDurations((audioLengths) => ({
         ...audioLengths,
-        [audioUrl]: duration,
+        [id]: duration,
       }));
     },
     []
@@ -61,7 +60,7 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
       .map(function parseDates(set) {
         const start = parseISO(set.start);
 
-        const length = audioDurations[set.audioUrl] ?? set.duration;
+        const length = audioDurations[set.id] ?? set.duration;
         const end = addSeconds(start, length);
 
         return { ...set, start, end };
@@ -84,25 +83,25 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
   const nextSet =
     currentSetIndex === -1 ? undefined : sets[currentSetIndex + 1];
 
-  const timeInfo: TimeInfo = currentSet
+  const timeInfo: TargetTimeInfo = currentSet
     ? isBefore(Date.now(), currentSet.start)
       ? {
-          status: TargetStatus.WaitingUntilStart,
+          status: 'WAITING_UNTIL_START',
           secondsUntilSet: Math.ceil(
             (currentSet.start.valueOf() - Date.now()) / 1000
           ),
         }
       : {
-          status: TargetStatus.Playing,
+          status: 'PLAYING',
           currentTime: Math.floor(
             (Date.now() - currentSet.start.valueOf()) / 1000
           ),
         }
-    : { status: TargetStatus.Ended };
+    : { status: 'ENDED' };
 
-  useClock(timeInfo.status !== TargetStatus.Ended);
+  useClock(timeInfo.status !== 'ENDED');
 
-  const targetShowInfo: ShowInfo = { ...timeInfo, currentSet, nextSet };
+  const targetShowInfo: TargetShowInfo = { ...timeInfo, currentSet, nextSet };
 
   return { targetShowInfo, onLoadedMetadata };
 }

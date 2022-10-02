@@ -13,10 +13,10 @@ export const links: LinksFunction = () => [
 ];
 
 type Props = {
-  onShowEnded: () => void;
+  onVolumeInput: (volume: number) => void;
 };
 
-export const ShowPlaying: FC<Props> = ({ onShowEnded }) => {
+export const ShowPlaying: FC<Props> = ({ onVolumeInput }) => {
   const [showSpinner, setShowSpinner] = useState(true);
   const [waitingUntilStart] = useState(true);
   const volume = 100;
@@ -36,13 +36,8 @@ export const ShowPlaying: FC<Props> = ({ onShowEnded }) => {
         {showSpinner ? <Spinner /> : currentTime}
       </div>
       {waitingUntilStart ? <div className="next-up">Next up</div> : null}
-      <div className="artist" onClick={onShowEnded}>
-        {set.artist}
-      </div>
-      <VolumeFab
-        volume={volume}
-        // @volumeinput="${this._handleVolumeInput}"
-      />
+      <div className="artist">{set.artist}</div>
+      <VolumeFab volume={volume} onVolumeInput={onVolumeInput} />
     </div>
   );
 };
