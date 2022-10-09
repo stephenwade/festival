@@ -13,13 +13,18 @@ export const links: LinksFunction = () => [
 ];
 
 type Props = {
+  volume: number;
+
   onVolumeInput: (volume: number) => void;
 };
 
-export const ShowPlaying: FC<Props> = ({ onVolumeInput }) => {
+export const ShowPlaying: FC<Props> = ({
+  volume,
+
+  onVolumeInput,
+}) => {
   const [showSpinner, setShowSpinner] = useState(true);
   const [waitingUntilStart] = useState(true);
-  const volume = 100;
   const set = { artist: "'Etikit" };
 
   const currentTime = '0:05';

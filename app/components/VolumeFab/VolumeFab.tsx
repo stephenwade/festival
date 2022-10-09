@@ -1,6 +1,8 @@
 import type { LinksFunction } from '@remix-run/node';
 import type { FC, KeyboardEventHandler } from 'react';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
+
+import { useOnClickOutside } from '~/hooks/useOnClickOutside';
 
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
 import stylesUrl from './volume-fab.css';
@@ -25,6 +27,14 @@ export const VolumeFab: FC<Props> = ({
   onVolumeInput,
 }) => {
   const [opened, setOpened] = useState(false);
+
+  const close = useCallback(() => {
+    setOpened(false);
+  }, []);
+
+  const buttonRef = useRef<HTMLDivElement>(null);
+
+  useOnClickOutside(buttonRef, close);
 
   const updateVolume = (volume: number) => {
     onVolumeChange?.(volume);
@@ -71,7 +81,7 @@ export const VolumeFab: FC<Props> = ({
       : VolumeUpIcon;
 
   return (
-    <div className="volume-fab-container">
+    <div ref={buttonRef} className="volume-fab-container">
       <button
         className={`elevation-transition ${
           opened ? 'elevation-z12' : 'elevation-z6'

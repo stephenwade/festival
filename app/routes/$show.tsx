@@ -68,7 +68,7 @@ const Show: FC = () => {
           return <ShowEnded />;
         }
 
-        return <ShowPlaying onVolumeInput={setVolume} />;
+        return <ShowPlaying volume={volume} onVolumeInput={setVolume} />;
       }}
     </AudioController>
   );
