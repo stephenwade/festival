@@ -163,7 +163,8 @@ export const AudioController: FC<Props> = ({
 
     const setChanged = change.currentSet !== showInfo.currentSet;
     const nextSrcAlreadySet =
-      activeAudio.dataset.mySrc === change.currentSet?.audioUrl;
+      activeAudio.attributes.getNamedItem('src')?.value ===
+      change.currentSet?.audioUrl;
     const shouldChangeSrc = setChanged && !nextSrcAlreadySet;
 
     let newShowInfo: ShowInfo;
@@ -171,7 +172,6 @@ export const AudioController: FC<Props> = ({
     if (change.status === 'WAITING_UNTIL_START') {
       if (shouldChangeSrc && change.currentSet) {
         activeAudio.src = change.currentSet.audioUrl;
-        activeAudio.dataset.mySrc = change.currentSet.audioUrl;
       }
 
       newShowInfo = {
@@ -183,7 +183,6 @@ export const AudioController: FC<Props> = ({
     } else if (change.status === 'PLAYING') {
       if (shouldChangeSrc && change.currentSet) {
         activeAudio.src = change.currentSet.audioUrl;
-        activeAudio.dataset.mySrc = change.currentSet.audioUrl;
       }
 
       if (change.currentTime > 0) {
@@ -408,7 +407,6 @@ export const AudioController: FC<Props> = ({
         if (e.target !== state.activeAudio) return;
 
         state.activeAudio.removeAttribute('src');
-        state.activeAudio.dataset.mySrc = undefined;
 
         // prettier-ignore
         // swap activeAudio and inactiveAudio
@@ -474,7 +472,8 @@ export const AudioController: FC<Props> = ({
           });
 
           const nextSrcAlreadySet =
-            state.inactiveAudio?.dataset.mySrc === showInfo.nextSet?.audioUrl;
+            state.inactiveAudio?.attributes.getNamedItem('src')?.value ===
+            showInfo.nextSet?.audioUrl;
           const lessThanOneMinuteLeft =
             showInfo.currentSet &&
             showInfo.currentSet.duration - showInfo.currentTime <= 60;
@@ -482,7 +481,6 @@ export const AudioController: FC<Props> = ({
             !nextSrcAlreadySet && showInfo.nextSet && lessThanOneMinuteLeft;
           if (shouldPreloadNextSet && state.inactiveAudio && showInfo.nextSet) {
             state.inactiveAudio.src = showInfo.nextSet.audioUrl;
-            state.inactiveAudio.dataset.mySrc = showInfo.nextSet.audioUrl;
           }
         }
       },
