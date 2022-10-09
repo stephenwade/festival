@@ -49,8 +49,9 @@ const Show: FC = () => {
     >
       {({
         showInfo,
-        // audioStatus,
+        audioStatus,
         // audioError,
+
         initializeAudio,
         // getAudioVisualizerData,
       }) => {
@@ -68,7 +69,14 @@ const Show: FC = () => {
           return <ShowEnded />;
         }
 
-        return <ShowPlaying volume={volume} onVolumeInput={setVolume} />;
+        return (
+          <ShowPlaying
+            volume={volume}
+            audioStatus={audioStatus}
+            showInfo={showInfo}
+            onVolumeInput={setVolume}
+          />
+        );
       }}
     </AudioController>
   );

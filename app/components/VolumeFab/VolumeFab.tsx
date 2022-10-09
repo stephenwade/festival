@@ -1,6 +1,6 @@
 import type { LinksFunction } from '@remix-run/node';
 import type { FC, KeyboardEventHandler } from 'react';
-import { useCallback, useRef, useState } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 
 import { useOnClickOutside } from '~/hooks/useOnClickOutside';
 
@@ -21,11 +21,11 @@ type Props = {
   onVolumeInput?: (volume: number) => void;
 };
 
-export const VolumeFab: FC<Props> = ({
+export const VolumeFab: FC<Props> = memo(function VolumeFab({
   volume,
   onVolumeChange,
   onVolumeInput,
-}) => {
+}) {
   const [opened, setOpened] = useState(false);
 
   const close = useCallback(() => {
@@ -123,4 +123,4 @@ export const VolumeFab: FC<Props> = ({
       </div>
     </div>
   );
-};
+});
