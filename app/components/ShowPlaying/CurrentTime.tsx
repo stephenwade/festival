@@ -14,8 +14,7 @@ type Props = {
 export const CurrentTime: FC<Props> = ({ showInfo, audioStatus }) => {
   const waitingUntilStart = showInfo.status === 'WAITING_UNTIL_START';
   const playing = showInfo.status === 'PLAYING';
-  const waitingForNetwork =
-    showInfo.status === 'DELAYING_FOR_INITIAL_SYNC' || audioStatus.waiting;
+  const waitingForNetwork = audioStatus.waiting;
 
   const showSpinner = waitingUntilStart ? false : waitingForNetwork;
 

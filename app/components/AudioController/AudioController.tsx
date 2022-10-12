@@ -185,27 +185,22 @@ export const AudioController: FC<Props> = ({
         activeAudio.src = change.currentSet.audioUrl;
       }
 
+      let currentTime = 0;
+
       if (change.currentTime > 0) {
-        // delay 2 seconds for audio to load
-        const delayingUntil = change.currentTime + 2;
-
-        newShowInfo = {
-          currentSet: change.currentSet,
-          status: 'DELAYING_FOR_INITIAL_SYNC',
-          delayingUntil,
-          nextSet: change.nextSet,
-        };
-        activeAudio.src += `#t=${delayingUntil}`;
-      } else {
-        void activeAudio.play();
-
-        newShowInfo = {
-          currentSet: change.currentSet,
-          status: 'PLAYING',
-          currentTime: 0,
-          nextSet: change.nextSet,
-        };
+        // delay 1 second for audio to load
+        currentTime = change.currentTime + 1;
+        activeAudio.src += `#t=${currentTime}`;
       }
+
+      void activeAudio.play();
+
+      newShowInfo = {
+        currentSet: change.currentSet,
+        status: 'PLAYING',
+        currentTime,
+        nextSet: change.nextSet,
+      };
     } else if (change.status === 'ENDED') {
       newShowInfo = { status: 'ENDED' };
     } else {
@@ -219,18 +214,10 @@ export const AudioController: FC<Props> = ({
     (change: ShowInfo) => {
       const state = stateRef.current;
 
-      switch (showInfo.status) {
-        case 'WAITING_FOR_AUDIO_CONTEXT':
-        case 'WAITING_UNTIL_START':
-        case 'ENDED':
-          state.nextChange = change;
-          doNextStatusChange();
-          break;
+      state.nextChange = change;
 
-        case 'DELAYING_FOR_INITIAL_SYNC':
-        case 'PLAYING':
-          state.nextChange = change;
-          break;
+      if (showInfo.status !== 'PLAYING') {
+        doNextStatusChange();
       }
     },
     [doNextStatusChange, showInfo.status]
@@ -254,20 +241,6 @@ export const AudioController: FC<Props> = ({
           ...showInfo,
           secondsUntilSet: change.secondsUntilSet,
         };
-      } else if (
-        showInfo.status === 'DELAYING_FOR_INITIAL_SYNC' &&
-        change.status === 'PLAYING'
-      ) {
-        if (change.currentTime >= showInfo.delayingUntil) {
-          void state.activeAudio.play();
-
-          newShowInfo = {
-            currentSet: change.currentSet,
-            status: 'PLAYING',
-            currentTime: showInfo.delayingUntil,
-            nextSet: change.nextSet,
-          };
-        }
       } else if (showInfo.status === 'PLAYING' && change.status === 'PLAYING') {
         let delay = change.currentTime - state.activeAudio.currentTime;
         if (
