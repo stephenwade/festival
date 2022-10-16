@@ -53,7 +53,7 @@ const Show: FC = () => {
         // audioError,
 
         initializeAudio,
-        // getAudioVisualizerData,
+        getAudioVisualizerData,
       }) => {
         if (showInfo.status === 'WAITING_FOR_AUDIO_CONTEXT') {
           return (
@@ -74,6 +74,7 @@ const Show: FC = () => {
             volume={volume}
             audioStatus={audioStatus}
             showInfo={showInfo}
+            getAudioVisualizerData={getAudioVisualizerData}
             onVolumeInput={setVolume}
           />
         );

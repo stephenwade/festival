@@ -32,6 +32,8 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
   const fetcher = useFetcher<ShowData>();
   const reloadShow = useCallback(() => {
     fetcher.load(`/${showId}/info`);
+
+    // Including `fetcher` gets the page into an infinite loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showId]);
 

@@ -185,12 +185,8 @@ export const AudioController: FC<Props> = ({
         activeAudio.src = change.currentSet.audioUrl;
       }
 
-      let currentTime = 0;
-
       if (change.currentTime > 0) {
-        // delay 1 second for audio to load
-        currentTime = change.currentTime + 1;
-        activeAudio.src += `#t=${currentTime}`;
+        activeAudio.src += `#t=${change.currentTime}`;
       }
 
       void activeAudio.play();
@@ -198,7 +194,7 @@ export const AudioController: FC<Props> = ({
       newShowInfo = {
         currentSet: change.currentSet,
         status: 'PLAYING',
-        currentTime,
+        currentTime: change.currentTime,
         nextSet: change.nextSet,
       };
     } else if (change.status === 'ENDED') {
