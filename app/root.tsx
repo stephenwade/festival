@@ -7,8 +7,9 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import checkWebP from 'supports-webp';
+import { useEffectOnce } from 'usehooks-ts';
 
 import elevationStylesUrl from './styles/elevation.css';
 import globalStylesUrl from './styles/global.css';
@@ -29,7 +30,7 @@ export const meta: MetaFunction = () => ({
 export default function App() {
   const [htmlClassName, setHtmlClassName] = useState<string>();
 
-  useEffect(() => {
+  useEffectOnce(() => {
     checkWebP
       .then((supported) => {
         if (supported) {
@@ -41,7 +42,7 @@ export default function App() {
       .catch(() => {
         setHtmlClassName('no-webp');
       });
-  }, []);
+  });
 
   return (
     <html lang="en" className={htmlClassName}>

@@ -1,8 +1,7 @@
 import type { LinksFunction } from '@remix-run/node';
 import type { FC, KeyboardEventHandler } from 'react';
 import { memo, useCallback, useRef, useState } from 'react';
-
-import { useOnClickOutside } from '~/hooks/useOnClickOutside';
+import { useOnClickOutside } from 'usehooks-ts';
 
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
 import stylesUrl from './volume-fab.css';

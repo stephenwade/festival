@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-
-import { useReduceMotion } from '~/hooks/useReduceMotion';
+import { useMediaQuery, useUpdateEffect, useWindowSize } from 'usehooks-ts';
 
 type Props = {
   currentTime: number;
@@ -20,7 +19,7 @@ export const AudioCanvas: FC<Props> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const reduceMotion = useReduceMotion();
+  const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 
   const [sizeMultiplier, setSizeMultiplier] = useState(1);
 
@@ -28,40 +27,31 @@ export const AudioCanvas: FC<Props> = ({
 
   const animationRequestIdRef = useRef<number>();
 
+  const { width, height } = useWindowSize();
+
   useEffect(() => {
-    const handleWindowResize = () => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-      const scale = window.devicePixelRatio;
+    const scale = window.devicePixelRatio;
 
-      canvas.width = window.innerWidth * scale;
-      canvas.height = window.innerHeight * scale;
+    canvas.width = width * scale;
+    canvas.height = height * scale;
 
-      const sizeMultiplier =
-        window.devicePixelRatio *
-        Math.min(1, window.innerWidth / 500, window.innerHeight / 800);
+    const sizeMultiplier =
+      window.devicePixelRatio * Math.min(1, width / 500, height / 800);
 
-      setSizeMultiplier(sizeMultiplier);
+    setSizeMultiplier(sizeMultiplier);
 
-      // canvas properties must be reset after canvas is resized
-      ctx.lineWidth = 4 * sizeMultiplier;
-      const color = '#fff';
-      ctx.strokeStyle = color;
-      ctx.fillStyle = color;
-    };
-
-    window.addEventListener('resize', handleWindowResize);
-
-    handleWindowResize();
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
+    // canvas properties must be reset after canvas is resized
+    ctx.lineWidth = 4 * sizeMultiplier;
+    const color = '#fff';
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+  }, [height, width]);
 
   const getCirclePoint = useCallback(
     (i: number, end: number, dataArray: Uint8Array, grow: number) => {
@@ -226,7 +216,7 @@ export const AudioCanvas: FC<Props> = ({
     animationRequestIdRef.current = requestAnimationFrame(animate);
   }, [drawCircle, drawProgress, getAudioVisualizerData, reduceMotion]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (animationRequestIdRef.current) {
       cancelAnimationFrame(animationRequestIdRef.current);
     }

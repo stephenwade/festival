@@ -9,6 +9,7 @@ import {
   useState,
 } from 'react';
 import { AudioContext } from 'standardized-audio-context';
+import { useEffectOnce } from 'usehooks-ts';
 
 import type { AudioStatus } from '~/types/AudioStatus';
 import type { ShowInfo, TargetShowInfo } from '~/types/ShowInfo';
@@ -42,6 +43,7 @@ type Props = {
     showInfo: ShowInfo;
     audioStatus: AudioStatus;
     audioError: boolean;
+
     initializeAudio: () => Promise<void>;
     getAudioVisualizerData: (() => Uint8Array) | null;
   }) => ReactNode;
@@ -468,12 +470,12 @@ export const AudioController: FC<Props> = ({
     [doNextStatusChange, onLoadedMetadata, onStalled, showInfo]
   );
 
-  useEffect(() => {
+  useEffectOnce(() => {
     const state = stateRef.current;
 
     state.activeAudio = audio1Ref.current;
     state.inactiveAudio = audio2Ref.current;
-  }, []);
+  });
 
   useEffect(() => {
     const state = stateRef.current;
@@ -488,6 +490,7 @@ export const AudioController: FC<Props> = ({
         showInfo,
         audioStatus,
         audioError,
+
         initializeAudio,
         getAudioVisualizerData: stateRef.current.getAudioVisualizerData,
       })}
