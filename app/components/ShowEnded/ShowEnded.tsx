@@ -1,5 +1,7 @@
 import type { LinksFunction } from '@remix-run/node';
 import type { FC } from 'react';
+import { toast } from 'react-toastify';
+import { useEffectOnce } from 'usehooks-ts';
 
 import stylesUrl from '~/styles/show-ended.css';
 
@@ -8,6 +10,10 @@ export const links: LinksFunction = () => [
 ];
 
 export const ShowEnded: FC = () => {
+  useEffectOnce(() => {
+    toast.dismiss();
+  });
+
   return (
     <div className="ended-container full-page">
       <a

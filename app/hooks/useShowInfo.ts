@@ -1,4 +1,3 @@
-import { useFetcher } from '@remix-run/react';
 import { addMilliseconds, addSeconds, isBefore, parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -7,6 +6,7 @@ import type { TargetShowInfo, TargetTimeInfo } from '~/types/ShowInfo';
 
 import { useClock } from './useClock';
 import { useCurrentShowId } from './useCurrentShowId';
+import { useFetchShowInfo } from './useFetchShowInfo';
 
 type UseShowStatusProps = {
   loaderData: ShowData;
@@ -29,28 +29,17 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
 
   const showId = useCurrentShowId();
 
-  const fetcher = useFetcher<ShowData>();
-  const reloadShow = useCallback(() => {
-    fetcher.load(`/${showId}/info`);
-
-    // Including `fetcher` gets the page into an infinite loop
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showId]);
+  const { data: fetcherData, refetch } = useFetchShowInfo(showId);
 
   useEffect(() => {
-    const handles = [
-      setTimeout(reloadShow, 0),
-      setInterval(reloadShow, 1000 * 60),
-    ];
+    const refetchInterval = setInterval(refetch, 1000 * 60);
 
     return () => {
-      for (const handle of handles) {
-        clearTimeout(handle);
-      }
+      clearTimeout(refetchInterval);
     };
-  }, [reloadShow, showId]);
+  }, [refetch, showId]);
 
-  const data = fetcher.data || loaderData;
+  const data = fetcherData || loaderData;
   const clientTimeSkewMs = useMemo(() => {
     const serverDate = parseISO(data.serverDate);
 

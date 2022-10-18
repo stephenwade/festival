@@ -27,6 +27,7 @@
     "date-fns": "2.29.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-toastify": "9.0.8",
     "standardized-audio-context": "25.3.32",
     "supports-webp": "3.0.0",
     "use-local-storage-state": "18.1.1",

@@ -32,9 +32,7 @@ export const meta: MetaFunction = ({ data }: { data: ShowData }) => {
 const Show: FC = () => {
   const loaderData: ShowData = useLoaderData();
 
-  const { targetShowInfo, onLoadedMetadata } = useShowInfo({
-    loaderData,
-  });
+  const { targetShowInfo, onLoadedMetadata } = useShowInfo({ loaderData });
 
   const [volume, setVolume] = useLocalStorageState('volume', {
     defaultValue: 100,
@@ -50,7 +48,7 @@ const Show: FC = () => {
       {({
         showInfo,
         audioStatus,
-        // audioError,
+        audioError,
 
         initializeAudio,
         getAudioVisualizerData,
@@ -73,6 +71,7 @@ const Show: FC = () => {
           <ShowPlaying
             volume={volume}
             audioStatus={audioStatus}
+            audioError={audioError}
             showInfo={showInfo}
             getAudioVisualizerData={getAudioVisualizerData}
             onVolumeInput={setVolume}
