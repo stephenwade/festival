@@ -2464,32 +2464,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server@npm:0.1.34":
-  version: 0.1.34
-  resolution: "@web/dev-server@npm:0.1.34"
-  dependencies:
-    "@babel/code-frame": ^7.12.11
-    "@types/command-line-args": ^5.0.0
-    "@web/config-loader": ^0.1.3
-    "@web/dev-server-core": ^0.3.19
-    "@web/dev-server-rollup": ^0.3.19
-    camelcase: ^6.2.0
-    command-line-args: ^5.1.1
-    command-line-usage: ^6.1.1
-    debounce: ^1.2.0
-    deepmerge: ^4.2.2
-    ip: ^1.1.5
-    nanocolors: ^0.2.1
-    open: ^8.0.2
-    portfinder: ^1.0.28
-  bin:
-    wds: dist/bin.js
-    web-dev-server: dist/bin.js
-  checksum: 57df0511b64164ecc42d2262b0fc6605e7235c8a9f1b6c7c62194d55137c04479ae67ef4378428b7f93b9ce3360895d9e705ecf91fd79a50b81db512f3fb4ff7
-  languageName: node
-  linkType: hard
-
-"@web/dev-server@npm:^0.1.35":
+"@web/dev-server@npm:0.1.35, @web/dev-server@npm:^0.1.35":
   version: 0.1.35
   resolution: "@web/dev-server@npm:0.1.35"
   dependencies:
@@ -5415,7 +5390,7 @@ __metadata:
     "@playwright/test": 1.27.0
     "@rollup/plugin-replace": 5.0.0
     "@vaadin/router": 1.7.4
-    "@web/dev-server": 0.1.34
+    "@web/dev-server": 0.1.35
     "@web/dev-server-import-maps": 0.0.7
     "@web/test-runner": 0.14.1
     "@web/test-runner-commands": 0.6.5
@@ -9085,7 +9060,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"portfinder@npm:^1.0.28, portfinder@npm:^1.0.32":
+"portfinder@npm:^1.0.32":
   version: 1.0.32
   resolution: "portfinder@npm:1.0.32"
   dependencies:
