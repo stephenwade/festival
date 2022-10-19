@@ -5370,6 +5370,7 @@ __metadata:
     eslint-plugin-wc: 1.3.2
     husky: 8.0.1
     lint-staged: 13.0.3
+    playwright: 1.27.1
     postcss-syntax: 0.36.2
     prettier: 2.7.1
     stylelint: 14.14.0
@@ -9031,15 +9032,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.27.0":
-  version: 1.27.0
-  resolution: "playwright-core@npm:1.27.0"
-  bin:
-    playwright: cli.js
-  checksum: e45565af0c33c34ccf7b513d8e84eda5101f0e12d495e9e1c2bfe16b675ddcdd8f064c449a1bd908365f2f126c8d40cc14bf95976e881e2e1620cd239240ed23
-  languageName: node
-  linkType: hard
-
 "playwright-core@npm:1.27.1":
   version: 1.27.1
   resolution: "playwright-core@npm:1.27.1"
@@ -9049,14 +9041,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:^1.22.2":
-  version: 1.27.0
-  resolution: "playwright@npm:1.27.0"
+"playwright@npm:1.27.1, playwright@npm:^1.22.2":
+  version: 1.27.1
+  resolution: "playwright@npm:1.27.1"
   dependencies:
-    playwright-core: 1.27.0
+    playwright-core: 1.27.1
   bin:
     playwright: cli.js
-  checksum: 1843eae3b702234bdffe114212ff16549892cb0698cb21fd4148c3b64867beaa38dcea33faaa8e47d2b9c1dfad21d330a7ad67242e044124ca3ce493916edca6
+  checksum: 7bb31998e1783f96443bd1a38f0d7838d1b6fd0cf410ac83ef480c0f0e3e930b809b7e42ccda35b9e272c84aaa8f15e0ee8bdddc19a60b224eecc57d285bf92f
   languageName: node
   linkType: hard
 
