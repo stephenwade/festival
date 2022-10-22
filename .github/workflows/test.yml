@@ -17,18 +17,20 @@ jobs:
         working-directory: frontend
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js 16.x
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: npm
+          cache: pnpm
 
-      - run: npm ci
+      - run: pnpm install
 
-      - run: npm run test:js
+      - run: pnpm test:js
 
   e2e:
     name: End to End
@@ -42,12 +44,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js 16.x
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: npm
+          cache: pnpm
 
-      - run: npm ci
+      - run: pnpm install
 
-      - run: npm run test:e2e
+      - run: pnpm test:e2e

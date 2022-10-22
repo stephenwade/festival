@@ -13,20 +13,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js 16.x
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: npm
+          cache: pnpm
 
-      - run: npm ci
+      - run: pnpm install
 
-      - run: npm run lint
+      - run: pnpm lint
 
-      - run: npm run imagemin
+      - run: pnpm imagemin
         working-directory: frontend
 
       - name: Check working directory

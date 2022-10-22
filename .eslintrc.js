@@ -35,6 +35,4 @@ module.exports = {
     'unused-imports/no-unused-imports': 'warn',
     'unused-imports/no-unused-vars': 'warn',
   },
-
-  ignorePatterns: ['old-frontend/*'],
 };
