@@ -21,6 +21,7 @@
     "format": "pnpm format:eslint; pnpm format:stylelint; pnpm format:prettier"
   },
   "dependencies": {
+    "@prisma/client": "4.5.0",
     "@remix-run/node": "1.7.3",
     "@remix-run/react": "1.7.3",
     "@remix-run/serve": "1.7.3",
@@ -49,6 +50,7 @@
     "husky": "8.0.1",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
+    "prisma": "4.5.0",
     "stylelint": "14.14.0",
     "stylelint-config-hudochenkov": "8.0.0",
     "stylelint-config-prettier": "9.0.3",
@@ -59,6 +61,7 @@
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint --fix",
     "*.css": "stylelint --fix",
+    "*.prisma": "prisma format --schema",
     "*": "prettier --ignore-unknown --write --ignore-path .lintignore"
   }
 }

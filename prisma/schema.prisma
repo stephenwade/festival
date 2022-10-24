@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Show {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  slug        String   @unique
+  name        String
+  description String?
+  sets        Set[]
+}
+
+model Set {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  audioUrl  String
+  artist    String
+  start     DateTime
+  duration  Int
+  Show      Show     @relation(fields: [showId], references: [id])
+  showId    String
+}

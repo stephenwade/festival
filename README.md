@@ -5,58 +5,44 @@ file for all users at the same time based on their system clock, allowing for
 the social aspect of a live broadcast (everyone can react to the same music
 at the same time) without requiring live streaming infrastructure.
 
-# Remix – Under Construction
-
 ## Local Development
 
-- Run `cd frontend` to change to the frontend directory.
 - Run `pnpm install` to install the required packages.
-- Add media files to the `media/` folder and add the information to
-  `media/sets.json`. Use `media/sets-sample.json` as a guide to format
-  your `sets.json` file.
-- If you add images, run `pnpm imagemin` to convert them to WebP.
-- Run `pnpm start` to serve the application locally.
+- Run `pnpm dev` to serve the application locally.
 
-## Sample Media
+## MySQL Setup
 
-- The `frontend/media/sets-sample.json` file has references to several sample
-  media files available under
-  [CC0](https://creativecommons.org/share-your-work/public-domain/cc0/).
-  To get the sample media files, download
-  [this ZIP file](https://stephenwade.me/sh/f/sample.zip)
-  and expand it into the `media/` folder.
+Run the following commands to create a MySQL user for Festival. Prisma Migrate
+requires the user account to have
+[permission to create databases](https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database#shadow-database-user-permissions).
+
+```
+CREATE USER festival@localhost IDENTIFIED BY 'your-password-here';
+GRANT CREATE, ALTER, DROP, REFERENCES ON *.* TO festival@localhost;
+```
 
 ## Building
 
-- `pnpm build` will bundle the application in the `dist/` folder.
-- `pnpm start:build` will serve the bundled application.
+- `pnpm build` will bundle the application for production.
+- `pnpm start` will serve the bundled application.
 
 ## Testing
 
-- Run `cd frontend` to change to the frontend directory.
-- Run `npx playwright install` to install the required dependencies for
-  Playwright, the end-to-end test runner.
-- Run `pnpm test:js` to run the component and store tests with
-  [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/).
-- Run `pnpm test:e2e` to run the end-to-end tests with
-  [Playwright](https://playwright.dev/).
-- You can also run `pnpm test` to run all tests at once.
+TODO
 
 ## Deploying
 
-The site is deployed to a web server via rsync over SSH. The media is deployed
-to Azure blob storage.
+TODO
 
 1. Make sure that your Azure storage account is set to allow
    [CORS requests](https://stackoverflow.com/a/41351674).
    This is required for the visualizer to work.
-1. Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest).
+1. Install the
+   [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
 1. Add the following environment variables to your `.env` file:
    - `FESTIVAL_SITE_DEPLOY_LOCATION`: The rsync destination for the site.
-   - `FESTIVAL_AZURE_STORAGE_ACCOUNT`: The name of the Azure storage account
-     for the media.
-   - `FESTIVAL_AZURE_STORAGE_KEY`: The access key for the Azure storage account.
+   - `AZURE_STORAGE_ACCOUNT`: The name of the Azure storage account for the
+     media.
+   - `AZURE_STORAGE_KEY`: The access key for the Azure storage account.
 1. Run `pnpm build` to build the site for production.
 1. Run `pnpm deploy` to deploy both the site and the media.
-   You can also run `pnpm deploy:site` to deploy only the site,
-   or `pnpm deploy:media` to deploy only the media.
