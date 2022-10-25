@@ -2248,9 +2248,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 18.11.2
-  resolution: "@types/node@npm:18.11.2"
-  checksum: 0ff5c90fb9ab653e018b858479aea4d2f763b07b31f9502383d408936f525ca37cac82ea27774a0dd0356ff9badba2792a6a3fff94f79fd7c82ee2a892c43ed5
+  version: 18.11.5
+  resolution: "@types/node@npm:18.11.5"
+  checksum: ac54e9287dd4549ea3dc8aabc0cf7bfa04c52f02925d7fd68414789617ec770f034c8ae2e111e8bd00d446a46fcac42587b5a316a1303e2f6ea094854248c9ff
   languageName: node
   linkType: hard
 
@@ -2693,16 +2693,16 @@ __metadata:
   linkType: hard
 
 "@webcomponents/shadycss@npm:^1.10.2, @webcomponents/shadycss@npm:^1.11.0":
-  version: 1.11.0
-  resolution: "@webcomponents/shadycss@npm:1.11.0"
-  checksum: 4c02f0c59f498c8a9dc202101e66b2591162e26fd91daed4eec9cb966c1cf9ae5a16ec42db8da7edfa7a87f3f4806a1dd36659c23b32b248d3f4cfd2d841d4b1
+  version: 1.11.1
+  resolution: "@webcomponents/shadycss@npm:1.11.1"
+  checksum: e57b186190e5c4f871adef7dfd31110efca9e04cde686fd0f7651868a9420da7ec418bf060fa5aa664964b149cd69cccf2c2367cb5d06d1656eda0022834c155
   languageName: node
   linkType: hard
 
 "@webcomponents/webcomponentsjs@npm:^2.5.0":
-  version: 2.6.0
-  resolution: "@webcomponents/webcomponentsjs@npm:2.6.0"
-  checksum: b1325d7ce201644890e666b723c33cd759c3286fe222962073a4652fa671ad07a8a6797303411440b7ad21a65399373dd9a4a920f6cefe758fa98cbc71e704b5
+  version: 2.7.0
+  resolution: "@webcomponents/webcomponentsjs@npm:2.7.0"
+  checksum: df60a5faf79d85eba334a42f7bffb101f0e01a8ee8cc3705f17c67c70247415c4440ad6e8fdd3c74dc5be097a436c4e4831824bef039a12b69f05e84a07187b7
   languageName: node
   linkType: hard
 
@@ -2740,11 +2740,11 @@ __metadata:
   linkType: hard
 
 "acorn@npm:^8.5.0, acorn@npm:^8.8.0":
-  version: 8.8.0
-  resolution: "acorn@npm:8.8.0"
+  version: 8.8.1
+  resolution: "acorn@npm:8.8.1"
   bin:
     acorn: bin/acorn
-  checksum: 7270ca82b242eafe5687a11fea6e088c960af712683756abf0791b68855ea9cace3057bd5e998ffcef50c944810c1e0ca1da526d02b32110e13c722aa959afdc
+  checksum: 4079b67283b94935157698831967642f24a075c52ce3feaaaafe095776dfbe15d86a1b33b1e53860fc0d062ed6c83f4284a5c87c85b9ad51853a01173da6097f
   languageName: node
   linkType: hard
 
@@ -3062,9 +3062,9 @@ __metadata:
   linkType: hard
 
 "axe-core@npm:^4.3.3":
-  version: 4.4.3
-  resolution: "axe-core@npm:4.4.3"
-  checksum: c3ea000d9ace3ba0bc747c8feafc24b0de62a0f7d93021d0f77b19c73fca15341843510f6170da563d51535d6cfb7a46c5fc0ea36170549dbb44b170208450a2
+  version: 4.5.0
+  resolution: "axe-core@npm:4.5.0"
+  checksum: 05b5fa52a8ed8498215cec4a43253d115cc2b43616e840768e05b1b00d6789e7480e5b29159920a45a9504489423836b2fe65a49a67b54cbc5d53b1b37245750
   languageName: node
   linkType: hard
 
@@ -3473,9 +3473,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001400":
-  version: 1.0.30001422
-  resolution: "caniuse-lite@npm:1.0.30001422"
-  checksum: 29c950944b33ce242068402e679a5651d1289033381dcad7295cf14b589a6bd93d5bf32aa458bacaba9b25597731e0278c84ee588910ae774eab0585be88df62
+  version: 1.0.30001425
+  resolution: "caniuse-lite@npm:1.0.30001425"
+  checksum: 4fbf9f5b125b15a3eeaf7b75ca611f417ab9ce1a9fc07ee1023b2a7c0cc9844ad61ff089e814e4af6f747b9b532b6b50e7cb7844e6c29900f68ac9d171193ece
   languageName: node
   linkType: hard
 
@@ -3944,32 +3944,32 @@ __metadata:
   linkType: hard
 
 "core-js-bundle@npm:^3.8.1":
-  version: 3.25.5
-  resolution: "core-js-bundle@npm:3.25.5"
-  checksum: c66b39312ade1123e7e70b4e9a08a8d250cc11e57c109f2684f7d8cac32e86d9195a06d86c7a6a22d22f95fcf1fb026ac7c54e8aaf7e0517727bc375f5952a73
+  version: 3.26.0
+  resolution: "core-js-bundle@npm:3.26.0"
+  checksum: 2e2249b5500220ceab119d2f19dd34e97281eef2771ec05ab8e79d0e9b616d59cf56399eb2cd6f5d9878a7a0a687a22ecac7305a5bbb281ee68616db49f235e6
   languageName: node
   linkType: hard
 
 "core-js-compat@npm:^3.25.1":
-  version: 3.25.5
-  resolution: "core-js-compat@npm:3.25.5"
+  version: 3.26.0
+  resolution: "core-js-compat@npm:3.26.0"
   dependencies:
     browserslist: ^4.21.4
-  checksum: 30686b750d675b685426ee25e41e30b83aa05ff7b79def94b457529d05c1ad123cd4d0b70d9162b077a15dc9f6f177ee997d846d0a3324176dd3c504e917309c
+  checksum: 120780ec33d441e476810abac9bf57199c2083006b179dc23d0ab0cfea096eff2a2fc3e9cb315d245735df661cfa4b76a8b8c37f5056fd02428a3cd2ea1d9f36
   languageName: node
   linkType: hard
 
 "core-js-pure@npm:^3.25.1":
-  version: 3.25.5
-  resolution: "core-js-pure@npm:3.25.5"
-  checksum: e48799a8ab28f00ef3db18377142ff2c578574ab2b18ebddde6cbf12823e0181a57c80e3caa6046ce2a2e439d603a252be767583ddc54248e3d1060bc5012127
+  version: 3.26.0
+  resolution: "core-js-pure@npm:3.26.0"
+  checksum: bbf5fa65cf3368a25f9d9cc525863acc8082fa3797efc8dc514f85d7f4aa870f4999b68863f3c7b96ed0b062add261a448758e6d337626c2535ad89ee8481a92
   languageName: node
   linkType: hard
 
 "core-js@npm:^3.0.0":
-  version: 3.25.5
-  resolution: "core-js@npm:3.25.5"
-  checksum: 208b308c49bc022f90d4349d4c99802a73c9d55053976b3c529f10014c1e37845926defad8c519f2c7f71ea0acf18d2b323ab6aaee34dc85b4c4b3ced0623f3f
+  version: 3.26.0
+  resolution: "core-js@npm:3.26.0"
+  checksum: 0149eb9d3909fde9c17626af3a6e625c326e8598d0bb5e6c5b48a18e5fcd4eaf48d4964d873667d8148542ff590fb98eb3f93618da114ca54999d6bc0349734b
   languageName: node
   linkType: hard
 
@@ -4758,9 +4758,9 @@ __metadata:
   linkType: hard
 
 "es-module-lexer@npm:^1.0.0":
-  version: 1.0.5
-  resolution: "es-module-lexer@npm:1.0.5"
-  checksum: 101417f5d6b5c4ce4f0b39a4031617cb54b85fc0869fe803c5f77ec6a2dbe55b5ed650b31f585d448c15f5418af77ff7a841c309694869acb4dfa18f93d40fe0
+  version: 1.1.0
+  resolution: "es-module-lexer@npm:1.1.0"
+  checksum: 3e9f5019b69c6b2f04eb8478c4fdb4ed72cb8b4c97511b5dd39c1f498386ed8f5083c32067c15efcfabc7e8460cb65ed4627dd32405475715a898009922f41fa
   languageName: node
   linkType: hard
 
