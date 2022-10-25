@@ -1252,7 +1252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.19.0, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.19.4, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.19.4
   resolution: "@babel/runtime@npm:7.19.4"
   dependencies:
@@ -3051,13 +3051,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^4.0.21":
-  version: 4.0.21
-  resolution: "automation-events@npm:4.0.21"
+"automation-events@npm:^4.0.22":
+  version: 4.0.22
+  resolution: "automation-events@npm:4.0.22"
   dependencies:
-    "@babel/runtime": ^7.19.0
+    "@babel/runtime": ^7.19.4
     tslib: ^2.4.0
-  checksum: 836d2ae97a38e45c16fd908054bc5c3d6de5e294e75f0b7ab580137ac5c891cec7648461e220bbbb59daa6bb6e527f59a357280b716ca9db7a15abb4e864502d
+  checksum: f153a93bbb566e118e228034e11236c9b62885122765bae07cf4876d05adb018742103de2359422d5b3b5992724511013089abfcaeb83034e9d88a9777d3ab34
   languageName: node
   linkType: hard
 
@@ -5427,7 +5427,7 @@ __metadata:
     rollup: 3.2.3
     rollup-plugin-copy: 3.4.0
     sinon: 14.0.1
-    standardized-audio-context: 25.3.32
+    standardized-audio-context: 25.3.33
   languageName: unknown
   linkType: soft
 
@@ -10297,14 +10297,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.32":
-  version: 25.3.32
-  resolution: "standardized-audio-context@npm:25.3.32"
+"standardized-audio-context@npm:25.3.33":
+  version: 25.3.33
+  resolution: "standardized-audio-context@npm:25.3.33"
   dependencies:
-    "@babel/runtime": ^7.19.0
-    automation-events: ^4.0.21
+    "@babel/runtime": ^7.19.4
+    automation-events: ^4.0.22
     tslib: ^2.4.0
-  checksum: 5ff1e5b9b19482cdde0aa3a1bfcf443b61c897ed627e3de4aa21cb41985728cb6733eb1ac42d64fd230b0e05bc13a901d042dfdce031c7b1dc0a69cecd832b91
+  checksum: 573e8bbf0f0991d2b62fb611083d382513f8be25e0058dc38f8f7ded8cce5e29dfc45cea7d9abcace3d9dc914ba61571e673fa83ff4f35fd988450286977c746
   languageName: node
   linkType: hard
 
