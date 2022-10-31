@@ -8,16 +8,18 @@ import { links as endedLinks, ShowEnded } from '~/components/ShowEnded';
 import { links as introLinks, ShowIntro } from '~/components/ShowIntro';
 import { links as playingLinks, ShowPlaying } from '~/components/ShowPlaying';
 import { useShowInfo } from '~/hooks/useShowInfo';
+import elevationStylesUrl from '~/styles/elevation.css';
 import showStylesUrl from '~/styles/show.css';
 import type { ShowData } from '~/types/ShowData';
 
 import { loader as showInfoLoader } from './$show.info';
 
 export const links: LinksFunction = () => [
+  { rel: 'stylesheet', href: elevationStylesUrl },
+  { rel: 'stylesheet', href: showStylesUrl },
   ...introLinks(),
   ...playingLinks(),
   ...endedLinks(),
-  { rel: 'stylesheet', href: showStylesUrl },
 ];
 
 export const loader = showInfoLoader;

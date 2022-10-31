@@ -1,4 +1,4 @@
-import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import type { MetaFunction } from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -10,14 +10,6 @@ import {
 import { useState } from 'react';
 import checkWebP from 'supports-webp';
 import { useEffectOnce } from 'usehooks-ts';
-
-import elevationStylesUrl from './styles/elevation.css';
-import globalStylesUrl from './styles/global.css';
-
-export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: globalStylesUrl },
-  { rel: 'stylesheet', href: elevationStylesUrl },
-];
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',

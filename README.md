@@ -18,6 +18,7 @@ requires the user account to have
 
 ```
 CREATE USER festival@localhost IDENTIFIED BY 'your-password-here';
+GRANT ALL ON festival.* TO festival@localhost;
 GRANT CREATE, ALTER, DROP, REFERENCES ON *.* TO festival@localhost;
 ```
 
