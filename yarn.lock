@@ -1252,7 +1252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.19.4, @babel/runtime@npm:^7.20.1, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.20.1, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.20.1
   resolution: "@babel/runtime@npm:7.20.1"
   dependencies:
@@ -3051,7 +3051,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^4.0.22":
+"automation-events@npm:^4.0.23":
   version: 4.0.23
   resolution: "automation-events@npm:4.0.23"
   dependencies:
@@ -5427,7 +5427,7 @@ __metadata:
     rollup: 3.2.5
     rollup-plugin-copy: 3.4.0
     sinon: 14.0.1
-    standardized-audio-context: 25.3.33
+    standardized-audio-context: 25.3.34
   languageName: unknown
   linkType: soft
 
@@ -10297,14 +10297,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.33":
-  version: 25.3.33
-  resolution: "standardized-audio-context@npm:25.3.33"
+"standardized-audio-context@npm:25.3.34":
+  version: 25.3.34
+  resolution: "standardized-audio-context@npm:25.3.34"
   dependencies:
-    "@babel/runtime": ^7.19.4
-    automation-events: ^4.0.22
-    tslib: ^2.4.0
-  checksum: 573e8bbf0f0991d2b62fb611083d382513f8be25e0058dc38f8f7ded8cce5e29dfc45cea7d9abcace3d9dc914ba61571e673fa83ff4f35fd988450286977c746
+    "@babel/runtime": ^7.20.1
+    automation-events: ^4.0.23
+    tslib: ^2.4.1
+  checksum: 71deb5eb00b6d24a11639f8128edf7ba949a3c6e49b102d5f21692a0536b64a87132a241547f2fecfe6e3938e0f4be20d3775e04a56b260f7e1e22b29d8c732f
   languageName: node
   linkType: hard
 
@@ -11055,7 +11055,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.4.0, tslib@npm:^2.4.1":
+"tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.4.1":
   version: 2.4.1
   resolution: "tslib@npm:2.4.1"
   checksum: 19480d6e0313292bd6505d4efe096a6b31c70e21cf08b5febf4da62e95c265c8f571f7b36fcc3d1a17e068032f59c269fab3459d6cd3ed6949eafecf64315fca
