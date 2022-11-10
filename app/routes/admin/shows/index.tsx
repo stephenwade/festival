@@ -1,7 +1,7 @@
 import type { Show } from '@prisma/client';
 import type { LoaderFunction, SerializeFrom } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 
 import { db } from '~/db/db.server';
@@ -18,17 +18,26 @@ const ShowIndex: FC = () => {
   const loaderData: LoaderData = useLoaderData();
 
   return (
-    <p>
-      {loaderData.length === 0 ? (
-        <em>No shows yet</em>
-      ) : (
-        <ul>
-          {loaderData.map((show) => (
-            <li key={show.id}>{show.name}</li>
-          ))}
-        </ul>
-      )}
-    </p>
+    <>
+      <p>
+        {loaderData.length === 0 ? (
+          <em>No shows yet</em>
+        ) : (
+          <ul>
+            {loaderData.map((show) => (
+              <li key={show.id}>
+                <Link to={`/admin/shows/${show.id}`}>
+                  {show.name} ({show.slug})
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </p>
+      <p>
+        <Link to="/admin/shows/new">Add show</Link>
+      </p>
+    </>
   );
 };
 
