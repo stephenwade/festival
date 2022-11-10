@@ -1537,9 +1537,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/building-rollup@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@open-wc/building-rollup@npm:2.0.2"
+"@open-wc/building-rollup@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@open-wc/building-rollup@npm:2.2.0"
   dependencies:
     "@babel/core": ^7.11.1
     "@babel/helpers": ^7.10.4
@@ -1549,9 +1549,9 @@ __metadata:
     "@babel/plugin-transform-modules-systemjs": ^7.10.5
     "@babel/plugin-transform-runtime": ^7.11.0
     "@babel/preset-env": ^7.9.0
-    "@open-wc/building-utils": ^2.18.5
+    "@open-wc/building-utils": ^2.20.0
     "@rollup/plugin-babel": ^5.1.0
-    "@rollup/plugin-node-resolve": ^7.1.1
+    "@rollup/plugin-node-resolve": ^13.3.0
     "@web/rollup-plugin-html": ^1.7.0
     "@web/rollup-plugin-import-meta-assets": ^1.0.6
     "@web/rollup-plugin-polyfills-loader": ^1.1.0
@@ -1566,13 +1566,13 @@ __metadata:
     terser: ^4.6.7
   peerDependencies:
     rollup: ^2.11.0
-  checksum: 3b1fe70a060b69d075e937e51c85c19bdf2d258d5f233a49ab95e145588a3acf7be15035fc463d04e394c04fb96e97a7010876c9cc759e19ea42aa50440094cc
+  checksum: 6a507216424ddd027cab9df0d72dee55774ba109908f73abb61b4841a420b9efd608376d5715791257fcdff2fdd37cabdd18db3cad4e4137c3792fac771ca0bb
   languageName: node
   linkType: hard
 
-"@open-wc/building-utils@npm:^2.18.5":
-  version: 2.18.5
-  resolution: "@open-wc/building-utils@npm:2.18.5"
+"@open-wc/building-utils@npm:^2.20.0":
+  version: 2.20.0
+  resolution: "@open-wc/building-utils@npm:2.20.0"
   dependencies:
     "@babel/core": ^7.11.1
     "@babel/plugin-syntax-dynamic-import": ^7.8.3
@@ -1581,7 +1581,7 @@ __metadata:
     arrify: ^2.0.1
     browserslist: ^4.16.5
     chokidar: ^3.4.3
-    clean-css: ^4.2.3
+    clean-css: ^5.3.1
     clone: ^2.1.2
     core-js-bundle: ^3.8.1
     deepmerge: ^4.2.2
@@ -1600,7 +1600,7 @@ __metadata:
     valid-url: ^1.0.9
     whatwg-fetch: ^3.5.0
     whatwg-url: ^7.1.0
-  checksum: 1bbfa83d1b3f62ca7a6fc4f9b39125af2172ceb38ea394621664b1ae2be8795bf95a2e8e534f0d192de1bd7971563a6a8a06fb76ba3c2b13acaef00a33711538
+  checksum: b99957a6b9ee55aa4fa975024d5988f5ce8faf1b8e1094e4923b5a6c26c9d854d5204196a58a2e1d3bd8a79a6a34f8e89f1a88bdc5471fee37eca268055c40a1
   languageName: node
   linkType: hard
 
@@ -1743,7 +1743,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-node-resolve@npm:^13.0.4":
+"@rollup/plugin-node-resolve@npm:^13.0.4, @rollup/plugin-node-resolve@npm:^13.3.0":
   version: 13.3.0
   resolution: "@rollup/plugin-node-resolve@npm:13.3.0"
   dependencies:
@@ -1756,21 +1756,6 @@ __metadata:
   peerDependencies:
     rollup: ^2.42.0
   checksum: ec5418e6b3c23a9e30683056b3010e9d325316dcfae93fbc673ae64dad8e56a2ce761c15c48f5e2dcfe0c822fdc4a4905ee6346e3dcf90603ba2260afef5a5e6
-  languageName: node
-  linkType: hard
-
-"@rollup/plugin-node-resolve@npm:^7.1.1":
-  version: 7.1.3
-  resolution: "@rollup/plugin-node-resolve@npm:7.1.3"
-  dependencies:
-    "@rollup/pluginutils": ^3.0.8
-    "@types/resolve": 0.0.8
-    builtin-modules: ^3.1.0
-    is-module: ^1.0.0
-    resolve: ^1.14.2
-  peerDependencies:
-    rollup: ^1.20.0||^2.0.0
-  checksum: e787c35f123652762d212b63f8cfaf577307434a935466397021c31b71d0d94357c6fa4e326b49bf44b959e22e41bc21f5648470eabec086566e7c36c5d041b1
   languageName: node
   linkType: hard
 
@@ -1813,7 +1798,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^3.0.8, @rollup/pluginutils@npm:^3.1.0":
+"@rollup/pluginutils@npm:^3.1.0":
   version: 3.1.0
   resolution: "@rollup/pluginutils@npm:3.1.0"
   dependencies:
@@ -2313,15 +2298,6 @@ __metadata:
   version: 1.2.4
   resolution: "@types/range-parser@npm:1.2.4"
   checksum: b7c0dfd5080a989d6c8bb0b6750fc0933d9acabeb476da6fe71d8bdf1ab65e37c136169d84148034802f48378ab94e3c37bb4ef7656b2bec2cb9c0f8d4146a95
-  languageName: node
-  linkType: hard
-
-"@types/resolve@npm:0.0.8":
-  version: 0.0.8
-  resolution: "@types/resolve@npm:0.0.8"
-  dependencies:
-    "@types/node": "*"
-  checksum: f241bb773ab14b14500623ac3b57c52006ce32b20426b6d8bf2fe5fdc0344f42c77ac0f94ff57b443ae1d320a1a86c62b4e47239f0321699404402fbeb24bad6
   languageName: node
   linkType: hard
 
@@ -3630,7 +3606,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clean-css@npm:^5.2.2":
+"clean-css@npm:^5.2.2, clean-css@npm:^5.3.1":
   version: 5.3.1
   resolution: "clean-css@npm:5.3.1"
   dependencies:
@@ -5367,7 +5343,7 @@ __metadata:
   dependencies:
     "@koa/router": 12.0.0
     "@magic-sdk/admin": 1.4.1
-    "@open-wc/building-rollup": 2.0.2
+    "@open-wc/building-rollup": 2.2.0
     "@rollup/plugin-replace": 5.0.1
     deepmerge: 4.2.2
     dotenv: 16.0.3
@@ -5415,7 +5391,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "festival@workspace:frontend"
   dependencies:
-    "@open-wc/building-rollup": 2.0.2
+    "@open-wc/building-rollup": 2.2.0
     "@open-wc/testing": 3.1.7
     "@open-wc/testing-helpers": 2.1.4
     "@playwright/test": 1.27.1
