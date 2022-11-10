@@ -27,7 +27,7 @@ const ShowIndex: FC = () => {
             {loaderData.map((show) => (
               <li key={show.id}>
                 <Link to={`/admin/shows/${show.id}`}>
-                  {show.name} ({show.slug})
+                  {show.name} ({show.id})
                 </Link>
               </li>
             ))}

@@ -8,10 +8,9 @@ datasource db {
 }
 
 model Show {
-  id          String   @id @default(uuid())
+  id          String   @id
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  slug        String   @unique
   name        String
   description String?
   sets        Set[]

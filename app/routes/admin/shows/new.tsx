@@ -12,12 +12,12 @@ function validateShowName(name: string) {
   }
 }
 
-async function validateShowSlug(slug: string) {
-  if (!slug.length) {
+async function validateShowId(id: string) {
+  if (!id.length) {
     return 'URL is required.';
   }
 
-  const existingShow = await db.show.findFirst({ where: { slug } });
+  const existingShow = await db.show.findFirst({ where: { id } });
   if (existingShow) {
     return 'A show already exists with that URL.';
   }
@@ -27,11 +27,11 @@ type ActionData = {
   formError?: string;
   fieldErrors?: {
     name: string | undefined;
-    slug: string | undefined;
+    id: string | undefined;
   };
   fields?: {
     name: string;
-    slug: string;
+    id: string;
   };
 };
 
@@ -40,8 +40,8 @@ const badRequest = (data: ActionData) => json(data, { status: 400 });
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
   const name = form.get('name');
-  const slug = form.get('slug');
-  if (typeof name !== 'string' || typeof slug !== 'string') {
+  const id = form.get('id');
+  if (typeof name !== 'string' || typeof id !== 'string') {
     return badRequest({
       formError: 'Form was not submitted correctly.',
     });
@@ -49,15 +49,15 @@ export const action: ActionFunction = async ({ request }) => {
 
   const fieldErrors = {
     name: validateShowName(name),
-    slug: await validateShowSlug(slug),
+    id: await validateShowId(id),
   };
-  const fields = { name, slug };
+  const fields = { name, id };
   if (Object.values(fieldErrors).some(Boolean)) {
     return badRequest({ fieldErrors, fields });
   }
 
   const show = await db.show.create({ data: fields });
-  return redirect(`/shows/${show.slug}`);
+  return redirect(`/shows/${show.id}`);
 };
 
 const NewShow: FC = () => {
@@ -77,10 +77,10 @@ const NewShow: FC = () => {
         <Input
           label="URL"
           prefix="https://urlfest.com/"
-          name="slug"
+          name="id"
           required
-          defaultValue={actionData?.fields?.slug}
-          errorMessage={actionData?.fieldErrors?.slug}
+          defaultValue={actionData?.fields?.id}
+          errorMessage={actionData?.fieldErrors?.id}
         />
         <p>
           <button type="submit" className="button">
