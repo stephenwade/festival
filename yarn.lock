@@ -1537,9 +1537,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/building-rollup@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@open-wc/building-rollup@npm:2.2.0"
+"@open-wc/building-rollup@npm:2.2.1":
+  version: 2.2.1
+  resolution: "@open-wc/building-rollup@npm:2.2.1"
   dependencies:
     "@babel/core": ^7.11.1
     "@babel/helpers": ^7.10.4
@@ -1549,7 +1549,7 @@ __metadata:
     "@babel/plugin-transform-modules-systemjs": ^7.10.5
     "@babel/plugin-transform-runtime": ^7.11.0
     "@babel/preset-env": ^7.9.0
-    "@open-wc/building-utils": ^2.20.0
+    "@open-wc/building-utils": ^2.20.1
     "@rollup/plugin-babel": ^5.1.0
     "@rollup/plugin-node-resolve": ^13.3.0
     "@web/rollup-plugin-html": ^1.7.0
@@ -1563,16 +1563,16 @@ __metadata:
     regenerator-runtime: ^0.13.7
     rollup-plugin-terser: ^7.0.2
     rollup-plugin-workbox: ^6.0.0
-    terser: ^4.6.7
+    terser: ^4.8.1
   peerDependencies:
     rollup: ^2.11.0
-  checksum: 6a507216424ddd027cab9df0d72dee55774ba109908f73abb61b4841a420b9efd608376d5715791257fcdff2fdd37cabdd18db3cad4e4137c3792fac771ca0bb
+  checksum: ec726c4366c3d746f8234bdcf3d92455ca707340d3e06d0b43c14c5fa1d46df27009d97386b124e6714e70aca40870ba009557ffa00137dac8d92ef9730d939d
   languageName: node
   linkType: hard
 
-"@open-wc/building-utils@npm:^2.20.0":
-  version: 2.20.0
-  resolution: "@open-wc/building-utils@npm:2.20.0"
+"@open-wc/building-utils@npm:^2.20.1":
+  version: 2.20.1
+  resolution: "@open-wc/building-utils@npm:2.20.1"
   dependencies:
     "@babel/core": ^7.11.1
     "@babel/plugin-syntax-dynamic-import": ^7.8.3
@@ -1596,11 +1596,11 @@ __metadata:
     rimraf: ^3.0.2
     shady-css-scoped-element: ^0.0.2
     systemjs: ^6.8.3
-    terser: ^4.6.7
+    terser: ^4.8.1
     valid-url: ^1.0.9
     whatwg-fetch: ^3.5.0
     whatwg-url: ^7.1.0
-  checksum: b99957a6b9ee55aa4fa975024d5988f5ce8faf1b8e1094e4923b5a6c26c9d854d5204196a58a2e1d3bd8a79a6a34f8e89f1a88bdc5471fee37eca268055c40a1
+  checksum: 457d4dee5d267a841d2feca9580b7bf7d9407c21a8616ec99d931fd7947144bb32f069490c04f629100f9a4629be77c50716b4c38da395c37f3b3f4e97828261
   languageName: node
   linkType: hard
 
@@ -5343,7 +5343,7 @@ __metadata:
   dependencies:
     "@koa/router": 12.0.0
     "@magic-sdk/admin": 1.4.1
-    "@open-wc/building-rollup": 2.2.0
+    "@open-wc/building-rollup": 2.2.1
     "@rollup/plugin-replace": 5.0.1
     deepmerge: 4.2.2
     dotenv: 16.0.3
@@ -5391,7 +5391,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "festival@workspace:frontend"
   dependencies:
-    "@open-wc/building-rollup": 2.2.0
+    "@open-wc/building-rollup": 2.2.1
     "@open-wc/testing": 3.1.7
     "@open-wc/testing-helpers": 2.1.4
     "@playwright/test": 1.27.1
@@ -10874,7 +10874,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser@npm:^4.6.3, terser@npm:^4.6.7":
+"terser@npm:^4.6.3, terser@npm:^4.8.1":
   version: 4.8.1
   resolution: "terser@npm:4.8.1"
   dependencies:
