@@ -1,6 +1,12 @@
-import type { ActionFunction, MetaFunction } from '@remix-run/node';
+import type { Show } from '@prisma/client';
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  SerializeFrom,
+} from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
-import { Form, useActionData } from '@remix-run/react';
+import { Form, Link, useActionData, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 
 import { Input } from '~/components/admin/Input';
@@ -12,10 +18,12 @@ function validateShowName(name: string) {
   }
 }
 
-async function validateShowId(id: string) {
+async function validateShowId(id: string, previousId: string) {
   if (!id.length) {
     return 'URL is required.';
   }
+
+  if (id === previousId) return;
 
   if (id === 'new') {
     return 'Invalid show URL.';
@@ -40,14 +48,29 @@ type ActionData = {
 };
 
 const badRequest = (data: ActionData) => json(data, { status: 400 });
+const notFound = () => new Response('Not Found', { status: 404 });
+const serverError = () =>
+  new Response('Internal Server Error', { status: 500 });
+
+type LoaderData = SerializeFrom<Show>;
+
+export const loader: LoaderFunction = async ({ params }) => {
+  const id = params.show;
+  if (!id) throw serverError();
+
+  const show = await db.show.findUnique({ where: { id } });
+  if (!show) throw notFound();
+
+  return json(show);
+};
 
 export const meta: MetaFunction = () => {
   return {
-    title: 'New show | Festival admin',
+    title: 'Edit show | Festival admin',
   };
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ params, request }) => {
   const form = await request.formData();
   const name = form.get('name');
   const id = form.get('id');
@@ -57,31 +80,37 @@ export const action: ActionFunction = async ({ request }) => {
     });
   }
 
+  const previousId = params.show;
+  if (!previousId) throw serverError();
   const fieldErrors = {
     name: validateShowName(name),
-    id: await validateShowId(id),
+    id: await validateShowId(id, previousId),
   };
   const fields = { name, id };
   if (Object.values(fieldErrors).some(Boolean)) {
     return badRequest({ fieldErrors, fields });
   }
 
-  const show = await db.show.create({ data: fields });
-  return redirect(`/admin/shows/${show.id}`);
+  await db.show.update({
+    where: { id: previousId },
+    data: fields,
+  });
+  return redirect(`/admin/shows/${fields.id}`);
 };
 
-const NewShow: FC = () => {
+const EditShow: FC = () => {
+  const loaderData: LoaderData = useLoaderData();
   const actionData = useActionData<ActionData>();
 
   return (
     <>
-      <h3>New show</h3>
+      <h3>Edit show</h3>
       <Form method="post">
         <Input
           label="Name"
           name="name"
           required
-          defaultValue={actionData?.fields?.name}
+          defaultValue={actionData?.fields?.name || loaderData.name}
           errorMessage={actionData?.fieldErrors?.name}
         />
         <Input
@@ -89,12 +118,13 @@ const NewShow: FC = () => {
           prefix="https://urlfest.com/"
           name="id"
           required
-          defaultValue={actionData?.fields?.id}
+          defaultValue={actionData?.fields?.id || loaderData.id}
           errorMessage={actionData?.fieldErrors?.id}
         />
         <p>
+          <Link to={`/admin/shows/${loaderData.id}`}>Cancel</Link>{' '}
           <button type="submit" className="button">
-            Add
+            Save
           </button>
         </p>
       </Form>
@@ -102,4 +132,4 @@ const NewShow: FC = () => {
   );
 };
 
-export default NewShow;
+export default EditShow;

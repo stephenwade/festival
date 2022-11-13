@@ -14,7 +14,7 @@ export const loader: LoaderFunction = async () => {
   return json(shows);
 };
 
-const ShowIndex: FC = () => {
+const ShowsIndex: FC = () => {
   const loaderData: LoaderData = useLoaderData();
 
   return (
@@ -41,4 +41,4 @@ const ShowIndex: FC = () => {
   );
 };
 
-export default ShowIndex;
+export default ShowsIndex;
