@@ -1,45 +1,38 @@
 import type { ActionFunction, MetaFunction } from '@remix-run/node';
-import { json, redirect } from '@remix-run/node';
-import { Form, useActionData } from '@remix-run/react';
+import { redirect } from '@remix-run/node';
+import { withZod } from '@remix-validated-form/with-zod';
 import type { FC } from 'react';
+import { ValidatedForm, validationError } from 'remix-validated-form';
+import { z } from 'zod';
+import { zfd } from 'zod-form-data';
 
 import { Input } from '~/components/admin/Input';
 import { db } from '~/db/db.server';
 
-function validateShowName(name: string) {
-  if (!name.length) {
-    return 'Name is required.';
-  }
-}
+const schema = zfd.formData({
+  name: zfd.text(),
+  id: zfd.text(
+    z.string().refine((id) => id !== 'new', {
+      message: 'Invalid show URL',
+    })
+  ),
+  description: zfd.text(z.string().optional()),
+});
 
-async function validateShowId(id: string) {
-  if (!id.length) {
-    return 'URL is required.';
-  }
+const clientValidator = withZod(schema);
 
-  if (id === 'new') {
-    return 'Invalid show URL.';
-  }
-
-  const existingShow = await db.show.findFirst({ where: { id } });
-  if (existingShow) {
-    return 'A show already exists with that URL.';
-  }
-}
-
-type ActionData = {
-  formError?: string;
-  fieldErrors?: {
-    name: string | undefined;
-    id: string | undefined;
-  };
-  fields?: {
-    name: string;
-    id: string;
-  };
-};
-
-const badRequest = (data: ActionData) => json(data, { status: 400 });
+const serverValidator = withZod(
+  schema.refine(
+    async ({ id }) => {
+      const existingShow = await db.show.findFirst({ where: { id } });
+      return !existingShow;
+    },
+    {
+      path: ['id'],
+      message: 'A show already exists with that URL.',
+    }
+  )
+);
 
 export const meta: MetaFunction = () => {
   return {
@@ -49,55 +42,26 @@ export const meta: MetaFunction = () => {
 
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
-  const name = form.get('name');
-  const id = form.get('id');
-  if (typeof name !== 'string' || typeof id !== 'string') {
-    return badRequest({
-      formError: 'Form was not submitted correctly.',
-    });
-  }
+  const { data, error } = await serverValidator.validate(form);
+  if (error) return validationError(error);
 
-  const fieldErrors = {
-    name: validateShowName(name),
-    id: await validateShowId(id),
-  };
-  const fields = { name, id };
-  if (Object.values(fieldErrors).some(Boolean)) {
-    return badRequest({ fieldErrors, fields });
-  }
-
-  const show = await db.show.create({ data: fields });
+  const show = await db.show.create({ data });
   return redirect(`/admin/shows/${show.id}`);
 };
 
 const NewShow: FC = () => {
-  const actionData = useActionData<ActionData>();
-
   return (
     <>
       <h3>New show</h3>
-      <Form method="post">
-        <Input
-          label="Name"
-          name="name"
-          required
-          defaultValue={actionData?.fields?.name}
-          errorMessage={actionData?.fieldErrors?.name}
-        />
-        <Input
-          label="URL"
-          prefix="https://urlfest.com/"
-          name="id"
-          required
-          defaultValue={actionData?.fields?.id}
-          errorMessage={actionData?.fieldErrors?.id}
-        />
+      <ValidatedForm validator={clientValidator} method="post">
+        <Input label="Name" name="name" />
+        <Input label="URL" prefix="https://urlfest.com/" name="id" />
         <p>
           <button type="submit" className="button">
             Add
           </button>
         </p>
-      </Form>
+      </ValidatedForm>
     </>
   );
 };
