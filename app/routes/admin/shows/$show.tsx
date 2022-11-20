@@ -9,6 +9,7 @@ import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 
 import { db } from '~/db/db.server';
+import { useOrigin } from '~/hooks/useOrigin';
 
 const notFound = () => new Response('Not Found', { status: 404 });
 const serverError = () =>
@@ -37,6 +38,8 @@ export const meta: MetaFunction = ({ data }) => {
 const ViewShow: FC = () => {
   const loaderData: LoaderData = useLoaderData();
 
+  const origin = useOrigin();
+
   return (
     <>
       <p>
@@ -47,7 +50,7 @@ const ViewShow: FC = () => {
         <strong>Name:</strong> {loaderData.name}
       </p>
       <p>
-        <strong>URL:</strong> https://urlfest.com/{loaderData.id}
+        <strong>URL:</strong> {origin}/{loaderData.id}
       </p>
       <p>
         <strong>Description:</strong> {loaderData.description}

@@ -4,6 +4,7 @@ import { ValidatedForm } from 'remix-validated-form';
 import type { z } from 'zod';
 
 import { Input } from '~/components/admin/Input';
+import { useOrigin } from '~/hooks/useOrigin';
 
 import type { schema } from './validators';
 import { clientValidator } from './validators';
@@ -18,23 +19,27 @@ const ShowForm: FC<ShowFormProps> = ({
   defaultValues,
   cancelLinkTo,
   submitButtonText,
-}) => (
-  <ValidatedForm
-    validator={clientValidator}
-    defaultValues={defaultValues}
-    method="post"
-  >
-    <Input label="Name" name="name" />
-    <Input label="URL" prefix="https://urlfest.com/" name="id" />
-    <Input label="Description" name="description" />
-    <p>
-      <Link to={cancelLinkTo}>Cancel</Link>{' '}
-      <button type="submit" className="button">
-        {submitButtonText}
-      </button>
-    </p>
-  </ValidatedForm>
-);
+}) => {
+  const origin = useOrigin();
+
+  return (
+    <ValidatedForm
+      validator={clientValidator}
+      defaultValues={defaultValues}
+      method="post"
+    >
+      <Input label="Name" name="name" />
+      <Input label="URL" prefix={`${origin ?? ''}/`} name="id" />
+      <Input label="Description" name="description" />
+      <p>
+        <Link to={cancelLinkTo}>Cancel</Link>{' '}
+        <button type="submit" className="button">
+          {submitButtonText}
+        </button>
+      </p>
+    </ValidatedForm>
+  );
+};
 
 export const NewShowForm: FC = () => (
   <ShowForm cancelLinkTo="/admin/shows" submitButtonText="Add" />
