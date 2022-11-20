@@ -11,7 +11,7 @@ export const schema = zfd.formData({
       message: 'Invalid show URL',
     })
   ),
-  description: zfd.text(z.string().optional()),
+  description: zfd.text(),
 });
 
 export const clientValidator = withZod(schema);

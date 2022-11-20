@@ -12,7 +12,7 @@ model Show {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   name        String
-  description String?
+  description String
   sets        Set[]
 }
 

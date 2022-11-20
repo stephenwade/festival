@@ -49,6 +49,9 @@ const ViewShow: FC = () => {
       <p>
         <strong>URL:</strong> https://urlfest.com/{loaderData.id}
       </p>
+      <p>
+        <strong>Description:</strong> {loaderData.description}
+      </p>
     </>
   );
 };

@@ -26,6 +26,7 @@ const ShowForm: FC<ShowFormProps> = ({
   >
     <Input label="Name" name="name" />
     <Input label="URL" prefix="https://urlfest.com/" name="id" />
+    <Input label="Description" name="description" />
     <p>
       <Link to={cancelLinkTo}>Cancel</Link>{' '}
       <button type="submit" className="button">
