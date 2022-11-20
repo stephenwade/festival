@@ -4,6 +4,7 @@ import { ValidatedForm } from 'remix-validated-form';
 import type { z } from 'zod';
 
 import { Input } from '~/components/admin/Input';
+import { SubmitButton } from '~/components/admin/SubmitButton';
 import { useOrigin } from '~/hooks/useOrigin';
 
 import type { schema } from './validators';
@@ -13,12 +14,14 @@ type ShowFormProps = {
   defaultValues?: z.infer<typeof schema>;
   cancelLinkTo: string;
   submitButtonText: string;
+  submitButtonTextSubmitting: string;
 };
 
 const ShowForm: FC<ShowFormProps> = ({
   defaultValues,
   cancelLinkTo,
   submitButtonText,
+  submitButtonTextSubmitting,
 }) => {
   const origin = useOrigin();
 
@@ -33,16 +36,21 @@ const ShowForm: FC<ShowFormProps> = ({
       <Input label="Description" name="description" />
       <p>
         <Link to={cancelLinkTo}>Cancel</Link>{' '}
-        <button type="submit" className="button">
-          {submitButtonText}
-        </button>
+        <SubmitButton
+          text={submitButtonText}
+          textSubmitting={submitButtonTextSubmitting}
+        />
       </p>
     </ValidatedForm>
   );
 };
 
 export const NewShowForm: FC = () => (
-  <ShowForm cancelLinkTo="/admin/shows" submitButtonText="Add" />
+  <ShowForm
+    cancelLinkTo="/admin/shows"
+    submitButtonText="Add"
+    submitButtonTextSubmitting="Adding…"
+  />
 );
 
 type EditShowFormProps = {
@@ -57,5 +65,6 @@ export const EditShowForm: FC<EditShowFormProps> = ({
     defaultValues={defaultValues}
     cancelLinkTo={`/admin/shows/${showId}`}
     submitButtonText="Save"
+    submitButtonTextSubmitting="Saving…"
   />
 );
