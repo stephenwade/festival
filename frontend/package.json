@@ -34,7 +34,7 @@
     "pwa-helpers": "0.9.1",
     "redux": "4.2.0",
     "redux-thunk": "2.4.2",
-    "standardized-audio-context": "25.3.34"
+    "standardized-audio-context": "25.3.35"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "2.2.1",
