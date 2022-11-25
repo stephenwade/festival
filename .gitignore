@@ -8,3 +8,6 @@ node_modules/
 .cache/
 build/
 .env
+
+# runtime
+upload

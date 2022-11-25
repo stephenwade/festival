@@ -36,7 +36,7 @@ export const meta: MetaFunction = ({ data }) => {
 };
 
 const ViewShow: FC = () => {
-  const loaderData: LoaderData = useLoaderData();
+  const show: LoaderData = useLoaderData();
 
   const origin = useOrigin();
 
@@ -44,16 +44,16 @@ const ViewShow: FC = () => {
     <>
       <p>
         <Link to="/admin/shows">Back to all shows</Link> -{' '}
-        <Link to={`/admin/shows/${loaderData.id}/edit`}>Edit</Link>
+        <Link to={`/admin/shows/${show.id}/edit`}>Edit</Link>
       </p>
       <p>
-        <strong>Name:</strong> {loaderData.name}
+        <strong>Name:</strong> {show.name}
       </p>
       <p>
-        <strong>URL:</strong> {origin}/{loaderData.id}
+        <strong>URL:</strong> {origin}/{show.id}
       </p>
       <p>
-        <strong>Description:</strong> {loaderData.description}
+        <strong>Description:</strong> {show.description}
       </p>
     </>
   );

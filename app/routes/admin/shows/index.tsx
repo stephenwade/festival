@@ -15,16 +15,16 @@ export const loader: LoaderFunction = async () => {
 };
 
 const ShowsIndex: FC = () => {
-  const loaderData: LoaderData = useLoaderData();
+  const shows: LoaderData = useLoaderData();
 
   return (
     <>
       <p>
-        {loaderData.length === 0 ? (
+        {shows.length === 0 ? (
           <em>No shows yet</em>
         ) : (
           <ul>
-            {loaderData.map((show) => (
+            {shows.map((show) => (
               <li key={show.id}>
                 <Link to={`/admin/shows/${show.id}`}>
                   {show.name} ({show.id})
