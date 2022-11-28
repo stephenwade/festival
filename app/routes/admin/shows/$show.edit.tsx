@@ -7,9 +7,7 @@ import type {
 } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import axios from 'axios';
 import type { FC } from 'react';
-import { useRef } from 'react';
 import { validationError } from 'remix-validated-form';
 
 import { db } from '~/db/db.server';
@@ -52,44 +50,10 @@ export const action: ActionFunction = async ({ params, request }) => {
 const EditShow: FC = () => {
   const show: LoaderData = useLoaderData();
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const onUploadClick = () => {
-    const form = new FormData();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const fileInput = fileInputRef.current!;
-
-    form.append('username', 'abc123');
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    for (const [i, file] of Array.from(fileInput.files!).entries()) {
-      form.append(`upload-${i}`, file);
-    }
-
-    // Can't use fetch because it doesn't support tracking upload progress
-    axios
-      .put(`/admin/shows/${show.id}/upload-set`, form, {
-        onUploadProgress: (event) => {
-          console.log(
-            'Progress:',
-            event.progress ? ~~(event.progress * 100) : 'none'
-          );
-        },
-      })
-      .then((response) => {
-        console.log('Success:', response.data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
-
   return (
     <>
       <h3>Edit show</h3>
       <EditShowForm defaultValues={show} showId={show.id} />
-      <p>
-        <input type="file" ref={fileInputRef} multiple />
-        <button onClick={onUploadClick}>Upload</button>
-      </p>
     </>
   );
 };
