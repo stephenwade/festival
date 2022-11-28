@@ -36,12 +36,10 @@ export const CurrentTime: FC<Props> = ({ showInfo, audioStatus }) => {
     const minutes = Math.floor(minutesFrac / 60);
     const seconds = time % 60;
 
-    let result: string;
-    if (hours > 0) {
-      result = `${hours.toString()}:${minutes.toString().padStart(2, '0')}`;
-    } else {
-      result = minutes.toString();
-    }
+    let result =
+      hours > 0
+        ? `${hours.toString()}:${minutes.toString().padStart(2, '0')}`
+        : minutes.toString();
     result += `:${seconds.toString().padStart(2, '0')}`;
     return result;
   }, [playing, showInfo, waitingUntilStart]);

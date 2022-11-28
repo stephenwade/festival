@@ -12,8 +12,6 @@ import elevationStylesUrl from '~/styles/elevation.css';
 import showStylesUrl from '~/styles/show.css';
 import type { ShowData } from '~/types/ShowData';
 
-import { loader as showInfoLoader } from './$show.info';
-
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: elevationStylesUrl },
   { rel: 'stylesheet', href: showStylesUrl },
@@ -22,7 +20,7 @@ export const links: LinksFunction = () => [
   ...endedLinks(),
 ];
 
-export const loader = showInfoLoader;
+export { loader } from './$show.info';
 
 export const meta: MetaFunction = ({ data }: { data: ShowData }) => {
   return {

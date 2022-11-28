@@ -35,7 +35,7 @@ export const loader: LoaderFunction = () => {
         audioUrl: '/media/sample/total-breakdown.mp3',
         artist: 'Brad Sucks',
         start: '2022-10-17T23:30:49-0400',
-        duration: 139.0,
+        duration: 139,
       },
       {
         id: '0b2c85e8-9614-471a-a645-b5f44c657c1c',

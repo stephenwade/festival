@@ -63,7 +63,7 @@ const ViewShow: FC = () => {
 
     form.append('username', 'abc123');
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    for (const [i, file] of Array.from(fileInput.files!).entries()) {
+    for (const [i, file] of [...fileInput.files!].entries()) {
       form.append(`upload-${i}`, file);
     }
 
@@ -73,7 +73,7 @@ const ViewShow: FC = () => {
         onUploadProgress: (event) => {
           console.log(
             'Progress:',
-            event.progress ? ~~(event.progress * 100) : 'none'
+            event.progress ? Math.trunc(event.progress * 100) : 'none'
           );
         },
       })

@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 
+function getCurrentSecond() {
+  return Math.floor(Date.now() / 1000);
+}
+
 export function useClock(enabled = true): void {
   const [, forceUpdate] = useState(0);
-
-  const getCurrentSecond = () => Math.floor(Date.now() / 1000);
 
   const lastSecond = useRef(getCurrentSecond());
 

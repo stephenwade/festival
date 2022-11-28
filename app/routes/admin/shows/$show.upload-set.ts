@@ -1,4 +1,4 @@
-import type { ActionFunction, NodeOnDiskFile } from '@remix-run/node';
+import type { ActionFunction } from '@remix-run/node';
 import {
   json,
   unstable_createFileUploadHandler,
@@ -24,10 +24,7 @@ export const action: ActionFunction = async ({ params, request }) => {
   const form = await unstable_parseMultipartFormData(request, uploadHandler);
 
   const files = Object.fromEntries(
-    Array.from(form.keys()).map((key) => [
-      key,
-      (form.get(key) as NodeOnDiskFile).name,
-    ])
+    [...form.keys()].map((key) => [key, (form.get(key) as File).name])
   );
 
   return json(files);

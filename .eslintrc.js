@@ -5,11 +5,12 @@ module.exports = {
   },
 
   extends: [
-    'prettier',
     '@remix-run/eslint-config',
     '@remix-run/eslint-config/node',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:unicorn/recommended',
+    'prettier',
   ],
 
   plugins: [
@@ -34,5 +35,13 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'warn',
     'unused-imports/no-unused-vars': 'warn',
+
+    'unicorn/filename-case': 'off',
+    'unicorn/no-null': 'off',
+    'unicorn/no-useless-undefined': 'off',
+    'unicorn/prefer-module': 'off',
+    'unicorn/prefer-switch': 'off',
+    'unicorn/prevent-abbreviations': 'off',
+    'unicorn/switch-case-braces': 'off',
   },
 };

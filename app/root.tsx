@@ -12,6 +12,7 @@ import checkWebP from 'supports-webp';
 import { useEffectOnce } from 'usehooks-ts';
 
 export const meta: MetaFunction = () => ({
+  // eslint-disable-next-line unicorn/text-encoding-identifier-case
   charset: 'utf-8',
   title: 'Festival',
   description: 'Host online music festivals',
