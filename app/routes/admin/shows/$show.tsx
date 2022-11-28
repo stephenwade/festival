@@ -12,6 +12,7 @@ import { useRef } from 'react';
 import { useBoolean } from 'usehooks-ts';
 
 import { db } from '~/db/db.server';
+import { runPing } from '~/ffmpeg/test.server';
 import { useOrigin } from '~/hooks/useOrigin';
 
 const notFound = () => new Response('Not Found', { status: 404 });
@@ -29,6 +30,8 @@ export const loader: LoaderFunction = async ({ params }) => {
     include: { sets: true },
   });
   if (!show) throw notFound();
+
+  runPing();
 
   return json(show);
 };
