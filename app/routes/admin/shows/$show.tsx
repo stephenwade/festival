@@ -14,6 +14,7 @@ import { useBoolean } from 'usehooks-ts';
 import { db } from '~/db/db.server';
 import { runPing } from '~/ffmpeg/test.server';
 import { useOrigin } from '~/hooks/useOrigin';
+import { useSse } from '~/hooks/useSse';
 
 const notFound = () => new Response('Not Found', { status: 404 });
 const serverError = () =>
@@ -85,6 +86,13 @@ const ViewShow: FC = () => {
       });
   };
 
+  useSse('/admin/test-sse', ['stdout'], (eventName, data) => {
+    const textarea = document.querySelector('textarea');
+    if (textarea) {
+      textarea.value += data;
+    }
+  });
+
   return (
     <>
       <p>
@@ -123,6 +131,7 @@ const ViewShow: FC = () => {
           </ul>
         )}
       </p>
+      <textarea />
     </>
   );
 };
