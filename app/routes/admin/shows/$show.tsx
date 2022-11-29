@@ -6,7 +6,6 @@ import type {
 } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
-import axios from 'axios';
 import type { FC } from 'react';
 import { useRef } from 'react';
 import { useBoolean } from 'usehooks-ts';
@@ -59,30 +58,47 @@ const ViewShow: FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const onUploadClick = () => {
     const form = new FormData();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const fileInput = fileInputRef.current!;
+    const fileInput = fileInputRef.current;
+    if (!fileInput || !fileInput.files?.length) return;
 
-    form.append('username', 'abc123');
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    for (const [i, file] of [...fileInput.files!].entries()) {
+    for (const [i, file] of [...fileInput.files].entries()) {
       form.append(`upload-${i}`, file);
     }
 
     // Can't use fetch because it doesn't support tracking upload progress
-    axios
-      .put(`/admin/shows/${show.id}/upload-set`, form, {
-        onUploadProgress: (event) => {
-          console.log(
-            'Progress:',
-            event.progress ? Math.trunc(event.progress * 100) : 'none'
-          );
-        },
-      })
+    const request = new Promise<string>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', `/admin/shows/${show.id}/upload-sets`);
+
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(xhr.response as string);
+        } else {
+          reject({ reason: 'Bad status code', status: xhr.status });
+        }
+      });
+
+      xhr.upload.addEventListener('progress', (event) => {
+        console.log('Progress:', (event.loaded / event.total) * 100);
+      });
+
+      xhr.addEventListener('error', () => {
+        reject({ reason: 'Error', status: xhr.status });
+      });
+
+      xhr.addEventListener('abort', () => {
+        reject({ reason: 'Aborted' });
+      });
+
+      xhr.send(form);
+    });
+
+    request
       .then((response) => {
-        console.log('Success:', response.data);
+        console.log('Request complete', response);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error('Error', error);
       });
   };
 

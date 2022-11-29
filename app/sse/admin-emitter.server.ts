@@ -20,8 +20,8 @@ export const getAdminEmitter = () => {
   return global.adminEmitter;
 };
 
-const emitter = getAdminEmitter();
-
 export function createAdminSseResponse(request: Request, events: string[]) {
+  const emitter = getAdminEmitter();
+
   return createSseResponseWithEmitter(request, emitter, events);
 }
