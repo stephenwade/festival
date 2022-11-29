@@ -1,17 +1,21 @@
 import { spawn } from 'node:child_process';
 
+import { getAdminEmitter } from '~/sse/admin-emitter.server';
+
+const emitter = getAdminEmitter();
+
 export function runPing() {
   const ping = spawn('ping', ['stephenwade.me', '-c', '5']);
 
   ping.stdout.on('data', (data: Buffer) => {
-    console.log(`stdout: ${data.toString()}`);
+    emitter.emit('stdout', data.toString());
   });
 
   ping.stderr.on('data', (data: Buffer) => {
-    console.error(`stderr: ${data.toString()}`);
+    emitter.emit('stderr', data.toString());
   });
 
-  ping.on('close', (code: number) => {
-    console.log(`child process exited with code ${code}`);
+  ping.on('close', (code) => {
+    emitter.emit('exit code', code);
   });
 }
