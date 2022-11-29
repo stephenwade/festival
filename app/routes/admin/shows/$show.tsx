@@ -7,9 +7,8 @@ import type {
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
-import { useRef } from 'react';
-import { useBoolean } from 'usehooks-ts';
 
+import { UploadSets } from '~/components/admin/UploadSets';
 import { db } from '~/db/db.server';
 import { runPing } from '~/ffmpeg/test.server';
 import { useOrigin } from '~/hooks/useOrigin';
@@ -49,59 +48,6 @@ const ViewShow: FC = () => {
 
   const origin = useOrigin();
 
-  const {
-    value: showingAddSets,
-    setTrue: showAddSets,
-    setFalse: hideAddSets,
-  } = useBoolean();
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const onUploadClick = () => {
-    const form = new FormData();
-    const fileInput = fileInputRef.current;
-    if (!fileInput || !fileInput.files?.length) return;
-
-    for (const [i, file] of [...fileInput.files].entries()) {
-      form.append(`upload-${i}`, file);
-    }
-
-    // Can't use fetch because it doesn't support tracking upload progress
-    const request = new Promise<string>((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('PUT', `/admin/shows/${show.id}/upload-sets`);
-
-      xhr.addEventListener('load', () => {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(xhr.response as string);
-        } else {
-          reject({ reason: 'Bad status code', status: xhr.status });
-        }
-      });
-
-      xhr.upload.addEventListener('progress', (event) => {
-        console.log('Progress:', (event.loaded / event.total) * 100);
-      });
-
-      xhr.addEventListener('error', () => {
-        reject({ reason: 'Error', status: xhr.status });
-      });
-
-      xhr.addEventListener('abort', () => {
-        reject({ reason: 'Aborted' });
-      });
-
-      xhr.send(form);
-    });
-
-    request
-      .then((response) => {
-        console.log('Request complete', response);
-      })
-      .catch((error) => {
-        console.error('Error', error);
-      });
-  };
-
   useSse('/admin/test-sse', ['stdout'], (eventName, data) => {
     const textarea = document.querySelector('textarea');
     if (textarea) {
@@ -126,15 +72,7 @@ const ViewShow: FC = () => {
       </p>
       <h3>Sets</h3>
       <p>
-        {showingAddSets ? (
-          <>
-            <input type="file" ref={fileInputRef} multiple />{' '}
-            <button onClick={onUploadClick}>Upload</button>{' '}
-            <button onClick={hideAddSets}>Done</button>
-          </>
-        ) : (
-          <button onClick={showAddSets}>Add sets</button>
-        )}
+        <UploadSets showId={show.id} />
       </p>
       <p>
         {show.sets.length === 0 ? (
