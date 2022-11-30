@@ -68,9 +68,7 @@ const ViewShow: FC = () => {
         <strong>Description:</strong> {show.description}
       </p>
       <h3>Sets</h3>
-      <p>
-        <UploadSets showId={show.id} />
-      </p>
+      <UploadSets showId={show.id} />
       {show.sets.length === 0 ? (
         <p>
           <em>No sets yet</em>
