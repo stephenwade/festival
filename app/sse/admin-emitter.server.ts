@@ -2,11 +2,6 @@ import { EventEmitter } from 'node:events';
 
 import { createSseResponseWithEmitter } from './sse-response.server';
 
-declare global {
-  // eslint-disable-next-line no-var
-  var adminEmitter: EventEmitter;
-}
-
 /**
  * Workaround for Remix App Server reloading all files on each request.
  *
@@ -19,6 +14,11 @@ export const getAdminEmitter = () => {
 
   return global.adminEmitter;
 };
+
+declare global {
+  // eslint-disable-next-line no-var
+  var adminEmitter: EventEmitter;
+}
 
 export function createAdminSseResponse(request: Request, events: string[]) {
   const emitter = getAdminEmitter();

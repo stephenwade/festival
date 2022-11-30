@@ -62,7 +62,7 @@ export const UploadSets: FC<Props> = ({ showId }) => {
 
   return showingAddSets ? (
     <>
-      <input type="file" ref={fileInputRef} multiple />{' '}
+      <input type="file" ref={fileInputRef} accept="audio/*" multiple />{' '}
       <button onClick={onUploadClick}>Upload</button>{' '}
       <button onClick={hideAddSets}>Done</button>
     </>
