@@ -19,21 +19,21 @@ const ShowsIndex: FC = () => {
 
   return (
     <>
-      <p>
-        {shows.length === 0 ? (
+      {shows.length === 0 ? (
+        <p>
           <em>No shows yet</em>
-        ) : (
-          <ul>
-            {shows.map((show) => (
-              <li key={show.id}>
-                <Link to={`/admin/shows/${show.id}`}>
-                  {show.name} ({show.id})
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </p>
+        </p>
+      ) : (
+        <ul>
+          {shows.map((show) => (
+            <li key={show.id}>
+              <Link to={`/admin/shows/${show.id}`}>
+                {show.name} ({show.id})
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
       <p>
         <Link to="/admin/shows/new">Add show</Link>
       </p>

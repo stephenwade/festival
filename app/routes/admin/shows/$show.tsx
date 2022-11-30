@@ -10,7 +10,6 @@ import type { FC } from 'react';
 
 import { UploadSets } from '~/components/admin/UploadSets';
 import { db } from '~/db/db.server';
-import { runPing } from '~/ffmpeg/test.server';
 import { useOrigin } from '~/hooks/useOrigin';
 import { useSse } from '~/hooks/useSse';
 
@@ -29,8 +28,6 @@ export const loader: LoaderFunction = async ({ params }) => {
     include: { sets: true },
   });
   if (!show) throw notFound();
-
-  runPing();
 
   return json(show);
 };
@@ -74,17 +71,31 @@ const ViewShow: FC = () => {
       <p>
         <UploadSets showId={show.id} />
       </p>
-      <p>
-        {show.sets.length === 0 ? (
+      {show.sets.length === 0 ? (
+        <p>
           <em>No sets yet</em>
-        ) : (
-          <ul>
-            {show.sets.map((set) => (
-              <li key={set.id}>{set.artist}</li>
-            ))}
-          </ul>
-        )}
-      </p>
+        </p>
+      ) : (
+        <ul>
+          {show.sets.map((set) => (
+            <li key={set.id}>
+              {set.artist || <em>No artist yet</em>}
+              <ul>
+                <li>
+                  <strong>Valid?</strong> {set.isValid ? 'yes' : 'no'}
+                </li>
+                <li>
+                  <strong>Start:</strong> {set.start ?? <em>No start yet</em>}
+                </li>
+                <li>
+                  <strong>Duration:</strong>{' '}
+                  {set.duration ?? <em>Calculating…</em>}
+                </li>
+              </ul>
+            </li>
+          ))}
+        </ul>
+      )}
       <textarea />
     </>
   );

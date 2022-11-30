@@ -17,24 +17,23 @@ model Show {
 }
 
 model Set {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  artist    String
-  start     DateTime
-  duration  Int
-  show      Show     @relation(fields: [showId], references: [id])
-  showId    String
-  file      File?
+  id       String    @id @default(uuid())
+  isValid  Boolean
+  artist   String?
+  start    DateTime?
+  duration Int?
+  show     Show      @relation(fields: [showId], references: [id])
+  showId   String
+  file     File?
 }
 
 model File {
   id              String  @id @default(uuid())
+  isReady         Boolean
+  status          String
   filename        String?
   audioUrl        String?
   convertProgress Int?
-  isReady         Boolean
-  status          String
   errorMessage    String?
   set             Set     @relation(fields: [setId], references: [id])
   setId           String  @unique
