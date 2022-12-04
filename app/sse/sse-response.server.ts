@@ -52,7 +52,7 @@ export function createSseResponse(
 export function createSseResponseWithEmitter(
   request: Request,
   emitter: EventEmitter,
-  events: string[]
+  events: readonly string[]
 ) {
   return createSseResponse(request, (send) => {
     const handlers = events.map(

@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 
-export function useSse(
+export function useSse<T extends string>(
   url: string | URL,
-  events: string[],
-  onEvent: (eventName: string, data: unknown) => void
+  events: readonly T[],
+  onEvent: (eventName: T, data: unknown) => void
 ) {
   const eventSourceRef = useRef<EventSource>();
 
