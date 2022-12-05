@@ -111,14 +111,12 @@ export const UploadSets: FC<Props> = ({ showId }) => {
       const form = new FormData();
       form.append(UPLOAD_SET_FORM_KEY, file);
       putForm(form, {
-        url: `/admin/shows/${showId}/upload-sets`,
+        url: `/admin/shows/${showId}/upload-set`,
         onProgress: (progress) => {
           dispatchUploadProgress({ uploadId, progress });
         },
       })
-        .then((result) => {
-          console.log(`File upload ${uploadId} is done! Result: ${result}`);
-
+        .then(() => {
           dispatchUploadProgress({ uploadId, complete: true });
         })
         .catch((error: { reason: string; status?: number }) => {

@@ -21,7 +21,7 @@ model Set {
   isValid  Boolean
   artist   String?
   start    DateTime?
-  duration Int?
+  duration Float?
   show     Show      @relation(fields: [showId], references: [id])
   showId   String
   file     File?
@@ -33,7 +33,7 @@ model File {
   status          String
   filename        String?
   audioUrl        String?
-  convertProgress Int?
+  convertProgress Float?
   errorMessage    String?
   set             Set     @relation(fields: [setId], references: [id])
   setId           String  @unique

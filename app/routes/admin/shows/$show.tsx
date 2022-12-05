@@ -7,23 +7,34 @@ import type {
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
+import { useCallback } from 'react';
 
 import { UploadSets } from '~/components/admin/UploadSets';
 import { db } from '~/db/db.server';
 import { useOrigin } from '~/hooks/useOrigin';
 import { useSse } from '~/hooks/useSse';
+import type {
+  FileProcessingFileUpdateData,
+  FileProcessingNewSetData,
+  FileProcessingSetUpdateData,
+} from '~/types/admin/file-processing-events';
+import { FileProcessingEventNames } from '~/types/admin/file-processing-events';
 
 const notFound = () => new Response('Not Found', { status: 404 });
 const serverError = () =>
   new Response('Internal Server Error', { status: 500 });
 
-const showWithSets = Prisma.validator<Prisma.ShowArgs>()({
-  include: { sets: true },
+const showWithSetsAndFiles = Prisma.validator<Prisma.ShowArgs>()({
+  include: {
+    sets: {
+      include: { file: true },
+    },
+  },
 });
 
-type ShowWithSets = Prisma.ShowGetPayload<typeof showWithSets>;
+type ShowWithSetsAndFiles = Prisma.ShowGetPayload<typeof showWithSetsAndFiles>;
 
-type LoaderData = SerializeFrom<ShowWithSets>;
+type LoaderData = SerializeFrom<ShowWithSetsAndFiles>;
 
 export const loader: LoaderFunction = async ({ params }) => {
   const id = params.show;
@@ -31,7 +42,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const show = await db.show.findUnique({
     where: { id },
-    ...showWithSets,
+    ...showWithSetsAndFiles,
   });
   if (!show) throw notFound();
 
@@ -51,12 +62,22 @@ const ViewShow: FC = () => {
 
   const origin = useOrigin();
 
-  useSse('/admin/test-sse', ['stdout'], (eventName, data) => {
-    const textarea = document.querySelector('textarea');
-    if (textarea) {
-      textarea.value += data;
-    }
-  });
+  useSse(
+    '/admin/shows/file-processing-sse',
+    FileProcessingEventNames,
+    useCallback((eventName, data) => {
+      if (eventName === 'new set') {
+        const newSet = data as FileProcessingNewSetData;
+        console.log('new set', newSet);
+      } else if (eventName === 'set update') {
+        const setUpdate = data as FileProcessingSetUpdateData;
+        console.log('set update', setUpdate);
+      } else if (eventName === 'file update') {
+        const fileUpdate = data as FileProcessingFileUpdateData;
+        console.log('file update', fileUpdate);
+      }
+    }, [])
+  );
 
   return (
     <>
@@ -100,7 +121,6 @@ const ViewShow: FC = () => {
           ))}
         </ul>
       )}
-      <textarea />
     </>
   );
 };
