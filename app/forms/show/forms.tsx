@@ -1,3 +1,4 @@
+import type { Show } from '@prisma/client';
 import { Link } from '@remix-run/react';
 import type { FC } from 'react';
 import { ValidatedForm } from 'remix-validated-form';
@@ -54,7 +55,7 @@ export const NewShowForm: FC = () => (
 );
 
 type EditShowFormProps = {
-  showId: string;
+  showId: Show['id'];
 } & Required<Pick<ShowFormProps, 'defaultValues'>>;
 
 export const EditShowForm: FC<EditShowFormProps> = ({

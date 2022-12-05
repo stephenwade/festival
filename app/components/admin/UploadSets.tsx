@@ -1,6 +1,9 @@
+import type { Show } from '@prisma/client';
 import type { FC } from 'react';
 import { useReducer, useRef } from 'react';
 import { useBoolean } from 'usehooks-ts';
+
+import { UPLOAD_SET_FORM_KEY } from '~/types/admin/upload-set';
 
 type PutFormOptions = {
   url: string;
@@ -80,7 +83,7 @@ function uploadMapReducer(
 }
 
 type Props = {
-  showId: string;
+  showId: Show['id'];
 };
 
 export const UploadSets: FC<Props> = ({ showId }) => {
@@ -106,7 +109,7 @@ export const UploadSets: FC<Props> = ({ showId }) => {
       dispatchUploadProgress({ uploadId, filename: file.name });
 
       const form = new FormData();
-      form.append('upload', file);
+      form.append(UPLOAD_SET_FORM_KEY, file);
       putForm(form, {
         url: `/admin/shows/${showId}/upload-sets`,
         onProgress: (progress) => {
@@ -122,6 +125,8 @@ export const UploadSets: FC<Props> = ({ showId }) => {
           console.error(`File upload ${uploadId} failed.`, error);
         });
     }
+
+    fileInput.value = '';
   };
 
   return (

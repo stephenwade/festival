@@ -1,4 +1,4 @@
-import type { Set, Show } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import type {
   LoaderFunction,
   MetaFunction,
@@ -17,7 +17,13 @@ const notFound = () => new Response('Not Found', { status: 404 });
 const serverError = () =>
   new Response('Internal Server Error', { status: 500 });
 
-type LoaderData = SerializeFrom<Show & { sets: Set[] }>;
+const showWithSets = Prisma.validator<Prisma.ShowArgs>()({
+  include: { sets: true },
+});
+
+type ShowWithSets = Prisma.ShowGetPayload<typeof showWithSets>;
+
+type LoaderData = SerializeFrom<ShowWithSets>;
 
 export const loader: LoaderFunction = async ({ params }) => {
   const id = params.show;
@@ -25,7 +31,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const show = await db.show.findUnique({
     where: { id },
-    include: { sets: true },
+    ...showWithSets,
   });
   if (!show) throw notFound();
 
