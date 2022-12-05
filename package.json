@@ -37,7 +37,7 @@
     "eslint-plugin-simple-import-sort": "8.0.0",
     "eslint-plugin-wc": "1.4.0",
     "husky": "8.0.2",
-    "lint-staged": "13.0.4",
+    "lint-staged": "13.1.0",
     "playwright": "1.28.1",
     "postcss-syntax": "0.36.2",
     "prettier": "2.8.0",
