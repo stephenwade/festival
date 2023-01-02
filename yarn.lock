@@ -1614,13 +1614,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/eslint-config@npm:9.0.0":
-  version: 9.0.0
-  resolution: "@open-wc/eslint-config@npm:9.0.0"
+"@open-wc/eslint-config@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@open-wc/eslint-config@npm:9.1.0"
   dependencies:
     eslint-config-airbnb-base: ^15.0.0
     eslint-plugin-html: ^7.1.0
     eslint-plugin-import: ^2.26.0
+    eslint-plugin-import-exports-imports-resolver: ^1.0.1
     eslint-plugin-lit: ^1.2.0
     eslint-plugin-lit-a11y: ^2.3.0
     eslint-plugin-no-only-tests: ^3.1.0
@@ -1633,7 +1634,7 @@ __metadata:
     eslint-plugin-lit-a11y: ^2.3.0
     eslint-plugin-no-only-tests: ^3.1.0
     eslint-plugin-wc: ^1.2.0
-  checksum: 1a7f5dc804aa0a97dc2e8ffd08d2af87ab07c0b78f1405168cef4dad2e909ae4b4c93729f508f08f12cc01a08a01a89bdf88101464f5f4458a74ca99b578191a
+  checksum: b70b791c9ca6274b1bade835ee8293a30015578b49ad18545348c876ec86b040e5b3481038a1ebc3e984b6ca0f0560ae1cac5a9e0d99c616be1b4e80bf756b46
   languageName: node
   linkType: hard
 
@@ -4878,6 +4879,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-import-exports-imports-resolver@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "eslint-plugin-import-exports-imports-resolver@npm:1.0.1"
+  dependencies:
+    resolve.exports: ^1.1.0
+    resolve.imports: ^1.2.6
+  checksum: 7b7fdc85be6ba4c35a7c541b99b150d8fd2c15fcf935c985cff14c1158adc8adcb031f51b9ce0b1dd6d8104c1e1485c8b197090ef9e8d61f63eadc83e2b2d1ec
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-import@npm:2.26.0, eslint-plugin-import@npm:^2.26.0":
   version: 2.26.0
   resolution: "eslint-plugin-import@npm:2.26.0"
@@ -5347,7 +5358,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "festival-root@workspace:."
   dependencies:
-    "@open-wc/eslint-config": 9.0.0
+    "@open-wc/eslint-config": 9.1.0
     "@playwright/test": 1.29.1
     "@stylelint/postcss-css-in-js": 0.38.0
     eslint: 8.30.0
@@ -9033,6 +9044,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pattern-key-compare@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "pattern-key-compare@npm:1.0.0"
+  checksum: 4be025948a8f4d2159d1afb2a8fa55a6fbc7b61236c6ae9dcac8cd27404475c8a20ce12d68bb39f462aa50a5d36757a0198085d2006859024bb73fe1a6447ce7
+  languageName: node
+  linkType: hard
+
 "peek-readable@npm:^4.1.0":
   version: 4.1.0
   resolution: "peek-readable@npm:4.1.0"
@@ -9754,6 +9772,22 @@ __metadata:
     http-errors: ~1.6.2
     path-is-absolute: 1.0.1
   checksum: 1a39f569ee54dd5f8ee8576ef8671c9724bea65d9f9982fbb5352af9fb4e500e1e459c1bfb1ae3ebfd8d43a709c3a01dfa4f46cf5b831e45e2caed4f1a208300
+  languageName: node
+  linkType: hard
+
+"resolve.exports@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "resolve.exports@npm:1.1.0"
+  checksum: 52865af8edb088f6c7759a328584a5de6b226754f004b742523adcfe398cfbc4559515104bc2ae87b8e78b1e4de46c9baec400b3fb1f7d517b86d2d48a098a2d
+  languageName: node
+  linkType: hard
+
+"resolve.imports@npm:^1.2.6":
+  version: 1.2.6
+  resolution: "resolve.imports@npm:1.2.6"
+  dependencies:
+    pattern-key-compare: ^1.0.0
+  checksum: b7d5927de408ef5d3218ed36d38ce19e8386be44b16bd104275cb2c1015ca54953d1b70bd581437c21c4fec1ba4c63b8280f87f1370ab5023939c7bd11aca5f4
   languageName: node
   linkType: hard
 
