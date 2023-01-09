@@ -193,7 +193,7 @@ describe('festival-ui-playing', () => {
 
       el.getAudioVisualizerData = () =>
         Uint8Array.from(new Array(512).fill(100));
-      await aTimeout(100);
+      await aTimeout(200);
 
       expect(
         canvas

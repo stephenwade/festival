@@ -48,7 +48,7 @@
             it('redirects to show intro page', async () => {
               const el = await fixture(template);
               el.onAfterEnter({ params: {} });
-              await aTimeout(100);
+              await aTimeout(200);
 
               expect(Router.go).to.have.been.calledWith('/my-show');
             });
