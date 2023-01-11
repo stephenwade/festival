@@ -24,7 +24,7 @@
     "format": "yarn format:eslint; yarn format:stylelint; yarn format:prettier"
   },
   "devDependencies": {
-    "@open-wc/eslint-config": "9.1.0",
+    "@open-wc/eslint-config": "9.2.0",
     "@playwright/test": "1.29.2",
     "@stylelint/postcss-css-in-js": "0.38.0",
     "eslint": "8.31.0",
