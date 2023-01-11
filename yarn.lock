@@ -1631,15 +1631,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/eslint-config@npm:9.1.0":
-  version: 9.1.0
-  resolution: "@open-wc/eslint-config@npm:9.1.0"
+"@open-wc/eslint-config@npm:9.2.0":
+  version: 9.2.0
+  resolution: "@open-wc/eslint-config@npm:9.2.0"
   dependencies:
     eslint-config-airbnb-base: ^15.0.0
     eslint-plugin-html: ^7.1.0
     eslint-plugin-import: ^2.26.0
     eslint-plugin-import-exports-imports-resolver: ^1.0.1
-    eslint-plugin-lit: ^1.2.0
+    eslint-plugin-lit: ^1.8.0
     eslint-plugin-lit-a11y: ^2.3.0
     eslint-plugin-no-only-tests: ^3.1.0
     eslint-plugin-wc: ^1.2.0
@@ -1651,7 +1651,7 @@ __metadata:
     eslint-plugin-lit-a11y: ^2.3.0
     eslint-plugin-no-only-tests: ^3.1.0
     eslint-plugin-wc: ^1.2.0
-  checksum: b70b791c9ca6274b1bade835ee8293a30015578b49ad18545348c876ec86b040e5b3481038a1ebc3e984b6ca0f0560ae1cac5a9e0d99c616be1b4e80bf756b46
+  checksum: 04e27013265e237d24d5583c34acf315ef8307b805de4c72359bdf752819841c89d83a9e06e6241c2fe97d672f720bf99a2ff470de523abc9fd07ae59f9a3c69
   languageName: node
   linkType: hard
 
@@ -4970,7 +4970,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-lit@npm:1.7.2, eslint-plugin-lit@npm:^1.2.0, eslint-plugin-lit@npm:^1.6.0":
+"eslint-plugin-lit@npm:1.7.2, eslint-plugin-lit@npm:^1.6.0":
   version: 1.7.2
   resolution: "eslint-plugin-lit@npm:1.7.2"
   dependencies:
@@ -4980,6 +4980,19 @@ __metadata:
   peerDependencies:
     eslint: ">= 5"
   checksum: 11eda4ad42cf1421b48a6b3cafdc237b974237c1698e148518b51d4f6bdcc0d9595604826d50e5f87844ee04564b102c33725434ef4569f6e2f8d4f7982e2250
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-lit@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "eslint-plugin-lit@npm:1.8.0"
+  dependencies:
+    parse5: ^6.0.1
+    parse5-htmlparser2-tree-adapter: ^6.0.1
+    requireindex: ^1.2.0
+  peerDependencies:
+    eslint: ">= 5"
+  checksum: c12e07e511db75afd500c153f03d0ced803647d1f87a3db87d3bcc9dcaf3096a3d17bfacaa5afd39abd3d70442d64e1a958ab9d6989d722a4b4d19b69ba01183
   languageName: node
   linkType: hard
 
@@ -5395,7 +5408,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "festival-root@workspace:."
   dependencies:
-    "@open-wc/eslint-config": 9.1.0
+    "@open-wc/eslint-config": 9.2.0
     "@playwright/test": 1.29.2
     "@stylelint/postcss-css-in-js": 0.38.0
     eslint: 8.31.0
