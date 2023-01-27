@@ -4125,15 +4125,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cwebp-bin@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "cwebp-bin@npm:7.0.1"
+"cwebp-bin@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "cwebp-bin@npm:8.0.0"
   dependencies:
     bin-build: ^3.0.0
     bin-wrapper: ^4.0.1
   bin:
     cwebp: cli.js
-  checksum: 89cdf06ee069161571b43153bbeeb1835b6dba1fcef12d19f8a9c289be74e035ff5679b2f45bdef8ee42a4cf71e3fb0d80f8a51d1b19c9c523bf3252685f667f
+  checksum: be6d74e63cd7abb3bf741f705f591690f9e3a62464ef00581e0d77e7b7615d1081c30860f589643db3a352df0c2acea4f9d4cd2c30dee67bf41801228c9e14ca
   languageName: node
   linkType: hard
 
@@ -5497,7 +5497,7 @@ __metadata:
     fetch-mock: 9.11.0
     imagemin: 8.0.1
     imagemin-cli: 7.0.0
-    imagemin-webp: 7.0.0
+    imagemin-webp: 8.0.0
     koa-range: 0.3.0
     lit: 2.6.1
     pwa-helpers: 0.9.1
@@ -6605,14 +6605,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"imagemin-webp@npm:7.0.0":
-  version: 7.0.0
-  resolution: "imagemin-webp@npm:7.0.0"
+"imagemin-webp@npm:8.0.0":
+  version: 8.0.0
+  resolution: "imagemin-webp@npm:8.0.0"
   dependencies:
-    cwebp-bin: ^7.0.1
+    cwebp-bin: ^8.0.0
     exec-buffer: ^3.2.0
     is-cwebp-readable: ^3.0.0
-  checksum: 8f27c83b39936ce91767c6cef73f5f524a3c78db5c736deccfd2990c8d40074079a0a76c0d36220216b2d2e99bbf8a57e1dcdf766fa02ea7648274537597352f
+  checksum: 707404df20f346b83b5651bc99017c2f272f400b87238ed64236a0dce112dd9c5d77d10ab365af6356e6ce33afd6a2d79fe534c82a8717ea746d9bc6f70b6804
   languageName: node
   linkType: hard
 
