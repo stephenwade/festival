@@ -32,7 +32,7 @@
     "date-fns": "2.29.3",
     "lit": "2.6.1",
     "pwa-helpers": "0.9.1",
-    "redux": "4.2.0",
+    "redux": "4.2.1",
     "redux-thunk": "2.4.2",
     "standardized-audio-context": "25.3.37"
   },
