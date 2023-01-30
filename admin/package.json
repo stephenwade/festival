@@ -23,7 +23,7 @@
     "@magic-sdk/admin": "1.8.0",
     "@open-wc/building-rollup": "2.2.1",
     "@rollup/plugin-replace": "5.0.2",
-    "deepmerge": "4.2.2",
+    "deepmerge": "4.3.0",
     "dotenv": "16.0.3",
     "koa": "2.14.1",
     "koa-mount": "4.0.0",
