@@ -54,8 +54,8 @@ export const elevationZ6 = css`
 
 export const elevationZ6Rotated90 = css`
   .mdc-elevation--z6--r90 {
-    box-shadow: -3px, 0 5px -1px rgb(0 0 0 / 20%), -6px,
-      0 10px 0 rgb(0 0 0 / 14%), -1px, 0 18px 0 rgb(0 0 0 / 12%);
+    box-shadow: -3px 0 5px -1px rgb(0 0 0 / 20%), -6px 0 10px 0 rgb(0 0 0 / 14%),
+      -1px 0 18px 0 rgb(0 0 0 / 12%);
   }
 `;
 
