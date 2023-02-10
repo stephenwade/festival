@@ -10,7 +10,7 @@ jobs:
   wtr:
     name: Web Test Runner
 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     defaults:
       run:
@@ -33,7 +33,7 @@ jobs:
   e2e:
     name: End to End
 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     defaults:
       run:
