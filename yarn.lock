@@ -5482,7 +5482,6 @@ __metadata:
     prettier: 2.8.4
     stylelint: 15.0.0
     stylelint-config-hudochenkov: 9.0.0
-    stylelint-config-prettier: 9.0.5
     stylelint-config-standard: 30.0.1
     stylelint-order: 6.0.2
   languageName: unknown
@@ -10870,18 +10869,6 @@ __metadata:
     stylelint: ^15.0.0
     stylelint-order: ^6.0.2
   checksum: a115934f4644bec01521d4593a03ba20c87d43455ed7151cd39dcdb2c5dad13533483d3cdd197a011d0f26b97e6573a20052c05977ae78f0d5453536793ffa5d
-  languageName: node
-  linkType: hard
-
-"stylelint-config-prettier@npm:9.0.5":
-  version: 9.0.5
-  resolution: "stylelint-config-prettier@npm:9.0.5"
-  peerDependencies:
-    stylelint: ">= 11.x < 15"
-  bin:
-    stylelint-config-prettier: bin/check.js
-    stylelint-config-prettier-check: bin/check.js
-  checksum: 3d04e463e0bb7e42a5ddec49eea6ef4ea07705d887e8a3ff1fcb82278a5e2bec1a36b8498ea7ed2d24878de29d7c94ac75b1d3ac4f8b19c3a84970595b29261f
   languageName: node
   linkType: hard
 
