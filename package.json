@@ -26,7 +26,6 @@
   "devDependencies": {
     "@open-wc/eslint-config": "9.2.2",
     "@playwright/test": "1.30.0",
-    "@stylelint/postcss-css-in-js": "0.38.0",
     "eslint": "8.33.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-html": "7.1.0",
@@ -39,12 +38,13 @@
     "husky": "8.0.3",
     "lint-staged": "13.1.1",
     "playwright": "1.30.0",
-    "postcss-syntax": "0.36.2",
+    "postcss-html": "1.5.0",
+    "postcss-lit": "1.0.1",
     "prettier": "2.8.4",
-    "stylelint": "14.16.1",
-    "stylelint-config-hudochenkov": "8.0.1",
+    "stylelint": "15.0.0",
+    "stylelint-config-hudochenkov": "9.0.0",
     "stylelint-config-prettier": "9.0.4",
-    "stylelint-config-standard": "29.0.0",
+    "stylelint-config-standard": "30.0.1",
     "stylelint-order": "6.0.2"
   },
   "lint-staged": {
