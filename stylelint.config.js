@@ -1,10 +1,6 @@
 module.exports = {
-  extends: [
-    'stylelint-config-standard',
-    'stylelint-config-prettier',
-    'stylelint-config-hudochenkov/order',
-  ],
+  extends: ['stylelint-config-standard', 'stylelint-config-hudochenkov/order'],
   rules: {
-    'declaration-block-trailing-semicolon': 'always',
+    'declaration-property-value-no-unknown': true,
   },
 };
