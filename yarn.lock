@@ -5465,7 +5465,7 @@ __metadata:
     postcss-syntax: 0.36.2
     prettier: 2.8.4
     stylelint: 14.16.1
-    stylelint-config-hudochenkov: 8.0.1
+    stylelint-config-hudochenkov: 9.0.0
     stylelint-config-prettier: 9.0.4
     stylelint-config-standard: 29.0.0
     stylelint-order: 6.0.2
@@ -10817,13 +10817,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-hudochenkov@npm:8.0.1":
-  version: 8.0.1
-  resolution: "stylelint-config-hudochenkov@npm:8.0.1"
+"stylelint-config-hudochenkov@npm:9.0.0":
+  version: 9.0.0
+  resolution: "stylelint-config-hudochenkov@npm:9.0.0"
   peerDependencies:
-    stylelint: ^14.10.0
-    stylelint-order: ^5.0.0 || ^6.0.1
-  checksum: 3024abc7c19b73f453fe687f8e7ab5dfd0d748139c3997964ddef9f3bdd387bfa129e77867ed28dec5119f0893715888a1f9f4103fa9be3d6505e9b64a457976
+    stylelint: ^15.0.0
+    stylelint-order: ^6.0.2
+  checksum: a115934f4644bec01521d4593a03ba20c87d43455ed7151cd39dcdb2c5dad13533483d3cdd197a011d0f26b97e6573a20052c05977ae78f0d5453536793ffa5d
   languageName: node
   linkType: hard
 
