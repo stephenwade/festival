@@ -1753,15 +1753,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.30.0":
-  version: 1.30.0
-  resolution: "@playwright/test@npm:1.30.0"
+"@playwright/test@npm:1.31.0":
+  version: 1.31.0
+  resolution: "@playwright/test@npm:1.31.0"
   dependencies:
     "@types/node": "*"
-    playwright-core: 1.30.0
+    fsevents: 2.3.2
+    playwright-core: 1.31.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
   bin:
     playwright: cli.js
-  checksum: 777432ac9cf3d0341fcd8dd265cb4c0775619d0ef48252b32a7c4d632d8038449756ec34bec873828cadbc08ba634e81176cb193304d34e699472771b7fb4d1e
+  checksum: 87bc330f2843b306db24c207db0710dce49798cd53ddc9a1962da36f5ec9a08fda5b860adf36b3e90b8571567e18ed45d21349a4d835c472695916a95fbbcebe
   languageName: node
   linkType: hard
 
@@ -5464,7 +5468,7 @@ __metadata:
   resolution: "festival-root@workspace:."
   dependencies:
     "@open-wc/eslint-config": 9.2.2
-    "@playwright/test": 1.30.0
+    "@playwright/test": 1.31.0
     eslint: 8.34.0
     eslint-config-prettier: 8.6.0
     eslint-plugin-html: 7.1.0
@@ -5476,7 +5480,7 @@ __metadata:
     eslint-plugin-wc: 1.4.0
     husky: 8.0.3
     lint-staged: 13.1.2
-    playwright: 1.30.0
+    playwright: 1.31.0
     postcss-html: 1.5.0
     postcss-lit: 1.0.1
     prettier: 2.8.4
@@ -5494,7 +5498,7 @@ __metadata:
     "@open-wc/building-rollup": 2.2.1
     "@open-wc/testing": 3.1.7
     "@open-wc/testing-helpers": 2.1.4
-    "@playwright/test": 1.30.0
+    "@playwright/test": 1.31.0
     "@rollup/plugin-replace": 5.0.2
     "@vaadin/router": 1.7.4
     "@web/dev-server": 0.1.35
@@ -5793,7 +5797,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@npm:~2.3.2":
+"fsevents@npm:2.3.2, fsevents@npm:~2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
   dependencies:
@@ -5803,7 +5807,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
+"fsevents@patch:fsevents@2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
   resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
@@ -9300,7 +9304,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:1.30.0, playwright@npm:^1.22.2":
+"playwright-core@npm:1.31.0":
+  version: 1.31.0
+  resolution: "playwright-core@npm:1.31.0"
+  bin:
+    playwright: cli.js
+  checksum: fa80ae8c0bf262f282f4f6d05dcf91983d3b7c38ec916cf41e394abab6c2b7de6a2dec34a66ef7d4dbb8526de75df406e1fdce6e0a014c0c49c37c95ae22d452
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.31.0":
+  version: 1.31.0
+  resolution: "playwright@npm:1.31.0"
+  dependencies:
+    playwright-core: 1.31.0
+  bin:
+    playwright: cli.js
+  checksum: 4c0dccb22fc45af664627292f3d57bd0f3e30594b40271393b0e4b90182d9eb680ce0d03c9f3ebf64d4396d3e84d664318cc3bb82eaf29570d6579b383ce6b71
+  languageName: node
+  linkType: hard
+
+"playwright@npm:^1.22.2":
   version: 1.30.0
   resolution: "playwright@npm:1.30.0"
   dependencies:
