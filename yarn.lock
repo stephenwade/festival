@@ -5491,7 +5491,7 @@ __metadata:
     lint-staged: 13.1.2
     playwright: 1.31.1
     postcss-html: 1.5.0
-    postcss-lit: 1.0.1
+    postcss-lit: 1.1.0
     prettier: 2.8.4
     stylelint: 15.2.0
     stylelint-config-hudochenkov: 9.0.0
@@ -7705,7 +7705,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lilconfig@npm:2.0.6":
+"lilconfig@npm:2.0.6, lilconfig@npm:^2.0.6":
   version: 2.0.6
   resolution: "lilconfig@npm:2.0.6"
   checksum: 40a3cd72f103b1be5975f2ac1850810b61d4053e20ab09be8d3aeddfe042187e1ba70b4651a7e70f95efa1642e7dc8b2ae395b317b7d7753b241b43cef7c0f7d
@@ -9356,16 +9356,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-lit@npm:1.0.1":
-  version: 1.0.1
-  resolution: "postcss-lit@npm:1.0.1"
+"postcss-lit@npm:1.1.0":
+  version: 1.1.0
+  resolution: "postcss-lit@npm:1.1.0"
   dependencies:
     "@babel/generator": ^7.16.5
     "@babel/parser": ^7.16.2
     "@babel/traverse": ^7.16.0
+    lilconfig: ^2.0.6
   peerDependencies:
     postcss: ^8.3.11
-  checksum: 1731c494b4f8889cded897fda057e85705874946fd389f7138c0279a9d85f4ce9ef964e3f8b0c8c8e29d97cef2caf07ac277d17026b5ffbbe51c3f851e88c156
+  checksum: a25bb6a0ce3b43e553167a3c2c748325e7fa805531af45a6806eb8594b41934ca1a1491da1c3bd5cae5de3d3089cffc6340a53fdab12089fbcf4af4acb446d9e
   languageName: node
   linkType: hard
 
