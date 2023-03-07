@@ -44,7 +44,7 @@
     "stylelint": "15.2.0",
     "stylelint-config-hudochenkov": "9.0.0",
     "stylelint-config-standard": "30.0.1",
-    "stylelint-order": "6.0.2"
+    "stylelint-order": "6.0.3"
   },
   "lint-staged": {
     "*.{js,cjs,html}": "eslint --fix",
