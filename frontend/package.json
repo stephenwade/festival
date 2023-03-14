@@ -42,7 +42,7 @@
     "@open-wc/testing-helpers": "2.2.0",
     "@playwright/test": "1.31.2",
     "@rollup/plugin-replace": "5.0.2",
-    "@web/dev-server": "0.1.35",
+    "@web/dev-server": "0.1.36",
     "@web/dev-server-import-maps": "0.0.7",
     "@web/test-runner": "0.15.1",
     "@web/test-runner-commands": "0.6.5",
