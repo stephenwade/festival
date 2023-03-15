@@ -24,7 +24,7 @@
     "format": "yarn format:eslint; yarn format:stylelint; yarn format:prettier"
   },
   "devDependencies": {
-    "@open-wc/eslint-config": "9.2.2",
+    "@open-wc/eslint-config": "10.0.0",
     "@playwright/test": "1.31.2",
     "eslint": "8.36.0",
     "eslint-config-prettier": "8.7.0",
