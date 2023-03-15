@@ -4814,6 +4814,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"emoji-regex@npm:^10.2.1":
+  version: 10.2.1
+  resolution: "emoji-regex@npm:10.2.1"
+  checksum: 1aa2d16881c56531fdfc03d0b36f5c2b6221cc4097499a5665b88b711dc3fb4d5b8804f0ca6f00c56e5dcf89bac75f0487eee85da1da77df3a33accc6ecbe426
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
@@ -5122,7 +5129,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-lit-a11y@npm:2.3.0, eslint-plugin-lit-a11y@npm:^2.3.0":
+"eslint-plugin-lit-a11y@npm:2.4.0":
+  version: 2.4.0
+  resolution: "eslint-plugin-lit-a11y@npm:2.4.0"
+  dependencies:
+    aria-query: ^5.1.3
+    axe-core: ^4.3.3
+    axobject-query: ^2.2.0
+    dom5: ^3.0.1
+    emoji-regex: ^10.2.1
+    eslint-plugin-lit: ^1.6.0
+    eslint-rule-extender: 0.0.1
+    language-tags: ^1.0.5
+    parse5: ^5.1.1
+    parse5-htmlparser2-tree-adapter: ^6.0.1
+    requireindex: ~1.2.0
+  peerDependencies:
+    eslint: ">= 5"
+  checksum: 977340590796cea034658054343d001945b59329a851ad43eeda906800379dd2f98cdc0103c0b7a39da6edfd623d580a0ea18bdf17ae5bb4b89f639b6109bd1d
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-lit-a11y@npm:^2.3.0":
   version: 2.3.0
   resolution: "eslint-plugin-lit-a11y@npm:2.3.0"
   dependencies:
@@ -5582,7 +5610,7 @@ __metadata:
     eslint-plugin-html: 7.1.0
     eslint-plugin-import: 2.27.5
     eslint-plugin-lit: 1.8.2
-    eslint-plugin-lit-a11y: 2.3.0
+    eslint-plugin-lit-a11y: 2.4.0
     eslint-plugin-no-only-tests: 3.1.0
     eslint-plugin-simple-import-sort: 10.0.0
     eslint-plugin-wc: 1.4.0
