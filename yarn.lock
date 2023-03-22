@@ -1524,6 +1524,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lit-labs/ssr-dom-shim@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@lit-labs/ssr-dom-shim@npm:1.1.0"
+  checksum: 7d6f2331418164ee65816db0670b0a958572c6b91c95e3b41bc1874c6f1465febbe8ac88d4f8367d69fbaba44820d7b255c5e384beab61fa7ee4135d1694b603
+  languageName: node
+  linkType: hard
+
 "@lit/reactive-element@npm:^1.0.0, @lit/reactive-element@npm:^1.3.0, @lit/reactive-element@npm:^1.6.0":
   version: 1.6.1
   resolution: "@lit/reactive-element@npm:1.6.1"
@@ -5526,7 +5533,7 @@ __metadata:
     koa-mount: 4.0.0
     koa-send: 5.0.1
     koa-static: 5.0.0
-    lit: 2.6.1
+    lit: 2.7.0
     nodemon: 2.0.21
     rollup: 3.20.0
   languageName: unknown
@@ -5587,7 +5594,7 @@ __metadata:
     imagemin-cli: 7.0.0
     imagemin-webp: 8.0.0
     koa-range: 0.3.0
-    lit: 2.6.1
+    lit: 2.7.0
     pwa-helpers: 0.9.1
     redux: 4.2.1
     redux-thunk: 2.4.2
@@ -7833,6 +7840,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lit-element@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "lit-element@npm:3.3.0"
+  dependencies:
+    "@lit-labs/ssr-dom-shim": ^1.1.0
+    "@lit/reactive-element": ^1.3.0
+    lit-html: ^2.7.0
+  checksum: 5a483c34dd55412599978e02858d841a932199dedca0b86ec54639096bc36c301f57915c0ee0463d8a57ac265d57f3468c8378224816c732c73df641a2549d62
+  languageName: node
+  linkType: hard
+
 "lit-html@npm:^2.0.0, lit-html@npm:^2.2.0, lit-html@npm:^2.6.0":
   version: 2.6.1
   resolution: "lit-html@npm:2.6.1"
@@ -7842,7 +7860,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:2.6.1, lit@npm:^2.0.0":
+"lit-html@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "lit-html@npm:2.7.0"
+  dependencies:
+    "@types/trusted-types": ^2.0.2
+  checksum: 8a0f83c0f6110f8d02484803c2b309c6d21011bd03681cb790c5303e4a6e4f94956cb2dcb05e67f6c4066f382193a7e5c8987ab0ca244f2fe6e85b99e2feecdd
+  languageName: node
+  linkType: hard
+
+"lit@npm:2.7.0":
+  version: 2.7.0
+  resolution: "lit@npm:2.7.0"
+  dependencies:
+    "@lit/reactive-element": ^1.6.0
+    lit-element: ^3.3.0
+    lit-html: ^2.7.0
+  checksum: 916f459ded2e9700fe695070963dcb2edcea2dd1d127db6885cf10e94766d5ca9f438ebf659dca264c6402708254927b0ffed6595b6bcaac422e6f203dbbf6ee
+  languageName: node
+  linkType: hard
+
+"lit@npm:^2.0.0":
   version: 2.6.1
   resolution: "lit@npm:2.6.1"
   dependencies:
