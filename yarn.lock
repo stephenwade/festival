@@ -2456,13 +2456,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vaadin/router@npm:1.7.4":
-  version: 1.7.4
-  resolution: "@vaadin/router@npm:1.7.4"
+"@vaadin/router@npm:1.7.5":
+  version: 1.7.5
+  resolution: "@vaadin/router@npm:1.7.5"
   dependencies:
     "@vaadin/vaadin-usage-statistics": ^2.1.0
     path-to-regexp: 2.4.0
-  checksum: 4d5d0ab105b1bc7ea6b5c3c3e2fb39994f1f9a5e009d20508797b3459a67c356ac51cf871222c6011ffb30a4509e4a605b37ef1115e19a94cc53e1b94200ac2a
+  checksum: 181f19efe7397ddc490298a895d1f08de3648f22942590b4159fc419e377078153861465eb7845f083c86d6b44e02724a6ea36f35e3465283caba9f9d7e05142
   languageName: node
   linkType: hard
 
@@ -5569,7 +5569,7 @@ __metadata:
     "@open-wc/testing-helpers": 2.2.0
     "@playwright/test": 1.31.2
     "@rollup/plugin-replace": 5.0.2
-    "@vaadin/router": 1.7.4
+    "@vaadin/router": 1.7.5
     "@web/dev-server": 0.1.36
     "@web/dev-server-import-maps": 0.0.8
     "@web/test-runner": 0.15.1

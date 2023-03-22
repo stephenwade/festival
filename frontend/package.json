@@ -28,7 +28,7 @@
     "deploy": "yarn deploy:site && yarn deploy:media"
   },
   "dependencies": {
-    "@vaadin/router": "1.7.4",
+    "@vaadin/router": "1.7.5",
     "date-fns": "2.29.3",
     "lit": "2.6.1",
     "pwa-helpers": "0.9.1",
