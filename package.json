@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@open-wc/eslint-config": "10.0.0",
-    "@playwright/test": "1.31.2",
+    "@playwright/test": "1.32.0",
     "eslint": "8.36.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-html": "7.1.0",
@@ -37,7 +37,7 @@
     "eslint-plugin-wc": "1.4.0",
     "husky": "8.0.3",
     "lint-staged": "13.2.0",
-    "playwright": "1.31.2",
+    "playwright": "1.32.0",
     "postcss-html": "1.5.0",
     "postcss-lit": "1.1.0",
     "prettier": "2.8.6",
