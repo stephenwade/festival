@@ -40,7 +40,7 @@
     "@open-wc/building-rollup": "2.2.2",
     "@open-wc/testing": "3.1.7",
     "@open-wc/testing-helpers": "2.2.0",
-    "@playwright/test": "1.32.0",
+    "@playwright/test": "1.32.1",
     "@rollup/plugin-replace": "5.0.2",
     "@web/dev-server": "0.1.36",
     "@web/dev-server-import-maps": "0.0.8",
