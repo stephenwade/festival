@@ -5,6 +5,16 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@75lb/deep-merge@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@75lb/deep-merge@npm:1.1.1"
+  dependencies:
+    lodash.assignwith: ^4.2.0
+    typical: ^7.1.1
+  checksum: fd9063488d854bc5d2e1636426a51d7864d0d32d2d82c5b01a40e89466088680f6e2623345fb46782de438088b6d3f029b0eea6d79a7807e0000b365f6b8142b
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:^2.2.0":
   version: 2.2.0
   resolution: "@ampproject/remapping@npm:2.2.0"
@@ -2525,6 +2535,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@web/dev-server-core@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@web/dev-server-core@npm:0.4.1"
+  dependencies:
+    "@types/koa": ^2.11.6
+    "@types/ws": ^7.4.0
+    "@web/parse5-utils": ^1.3.1
+    chokidar: ^3.4.3
+    clone: ^2.1.2
+    es-module-lexer: ^1.0.0
+    get-stream: ^6.0.0
+    is-stream: ^2.0.0
+    isbinaryfile: ^5.0.0
+    koa: ^2.13.0
+    koa-etag: ^4.0.0
+    koa-send: ^5.0.1
+    koa-static: ^5.0.0
+    lru-cache: ^6.0.0
+    mime-types: ^2.1.27
+    parse5: ^6.0.1
+    picomatch: ^2.2.2
+    ws: ^7.4.2
+  checksum: 4cf728ac781c7831c9c59ffaa1bd2dca1f1e8a6553bedd0d80e47d946ea427067eb1d07b028fc8296a36930c1dd5631e0bc1ccf8f0f4b9203da362c958c1833e
+  languageName: node
+  linkType: hard
+
 "@web/dev-server-import-maps@npm:0.0.8":
   version: 0.0.8
   resolution: "@web/dev-server-import-maps@npm:0.0.8"
@@ -2553,7 +2589,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server@npm:0.1.37, @web/dev-server@npm:^0.1.37":
+"@web/dev-server-rollup@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@web/dev-server-rollup@npm:0.4.1"
+  dependencies:
+    "@rollup/plugin-node-resolve": ^13.0.4
+    "@web/dev-server-core": ^0.4.1
+    nanocolors: ^0.2.1
+    parse5: ^6.0.1
+    rollup: ^2.67.0
+    whatwg-url: ^11.0.0
+  checksum: a0c3566f67b5a5ead3822431302ddcaa9d043b18fdcf1190056a4e0539e5d5b545ebfecaf6021412eb4b5b6e074c2b1eff35c71e859195623c7c07e065f9df58
+  languageName: node
+  linkType: hard
+
+"@web/dev-server@npm:0.1.38":
+  version: 0.1.38
+  resolution: "@web/dev-server@npm:0.1.38"
+  dependencies:
+    "@babel/code-frame": ^7.12.11
+    "@types/command-line-args": ^5.0.0
+    "@web/config-loader": ^0.1.3
+    "@web/dev-server-core": ^0.4.1
+    "@web/dev-server-rollup": ^0.4.1
+    camelcase: ^6.2.0
+    command-line-args: ^5.1.1
+    command-line-usage: ^7.0.1
+    debounce: ^1.2.0
+    deepmerge: ^4.2.2
+    ip: ^1.1.5
+    nanocolors: ^0.2.1
+    open: ^8.0.2
+    portfinder: ^1.0.32
+  bin:
+    wds: dist/bin.js
+    web-dev-server: dist/bin.js
+  checksum: eeaf34f8744f58cfb9493155ad8548a87cae4e445a2fa894610b070f66cb303614d247bb609e378b9df342935ad980a259630317c444d19f9796abfcfb20bb13
+  languageName: node
+  linkType: hard
+
+"@web/dev-server@npm:^0.1.37":
   version: 0.1.37
   resolution: "@web/dev-server@npm:0.1.37"
   dependencies:
@@ -2585,6 +2660,16 @@ __metadata:
     "@types/parse5": ^6.0.1
     parse5: ^6.0.1
   checksum: 379849c1b0a060d50037c7dc90d27231dc68f57b1034d87f89129c3cd87fa27d3a0f8e550e1ab3be00bb1c0d440a8fa95c153a481ed8c2c705fd46fbc8a8433d
+  languageName: node
+  linkType: hard
+
+"@web/parse5-utils@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "@web/parse5-utils@npm:1.3.1"
+  dependencies:
+    "@types/parse5": ^6.0.1
+    parse5: ^6.0.1
+  checksum: 3320b2c4ea1e6a2ff1e57086b0c697a71dac7a6e54da86b2fb8e6c1d5a673bf9b911a743a10daa8cd62a571719edf3e66c9b17e87d79cc982f234bf141e2e178
   languageName: node
   linkType: hard
 
@@ -3004,6 +3089,13 @@ __metadata:
   version: 4.0.2
   resolution: "array-back@npm:4.0.2"
   checksum: f30603270771eeb54e5aad5f54604c62b3577a18b6db212a7272b2b6c32049121b49431f656654790ed1469411e45f387e7627c0de8fd0515995cc40df9b9294
+  languageName: node
+  linkType: hard
+
+"array-back@npm:^6.2.2":
+  version: 6.2.2
+  resolution: "array-back@npm:6.2.2"
+  checksum: baae1e3a1687300a307d3bdf09715f6415e1099b5729d3d8e397309fb1e43d90b939d694602892172aaca7e0aeed38da89d04aa4951637d31c2a21350809e003
   languageName: node
   linkType: hard
 
@@ -3613,6 +3705,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chalk-template@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "chalk-template@npm:0.4.0"
+  dependencies:
+    chalk: ^4.1.2
+  checksum: 6c706802a79a7963cbce18f022b046fe86e438a67843151868852f80ea7346e975a6a9749991601e7e5d3b6a6c4852a04c53dc966a9a3d04031bd0e0ed53c819
+  languageName: node
+  linkType: hard
+
 "chalk@npm:5.2.0":
   version: 5.2.0
   resolution: "chalk@npm:5.2.0"
@@ -3884,7 +3985,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"command-line-args@npm:^5.1.1":
+"command-line-args@npm:^5.1.1, command-line-args@npm:^5.2.1":
   version: 5.2.1
   resolution: "command-line-args@npm:5.2.1"
   dependencies:
@@ -3905,6 +4006,18 @@ __metadata:
     table-layout: ^1.0.2
     typical: ^5.2.0
   checksum: 8261d4e5536eb0bcddee0ec5e89c05bb2abd18e5760785c8078ede5020bc1c612cbe28eb6586f5ed4a3660689748e5aaad4a72f21566f4ef39393694e2fa1a0b
+  languageName: node
+  linkType: hard
+
+"command-line-usage@npm:^7.0.0, command-line-usage@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "command-line-usage@npm:7.0.1"
+  dependencies:
+    array-back: ^6.2.2
+    chalk-template: ^0.4.0
+    table-layout: ^3.0.0
+    typical: ^7.1.1
+  checksum: ac78ad6b83b9622bb111ae8e82205bde1d2da74df237fdd0bd7d98eda3592c8933ec600818b0b028b2313ddca638b1b60f0780dd9457ad4a0384b17156641f79
   languageName: node
   linkType: hard
 
@@ -5569,7 +5682,7 @@ __metadata:
     "@playwright/test": 1.32.2
     "@rollup/plugin-replace": 5.0.2
     "@vaadin/router": 1.7.5
-    "@web/dev-server": 0.1.37
+    "@web/dev-server": 0.1.38
     "@web/dev-server-import-maps": 0.0.8
     "@web/test-runner": 0.15.2
     "@web/test-runner-commands": 0.6.5
@@ -7344,6 +7457,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isbinaryfile@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "isbinaryfile@npm:5.0.0"
+  checksum: 25cc27388d51b8322c103f5894f9e72ec04e017734e57c4b70be2666501ec7e7f6cbb4a5fcfd15260a7cac979bd1ddb7f5231f5a3098c0695c4e7c049513dfaf
+  languageName: node
+  linkType: hard
+
 "isexe@npm:^2.0.0":
   version: 2.0.0
   resolution: "isexe@npm:2.0.0"
@@ -7899,6 +8019,13 @@ __metadata:
   version: 3.9.1
   resolution: "lodash._getnative@npm:3.9.1"
   checksum: ba2152bb10bf44beb54fcd273598197972c989c2181b54e533cec1ff1ebebdf8bb02d4ffc3d5a648480a48beb3026db191f5de99adecd7eac36bbd6025c9b048
+  languageName: node
+  linkType: hard
+
+"lodash.assignwith@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "lodash.assignwith@npm:4.2.0"
+  checksum: 014a88e398802ca4eaae314afb67f32eb2cab6f01e61490dbbb74694263f79715341ab8ddf4b344093a2253b506d347f67731f0499e457d9c0128be1d2caf6dd
   languageName: node
   linkType: hard
 
@@ -10685,6 +10812,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stream-read-all@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "stream-read-all@npm:3.0.1"
+  checksum: 40d3c286837f1b1ae7e8105959804ad42fda00f2c087722d981cb1c9fbbea892b8a0a7ca1cf6a016c96770151a6201a3da5c8b66fe35e35106b52a5e9ab90e3e
+  languageName: node
+  linkType: hard
+
 "stream-slice@npm:^0.1.2":
   version: 0.1.2
   resolution: "stream-slice@npm:0.1.2"
@@ -11143,6 +11277,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"table-layout@npm:^3.0.0":
+  version: 3.0.2
+  resolution: "table-layout@npm:3.0.2"
+  dependencies:
+    "@75lb/deep-merge": ^1.1.1
+    array-back: ^6.2.2
+    command-line-args: ^5.2.1
+    command-line-usage: ^7.0.0
+    stream-read-all: ^3.0.1
+    typical: ^7.1.1
+    wordwrapjs: ^5.1.0
+  bin:
+    table-layout: bin/cli.js
+  checksum: 2d4c538f224e64321d35788dbf78305cc1d138a3508e1a29f33e4f6b00bd082990a45dc85fd92948213f48ed8c0b3599155c2a05de412661ff020635e0db3762
+  languageName: node
+  linkType: hard
+
 "table@npm:^6.8.1":
   version: 6.8.1
   resolution: "table@npm:6.8.1"
@@ -11544,6 +11695,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typical@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "typical@npm:7.1.1"
+  checksum: 292c64a2e3d2296fd1b7a92bbe3a9ad683f643f3faa8c9b45f6911105da54246817a3e2a4f0fdd01bb4c49d2b940618ad30b6771ac1c94bf690a40c706f657fa
+  languageName: node
+  linkType: hard
+
 "unbox-primitive@npm:^1.0.2":
   version: 1.0.2
   resolution: "unbox-primitive@npm:1.0.2"
@@ -11937,6 +12095,13 @@ __metadata:
     reduce-flatten: ^2.0.0
     typical: ^5.2.0
   checksum: 3d927f3c95d0ad990968da54c0ad8cde2801d8e91006cd7474c26e6b742cc8557250ce495c9732b2f9db1f903601cb74ec282e0f122ee0d02d7abe81e150eea8
+  languageName: node
+  linkType: hard
+
+"wordwrapjs@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "wordwrapjs@npm:5.1.0"
+  checksum: 063c7a5a85b694be1a5fd96f7ae0c0f4d717a087909e5c70cf25edec6eb5df5f2f5561f23e939cf6d7514cf81902610f74f288ef1612a49bf5451de15e0e29db
   languageName: node
   linkType: hard
 
