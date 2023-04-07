@@ -1624,9 +1624,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@open-wc/building-rollup@npm:2.2.2":
-  version: 2.2.2
-  resolution: "@open-wc/building-rollup@npm:2.2.2"
+"@open-wc/building-rollup@npm:2.2.3":
+  version: 2.2.3
+  resolution: "@open-wc/building-rollup@npm:2.2.3"
   dependencies:
     "@babel/core": ^7.11.1
     "@babel/helpers": ^7.10.4
@@ -1636,7 +1636,7 @@ __metadata:
     "@babel/plugin-transform-modules-systemjs": ^7.10.5
     "@babel/plugin-transform-runtime": ^7.11.0
     "@babel/preset-env": ^7.9.0
-    "@open-wc/building-utils": ^2.20.1
+    "@open-wc/building-utils": ^2.21.1
     "@rollup/plugin-babel": ^6.0.3
     "@rollup/plugin-node-resolve": ^13.3.0
     "@web/rollup-plugin-html": ^1.11.0
@@ -1646,20 +1646,20 @@ __metadata:
     browserslist: ^4.16.5
     deepmerge: ^4.2.2
     magic-string: ^0.30.0
-    parse5: ^5.1.1
+    parse5: ^7.1.2
     regenerator-runtime: ^0.13.7
     rollup-plugin-terser: ^7.0.2
     rollup-plugin-workbox: ^6.0.0
     terser: ^4.8.1
   peerDependencies:
     rollup: ^2.11.0
-  checksum: 10c79b35c9474a1a0a60c9dbf4c6da9e99799983a87f663e498dc6f92402e5aa98199dcf14ba40eac223c1f38ae0ec5b5a24971f67737479156b0f8d1d4357fa
+  checksum: 2224a230a65cae237311c581ca11ffae79b1a5e5b8424d7e78b4966fdcd32a9d52cc0117c63d18a79aae7fb16d218b8009e0e68ec56277b9305cc75dfcebb369
   languageName: node
   linkType: hard
 
-"@open-wc/building-utils@npm:^2.20.1":
-  version: 2.21.0
-  resolution: "@open-wc/building-utils@npm:2.21.0"
+"@open-wc/building-utils@npm:^2.21.1":
+  version: 2.21.1
+  resolution: "@open-wc/building-utils@npm:2.21.1"
   dependencies:
     "@babel/core": ^7.11.1
     "@babel/plugin-syntax-dynamic-import": ^7.8.3
@@ -1675,8 +1675,8 @@ __metadata:
     es-module-shims: ^1.4.1
     html-minifier-terser: ^5.1.1
     lru-cache: ^6.0.0
-    minimatch: ^3.0.4
-    parse5: ^5.1.1
+    minimatch: ^7.4.2
+    parse5: ^7.1.2
     path-is-inside: ^1.0.2
     regenerator-runtime: ^0.13.7
     resolve: ^1.19.0
@@ -1687,7 +1687,7 @@ __metadata:
     valid-url: ^1.0.9
     whatwg-fetch: ^3.5.0
     whatwg-url: ^7.1.0
-  checksum: 30e6b546a6d4cd35bc9d33771352a2d9746e1bd29b00d0b7d6de681b6ec9d22adf152753704eecbd25a5d5351721a4aedb55a5d8f986c21fff1d426d22a6d43c
+  checksum: 5cdb09240a66bd8188a43349f6f6eb3b43a4c48ef443d60a8a71b0f280dc7396e236c4039caaf6b3232c69ff182c0c83a265d646a203bee1d172690a9e69059f
   languageName: node
   linkType: hard
 
@@ -5642,7 +5642,7 @@ __metadata:
   dependencies:
     "@koa/router": 12.0.0
     "@magic-sdk/admin": 1.9.2
-    "@open-wc/building-rollup": 2.2.2
+    "@open-wc/building-rollup": 2.2.3
     "@rollup/plugin-replace": 5.0.2
     deepmerge: 4.3.1
     dotenv: 16.0.3
@@ -5689,7 +5689,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "festival@workspace:frontend"
   dependencies:
-    "@open-wc/building-rollup": 2.2.2
+    "@open-wc/building-rollup": 2.2.3
     "@open-wc/testing": 3.1.7
     "@open-wc/testing-helpers": 2.2.0
     "@playwright/test": 1.32.2
@@ -8531,6 +8531,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^7.4.2":
+  version: 7.4.5
+  resolution: "minimatch@npm:7.4.5"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: dfb82497bd9007d3dde3f5e033ea4e314e221186ece26863521a8fa955e73f58f0fd11704b79eec37ba29be460be0cf92a7a6455dd41d5763b5b12072c6013c3
+  languageName: node
+  linkType: hard
+
 "minimist-options@npm:4.1.0":
   version: 4.1.0
   resolution: "minimist-options@npm:4.1.0"
@@ -9315,6 +9324,15 @@ __metadata:
   version: 6.0.1
   resolution: "parse5@npm:6.0.1"
   checksum: 7d569a176c5460897f7c8f3377eff640d54132b9be51ae8a8fa4979af940830b2b0c296ce75e5bd8f4041520aadde13170dbdec44889975f906098ea0002f4bd
+  languageName: node
+  linkType: hard
+
+"parse5@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "parse5@npm:7.1.2"
+  dependencies:
+    entities: ^4.4.0
+  checksum: 59465dd05eb4c5ec87b76173d1c596e152a10e290b7abcda1aecf0f33be49646ea74840c69af975d7887543ea45564801736356c568d6b5e71792fd0f4055713
   languageName: node
   linkType: hard
 
