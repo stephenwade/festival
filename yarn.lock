@@ -3150,13 +3150,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "automation-events@npm:5.0.2"
+"automation-events@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "automation-events@npm:5.0.3"
   dependencies:
     "@babel/runtime": ^7.21.0
     tslib: ^2.5.0
-  checksum: d2092670352e27dff99f7f40fa54888ba51c91723a395504de40fc5925ebdfd62f7f011ceaee2e01de486d0f0ff3f905d23d27133083c81bdc83c52ff5468733
+  checksum: 8a9334e89d8cc4628e4db93e9e1dcce9f62ee41cfd7c4691f52f81eb0850b3f8f54a3dd89b36d1a45d9966bf1e4a17697178b1afdfa074e9bfd02ed181d75ba9
   languageName: node
   linkType: hard
 
@@ -5630,7 +5630,7 @@ __metadata:
     rollup: 3.20.5
     rollup-plugin-copy: 3.4.0
     sinon: 15.0.3
-    standardized-audio-context: 25.3.42
+    standardized-audio-context: 25.3.43
   languageName: unknown
   linkType: soft
 
@@ -10739,14 +10739,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.42":
-  version: 25.3.42
-  resolution: "standardized-audio-context@npm:25.3.42"
+"standardized-audio-context@npm:25.3.43":
+  version: 25.3.43
+  resolution: "standardized-audio-context@npm:25.3.43"
   dependencies:
     "@babel/runtime": ^7.21.0
-    automation-events: ^5.0.2
+    automation-events: ^5.0.3
     tslib: ^2.5.0
-  checksum: f31712e48e0161842d66f614e3787c8d050e718b6c4b02f9480ad1fba9a12e9c82a8cde335d9a9cfef9cadffd12062a6e3cc241c5cc12197cf0b021ccd12bf62
+  checksum: 041ff9e2b956c6a5a03410a3f5f6e888ab34d5136567438b237aa7a1f99f04359e15860d2d251e3c74b6b41ebbf0e4ead3bb184a3c9c88ff1ede131411789633
   languageName: node
   linkType: hard
 
