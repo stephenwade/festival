@@ -5140,7 +5140,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-lit@npm:1.8.2, eslint-plugin-lit@npm:^1.6.0, eslint-plugin-lit@npm:^1.8.0":
+"eslint-plugin-lit@npm:1.8.3":
+  version: 1.8.3
+  resolution: "eslint-plugin-lit@npm:1.8.3"
+  dependencies:
+    parse5: ^6.0.1
+    parse5-htmlparser2-tree-adapter: ^6.0.1
+    requireindex: ^1.2.0
+  peerDependencies:
+    eslint: ">= 5"
+  checksum: 67f78b92b06224b3b83f2c914f508e94072aea106f3ea5aea42de55d3e83c73c91369b07f359a6ddeda5412c46f4f300c37d80715177cbb88834a5b497d262a0
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-lit@npm:^1.6.0, eslint-plugin-lit@npm:^1.8.0":
   version: 1.8.2
   resolution: "eslint-plugin-lit@npm:1.8.2"
   dependencies:
@@ -5578,7 +5591,7 @@ __metadata:
     eslint-config-prettier: 8.8.0
     eslint-plugin-html: 7.1.0
     eslint-plugin-import: 2.27.5
-    eslint-plugin-lit: 1.8.2
+    eslint-plugin-lit: 1.8.3
     eslint-plugin-lit-a11y: 2.4.1
     eslint-plugin-no-only-tests: 3.1.0
     eslint-plugin-simple-import-sort: 10.0.0
