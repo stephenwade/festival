@@ -2498,6 +2498,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@web/browser-logs@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@web/browser-logs@npm:0.3.0"
+  dependencies:
+    errorstacks: ^2.2.0
+  checksum: 0313a0d2a4e08cc533191a48be8e61d3f885d244935df72a59b79c917cabefa76c1ae2d81dd69c50581af5dde105666a733bb0e627b5986f4aa25d776f2a3968
+  languageName: node
+  linkType: hard
+
 "@web/config-loader@npm:^0.1.3":
   version: 0.1.3
   resolution: "@web/config-loader@npm:0.1.3"
@@ -2702,7 +2711,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-commands@npm:0.6.6, @web/test-runner-commands@npm:^0.6.5, @web/test-runner-commands@npm:^0.6.6":
+"@web/test-runner-commands@npm:0.7.0":
+  version: 0.7.0
+  resolution: "@web/test-runner-commands@npm:0.7.0"
+  dependencies:
+    "@web/test-runner-core": ^0.11.0
+    mkdirp: ^1.0.4
+  checksum: ed931f5581b7f328d36d5edf6e25cc35a1c33aa980730f222c96c5290a3e543bae4ac2abda57de9447b1abee3085881b873d30db22dc521ca430c794bb609cd9
+  languageName: node
+  linkType: hard
+
+"@web/test-runner-commands@npm:^0.6.5, @web/test-runner-commands@npm:^0.6.6":
   version: 0.6.6
   resolution: "@web/test-runner-commands@npm:0.6.6"
   dependencies:
@@ -2743,6 +2762,40 @@ __metadata:
     picomatch: ^2.2.2
     source-map: ^0.7.3
   checksum: 635a510442bea3bce97596a2aed1c58a6154b4b83a44bf3e9c9497a751f42426cae5f67555916c4fd63064a4e91a5e26755e3090887ebac38ec0ab2691e1fe6c
+  languageName: node
+  linkType: hard
+
+"@web/test-runner-core@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "@web/test-runner-core@npm:0.11.0"
+  dependencies:
+    "@babel/code-frame": ^7.12.11
+    "@types/babel__code-frame": ^7.0.2
+    "@types/co-body": ^6.1.0
+    "@types/convert-source-map": ^2.0.0
+    "@types/debounce": ^1.2.0
+    "@types/istanbul-lib-coverage": ^2.0.3
+    "@types/istanbul-reports": ^3.0.0
+    "@web/browser-logs": ^0.3.0
+    "@web/dev-server-core": ^0.5.0
+    chokidar: ^3.4.3
+    cli-cursor: ^3.1.0
+    co-body: ^6.1.0
+    convert-source-map: ^2.0.0
+    debounce: ^1.2.0
+    dependency-graph: ^0.11.0
+    globby: ^11.0.1
+    ip: ^1.1.5
+    istanbul-lib-coverage: ^3.0.0
+    istanbul-lib-report: ^3.0.0
+    istanbul-reports: ^3.0.2
+    log-update: ^4.0.0
+    nanocolors: ^0.2.1
+    nanoid: ^3.1.25
+    open: ^8.0.2
+    picomatch: ^2.2.2
+    source-map: ^0.7.3
+  checksum: e62b1fd85e2a8a0e324bb5f854f20ac442d69d4ce8cdbac7ddcea9d2f8a709799714c8da5a42a92279c4577fa6df22d5997c4efdb57df0d7a43fcf65b7d6734f
   languageName: node
   linkType: hard
 
@@ -5658,7 +5711,7 @@ __metadata:
     "@web/dev-server": 0.1.38
     "@web/dev-server-import-maps": 0.1.0
     "@web/test-runner": 0.15.3
-    "@web/test-runner-commands": 0.6.6
+    "@web/test-runner-commands": 0.7.0
     "@web/test-runner-mocha": 0.7.5
     "@web/test-runner-playwright": 0.9.0
     chai: 4.3.7
