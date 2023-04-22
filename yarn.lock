@@ -2333,6 +2333,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/mocha@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "@types/mocha@npm:10.0.1"
+  checksum: 224ea9fce7b1734ccdb9aa99a622d902a538ce1847bca7fd22c5fb38adcf3ed536f50f48f587085db988a4bb3c2eb68f4b98e1cd6a38bc5547bd3bbbedc54495
+  languageName: node
+  linkType: hard
+
 "@types/mocha@npm:^8.2.0":
   version: 8.2.3
   resolution: "@types/mocha@npm:8.2.3"
@@ -2824,7 +2831,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-mocha@npm:0.7.5, @web/test-runner-mocha@npm:^0.7.5":
+"@web/test-runner-mocha@npm:0.8.0":
+  version: 0.8.0
+  resolution: "@web/test-runner-mocha@npm:0.8.0"
+  dependencies:
+    "@types/mocha": ^10.0.1
+    "@web/test-runner-core": ^0.11.0
+  checksum: d1aa51bec3bb7e913b61575edff5c65037532810b589bfe5f268c9367ee3d391c7923a660cf00f9ded9bc9b4a78c483116387e4d156afd9e4c7ccf2d61b4e633
+  languageName: node
+  linkType: hard
+
+"@web/test-runner-mocha@npm:^0.7.5":
   version: 0.7.5
   resolution: "@web/test-runner-mocha@npm:0.7.5"
   dependencies:
@@ -5725,7 +5742,7 @@ __metadata:
     "@web/dev-server-import-maps": 0.1.0
     "@web/test-runner": 0.15.3
     "@web/test-runner-commands": 0.7.0
-    "@web/test-runner-mocha": 0.7.5
+    "@web/test-runner-mocha": 0.8.0
     "@web/test-runner-playwright": 0.10.0
     chai: 4.3.7
     concurrently: 8.0.1
