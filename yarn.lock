@@ -2542,6 +2542,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@web/config-loader@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@web/config-loader@npm:0.2.1"
+  dependencies:
+    semver: ^7.3.4
+  checksum: 698feaf18b9c486a77bc752fb74bbf62d44548a1a63beb35c58f9ef8eae498c5aafff3996dbcfd4a32b33226fed5d2d5338add8a12ba9ffe258063c95b7b947e
+  languageName: node
+  linkType: hard
+
 "@web/dev-server-core@npm:^0.4.1":
   version: 0.4.1
   resolution: "@web/dev-server-core@npm:0.4.1"
@@ -2648,7 +2657,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server@npm:0.2.0, @web/dev-server@npm:^0.2.0":
+"@web/dev-server@npm:0.2.1":
+  version: 0.2.1
+  resolution: "@web/dev-server@npm:0.2.1"
+  dependencies:
+    "@babel/code-frame": ^7.12.11
+    "@types/command-line-args": ^5.0.0
+    "@web/config-loader": ^0.2.1
+    "@web/dev-server-core": ^0.5.1
+    "@web/dev-server-rollup": ^0.5.0
+    camelcase: ^6.2.0
+    command-line-args: ^5.1.1
+    command-line-usage: ^7.0.1
+    debounce: ^1.2.0
+    deepmerge: ^4.2.2
+    ip: ^1.1.5
+    nanocolors: ^0.2.1
+    open: ^8.0.2
+    portfinder: ^1.0.32
+  bin:
+    wds: dist/bin.js
+    web-dev-server: dist/bin.js
+  checksum: 9b97305f13df2178dd3e93b20acf69376501ccfd13b6a14f13b8221787eb06ab908159cf82e26409576c3785778529e5e720d5a89feccb3a5ee3eb769b0a0421
+  languageName: node
+  linkType: hard
+
+"@web/dev-server@npm:^0.2.0":
   version: 0.2.0
   resolution: "@web/dev-server@npm:0.2.0"
   dependencies:
@@ -5761,7 +5795,7 @@ __metadata:
     "@playwright/test": 1.32.3
     "@rollup/plugin-replace": 5.0.2
     "@vaadin/router": 1.7.5
-    "@web/dev-server": 0.2.0
+    "@web/dev-server": 0.2.1
     "@web/dev-server-import-maps": 0.1.1
     "@web/test-runner": 0.16.0
     "@web/test-runner-commands": 0.7.0
