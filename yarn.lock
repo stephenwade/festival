@@ -2594,17 +2594,43 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server-import-maps@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@web/dev-server-import-maps@npm:0.1.0"
+"@web/dev-server-core@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@web/dev-server-core@npm:0.5.1"
+  dependencies:
+    "@types/koa": ^2.11.6
+    "@types/ws": ^7.4.0
+    "@web/parse5-utils": ^2.0.0
+    chokidar: ^3.4.3
+    clone: ^2.1.2
+    es-module-lexer: ^1.0.0
+    get-stream: ^6.0.0
+    is-stream: ^2.0.0
+    isbinaryfile: ^5.0.0
+    koa: ^2.13.0
+    koa-etag: ^4.0.0
+    koa-send: ^5.0.1
+    koa-static: ^5.0.0
+    lru-cache: ^8.0.4
+    mime-types: ^2.1.27
+    parse5: ^6.0.1
+    picomatch: ^2.2.2
+    ws: ^7.4.2
+  checksum: 95eab93dcad632733f3e16270a2723967f190b16fc31000cf221d4b68e9277a2f95bd31f12798ccbe3ce1642d5d6295f2518f732219a0bc4af6674a79ea686d5
+  languageName: node
+  linkType: hard
+
+"@web/dev-server-import-maps@npm:0.1.1":
+  version: 0.1.1
+  resolution: "@web/dev-server-import-maps@npm:0.1.1"
   dependencies:
     "@import-maps/resolve": ^1.0.1
     "@types/parse5": ^6.0.1
-    "@web/dev-server-core": ^0.5.0
+    "@web/dev-server-core": ^0.5.1
     "@web/parse5-utils": ^2.0.0
     parse5: ^6.0.1
     picomatch: ^2.2.2
-  checksum: e8f4dcc79edc9a2716eade7ce815640662f4a7a84c3cf31457bbccc0685145c7fcb2ed7f0820b58e4bb7b077b64313316d61d0d9c032e95608143d410b37fc57
+  checksum: bb2b12ed8dccfc9d3240db24643c23e3e70dfa919035f7400c874af50b19219e44de14377b12338303db0ec48a2623ba95c015e0d19bddacfc383bd05be1e658
   languageName: node
   linkType: hard
 
@@ -5736,7 +5762,7 @@ __metadata:
     "@rollup/plugin-replace": 5.0.2
     "@vaadin/router": 1.7.5
     "@web/dev-server": 0.2.0
-    "@web/dev-server-import-maps": 0.1.0
+    "@web/dev-server-import-maps": 0.1.1
     "@web/test-runner": 0.16.0
     "@web/test-runner-commands": 0.7.0
     "@web/test-runner-mocha": 0.8.0
