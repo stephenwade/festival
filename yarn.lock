@@ -2533,6 +2533,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@web/browser-logs@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@web/browser-logs@npm:0.3.1"
+  dependencies:
+    errorstacks: ^2.2.0
+  checksum: 7eb4ace5d20cc516cb2f3ff62e1b1d8e9cd145d44fa8338ad27d9173a114ce73f736e4c5ae1c3b006fe0e694d21f39807ecaec7479b1284cde9cbf20044c2057
+  languageName: node
+  linkType: hard
+
 "@web/config-loader@npm:^0.2.0":
   version: 0.2.0
   resolution: "@web/config-loader@npm:0.2.0"
@@ -2885,6 +2894,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@web/test-runner-core@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "@web/test-runner-core@npm:0.11.1"
+  dependencies:
+    "@babel/code-frame": ^7.12.11
+    "@types/babel__code-frame": ^7.0.2
+    "@types/co-body": ^6.1.0
+    "@types/convert-source-map": ^2.0.0
+    "@types/debounce": ^1.2.0
+    "@types/istanbul-lib-coverage": ^2.0.3
+    "@types/istanbul-reports": ^3.0.0
+    "@web/browser-logs": ^0.3.1
+    "@web/dev-server-core": ^0.5.1
+    chokidar: ^3.4.3
+    cli-cursor: ^3.1.0
+    co-body: ^6.1.0
+    convert-source-map: ^2.0.0
+    debounce: ^1.2.0
+    dependency-graph: ^0.11.0
+    globby: ^11.0.1
+    ip: ^1.1.5
+    istanbul-lib-coverage: ^3.0.0
+    istanbul-lib-report: ^3.0.0
+    istanbul-reports: ^3.0.2
+    log-update: ^4.0.0
+    nanocolors: ^0.2.1
+    nanoid: ^3.1.25
+    open: ^8.0.2
+    picomatch: ^2.2.2
+    source-map: ^0.7.3
+  checksum: f3f46a69625f541d5b90b1743c1d26c241bea1c0182a0393a480dc7f388db1e5d9548f3dd1844fcd6755765ee1906b81e0bfcf6b120d6a125d5528a642212046
+  languageName: node
+  linkType: hard
+
 "@web/test-runner-coverage-v8@npm:^0.6.0":
   version: 0.6.0
   resolution: "@web/test-runner-coverage-v8@npm:0.6.0"
@@ -2898,7 +2941,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-mocha@npm:0.8.0, @web/test-runner-mocha@npm:^0.8.0":
+"@web/test-runner-mocha@npm:0.8.1":
+  version: 0.8.1
+  resolution: "@web/test-runner-mocha@npm:0.8.1"
+  dependencies:
+    "@types/mocha": ^10.0.1
+    "@web/test-runner-core": ^0.11.1
+  checksum: 05e8f39dd8b9db928978e5c1c200f7d3685caeb3b7c50f872485759eaebf351130abd9fd24b3790c1aad3afdcbf67ba8a56f73c84b4e89dbc49c2ad043686065
+  languageName: node
+  linkType: hard
+
+"@web/test-runner-mocha@npm:^0.8.0":
   version: 0.8.0
   resolution: "@web/test-runner-mocha@npm:0.8.0"
   dependencies:
@@ -5799,7 +5852,7 @@ __metadata:
     "@web/dev-server-import-maps": 0.1.1
     "@web/test-runner": 0.16.0
     "@web/test-runner-commands": 0.7.0
-    "@web/test-runner-mocha": 0.8.0
+    "@web/test-runner-mocha": 0.8.1
     "@web/test-runner-playwright": 0.10.0
     chai: 4.3.7
     concurrently: 8.0.1
