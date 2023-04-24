@@ -19,4 +19,5 @@ export default {
     playwrightLauncher({ product: 'firefox' }),
   ],
   browserStartTimeout: 60_000,
+  testsStartTimeout: 40_000,
 };
