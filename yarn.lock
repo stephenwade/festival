@@ -2542,15 +2542,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/config-loader@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@web/config-loader@npm:0.2.0"
-  dependencies:
-    semver: ^7.3.4
-  checksum: ef50c974295f430a3b7bd8f9e725dace2f0b755c992e6d3cb06bf390c173b49ba7099bf78353ba70928c7f617d868a1f9600a1853c35def01cd07eafec239167
-  languageName: node
-  linkType: hard
-
 "@web/config-loader@npm:^0.2.1":
   version: 0.2.1
   resolution: "@web/config-loader@npm:0.2.1"
@@ -2666,7 +2657,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/dev-server@npm:0.2.1":
+"@web/dev-server@npm:0.2.1, @web/dev-server@npm:^0.2.1":
   version: 0.2.1
   resolution: "@web/dev-server@npm:0.2.1"
   dependencies:
@@ -2688,31 +2679,6 @@ __metadata:
     wds: dist/bin.js
     web-dev-server: dist/bin.js
   checksum: 9b97305f13df2178dd3e93b20acf69376501ccfd13b6a14f13b8221787eb06ab908159cf82e26409576c3785778529e5e720d5a89feccb3a5ee3eb769b0a0421
-  languageName: node
-  linkType: hard
-
-"@web/dev-server@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@web/dev-server@npm:0.2.0"
-  dependencies:
-    "@babel/code-frame": ^7.12.11
-    "@types/command-line-args": ^5.0.0
-    "@web/config-loader": ^0.2.0
-    "@web/dev-server-core": ^0.5.0
-    "@web/dev-server-rollup": ^0.5.0
-    camelcase: ^6.2.0
-    command-line-args: ^5.1.1
-    command-line-usage: ^7.0.1
-    debounce: ^1.2.0
-    deepmerge: ^4.2.2
-    ip: ^1.1.5
-    nanocolors: ^0.2.1
-    open: ^8.0.2
-    portfinder: ^1.0.32
-  bin:
-    wds: dist/bin.js
-    web-dev-server: dist/bin.js
-  checksum: a279da6c8db5d6fa6aff18fa75c5f3ce0bef67c2251a4c3648c22282a87e9e8e733594af935ac694d577e86bc5794a47c59a165d05ee393acf58d8dfdd20f0a4
   languageName: node
   linkType: hard
 
@@ -2941,23 +2907,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-mocha@npm:0.8.1":
+"@web/test-runner-mocha@npm:0.8.1, @web/test-runner-mocha@npm:^0.8.1":
   version: 0.8.1
   resolution: "@web/test-runner-mocha@npm:0.8.1"
   dependencies:
     "@types/mocha": ^10.0.1
     "@web/test-runner-core": ^0.11.1
   checksum: 05e8f39dd8b9db928978e5c1c200f7d3685caeb3b7c50f872485759eaebf351130abd9fd24b3790c1aad3afdcbf67ba8a56f73c84b4e89dbc49c2ad043686065
-  languageName: node
-  linkType: hard
-
-"@web/test-runner-mocha@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "@web/test-runner-mocha@npm:0.8.0"
-  dependencies:
-    "@types/mocha": ^10.0.1
-    "@web/test-runner-core": ^0.11.0
-  checksum: d1aa51bec3bb7e913b61575edff5c65037532810b589bfe5f268c9367ee3d391c7923a660cf00f9ded9bc9b4a78c483116387e4d156afd9e4c7ccf2d61b4e633
   languageName: node
   linkType: hard
 
@@ -2972,17 +2928,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner@npm:0.16.0":
-  version: 0.16.0
-  resolution: "@web/test-runner@npm:0.16.0"
+"@web/test-runner@npm:0.16.1":
+  version: 0.16.1
+  resolution: "@web/test-runner@npm:0.16.1"
   dependencies:
-    "@web/browser-logs": ^0.3.0
-    "@web/config-loader": ^0.2.0
-    "@web/dev-server": ^0.2.0
+    "@web/browser-logs": ^0.3.1
+    "@web/config-loader": ^0.2.1
+    "@web/dev-server": ^0.2.1
     "@web/test-runner-chrome": ^0.13.0
     "@web/test-runner-commands": ^0.7.0
-    "@web/test-runner-core": ^0.11.0
-    "@web/test-runner-mocha": ^0.8.0
+    "@web/test-runner-core": ^0.11.1
+    "@web/test-runner-mocha": ^0.8.1
     camelcase: ^6.2.0
     command-line-args: ^5.1.1
     command-line-usage: ^7.0.1
@@ -2995,7 +2951,7 @@ __metadata:
   bin:
     web-test-runner: dist/bin.js
     wtr: dist/bin.js
-  checksum: 94dc5a77fa4ed5e1729acbeaae0ae77fdba328a823974ee57bd52dee46a955dbaa106900cbb71d2198509fd99fe2997c5facb5c228748deb8151c9100c711c4f
+  checksum: 42bb329c3fc2da09bbd530a14d37b0c3af972de5b13063c1d7296edb7c1dc6622d5bcd0d02321f77c9cee2eb08cd95fdbea385ee994a03658470117474bc2ceb
   languageName: node
   linkType: hard
 
@@ -5850,7 +5806,7 @@ __metadata:
     "@vaadin/router": 1.7.5
     "@web/dev-server": 0.2.1
     "@web/dev-server-import-maps": 0.1.1
-    "@web/test-runner": 0.16.0
+    "@web/test-runner": 0.16.1
     "@web/test-runner-commands": 0.7.0
     "@web/test-runner-mocha": 0.8.1
     "@web/test-runner-playwright": 0.10.0
