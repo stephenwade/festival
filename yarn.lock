@@ -1287,6 +1287,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.21.5":
+  version: 7.21.5
+  resolution: "@babel/runtime@npm:7.21.5"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: 358f2779d3187f5c67ad302e8f8d435412925d0b991d133c7d4a7b1ddd5a3fda1b6f34537cb64628dfd96a27ae46df105bed3895b8d754b88cacdded8d1129dd
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.18.10, @babel/template@npm:^7.20.7":
   version: 7.20.7
   resolution: "@babel/template@npm:7.20.7"
@@ -3335,13 +3344,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "automation-events@npm:6.0.0"
+"automation-events@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "automation-events@npm:6.0.1"
   dependencies:
-    "@babel/runtime": ^7.21.0
+    "@babel/runtime": ^7.21.5
     tslib: ^2.5.0
-  checksum: b0897c33a7ea709adda1cd3446281610a343f30b8e1a2edb8fd0e4d7d5f58bd4c4740256b1da04603760eef31bbfbf3cc289fd13b8d9db519a9d833643d334d1
+  checksum: d072c88980646d6cda30535a27473475ea33e0ca983de9cdc3d37019dcb93953097b396955ec86eca8430acc2dcf87bba3bb581a405f63b49d5d6eb62f0683cb
   languageName: node
   linkType: hard
 
@@ -5849,7 +5858,7 @@ __metadata:
     rollup: 3.21.3
     rollup-plugin-copy: 3.4.0
     sinon: 15.0.4
-    standardized-audio-context: 25.3.45
+    standardized-audio-context: 25.3.46
   languageName: unknown
   linkType: soft
 
@@ -11001,14 +11010,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.45":
-  version: 25.3.45
-  resolution: "standardized-audio-context@npm:25.3.45"
+"standardized-audio-context@npm:25.3.46":
+  version: 25.3.46
+  resolution: "standardized-audio-context@npm:25.3.46"
   dependencies:
-    "@babel/runtime": ^7.21.0
-    automation-events: ^6.0.0
+    "@babel/runtime": ^7.21.5
+    automation-events: ^6.0.1
     tslib: ^2.5.0
-  checksum: fe077ebbb3d68ca8caefc90b7924c49ec250b0c02ef3b8e763ebb19cfefa757d77aef6a1e3ca85a41e2eb6420b4831821a1f152ddd794dc01380a270014394f3
+  checksum: 57aba15fdb1140693bdf667cbae8f414b8928eb024c56b7910507db70a0d0402fc73a9cbb457542e9649575be7408fe52c91e3748bd789229efb117a988829f1
   languageName: node
   linkType: hard
 
