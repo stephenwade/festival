@@ -1548,15 +1548,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@magic-sdk/admin@npm:1.9.2":
-  version: 1.9.2
-  resolution: "@magic-sdk/admin@npm:1.9.2"
+"@magic-sdk/admin@npm:1.10.0":
+  version: 1.10.0
+  resolution: "@magic-sdk/admin@npm:1.10.0"
   dependencies:
     "@types/atob": ^2.1.2
     atob: ^2.1.2
     ethereum-cryptography: ^1.0.1
     node-fetch: ^2.6.0
-  checksum: f9a28bc649a40b76b7cdbb77d3f803df67d6c3f57b35ba4c7566010dda1a47db289decf28d65e32da682a3ec7cdd098d8209c1cd3c608c5b59f179ea77c42a85
+  checksum: d9685230dbedbd845285fa9744a2f60c9a21db5aeb8d0ccab515edfbe63b3c1f5d5d28a52566b9611a34c2f65139f2485a5d7072df79fd5bfcce3d5a5fa78d4f
   languageName: node
   linkType: hard
 
@@ -5780,7 +5780,7 @@ __metadata:
   resolution: "festival-admin@workspace:admin"
   dependencies:
     "@koa/router": 12.0.0
-    "@magic-sdk/admin": 1.9.2
+    "@magic-sdk/admin": 1.10.0
     "@open-wc/building-rollup": 2.2.3
     "@rollup/plugin-replace": 5.0.2
     deepmerge: 4.3.1
