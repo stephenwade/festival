@@ -9,6 +9,7 @@ import { createSseResponseWithEmitter } from './sse-response.server';
  */
 export function getAdminEmitter<T extends string>() {
   if (!global.adminEmitter) {
+    // eslint-disable-next-line unicorn/prefer-event-target
     global.adminEmitter = new EventEmitter();
   }
 
