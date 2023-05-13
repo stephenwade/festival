@@ -7,7 +7,7 @@ export const FileProcessingEventNames = [
   'file update',
 ] as const;
 
-export type FileProcessingEventName = typeof FileProcessingEventNames[number];
+export type FileProcessingEventName = (typeof FileProcessingEventNames)[number];
 
 const setWithFiles = Prisma.validator<Prisma.SetArgs>()({
   include: { file: true },
