@@ -30,6 +30,6 @@ export function emitFileUpdate(data: FileProcessingFileUpdateData) {
   emitter.emit('file update', data);
 }
 
-export const loader: LoaderFunction = ({ request }) => {
+export const loader = (({ request }) => {
   return createAdminSseResponse(request, FileProcessingEventNames);
-};
+}) satisfies LoaderFunction;

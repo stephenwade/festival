@@ -1,9 +1,4 @@
-import type { Prisma } from '@prisma/client';
-import type {
-  LoaderFunction,
-  MetaFunction,
-  SerializeFrom,
-} from '@remix-run/node';
+import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
@@ -24,41 +19,31 @@ const notFound = () => new Response('Not Found', { status: 404 });
 const serverError = () =>
   new Response('Internal Server Error', { status: 500 });
 
-const showWithSetsAndFiles = {
-  include: {
-    sets: {
-      include: { file: true },
-    },
-  },
-} satisfies Prisma.ShowArgs;
-
-type ShowWithSetsAndFiles = Prisma.ShowGetPayload<typeof showWithSetsAndFiles>;
-
-type LoaderData = SerializeFrom<ShowWithSetsAndFiles>;
-
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = (async ({ params }) => {
   const id = params.show;
   if (!id) throw serverError();
 
   const show = await db.show.findUnique({
     where: { id },
-    ...showWithSetsAndFiles,
+    include: {
+      sets: {
+        include: { file: true },
+      },
+    },
   });
   if (!show) throw notFound();
 
   return json(show);
-};
+}) satisfies LoaderFunction;
 
-export const meta: MetaFunction = ({ data }) => {
-  const loaderData = data as LoaderData;
-
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return {
-    title: `${loaderData.name} | Festival admin`,
+    title: `${data.name} | Festival admin`,
   };
 };
 
 const ViewShow: FC = () => {
-  const show: LoaderData = useLoaderData();
+  const show = useLoaderData<typeof loader>();
 
   const origin = useOrigin();
 

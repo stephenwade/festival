@@ -4,7 +4,7 @@ import { formatISO } from 'date-fns';
 
 import type { ShowData } from '~/types/ShowData';
 
-export const loader: LoaderFunction = () => {
+export const loader = (() => {
   const data: ShowData = {
     name: 'Sample Show',
     description: 'November 8–15, 2023',
@@ -49,4 +49,4 @@ export const loader: LoaderFunction = () => {
   };
 
   return json(data);
-};
+}) satisfies LoaderFunction;

@@ -1,9 +1,7 @@
-import type { Show } from '@prisma/client';
 import type {
   ActionFunction,
   LoaderFunction,
   MetaFunction,
-  SerializeFrom,
 } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
@@ -15,16 +13,14 @@ import { EditShowForm, makeServerValidator } from '~/forms/show';
 
 const notFound = () => new Response('Not Found', { status: 404 });
 
-type LoaderData = SerializeFrom<Show>;
-
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = (async ({ params }) => {
   const id = params.show as string;
 
   const show = await db.show.findUnique({ where: { id } });
   if (!show) throw notFound();
 
   return json(show);
-};
+}) satisfies LoaderFunction;
 
 export const meta: MetaFunction = () => {
   return {
@@ -48,7 +44,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 };
 
 const EditShow: FC = () => {
-  const show: LoaderData = useLoaderData();
+  const show = useLoaderData<typeof loader>();
 
   return (
     <>
