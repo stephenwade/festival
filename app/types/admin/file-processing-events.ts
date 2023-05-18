@@ -1,5 +1,4 @@
-import type { File, Set } from '@prisma/client';
-import { Prisma } from '@prisma/client';
+import type { File, Prisma, Set } from '@prisma/client';
 
 export const FileProcessingEventNames = [
   'new set',
@@ -9,9 +8,9 @@ export const FileProcessingEventNames = [
 
 export type FileProcessingEventName = (typeof FileProcessingEventNames)[number];
 
-const setWithFiles = Prisma.validator<Prisma.SetArgs>()({
+const setWithFiles = {
   include: { file: true },
-});
+} satisfies Prisma.SetArgs;
 
 type SetWithFiles = Prisma.SetGetPayload<typeof setWithFiles>;
 

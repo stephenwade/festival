@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import type {
   LoaderFunction,
   MetaFunction,
@@ -24,13 +24,13 @@ const notFound = () => new Response('Not Found', { status: 404 });
 const serverError = () =>
   new Response('Internal Server Error', { status: 500 });
 
-const showWithSetsAndFiles = Prisma.validator<Prisma.ShowArgs>()({
+const showWithSetsAndFiles = {
   include: {
     sets: {
       include: { file: true },
     },
   },
-});
+} satisfies Prisma.ShowArgs;
 
 type ShowWithSetsAndFiles = Prisma.ShowGetPayload<typeof showWithSetsAndFiles>;
 
