@@ -23,7 +23,7 @@ export const makeServerValidator = ({
     schema.refine(
       async ({ id }) => {
         if (id === previousId) return true;
-        const existingShow = await db.show.findFirst({ where: { id } });
+        const existingShow = await db.show.findUnique({ where: { id } });
         return !existingShow;
       },
       {
