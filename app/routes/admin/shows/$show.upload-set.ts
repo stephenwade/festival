@@ -189,7 +189,7 @@ function getAudioStreamIndex(stats: FFprobeOutput) {
 
 /**
  * Checks if the file is an MP3 file with exactly 1 audio stream and a bit rate
- * of no more than 193 KBps.
+ * of no more than 193 Kbps.
  */
 function checkNeedsConverting(stats: FFprobeOutput) {
   const MAX_BIT_RATE = 193_000;
