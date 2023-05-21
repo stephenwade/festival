@@ -4,7 +4,6 @@ import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 import { useCallback } from 'react';
 
-import { UploadSets } from '~/components/admin/UploadSets';
 import { db } from '~/db/db.server';
 import { useOrigin } from '~/hooks/useOrigin';
 import { useSse } from '~/hooks/useSse';
@@ -80,7 +79,6 @@ const ViewShow: FC = () => {
         <strong>Description:</strong> {show.description}
       </p>
       <h3>Sets</h3>
-      <UploadSets showId={show.id} />
       {show.sets.length === 0 ? (
         <p>
           <em>No sets yet</em>
