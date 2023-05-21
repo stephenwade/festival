@@ -2,17 +2,9 @@ import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
-import { useCallback } from 'react';
 
 import { db } from '~/db/db.server';
 import { useOrigin } from '~/hooks/useOrigin';
-import { useSse } from '~/hooks/useSse';
-import type {
-  FileProcessingFileUpdateData,
-  FileProcessingNewSetData,
-  FileProcessingSetUpdateData,
-} from '~/types/admin/file-processing-events';
-import { FileProcessingEventNames } from '~/types/admin/file-processing-events';
 
 const notFound = () => new Response('Not Found', { status: 404 });
 const serverError = () =>
@@ -46,22 +38,22 @@ const ViewShow: FC = () => {
 
   const origin = useOrigin();
 
-  useSse(
-    '/admin/shows/file-processing-sse',
-    FileProcessingEventNames,
-    useCallback((eventName, data) => {
-      if (eventName === 'new set') {
-        const newSet = data as FileProcessingNewSetData;
-        console.log('new set', newSet);
-      } else if (eventName === 'set update') {
-        const setUpdate = data as FileProcessingSetUpdateData;
-        console.log('set update', setUpdate);
-      } else if (eventName === 'file update') {
-        const fileUpdate = data as FileProcessingFileUpdateData;
-        console.log('file update', fileUpdate);
-      }
-    }, [])
-  );
+  // useSse(
+  //   '/admin/shows/file-processing-sse',
+  //   FileProcessingEventNames,
+  //   useCallback((eventName, data) => {
+  //     if (eventName === 'new set') {
+  //       const newSet = data as FileProcessingNewSetData;
+  //       console.log('new set', newSet);
+  //     } else if (eventName === 'set update') {
+  //       const setUpdate = data as FileProcessingSetUpdateData;
+  //       console.log('set update', setUpdate);
+  //     } else if (eventName === 'file update') {
+  //       const fileUpdate = data as FileProcessingFileUpdateData;
+  //       console.log('file update', fileUpdate);
+  //     }
+  //   }, [])
+  // );
 
   return (
     <>
