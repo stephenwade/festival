@@ -11,6 +11,7 @@ export const schema = zfd.formData({
       message: 'Invalid show URL',
     })
   ),
+  startDate: z.string().datetime(),
   description: zfd.text(),
 });
 

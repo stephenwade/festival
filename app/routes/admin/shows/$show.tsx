@@ -70,6 +70,9 @@ const ViewShow: FC = () => {
       <p>
         <strong>Description:</strong> {show.description}
       </p>
+      <p>
+        <strong>Start date:</strong> {show.startDate}
+      </p>
       <h3>Sets</h3>
       {show.sets.length === 0 ? (
         <p>
@@ -82,14 +85,11 @@ const ViewShow: FC = () => {
               {set.artist || <em>No artist yet</em>}
               <ul>
                 <li>
-                  <strong>Valid?</strong> {set.isValid ? 'yes' : 'no'}
-                </li>
-                <li>
-                  <strong>Start:</strong> {set.start ?? <em>No start yet</em>}
+                  <strong>Artist:</strong> {set.artist}
                 </li>
                 <li>
                   <strong>Duration:</strong>{' '}
-                  {set.duration ?? <em>Calculating…</em>}
+                  {set.file?.duration ?? <em>Unknown</em>}
                 </li>
               </ul>
             </li>

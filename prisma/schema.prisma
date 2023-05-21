@@ -14,28 +14,37 @@ model Show {
   updatedAt   DateTime @updatedAt
   name        String
   description String
+  startDate   DateTime
   sets        Set[]
 }
 
 model Set {
-  id       String    @id @default(uuid())
-  isValid  Boolean
-  artist   String?
-  start    DateTime?
-  duration Float?
-  show     Show      @relation(fields: [showId], references: [id])
-  showId   String
-  file     File?
+  id      String   @id @default(uuid())
+  artist  String
+  offset  Int
+  show    Show     @relation(fields: [showId], references: [id])
+  showId  String
+  file    File?
+  newFile NewFile?
 }
 
 model File {
+  id       String  @id
+  filename String
+  audioUrl String
+  duration Float
+  set      Set?    @relation(fields: [setId], references: [id])
+  setId    String? @unique
+}
+
+model NewFile {
   id              String  @id @default(uuid())
-  isReady         Boolean
   status          String
-  filename        String?
+  filename        String
   audioUrl        String?
+  duration        Float?
   convertProgress Float?
   errorMessage    String?
-  set             Set     @relation(fields: [setId], references: [id])
-  setId           String  @unique
+  set             Set?    @relation(fields: [setId], references: [id])
+  setId           String? @unique
 }

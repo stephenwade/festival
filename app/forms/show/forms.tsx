@@ -35,6 +35,7 @@ const ShowForm: FC<ShowFormProps> = ({
       <Input label="Name" name="name" />
       <Input label="URL" prefix={`${origin ?? ''}/`} name="id" />
       <Input label="Description" name="description" />
+      <Input label="Start date" name="startDate" />
       <p>
         <Link to={cancelLinkTo}>Cancel</Link>{' '}
         <SubmitButton

@@ -1,7 +1,7 @@
 import { rename } from 'node:fs';
 import { promisify } from 'node:util';
 
-import type { File, Set, Show } from '@prisma/client';
+import type { NewFile } from '@prisma/client';
 import type { ActionFunction } from '@remix-run/node';
 import {
   unstable_createFileUploadHandler,
@@ -13,12 +13,6 @@ import { ffmpeg } from '~/ffmpeg/ffmpeg.server';
 import type { FFprobeOutput } from '~/ffmpeg/ffprobe.server';
 import { ffprobe } from '~/ffmpeg/ffprobe.server';
 import { UPLOAD_SET_FORM_KEY } from '~/types/admin/upload-set';
-
-import {
-  emitFileUpdate,
-  emitNewSet,
-  emitSetUpdate,
-} from './file-processing-sse';
 
 const GIGABYTE = 1_000_000_000;
 const MICROSECONDS = 1 / 1_000_000;
@@ -35,22 +29,19 @@ export const action: ActionFunction = async ({ params, request }) => {
 
   const fileInfo = await getFileFromFormData(request);
 
-  const set = await saveSetAndFileToDatabase(show.id, fileInfo.name);
-  const file = set.file;
-  if (!file) throw serverError();
-  emitNewSet({ ...set, file });
+  const newFile = await saveNewFileToDatabase(fileInfo.name);
+  // emitNewNewFile(fileProcessing);
 
-  if (!file.filename) throw serverError();
   try {
-    const filename = `upload/${file.filename}`;
+    const filename = `upload/${newFile.filename}`;
 
     const stats = await ffprobe(filename);
     console.log(`ffprobe stats for ${filename}:`, stats);
 
-    await updateSetDuration(set.id, stats.format.duration);
+    await updateNewFileDuration(newFile.id, stats.format.duration);
 
     const needsConverting = checkNeedsConverting(stats);
-    const newFilename = `upload/${file.id}.mp3`;
+    const newFilename = `upload/${newFile.id}.mp3`;
     if (needsConverting) {
       const streamIndex = getAudioStreamIndex(stats);
       await ffmpeg(filename, streamIndex, newFilename, (progress) => {
@@ -62,7 +53,7 @@ export const action: ActionFunction = async ({ params, request }) => {
           const currentTime = progress.out_time_us * MICROSECONDS;
           convertProgress = currentTime / total;
         }
-        void updateFileConvertProgress(file.id, convertProgress);
+        void updateNewFileConvertProgress(newFile.id, convertProgress);
       });
     } else {
       await renameFile(filename, newFilename);
@@ -70,13 +61,17 @@ export const action: ActionFunction = async ({ params, request }) => {
 
     // TODO:
     // - Upload to Azure
+    await db.newFile.update({
+      where: { id: newFile.id },
+      data: { audioUrl: 'https://example.com/audio.mp3' },
+    });
     // - Clean up local files
 
-    await updateFileDoneProcessing(file.id, newFilename);
+    await updateFileDoneProcessing(newFile.id, newFilename);
 
     return null;
   } catch (error) {
-    await handleError(error, file.id);
+    await handleError(error, newFile.id);
     throw error;
   }
 };
@@ -95,80 +90,86 @@ async function getFileFromFormData(request: Request): Promise<globalThis.File> {
   return file;
 }
 
-async function saveSetAndFileToDatabase(showId: Show['id'], filename: string) {
-  const set = await db.set.create({
+async function saveNewFileToDatabase(filename: string) {
+  const newFile = await db.newFile.create({
     data: {
-      isValid: false,
-      file: {
-        create: {
-          isReady: false,
-          status: 'Processing…',
-          filename,
-        },
-      },
-      showId,
+      status: 'Processing…',
+      filename,
     },
-    include: { file: true },
   });
 
-  return set;
+  return newFile;
 }
 
-async function updateSetDuration(setId: Set['id'], duration: number) {
-  const data: Partial<Set> = { duration };
+async function updateNewFileDuration(
+  newFileId: NewFile['id'],
+  duration: number
+) {
+  const data: Partial<NewFile> = { duration };
 
-  await db.set.update({
-    where: { id: setId },
+  await db.newFile.update({
+    where: { id: newFileId },
     data,
   });
 
-  emitSetUpdate({ id: setId, ...data });
+  // emitNewFileUpdate({ id: newFileId, ...data });
 }
 
-async function updateFileConvertProgress(
-  fileId: File['id'],
+async function updateNewFileConvertProgress(
+  newFileId: NewFile['id'],
   convertProgress: number
 ) {
-  const data: Partial<File> = { status: 'Converting…', convertProgress };
+  const data: Partial<NewFile> = { status: 'Converting…', convertProgress };
 
-  await db.file.update({
-    where: { id: fileId },
+  await db.newFile.update({
+    where: { id: newFileId },
     data,
   });
 
-  emitFileUpdate({ id: fileId, ...data });
+  // emitNewFileUpdate({ id: newFileId, ...data });
 }
 
 async function updateFileDoneProcessing(
-  fileId: File['id'],
+  newFileId: NewFile['id'],
   newFilename: string
 ) {
-  const data: Partial<File> = {
-    status: 'Done',
-    filename: newFilename,
-  };
-
-  await db.file.update({
-    where: { id: fileId },
-    data,
+  const newFile = await db.newFile.findUnique({
+    where: { id: newFileId },
   });
 
-  emitFileUpdate({ id: fileId, ...data });
+  if (!newFile || !newFile.duration || !newFile.audioUrl) {
+    throw serverError();
+  }
+
+  /* const file = */ await db.file.create({
+    data: {
+      id: newFile.id,
+      filename: newFilename,
+      audioUrl: newFile.audioUrl,
+      duration: newFile.duration,
+    },
+  });
+
+  await db.newFile.delete({
+    where: { id: newFileId },
+  });
+
+  // emitNewFile(file);
 }
 
-async function handleError(error: unknown, fileId: File['id']) {
+async function handleError(error: unknown, newFileId: NewFile['id']) {
   const errorMessage = error instanceof Error ? error.message : String(error);
 
   console.error('Error while converting file', error);
 
-  const data: Partial<File> = { status: 'Error', errorMessage };
+  const data: Partial<NewFile> = { status: 'Error', errorMessage };
 
-  await db.file.update({
-    where: { id: fileId },
+  await db.newFile.update({
+    where: { id: newFileId },
     data,
   });
 
-  emitFileUpdate({ id: fileId, ...data });
+  // emitNewFileUpdate({ id: newFileId, ...data });
 }
 
 /**
