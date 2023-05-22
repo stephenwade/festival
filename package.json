@@ -37,7 +37,6 @@
     "eslint-plugin-wc": "1.5.0",
     "husky": "8.0.3",
     "lint-staged": "13.2.2",
-    "playwright": "1.34.0",
     "postcss-html": "1.5.0",
     "postcss-lit": "1.1.0",
     "prettier": "2.8.8",
