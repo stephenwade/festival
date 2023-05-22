@@ -19,6 +19,7 @@ export const loader = (async ({ params }) => {
     include: {
       sets: {
         include: { file: true },
+        orderBy: { offset: 'asc' },
       },
     },
   });
@@ -86,6 +87,9 @@ const ViewShow: FC = () => {
               <ul>
                 <li>
                   <strong>Artist:</strong> {set.artist}
+                </li>
+                <li>
+                  <strong>Offset:</strong> {set.offset}
                 </li>
                 <li>
                   <strong>Duration:</strong>{' '}

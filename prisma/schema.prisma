@@ -21,19 +21,19 @@ model Show {
 model Set {
   id      String   @id @default(uuid())
   artist  String
-  offset  Int
-  show    Show     @relation(fields: [showId], references: [id])
+  offset  Float
+  show    Show     @relation(fields: [showId], references: [id], onDelete: Cascade)
   showId  String
   file    File?
   newFile NewFile?
 }
 
 model File {
-  id       String  @id
+  id       String  @id @default(uuid())
   filename String
   audioUrl String
   duration Float
-  set      Set?    @relation(fields: [setId], references: [id])
+  set      Set?    @relation(fields: [setId], references: [id], onDelete: Cascade)
   setId    String? @unique
 }
 

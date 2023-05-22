@@ -19,7 +19,14 @@ export const action: ActionFunction = async ({ request }) => {
   const { data, error } = await validator.validate(form);
   if (error) return validationError(error);
 
-  const show = await db.show.create({ data });
+  const { sets, ...rest } = data;
+
+  const show = await db.show.create({
+    data: {
+      ...rest,
+      sets: { create: sets },
+    },
+  });
   return redirect(`/admin/shows/${show.id}`);
 };
 

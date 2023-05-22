@@ -10,7 +10,8 @@ export type FileProcessingEventName = (typeof FileProcessingEventNames)[number];
 
 const setWithFiles = {
   include: { file: true },
-} satisfies Prisma.SetArgs;
+  orderBy: { offset: 'asc' },
+} satisfies Prisma.SetFindManyArgs;
 
 type SetWithFiles = Prisma.SetGetPayload<typeof setWithFiles>;
 

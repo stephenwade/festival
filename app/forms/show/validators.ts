@@ -4,6 +4,12 @@ import { zfd } from 'zod-form-data';
 
 import { db } from '~/db/db.server';
 
+export const setSchema = z.object({
+  id: zfd.text(),
+  artist: zfd.text(),
+  offset: zfd.numeric(),
+});
+
 export const schema = zfd.formData({
   name: zfd.text(),
   id: zfd.text(
@@ -13,6 +19,7 @@ export const schema = zfd.formData({
   ),
   startDate: z.string().datetime(),
   description: zfd.text(),
+  sets: zfd.repeatableOfType(setSchema),
 });
 
 export const clientValidator = withZod(schema);

@@ -12,7 +12,7 @@ export const SubmitButton: FC<Props> = ({ text, textSubmitting }) => {
   const disabled = isSubmitting || !isValid;
 
   return (
-    <button type="submit" className="button" disabled={disabled}>
+    <button type="submit" disabled={disabled}>
       {isSubmitting ? textSubmitting : text}
     </button>
   );

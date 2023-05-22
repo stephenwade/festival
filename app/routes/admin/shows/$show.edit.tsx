@@ -16,7 +16,15 @@ const notFound = () => new Response('Not Found', { status: 404 });
 export const loader = (async ({ params }) => {
   const id = params.show as string;
 
-  const show = await db.show.findUnique({ where: { id } });
+  const show = await db.show.findUnique({
+    where: { id },
+    include: {
+      sets: {
+        include: { file: true },
+        orderBy: { offset: 'asc' },
+      },
+    },
+  });
   if (!show) throw notFound();
 
   return json(show);
@@ -36,10 +44,41 @@ export const action: ActionFunction = async ({ params, request }) => {
   const { data, error } = await validator.validate(form);
   if (error) return validationError(error);
 
+  const { sets, ...rest } = data;
+
   await db.show.update({
     where: { id: previousId },
-    data,
+    data: {
+      ...rest,
+      sets: {
+        deleteMany: {
+          showId: previousId,
+          id: { notIn: sets.map((set) => set.id) },
+        },
+        upsert: sets.map((set) => ({
+          create: set,
+          update: set,
+          where: { id: set.id },
+        })),
+      },
+    },
   });
+  await Promise.all([
+    db.set.deleteMany({
+      where: {
+        showId: rest.id,
+        id: { notIn: sets.map((set) => set.id) },
+      },
+    }),
+    sets.map((set) =>
+      db.set.upsert({
+        create: { ...set, showId: rest.id },
+        update: set,
+        where: { id: set.id },
+      })
+    ),
+  ]);
+
   return redirect(`/admin/shows/${data.id}`);
 };
 
