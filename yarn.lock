@@ -3277,13 +3277,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"automation-events@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "automation-events@npm:6.0.1"
+"automation-events@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "automation-events@npm:6.0.2"
   dependencies:
     "@babel/runtime": ^7.21.5
-    tslib: ^2.5.0
-  checksum: d072c88980646d6cda30535a27473475ea33e0ca983de9cdc3d37019dcb93953097b396955ec86eca8430acc2dcf87bba3bb581a405f63b49d5d6eb62f0683cb
+    tslib: ^2.5.2
+  checksum: 0eb73f16cad9574ba44b0efb9ac4441e708f8573b99270042ea9b92a184413e8cb7cbed35e8eb6be04e825ef046c38a8dc6bcbf19a6fbb8bed2505ef1772a394
   languageName: node
   linkType: hard
 
@@ -5742,7 +5742,7 @@ __metadata:
     rollup: 3.23.0
     rollup-plugin-copy: 3.4.0
     sinon: 15.1.0
-    standardized-audio-context: 25.3.46
+    standardized-audio-context: 25.3.47
   languageName: unknown
   linkType: soft
 
@@ -10829,14 +10829,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.46":
-  version: 25.3.46
-  resolution: "standardized-audio-context@npm:25.3.46"
+"standardized-audio-context@npm:25.3.47":
+  version: 25.3.47
+  resolution: "standardized-audio-context@npm:25.3.47"
   dependencies:
     "@babel/runtime": ^7.21.5
-    automation-events: ^6.0.1
-    tslib: ^2.5.0
-  checksum: 57aba15fdb1140693bdf667cbae8f414b8928eb024c56b7910507db70a0d0402fc73a9cbb457542e9649575be7408fe52c91e3748bd789229efb117a988829f1
+    automation-events: ^6.0.2
+    tslib: ^2.5.2
+  checksum: a8bcd3767837452f6c58dc3a5f811a197de480fc75d4e2b81b7eda09fee1c783ba78f734251cd5589a00e029e00eefbed5805c3b4b52342cf7db71299c6c4fbe
   languageName: node
   linkType: hard
 
@@ -11611,7 +11611,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.5.0":
+"tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.5.2":
   version: 2.5.2
   resolution: "tslib@npm:2.5.2"
   checksum: 4d3c1e238b94127ed0e88aa0380db3c2ddae581dc0f4bae5a982345e9f50ee5eda90835b8bfba99b02df10a5734470be197158c36f9129ac49fdc14a6a9da222
