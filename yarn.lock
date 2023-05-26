@@ -1280,6 +1280,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.22.0":
+  version: 7.22.0
+  resolution: "@babel/runtime@npm:7.22.0"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: fa60a963f33de98baf55179b8b4b986d7ed4b97ec4f725e976fd3ecd6f3005096d9df4ef3cd4a6ce46105d619c7cb086567bcf272e4596a63e66ef9b36463bcb
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.18.10, @babel/template@npm:^7.20.7":
   version: 7.20.7
   resolution: "@babel/template@npm:7.20.7"
@@ -5742,7 +5751,7 @@ __metadata:
     rollup: 3.23.0
     rollup-plugin-copy: 3.4.0
     sinon: 15.1.0
-    standardized-audio-context: 25.3.47
+    standardized-audio-context: 25.3.48
   languageName: unknown
   linkType: soft
 
@@ -10829,14 +10838,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standardized-audio-context@npm:25.3.47":
-  version: 25.3.47
-  resolution: "standardized-audio-context@npm:25.3.47"
+"standardized-audio-context@npm:25.3.48":
+  version: 25.3.48
+  resolution: "standardized-audio-context@npm:25.3.48"
   dependencies:
-    "@babel/runtime": ^7.21.5
+    "@babel/runtime": ^7.22.0
     automation-events: ^6.0.2
     tslib: ^2.5.2
-  checksum: a8bcd3767837452f6c58dc3a5f811a197de480fc75d4e2b81b7eda09fee1c783ba78f734251cd5589a00e029e00eefbed5805c3b4b52342cf7db71299c6c4fbe
+  checksum: be5338944342765f7617bb04625e695e2dbb5be7e79842ff71019ca823ea8b349b41c118f57fcc5aba438580ee9d9a0746eebc7f13b828ad828c085edd53d1a7
   languageName: node
   linkType: hard
 
