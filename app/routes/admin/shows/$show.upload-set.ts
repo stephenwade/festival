@@ -14,6 +14,8 @@ import type { FFprobeOutput } from '~/ffmpeg/ffprobe.server';
 import { ffprobe } from '~/ffmpeg/ffprobe.server';
 import { UPLOAD_SET_FORM_KEY } from '~/types/admin/upload-set';
 
+import { emitFileProcessingEvent } from './file-processing-sse';
+
 const GIGABYTE = 1_000_000_000;
 const MICROSECONDS = 1 / 1_000_000;
 
@@ -30,7 +32,7 @@ export const action: ActionFunction = async ({ params, request }) => {
   const fileInfo = await getFileFromFormData(request);
 
   const newFile = await saveNewFileToDatabase(fileInfo.name);
-  // emitNewNewFile(fileProcessing);
+  emitFileProcessingEvent({ type: 'new NewFile', newFile });
 
   try {
     const filename = `upload/${newFile.filename}`;
@@ -107,12 +109,12 @@ async function updateNewFileDuration(
 ) {
   const data: Partial<NewFile> = { duration };
 
-  await db.newFile.update({
+  const newFile = await db.newFile.update({
     where: { id: newFileId },
     data,
   });
 
-  // emitNewFileUpdate({ id: newFileId, ...data });
+  emitFileProcessingEvent({ type: 'NewFile update', newFile });
 }
 
 async function updateNewFileConvertProgress(
@@ -121,12 +123,12 @@ async function updateNewFileConvertProgress(
 ) {
   const data: Partial<NewFile> = { status: 'Converting…', convertProgress };
 
-  await db.newFile.update({
+  const newFile = await db.newFile.update({
     where: { id: newFileId },
     data,
   });
 
-  // emitNewFileUpdate({ id: newFileId, ...data });
+  emitFileProcessingEvent({ type: 'NewFile update', newFile });
 }
 
 async function updateFileDoneProcessing(
@@ -141,7 +143,7 @@ async function updateFileDoneProcessing(
     throw serverError();
   }
 
-  /* const file = */ await db.file.create({
+  const file = await db.file.create({
     data: {
       id: newFile.id,
       filename: newFilename,
@@ -154,7 +156,7 @@ async function updateFileDoneProcessing(
     where: { id: newFileId },
   });
 
-  // emitNewFile(file);
+  emitFileProcessingEvent({ type: 'new File', file });
 }
 
 async function handleError(error: unknown, newFileId: NewFile['id']) {
@@ -164,12 +166,12 @@ async function handleError(error: unknown, newFileId: NewFile['id']) {
 
   const data: Partial<NewFile> = { status: 'Error', errorMessage };
 
-  await db.newFile.update({
+  const newFile = await db.newFile.update({
     where: { id: newFileId },
     data,
   });
 
-  // emitNewFileUpdate({ id: newFileId, ...data });
+  emitFileProcessingEvent({ type: 'NewFile update', newFile });
 }
 
 /**

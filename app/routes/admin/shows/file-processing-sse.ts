@@ -1,35 +1,17 @@
 import type { LoaderFunction } from '@remix-run/node';
 
 import {
-  createAdminSseResponse,
-  getAdminEmitter,
-} from '~/sse/admin-emitter.server';
-import type {
-  FileProcessingEventName,
-  FileProcessingFileUpdateData,
-  FileProcessingNewSetData,
-  FileProcessingSetUpdateData,
-} from '~/types/admin/file-processing-events';
-import { FileProcessingEventNames } from '~/types/admin/file-processing-events';
+  adminEventStream,
+  dispatchAdminEvent,
+} from '~/sse/admin-events.server';
+import type { FileProcessingEventData } from '~/types/admin/FileProcessingEvent';
 
-export function emitNewSet(data: FileProcessingNewSetData) {
-  const emitter = getAdminEmitter<FileProcessingEventName>();
+const EVENT_TYPE = 'file processing';
 
-  emitter.emit('new set', data);
-}
-
-export function emitSetUpdate(data: FileProcessingSetUpdateData) {
-  const emitter = getAdminEmitter<FileProcessingEventName>();
-
-  emitter.emit('set update', data);
-}
-
-export function emitFileUpdate(data: FileProcessingFileUpdateData) {
-  const emitter = getAdminEmitter<FileProcessingEventName>();
-
-  emitter.emit('file update', data);
+export function emitFileProcessingEvent(data: FileProcessingEventData) {
+  dispatchAdminEvent(EVENT_TYPE, data);
 }
 
 export const loader = (({ request }) => {
-  return createAdminSseResponse(request, FileProcessingEventNames);
+  return adminEventStream(request, EVENT_TYPE);
 }) satisfies LoaderFunction;
