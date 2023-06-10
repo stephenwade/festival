@@ -2965,6 +2965,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@web/test-runner-coverage-v8@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "@web/test-runner-coverage-v8@npm:0.7.0"
+  dependencies:
+    "@web/test-runner-core": ^0.11.0
+    istanbul-lib-coverage: ^3.0.0
+    lru-cache: ^8.0.4
+    picomatch: ^2.2.2
+    v8-to-istanbul: ^9.0.1
+  checksum: 8b7b6eee2674f0bd34654aaca3691747f7a904837168705582bd11e685b768e191d36f34f5995adf139aab414eaaeb828e4b814bc209df15100270acbcfe1e7b
+  languageName: node
+  linkType: hard
+
 "@web/test-runner-mocha@npm:0.8.1, @web/test-runner-mocha@npm:^0.8.1":
   version: 0.8.1
   resolution: "@web/test-runner-mocha@npm:0.8.1"
@@ -2975,14 +2988,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-playwright@npm:0.10.0":
-  version: 0.10.0
-  resolution: "@web/test-runner-playwright@npm:0.10.0"
+"@web/test-runner-playwright@npm:0.10.1":
+  version: 0.10.1
+  resolution: "@web/test-runner-playwright@npm:0.10.1"
   dependencies:
     "@web/test-runner-core": ^0.11.0
-    "@web/test-runner-coverage-v8": ^0.6.0
+    "@web/test-runner-coverage-v8": ^0.7.0
     playwright: ^1.22.2
-  checksum: 06902cb74e3b2d82b1725352384bae2267e3bf42b8e03981ba2fcb229a1a59c55811612ca85a5e312af488e6fa8fdd2408fa71d277a10eb651ef7895856e479b
+  checksum: d2aebc54c0444fb434671dc0d3a3912f76570eae4a909b7912cf46b9535232c7f7829729554e8629f546abce48433f9f5b21d583011582753fbb40e288c28e80
   languageName: node
   linkType: hard
 
@@ -5839,7 +5852,7 @@ __metadata:
     "@web/test-runner": 0.16.1
     "@web/test-runner-commands": 0.7.0
     "@web/test-runner-mocha": 0.8.1
-    "@web/test-runner-playwright": 0.10.0
+    "@web/test-runner-playwright": 0.10.1
     chai: 4.3.7
     concurrently: 8.1.0
     date-fns: 2.30.0
