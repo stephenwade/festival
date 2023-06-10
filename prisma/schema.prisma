@@ -19,13 +19,13 @@ model Show {
 }
 
 model Set {
-  id      String   @id @default(uuid())
-  artist  String
-  offset  Float
-  show    Show     @relation(fields: [showId], references: [id], onDelete: Cascade)
-  showId  String
-  file    File?
-  newFile NewFile?
+  id         String      @id @default(uuid())
+  artist     String
+  offset     Float
+  show       Show        @relation(fields: [showId], references: [id], onDelete: Cascade)
+  showId     String
+  file       File?
+  fileUpload FileUpload?
 }
 
 model File {
@@ -37,7 +37,7 @@ model File {
   setId    String? @unique
 }
 
-model NewFile {
+model FileUpload {
   id              String  @id @default(uuid())
   status          String
   filename        String

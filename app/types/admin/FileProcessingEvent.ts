@@ -1,7 +1,7 @@
-import type { File, NewFile } from '@prisma/client';
+import type { File, FileUpload } from '@prisma/client';
 import type { SerializeFrom } from '@remix-run/node';
 
 export type FileProcessingEventData =
-  | { type: 'new NewFile'; newFile: SerializeFrom<NewFile> }
-  | { type: 'NewFile update'; newFile: SerializeFrom<NewFile> }
+  | { type: 'new FileUpload'; fileUpload: SerializeFrom<FileUpload> }
+  | { type: 'FileUpload update'; fileUpload: SerializeFrom<FileUpload> }
   | { type: 'new File'; file: SerializeFrom<File> };
