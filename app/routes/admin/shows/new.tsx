@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
   };
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = (async ({ request }) => {
   const validator = makeServerValidator();
 
   const form = await request.formData();
@@ -28,7 +28,7 @@ export const action: ActionFunction = async ({ request }) => {
     },
   });
   return redirect(`/admin/shows/${show.id}`);
-};
+}) satisfies ActionFunction;
 
 const NewShow: FC = () => {
   return (

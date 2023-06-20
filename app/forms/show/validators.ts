@@ -8,6 +8,7 @@ export const setSchema = z.object({
   id: zfd.text(),
   artist: zfd.text(),
   offset: zfd.numeric(),
+  fileUploadId: zfd.text(z.string().optional()),
 });
 
 export const schema = zfd.formData({

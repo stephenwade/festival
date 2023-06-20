@@ -15,36 +15,41 @@ model Show {
   name        String
   description String
   startDate   DateTime
-  sets        Set[]
+
+  sets Set[]
 }
 
 model Set {
-  id         String      @id @default(uuid())
-  artist     String
-  offset     Float
-  show       Show        @relation(fields: [showId], references: [id], onDelete: Cascade)
-  showId     String
-  file       File?
-  fileUpload FileUpload?
+  id     String @id @default(uuid())
+  artist String
+  offset Float
+
+  show   Show   @relation(fields: [showId], references: [id], onDelete: Cascade)
+  showId String
+
+  fileUpload   FileUpload? @relation(fields: [fileUploadId], references: [id])
+  fileUploadId String?     @unique
 }
 
 model File {
-  id       String  @id @default(uuid())
-  filename String
+  id       String @id @default(uuid())
+  name     String
   audioUrl String
   duration Float
-  set      Set?    @relation(fields: [setId], references: [id], onDelete: Cascade)
-  setId    String? @unique
+
+  fileUpload   FileUpload @relation(fields: [fileUploadId], references: [id])
+  fileUploadId String     @unique
 }
 
 model FileUpload {
   id              String  @id @default(uuid())
   status          String
-  filename        String
+  name            String
   audioUrl        String?
   duration        Float?
   convertProgress Float?
   errorMessage    String?
-  set             Set?    @relation(fields: [setId], references: [id])
-  setId           String? @unique
+
+  set  Set?
+  file File?
 }

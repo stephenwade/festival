@@ -7,6 +7,8 @@ const integerString = z.string().regex(/^\d+$/u).transform(Number);
 /**
  * Parses a string containing progress output in `key=value` format from FFmpeg.
  *
+ * Tested on FFmpeg 5.1.3.
+ *
  * @example
  * ```text
  * total_size=1888075
@@ -40,21 +42,21 @@ export type FFmpegProgress = z.infer<typeof ffmpegProgressSchema>;
 export type FFmpegProgressCallback = (progress: FFmpegProgress) => void;
 
 export function ffmpeg(
-  inputFilename: string,
+  inputFileName: string,
   streamIndex: number,
-  outputFilename: string,
+  outputFileName: string,
   progressCallback?: FFmpegProgressCallback
 ) {
-  console.log('Running ffmpeg', { inputFilename, outputFilename });
+  console.log('Running ffmpeg', { inputFileName, outputFileName });
 
   const ffmpeg = spawn('ffmpeg', [
     '-loglevel',
     'warning',
     '-i',
-    inputFilename,
+    inputFileName,
     '-map',
     `0:${streamIndex}`,
-    outputFilename,
+    outputFileName,
     '-progress',
     '-',
   ]);
@@ -65,8 +67,8 @@ export function ffmpeg(
         progressCallback(ffmpegProgressSchema.parse(data.toString()));
       } catch (error) {
         console.warn('Failed to parse stdout when running ffmpeg:', {
-          inputFilename,
-          outputFilename,
+          inputFileName,
+          outputFileName,
         });
         console.warn(error);
       }
@@ -75,8 +77,8 @@ export function ffmpeg(
 
   ffmpeg.stderr.on('data', (data: Buffer) => {
     console.warn('stderr when running ffmpeg:', {
-      inputFilename,
-      outputFilename,
+      inputFileName,
+      outputFileName,
     });
     console.warn(data.toString());
   });

@@ -1,36 +1,41 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
-export function useSse<T extends string>(
-  url: string | URL,
-  events: readonly T[],
-  onEvent: (eventName: T, data: unknown) => void
-) {
-  const eventSourceRef = useRef<EventSource>();
+const eventSources = new Map<
+  string | URL,
+  { eventSource: EventSource; refCount: number }
+>();
 
+export function useSse<T>(url: string | URL, onMessage: (data: T) => void) {
   useEffect(() => {
-    const eventSource = new EventSource(url);
-    eventSourceRef.current = eventSource;
+    const eventSourceData = eventSources.get(url);
+    const eventSource = eventSourceData?.eventSource ?? new EventSource(url);
+    eventSources.set(url, {
+      eventSource,
+      refCount: (eventSourceData?.refCount ?? 0) + 1,
+    });
 
-    const handlers = events.map(
-      (eventName) =>
-        [
-          eventName,
-          (event: MessageEvent<string>) => {
-            onEvent(eventName, JSON.parse(event.data));
-          },
-        ] as const
-    );
+    const handler = (event: MessageEvent<string>) => {
+      onMessage(JSON.parse(event.data) as T);
+    };
 
-    for (const [eventName, handler] of handlers) {
-      eventSource.addEventListener(eventName, handler);
-    }
+    eventSource.addEventListener('message', handler);
 
     return () => {
-      for (const [eventName, handler] of handlers) {
-        eventSource.removeEventListener(eventName, handler);
-      }
+      eventSource.removeEventListener('message', handler);
 
-      eventSource.close();
+      const eventSourceData = eventSources.get(url);
+      if (eventSourceData?.refCount === 1) {
+        eventSource.close();
+        eventSources.delete(url);
+      } else if (eventSourceData) {
+        eventSources.set(url, {
+          eventSource: eventSourceData.eventSource,
+          refCount: eventSourceData.refCount - 1,
+        });
+      } else {
+        // This should never happen
+        eventSource.close();
+      }
     };
-  }, [events, onEvent, url]);
+  }, [onMessage, url]);
 }

@@ -9,6 +9,8 @@ const numericString = z
 
 /**
  * Parses a string containing JSON output from `ffprobe`.
+ *
+ * Tested on FFmpeg 5.1.3.
  */
 const ffprobeOutputSchema = z.preprocess(
   (str) => JSON.parse(z.string().parse(str)),
@@ -33,8 +35,8 @@ const ffprobeOutputSchema = z.preprocess(
 
 export type FFprobeOutput = z.infer<typeof ffprobeOutputSchema>;
 
-export function ffprobe(filename: string) {
-  console.log(`Running ffprobe on ${filename}`);
+export function ffprobe(fileName: string) {
+  console.log(`Running ffprobe on ${fileName}`);
 
   const ffprobe = spawn('ffprobe', [
     '-loglevel',
@@ -43,7 +45,7 @@ export function ffprobe(filename: string) {
     'json',
     '-show_format',
     '-show_streams',
-    filename,
+    fileName,
   ]);
 
   let output = '';
@@ -53,7 +55,7 @@ export function ffprobe(filename: string) {
   });
 
   ffprobe.stderr.on('data', (data: Buffer) => {
-    console.warn(`stderr when running ffprobe on ${filename}:`);
+    console.warn(`stderr when running ffprobe on ${fileName}:`);
     console.warn(data.toString());
   });
 

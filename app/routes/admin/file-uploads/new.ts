@@ -4,6 +4,7 @@ import { promisify } from 'node:util';
 import type { FileUpload } from '@prisma/client';
 import type { ActionFunction } from '@remix-run/node';
 import {
+  json,
   unstable_createFileUploadHandler,
   unstable_parseMultipartFormData,
 } from '@remix-run/node';
@@ -12,41 +13,69 @@ import { db } from '~/db/db.server';
 import { ffmpeg } from '~/ffmpeg/ffmpeg.server';
 import type { FFprobeOutput } from '~/ffmpeg/ffprobe.server';
 import { ffprobe } from '~/ffmpeg/ffprobe.server';
-import { UPLOAD_SET_FORM_KEY } from '~/types/admin/upload-set';
+import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
 
-import { emitFileProcessingEvent } from './file-processing-sse';
+import { emitFileProcessingEvent } from './events';
 
 const GIGABYTE = 1_000_000_000;
 const MICROSECONDS = 1 / 1_000_000;
 
 const badRequest = () => new Response('Bad Request', { status: 400 });
-const notFound = () => new Response('Not Found', { status: 404 });
 const serverError = () =>
   new Response('Internal Server Error', { status: 500 });
 
-export const action: ActionFunction = async ({ params, request }) => {
-  const id = params.show as string;
-  const show = await db.show.findUnique({ where: { id } });
-  if (!show) throw notFound();
-
+export const action = (async ({ request }) => {
   const fileInfo = await getFileFromFormData(request);
 
   const fileUpload = await saveFileUploadToDatabase(fileInfo.name);
-  emitFileProcessingEvent({ type: 'new FileUpload', fileUpload });
+  emitFileProcessingEvent(fileUpload);
 
+  // Run this in the background after responding to the request
+  void processFileUpload(fileUpload);
+
+  return json(fileUpload);
+}) satisfies ActionFunction;
+
+async function getFileFromFormData(request: Request): Promise<globalThis.File> {
+  const uploadHandler = unstable_createFileUploadHandler({
+    directory: 'upload',
+    maxPartSize: 1 * GIGABYTE,
+  });
+
+  const form = await unstable_parseMultipartFormData(request, uploadHandler);
+
+  const file = form.get(UPLOAD_FILE_FORM_KEY);
+  if (typeof file === 'string' || file === null) throw badRequest();
+
+  return file;
+}
+
+async function saveFileUploadToDatabase(name: string) {
+  const fileUpload = await db.fileUpload.create({
+    data: {
+      status: 'Processing…',
+      name,
+    },
+    include: { file: true },
+  });
+
+  return fileUpload;
+}
+
+async function processFileUpload(fileUpload: FileUpload) {
   try {
-    const filename = `upload/${fileUpload.filename}`;
+    const fileName = `upload/${fileUpload.name}`;
 
-    const stats = await ffprobe(filename);
-    console.log(`ffprobe stats for ${filename}:`, stats);
+    const stats = await ffprobe(fileName);
+    console.log(`ffprobe stats for ${fileName}:`, stats);
 
     await updateFileUploadDuration(fileUpload.id, stats.format.duration);
 
     const needsConverting = checkNeedsConverting(stats);
-    const newFilename = `upload/${fileUpload.id}.mp3`;
+    const newFileName = `upload/${fileUpload.id}.mp3`;
     if (needsConverting) {
       const streamIndex = getAudioStreamIndex(stats);
-      await ffmpeg(filename, streamIndex, newFilename, (progress) => {
+      await ffmpeg(fileName, streamIndex, newFileName, (progress) => {
         let convertProgress: number;
         if (progress.progress === 'end') {
           convertProgress = 1;
@@ -58,7 +87,7 @@ export const action: ActionFunction = async ({ params, request }) => {
         void updateFileUploadConvertProgress(fileUpload.id, convertProgress);
       });
     } else {
-      await renameFile(filename, newFilename);
+      await renameFile(fileName, newFileName);
     }
 
     // TODO:
@@ -69,71 +98,46 @@ export const action: ActionFunction = async ({ params, request }) => {
     });
     // - Clean up local files
 
-    await updateFileDoneProcessing(fileUpload.id, newFilename);
+    await updateFileDoneProcessing(fileUpload.id, newFileName);
 
     return null;
   } catch (error) {
     await handleError(error, fileUpload.id);
-    throw error;
   }
-};
-
-async function getFileFromFormData(request: Request): Promise<globalThis.File> {
-  const uploadHandler = unstable_createFileUploadHandler({
-    directory: 'upload',
-    maxPartSize: 1 * GIGABYTE,
-  });
-
-  const form = await unstable_parseMultipartFormData(request, uploadHandler);
-
-  const file = form.get(UPLOAD_SET_FORM_KEY);
-  if (typeof file === 'string' || file === null) throw badRequest();
-
-  return file;
-}
-
-async function saveFileUploadToDatabase(filename: string) {
-  const fileUpload = await db.fileUpload.create({
-    data: {
-      status: 'Processing…',
-      filename,
-    },
-  });
-
-  return fileUpload;
 }
 
 async function updateFileUploadDuration(
   fileUploadId: FileUpload['id'],
   duration: number
 ) {
-  const data: Partial<FileUpload> = { duration };
-
   const fileUpload = await db.fileUpload.update({
     where: { id: fileUploadId },
-    data,
+    data: { duration },
+    include: { file: true },
   });
 
-  emitFileProcessingEvent({ type: 'FileUpload update', fileUpload });
+  emitFileProcessingEvent(fileUpload);
 }
 
 async function updateFileUploadConvertProgress(
   fileUploadId: FileUpload['id'],
   convertProgress: number
 ) {
-  const data: Partial<FileUpload> = { status: 'Converting…', convertProgress };
-
   const fileUpload = await db.fileUpload.update({
     where: { id: fileUploadId },
-    data,
+    data: {
+      status: 'Converting…',
+      convertProgress,
+    },
+    include: { file: true },
   });
 
-  emitFileProcessingEvent({ type: 'FileUpload update', fileUpload });
+  emitFileProcessingEvent(fileUpload);
 }
 
 async function updateFileDoneProcessing(
   fileUploadId: FileUpload['id'],
-  newFilename: string
+  newName: string
 ) {
   const fileUpload = await db.fileUpload.findUnique({
     where: { id: fileUploadId },
@@ -143,20 +147,22 @@ async function updateFileDoneProcessing(
     throw serverError();
   }
 
-  const file = await db.file.create({
-    data: {
-      id: fileUpload.id,
-      filename: newFilename,
-      audioUrl: fileUpload.audioUrl,
-      duration: fileUpload.duration,
-    },
-  });
-
-  await db.fileUpload.delete({
+  const newFileUpload = await db.fileUpload.update({
     where: { id: fileUploadId },
+    data: {
+      status: 'Done',
+      file: {
+        create: {
+          name: newName,
+          audioUrl: fileUpload.audioUrl,
+          duration: fileUpload.duration,
+        },
+      },
+    },
+    include: { file: true },
   });
 
-  emitFileProcessingEvent({ type: 'new File', file });
+  emitFileProcessingEvent(newFileUpload);
 }
 
 async function handleError(error: unknown, fileUploadId: FileUpload['id']) {
@@ -164,14 +170,16 @@ async function handleError(error: unknown, fileUploadId: FileUpload['id']) {
 
   console.error('Error while converting file', error);
 
-  const data: Partial<FileUpload> = { status: 'Error', errorMessage };
-
   const fileUpload = await db.fileUpload.update({
     where: { id: fileUploadId },
-    data,
+    data: {
+      status: 'Error',
+      errorMessage,
+    },
+    include: { file: true },
   });
 
-  emitFileProcessingEvent({ type: 'FileUpload update', fileUpload });
+  emitFileProcessingEvent(fileUpload);
 }
 
 /**

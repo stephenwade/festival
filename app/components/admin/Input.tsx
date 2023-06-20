@@ -15,9 +15,10 @@ export const Input: FC<Props> = ({ name, label, prefix }) => {
       <label>
         {label}: {prefix}
         <input
-          {...getInputProps()}
-          aria-invalid={Boolean(error) || undefined}
-          aria-errormessage={error ? `${name}-error` : undefined}
+          {...getInputProps({
+            'aria-invalid': Boolean(error) || undefined,
+            'aria-errormessage': error ? `${name}-error` : undefined,
+          })}
         />
       </label>
       {error ? (

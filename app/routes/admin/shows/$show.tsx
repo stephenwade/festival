@@ -18,7 +18,9 @@ export const loader = (async ({ params }) => {
     where: { id },
     include: {
       sets: {
-        include: { file: true },
+        include: {
+          fileUpload: { select: { file: true } },
+        },
         orderBy: { offset: 'asc' },
       },
     },
@@ -40,7 +42,7 @@ const ViewShow: FC = () => {
   const origin = useOrigin();
 
   // useSse(
-  //   '/admin/shows/file-processing-sse',
+  //   '/admin/file-uploads/events',
   //   FileProcessingEventNames,
   //   useCallback((eventName, data) => {
   //     if (eventName === 'new set') {
@@ -86,14 +88,11 @@ const ViewShow: FC = () => {
               {set.artist || <em>No artist yet</em>}
               <ul>
                 <li>
-                  <strong>Artist:</strong> {set.artist}
-                </li>
-                <li>
                   <strong>Offset:</strong> {set.offset}
                 </li>
                 <li>
                   <strong>Duration:</strong>{' '}
-                  {set.file?.duration ?? <em>Unknown</em>}
+                  {set.fileUpload?.file?.duration ?? <em>Unknown</em>}
                 </li>
               </ul>
             </li>

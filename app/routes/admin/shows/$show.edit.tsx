@@ -10,6 +10,8 @@ import { validationError } from 'remix-validated-form';
 
 import { db } from '~/db/db.server';
 import { EditShowForm, makeServerValidator } from '~/forms/show';
+import { replaceNullsWithUndefined } from '~/forms/utils/replaceNullsWithUndefined';
+import { replaceUndefinedsWithNull } from '~/forms/utils/replaceUndefinedsWithNull';
 
 const notFound = () => new Response('Not Found', { status: 404 });
 
@@ -20,14 +22,16 @@ export const loader = (async ({ params }) => {
     where: { id },
     include: {
       sets: {
-        include: { file: true },
+        include: {
+          fileUpload: { select: { file: true } },
+        },
         orderBy: { offset: 'asc' },
       },
     },
   });
   if (!show) throw notFound();
 
-  return json(show);
+  return json(replaceNullsWithUndefined(show));
 }) satisfies LoaderFunction;
 
 export const meta: MetaFunction = () => {
@@ -36,7 +40,7 @@ export const meta: MetaFunction = () => {
   };
 };
 
-export const action: ActionFunction = async ({ params, request }) => {
+export const action = (async ({ params, request }) => {
   const previousId = params.show as string;
   const validator = makeServerValidator({ previousId });
 
@@ -44,7 +48,7 @@ export const action: ActionFunction = async ({ params, request }) => {
   const { data, error } = await validator.validate(form);
   if (error) return validationError(error);
 
-  const { sets, ...rest } = data;
+  const { sets, ...rest } = replaceUndefinedsWithNull(data);
 
   await db.show.update({
     where: { id: previousId },
@@ -80,7 +84,7 @@ export const action: ActionFunction = async ({ params, request }) => {
   ]);
 
   return redirect(`/admin/shows/${data.id}`);
-};
+}) satisfies ActionFunction;
 
 const EditShow: FC = () => {
   const show = useLoaderData<typeof loader>();

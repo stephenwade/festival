@@ -4,12 +4,17 @@ import { useFormContext, useIsSubmitting } from 'remix-validated-form';
 type Props = {
   text: ReactNode;
   textSubmitting: ReactNode;
+  disabled?: boolean;
 };
 
-export const SubmitButton: FC<Props> = ({ text, textSubmitting }) => {
+export const SubmitButton: FC<Props> = ({
+  text,
+  textSubmitting,
+  disabled: disabledProp,
+}) => {
   const isSubmitting = useIsSubmitting();
   const { isValid } = useFormContext();
-  const disabled = isSubmitting || !isValid;
+  const disabled = disabledProp || isSubmitting || !isValid;
 
   return (
     <button type="submit" disabled={disabled}>
