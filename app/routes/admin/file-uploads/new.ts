@@ -1,5 +1,4 @@
-import { rename } from 'node:fs';
-import { promisify } from 'node:util';
+import { rename, unlink } from 'node:fs/promises';
 
 import type { FileUpload } from '@prisma/client';
 import type { ActionFunction } from '@remix-run/node';
@@ -9,6 +8,7 @@ import {
   unstable_parseMultipartFormData,
 } from '@remix-run/node';
 
+import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
 import { db } from '~/db/db.server';
 import { ffmpeg } from '~/ffmpeg/ffmpeg.server';
 import type { FFprobeOutput } from '~/ffmpeg/ffprobe.server';
@@ -87,20 +87,26 @@ async function processFileUpload(fileUpload: FileUpload) {
         void updateFileUploadConvertProgress(fileUpload.id, convertProgress);
       });
     } else {
-      await renameFile(fileName, newFileName);
+      await rename(fileName, newFileName);
     }
 
-    // TODO:
-    // - Upload to Azure
+    await updateFileUploadFinishing(fileUpload.id);
+    const blobName = `${fileUpload.id}.mp3`;
+    await uploadFileToAzure({
+      blobName,
+      fileName: newFileName,
+      contentType: 'audio/mpeg',
+    });
+    const audioUrl = getBlobUrl(blobName);
+
     await db.fileUpload.update({
       where: { id: fileUpload.id },
-      data: { audioUrl: 'https://example.com/audio.mp3' },
+      data: { audioUrl },
     });
-    // - Clean up local files
+
+    await unlink(newFileName);
 
     await updateFileDoneProcessing(fileUpload.id, newFileName);
-
-    return null;
   } catch (error) {
     await handleError(error, fileUpload.id);
   }
@@ -128,6 +134,19 @@ async function updateFileUploadConvertProgress(
     data: {
       status: 'Converting…',
       convertProgress,
+    },
+    include: { file: true },
+  });
+
+  emitFileProcessingEvent(fileUpload);
+}
+
+async function updateFileUploadFinishing(fileUploadId: FileUpload['id']) {
+  const fileUpload = await db.fileUpload.update({
+    where: { id: fileUploadId },
+    data: {
+      status: 'Finishing up…',
+      convertProgress: null,
     },
     include: { file: true },
   });
@@ -214,5 +233,3 @@ function checkNeedsConverting(stats: FFprobeOutput) {
     stats.streams[0].bit_rate < MAX_BIT_RATE
   );
 }
-
-const renameFile = promisify(rename);
