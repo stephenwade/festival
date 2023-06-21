@@ -22,6 +22,7 @@ module.exports = {
   ],
 
   rules: {
+    'object-shorthand': 'warn',
     quotes: ['warn', 'single', { avoidEscape: true }],
     'require-unicode-regexp': 'warn',
 

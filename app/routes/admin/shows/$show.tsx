@@ -7,12 +7,9 @@ import { db } from '~/db/db.server';
 import { useOrigin } from '~/hooks/useOrigin';
 
 const notFound = () => new Response('Not Found', { status: 404 });
-const serverError = () =>
-  new Response('Internal Server Error', { status: 500 });
 
 export const loader = (async ({ params }) => {
-  const id = params.show;
-  if (!id) throw serverError();
+  const id = params.show as string;
 
   const show = await db.show.findUnique({
     where: { id },

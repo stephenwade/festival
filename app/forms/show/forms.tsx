@@ -1,5 +1,5 @@
 import type { Show } from '@prisma/client';
-import { useNavigate } from '@remix-run/react';
+import { Form, useNavigate, useNavigation } from '@remix-run/react';
 import type { FC } from 'react';
 import { useCallback, useState } from 'react';
 import {
@@ -67,6 +67,7 @@ type ShowFormProps = {
   cancelLinkTo: string;
   submitButtonText: string;
   submitButtonTextSubmitting: string;
+  showDeleteButton?: boolean;
 };
 
 const ShowForm: FC<ShowFormProps> = ({
@@ -74,9 +75,14 @@ const ShowForm: FC<ShowFormProps> = ({
   cancelLinkTo,
   submitButtonText,
   submitButtonTextSubmitting,
+  showDeleteButton,
 }) => {
   const origin = useOrigin();
   const navigate = useNavigate();
+
+  const navigation = useNavigation();
+  const isDeleting =
+    navigation.state === 'submitting' && navigation.formMethod === 'delete';
 
   const {
     count: countUploading,
@@ -100,45 +106,59 @@ const ShowForm: FC<ShowFormProps> = ({
   );
 
   return (
-    <ValidatedForm
-      id={SHOW_FORM_ID}
-      validator={clientValidator}
-      defaultValues={defaultValues}
-      method="post"
-    >
-      <Input label="Name" name="name" />
-      <Input label="URL" prefix={`${origin ?? ''}/`} name="id" />
-      <Input label="Description" name="description" />
-      <Input label="Start date" name="startDate" />
-      <h4>Sets</h4>
-      {sets.map((set, index) => (
-        <SetForm
-          key={set.id}
-          name={`sets[${index}]`}
-          remove={() => remove(index)}
-          onIsUploadingChanged={onIsUploadingChanged}
-        />
-      ))}
-      <p>
-        <button type="button" onClick={() => push({ id: crypto.randomUUID() })}>
-          Add set
-        </button>
-      </p>
-      <p>
-        <button
-          type="button"
-          onClick={() => navigate(cancelLinkTo)}
-          disabled={saveDisabled}
-        >
-          Cancel
-        </button>{' '}
-        <SubmitButton
-          text={submitButtonText}
-          textSubmitting={submitButtonTextSubmitting}
-          disabled={saveDisabled}
-        />
-      </p>
-    </ValidatedForm>
+    <>
+      <ValidatedForm
+        id={SHOW_FORM_ID}
+        validator={clientValidator}
+        defaultValues={defaultValues}
+        method="post"
+      >
+        <Input label="Name" name="name" />
+        <Input label="URL" prefix={`${origin ?? ''}/`} name="id" />
+        <Input label="Description" name="description" />
+        <Input label="Start date" name="startDate" />
+        <h4>Sets</h4>
+        {sets.map((set, index) => (
+          <SetForm
+            key={set.id}
+            name={`sets[${index}]`}
+            remove={() => remove(index)}
+            onIsUploadingChanged={onIsUploadingChanged}
+          />
+        ))}
+        <p>
+          <button
+            type="button"
+            onClick={() => push({ id: crypto.randomUUID() })}
+          >
+            Add set
+          </button>
+        </p>
+        <p>
+          <button
+            type="button"
+            onClick={() => navigate(cancelLinkTo)}
+            disabled={saveDisabled}
+          >
+            Cancel
+          </button>{' '}
+          <SubmitButton
+            text={submitButtonText}
+            textSubmitting={submitButtonTextSubmitting}
+            disabled={saveDisabled}
+          />
+        </p>
+      </ValidatedForm>
+      {showDeleteButton && (
+        <Form method="delete">
+          <p>
+            <button disabled={isDeleting}>
+              {isDeleting ? 'Deleting show…' : 'Delete show'}
+            </button>
+          </p>
+        </Form>
+      )}
+    </>
   );
 };
 
@@ -163,5 +183,6 @@ export const EditShowForm: FC<EditShowFormProps> = ({
     cancelLinkTo={`/admin/shows/${showId}`}
     submitButtonText="Save"
     submitButtonTextSubmitting="Saving…"
+    showDeleteButton
   />
 );

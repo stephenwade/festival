@@ -42,6 +42,13 @@ export const meta: MetaFunction = () => {
 
 export const action = (async ({ params, request }) => {
   const previousId = params.show as string;
+
+  if (request.method === 'DELETE') {
+    await db.show.delete({ where: { id: previousId } });
+
+    return redirect('/admin/shows');
+  }
+
   const validator = makeServerValidator({ previousId });
 
   const form = await request.formData();
