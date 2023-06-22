@@ -1,21 +1,18 @@
-import type { Show } from '@prisma/client';
-import type { LoaderFunction, SerializeFrom } from '@remix-run/node';
+import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 
 import { db } from '~/db/db.server';
 
-type LoaderData = SerializeFrom<Show[]>;
-
-export const loader: LoaderFunction = async () => {
+export const loader = (async () => {
   const shows = await db.show.findMany();
 
   return json(shows);
-};
+}) satisfies LoaderFunction;
 
 const ShowsIndex: FC = () => {
-  const shows: LoaderData = useLoaderData();
+  const shows = useLoaderData<typeof loader>();
 
   return (
     <>

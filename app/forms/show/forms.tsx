@@ -12,8 +12,8 @@ import { useCounter, useUpdateEffect } from 'usehooks-ts';
 import type { z } from 'zod';
 
 import { Input } from '~/components/admin/Input';
+import { SaveButton } from '~/components/admin/SaveButton';
 import { SetFileUpload } from '~/components/admin/SetFileUpload';
-import { SubmitButton } from '~/components/admin/SubmitButton';
 import { useOrigin } from '~/hooks/useOrigin';
 
 import type { schema, setSchema } from './validators';
@@ -65,16 +65,12 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
 type ShowFormProps = {
   defaultValues?: z.infer<typeof schema>;
   cancelLinkTo: string;
-  submitButtonText: string;
-  submitButtonTextSubmitting: string;
   showDeleteButton?: boolean;
 };
 
 const ShowForm: FC<ShowFormProps> = ({
   defaultValues,
   cancelLinkTo,
-  submitButtonText,
-  submitButtonTextSubmitting,
   showDeleteButton,
 }) => {
   const origin = useOrigin();
@@ -82,7 +78,7 @@ const ShowForm: FC<ShowFormProps> = ({
 
   const navigation = useNavigation();
   const isDeleting =
-    navigation.state === 'submitting' && navigation.formMethod === 'delete';
+    navigation.state === 'submitting' && navigation.formMethod === 'DELETE';
 
   const {
     count: countUploading,
@@ -142,11 +138,7 @@ const ShowForm: FC<ShowFormProps> = ({
           >
             Cancel
           </button>{' '}
-          <SubmitButton
-            text={submitButtonText}
-            textSubmitting={submitButtonTextSubmitting}
-            disabled={saveDisabled}
-          />
+          <SaveButton disabled={saveDisabled} />
         </p>
       </ValidatedForm>
       {showDeleteButton && (
@@ -162,13 +154,7 @@ const ShowForm: FC<ShowFormProps> = ({
   );
 };
 
-export const NewShowForm: FC = () => (
-  <ShowForm
-    cancelLinkTo="/admin/shows"
-    submitButtonText="Add"
-    submitButtonTextSubmitting="Adding…"
-  />
-);
+export const NewShowForm: FC = () => <ShowForm cancelLinkTo="/admin/shows" />;
 
 type EditShowFormProps = {
   showId: Show['id'];
@@ -181,8 +167,6 @@ export const EditShowForm: FC<EditShowFormProps> = ({
   <ShowForm
     defaultValues={defaultValues}
     cancelLinkTo={`/admin/shows/${showId}`}
-    submitButtonText="Save"
-    submitButtonTextSubmitting="Saving…"
     showDeleteButton
   />
 );

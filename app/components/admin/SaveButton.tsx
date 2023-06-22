@@ -2,14 +2,14 @@ import type { FC, ReactNode } from 'react';
 import { useFormContext, useIsSubmitting } from 'remix-validated-form';
 
 type Props = {
-  text: ReactNode;
-  textSubmitting: ReactNode;
+  text?: ReactNode;
+  textSubmitting?: ReactNode;
   disabled?: boolean;
 };
 
-export const SubmitButton: FC<Props> = ({
-  text,
-  textSubmitting,
+export const SaveButton: FC<Props> = ({
+  text = 'Save',
+  textSubmitting = 'Saving…',
   disabled: disabledProp,
 }) => {
   const isSubmitting = useIsSubmitting();
