@@ -12,6 +12,7 @@ import { useCounter, useUpdateEffect } from 'usehooks-ts';
 import type { z } from 'zod';
 
 import { Input } from '~/components/admin/Input';
+import { InputDateTime } from '~/components/admin/InputDateTime';
 import { SaveButton } from '~/components/admin/SaveButton';
 import { SetFileUpload } from '~/components/admin/SetFileUpload';
 import { useOrigin } from '~/hooks/useOrigin';
@@ -112,7 +113,7 @@ const ShowForm: FC<ShowFormProps> = ({
         <Input label="Name" name="name" />
         <Input label="URL" prefix={`${origin ?? ''}/`} name="id" />
         <Input label="Description" name="description" />
-        <Input label="Start date" name="startDate" />
+        <InputDateTime label="Start date" name="startDate" step="1" />
         <h4>Sets</h4>
         {sets.map((set, index) => (
           <SetForm
