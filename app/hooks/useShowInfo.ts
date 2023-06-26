@@ -1,3 +1,4 @@
+import { useRevalidator } from '@remix-run/react';
 import { addMilliseconds, addSeconds, isBefore, parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -6,7 +7,6 @@ import type { TargetShowInfo, TargetTimeInfo } from '~/types/ShowInfo';
 
 import { useClock } from './useClock';
 import { useCurrentShowId } from './useCurrentShowId';
-import { useFetchShowInfo } from './useFetchShowInfo';
 
 type UseShowStatusProps = {
   loaderData: ShowData;
@@ -29,17 +29,16 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
 
   const showId = useCurrentShowId();
 
-  const { data: fetcherData, refetch } = useFetchShowInfo(showId);
-
+  const revalidator = useRevalidator();
   useEffect(() => {
-    const refetchInterval = setInterval(refetch, 1000 * 60);
+    const refetchInterval = setInterval(revalidator.revalidate, 1000 * 60);
 
     return () => {
       clearTimeout(refetchInterval);
     };
-  }, [refetch, showId]);
+  }, [revalidator.revalidate, showId]);
 
-  const data = fetcherData || loaderData;
+  const data = loaderData;
   const clientTimeSkewMs = useMemo(() => {
     const serverDate = parseISO(data.serverDate);
 
