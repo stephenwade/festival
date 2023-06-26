@@ -14,6 +14,7 @@ import { links as endedLinks, ShowEnded } from '~/components/ShowEnded';
 import { links as introLinks, ShowIntro } from '~/components/ShowIntro';
 import { links as playingLinks, ShowPlaying } from '~/components/ShowPlaying';
 import { useShowInfo } from '~/hooks/useShowInfo';
+import { addTrailingSlash } from '~/route-util/addTrailingSlash';
 import elevationStylesUrl from '~/styles/elevation.css';
 import showStylesUrl from '~/styles/show.css';
 import type { ShowData } from '~/types/ShowData';
@@ -21,12 +22,16 @@ import type { ShowData } from '~/types/ShowData';
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: elevationStylesUrl },
   { rel: 'stylesheet', href: showStylesUrl },
+  { rel: 'stylesheet', href: './styles.css' },
   ...introLinks(),
   ...playingLinks(),
   ...endedLinks(),
 ];
 
 export const loader = (({ request }) => {
+  // required for the `./styles.css` link to work
+  addTrailingSlash(request.url);
+
   const data: ShowData = {
     name: 'Sample Show',
     description: 'November 8–15, 2023',

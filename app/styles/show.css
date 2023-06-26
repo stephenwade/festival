@@ -24,33 +24,14 @@ body {
   margin: 0;
 }
 
-/*
-The no-webp and webp classes are added in entry.client.tsx.
-This determines whether we load the WebP or JPEG format background image.
-*/
-html.no-webp {
-  --background-image: url('/images/impulse-background.jpg');
-}
-
-html.webp {
-  --background-image: url('/images/impulse-background.webp');
-}
-
 body {
-  --background-color: #131112; /* fallback color for --background-image */
-  --background-color-lighter: #a2bfdc; /* background-color at 75% luminosity */
-
   background-color: var(--background-color);
-  font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue',
-    Helvetica, Arial, 'Lucida Grande', sans-serif;
-  user-select: none;
-}
-
-html.no-webp body,
-html.webp body {
   background-image: var(--background-image);
   background-position: center;
   background-size: cover;
+  font-family: HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue',
+    Helvetica, Arial, 'Lucida Grande', sans-serif;
+  user-select: none;
 }
 
 button {
