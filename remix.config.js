@@ -3,7 +3,7 @@
  */
 module.exports = {
   ignoredRouteFiles: ['**/.*'],
-  serverDependenciesToBundle: ['supports-webp'],
+  serverDependenciesToBundle: [],
   future: {
     v2_errorBoundary: true,
     v2_normalizeFormMethod: true,

@@ -7,9 +7,6 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
-import { useState } from 'react';
-import checkWebP from 'supports-webp';
-import { useEffectOnce } from 'usehooks-ts';
 
 export const meta: MetaFunction = () => ({
   // eslint-disable-next-line unicorn/text-encoding-identifier-case
@@ -21,24 +18,8 @@ export const meta: MetaFunction = () => ({
 });
 
 export default function App() {
-  const [htmlClassName, setHtmlClassName] = useState<string>();
-
-  useEffectOnce(() => {
-    checkWebP
-      .then((supported) => {
-        if (supported) {
-          setHtmlClassName('webp');
-        } else {
-          setHtmlClassName('no-webp');
-        }
-      })
-      .catch(() => {
-        setHtmlClassName('no-webp');
-      });
-  });
-
   return (
-    <html lang="en" className={htmlClassName}>
+    <html lang="en">
       <head>
         <Meta />
         <Links />

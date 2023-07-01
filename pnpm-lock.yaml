@@ -47,9 +47,6 @@ dependencies:
   standardized-audio-context:
     specifier: 25.3.46
     version: 25.3.46
-  supports-webp:
-    specifier: 3.0.0
-    version: 3.0.0
   use-local-storage-state:
     specifier: 18.3.2
     version: 18.3.2(react-dom@18.2.0)(react@18.2.0)
@@ -8068,10 +8065,6 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
     dev: true
-
-  /supports-webp@3.0.0:
-    resolution: {integrity: sha512-5yfrbixhxDhyVma1Pz73MXHDyKtJaBaHCrJaoEKePF6gzm/7xI8Fd/vZu3oBx2a+jN/ZUpTrNKEzN9QgvdzIoQ==}
-    dev: false
 
   /svg-tags@1.0.0:
     resolution: {integrity: sha512-ovssysQTa+luh7A5Weu3Rta6FJlFBBbInjOh722LIt6klpU2/HtdUbszju/G4devcvk8PGt7FCLv5wftu3THUA==}
