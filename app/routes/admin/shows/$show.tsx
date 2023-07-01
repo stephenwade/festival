@@ -14,6 +14,8 @@ export const loader = (async ({ params }) => {
   const show = await db.show.findUnique({
     where: { id },
     include: {
+      showLogoFile: true,
+      backgroundImageFile: true,
       sets: {
         include: {
           audioFileUpload: { select: { audioFile: true } },
@@ -55,6 +57,16 @@ const ViewShow: FC = () => {
       </p>
       <p>
         <strong>Start date:</strong> {show.startDate}
+      </p>
+      <p>
+        <strong>Show logo:</strong>{' '}
+        <a href={show.showLogoFile.url}>{show.showLogoFile.name}</a>
+      </p>
+      <p>
+        <strong>Background image:</strong>{' '}
+        <a href={show.backgroundImageFile.url}>
+          {show.backgroundImageFile.name}
+        </a>
       </p>
       <p>
         <strong>Background colors:</strong> {show.backgroundColor},{' '}
