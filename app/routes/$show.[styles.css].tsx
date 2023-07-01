@@ -1,11 +1,24 @@
 import type { LoaderFunction } from '@remix-run/node';
 
-export const loader = (() => {
-  const backgroundImage = "url('/images/impulse-background.webp')";
-  /** fallback color for `--background-image` */
-  const backgroundColor = '#131112';
-  /** backgroundColor at 75% luminosity */
-  const backgroundColorLighter = '#a2bfdc';
+import { db } from '~/db/db.server';
+
+const notFound = () => new Response('Not Found', { status: 404 });
+
+export const loader = (async ({ params }) => {
+  const id = params.show as string;
+
+  const show = await db.show.findUnique({
+    where: { id },
+    include: {
+      showLogoFile: true,
+      backgroundImageFile: true,
+    },
+  });
+  if (!show) throw notFound();
+
+  const backgroundImage = `url(${show.backgroundImageFile.url})`;
+  const backgroundColor = show.backgroundColor;
+  const backgroundColorLighter = show.backgroundColorSecondary;
 
   return new Response(
     `body {
