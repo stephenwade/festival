@@ -6,15 +6,15 @@ import {
   dispatchAdminEvent,
 } from '~/sse/admin-events.server';
 
-export type FileUploadEvent = SerializeFrom<
-  Prisma.FileUploadGetPayload<{
-    include: { file: true };
+export type AudioFileUploadEvent = SerializeFrom<
+  Prisma.AudioFileUploadGetPayload<{
+    include: { audioFile: true };
   }>
 >;
 
-const EVENT_TYPE = 'file processing';
+const EVENT_TYPE = 'audio file processing';
 
-export function emitFileProcessingEvent(data: FileUploadEvent) {
+export function emitAudioFileProcessingEvent(data: AudioFileUploadEvent) {
   dispatchAdminEvent(EVENT_TYPE, data);
 }
 

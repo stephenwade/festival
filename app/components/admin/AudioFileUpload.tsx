@@ -6,13 +6,13 @@ import { useControlField, useField } from 'remix-validated-form';
 import type { z } from 'zod';
 
 import type { setSchema } from '~/forms/show';
-import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
+import { UPLOAD_AUDIO_FORM_KEY } from '~/forms/upload-audio';
 import { useSse } from '~/hooks/useSse';
-import type { loader as fileUploadLoader } from '~/routes/admin/file-uploads/$id';
-import type { FileUploadEvent } from '~/routes/admin/file-uploads/events';
-import type { action as newFileUploadAction } from '~/routes/admin/file-uploads/new';
+import type { loader as audioUploadLoader } from '~/routes/admin/audio-upload/$id';
+import type { AudioFileUploadEvent } from '~/routes/admin/audio-upload/events';
+import type { action as newAudioUploadAction } from '~/routes/admin/audio-upload/new';
 
-type PutFormResponse = SerializeFrom<typeof newFileUploadAction>;
+type PutFormResponse = SerializeFrom<typeof newAudioUploadAction>;
 
 type PutFormOptions = {
   url: string;
@@ -62,22 +62,22 @@ type Props = {
   setIsUploading: (isUploading: boolean) => void;
 };
 
-export const SetFileUpload: FC<Props> = ({
+export const AudioFileUpload: FC<Props> = ({
   name,
   isUploading,
   setIsUploading,
 }) => {
   const { getInputProps } = useField(name);
   const [fileUploadId, setFileUploadId] =
-    useControlField<z.infer<typeof setSchema>['fileUploadId']>(name);
+    useControlField<z.infer<typeof setSchema>['audioFileUploadId']>(name);
 
   const [fileUploadState, setFileUploadState] =
-    useState<SerializeFrom<typeof fileUploadLoader>>();
+    useState<SerializeFrom<typeof audioUploadLoader>>();
 
   useSse(
-    '/admin/file-uploads/events',
+    '/admin/audio-upload/events',
     useCallback(
-      (data: FileUploadEvent) => {
+      (data: AudioFileUploadEvent) => {
         if (data.id !== fileUploadId) return;
         setFileUploadState(data);
       },
@@ -85,7 +85,7 @@ export const SetFileUpload: FC<Props> = ({
     )
   );
 
-  const fetcher = useFetcher<typeof fileUploadLoader>();
+  const fetcher = useFetcher<typeof audioUploadLoader>();
   useEffect(() => {
     if (
       !fileUploadId ||
@@ -97,7 +97,7 @@ export const SetFileUpload: FC<Props> = ({
     }
 
     // Only use fetcher if needed. Further data will be fetched from the SSE.
-    fetcher.load(`/admin/file-uploads/${fileUploadId}`);
+    fetcher.load(`/admin/audio-upload/${fileUploadId}`);
   }, [fetcher, fileUploadId, fileUploadState]);
 
   const fileUpload = fileUploadState ?? fetcher.data;
@@ -116,13 +116,13 @@ export const SetFileUpload: FC<Props> = ({
     setUploadProgress(0);
 
     const form = new FormData();
-    form.append(UPLOAD_FILE_FORM_KEY, file);
+    form.append(UPLOAD_AUDIO_FORM_KEY, file);
     putForm(form, {
-      url: '/admin/file-uploads/new',
+      url: '/admin/audio-upload/new',
       onProgress: setUploadProgress,
     })
       .then((fileUpload) => {
-        setFileUploadState({ ...fileUpload, file: null });
+        setFileUploadState({ ...fileUpload, audioFile: null });
 
         // Wait a bit to make sure the fetcher is not triggered before the
         // file upload state is updated.
@@ -132,7 +132,7 @@ export const SetFileUpload: FC<Props> = ({
         }, 100);
       })
       .catch((error: { reason: string; status?: number }) => {
-        console.error(`File upload ${name} failed.`, error);
+        console.error(`Audio file upload ${name} failed.`, error);
       });
 
     fileInput.value = '';
@@ -158,15 +158,15 @@ export const SetFileUpload: FC<Props> = ({
           </>
         ) : fileUploadId ? (
           fileUpload ? (
-            fileUpload.file ? (
+            fileUpload.audioFile ? (
               <>
-                Duration: {fileUpload.file.duration}{' '}
+                Duration: {fileUpload.audioFile.duration}{' '}
                 <button type="button" onClick={onRemoveFileClick}>
                   Remove file
                 </button>
               </>
             ) : fileUpload.errorMessage ? (
-              <>Error while converting file: {fileUpload.errorMessage}</>
+              <>Error while converting audio file: {fileUpload.errorMessage}</>
             ) : (
               <>
                 {fileUpload.status}{' '}

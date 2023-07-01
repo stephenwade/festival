@@ -11,10 +11,10 @@ import {
 import { useCounter, useUpdateEffect } from 'usehooks-ts';
 import type { z } from 'zod';
 
+import { AudioFileUpload } from '~/components/admin/AudioFileUpload';
 import { Input } from '~/components/admin/Input';
 import { InputDateTime } from '~/components/admin/InputDateTime';
 import { SaveButton } from '~/components/admin/SaveButton';
-import { SetFileUpload } from '~/components/admin/SetFileUpload';
 import { useOrigin } from '~/hooks/useOrigin';
 
 import type { schema, setSchema } from './validators';
@@ -51,8 +51,8 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
       <input {...getInputProps({ type: 'hidden', value: id })} />
       <Input label="Artist" name={`${name}.artist`} />
       <Input label="Offset" name={`${name}.offset`} />
-      <SetFileUpload
-        name={`${name}.fileUploadId`}
+      <AudioFileUpload
+        name={`${name}.audioFileUploadId`}
         isUploading={isUploading}
         setIsUploading={setIsUploading}
       />

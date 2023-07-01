@@ -16,7 +16,7 @@ export const loader = (async ({ params }) => {
     include: {
       sets: {
         include: {
-          fileUpload: { select: { file: true } },
+          audioFileUpload: { select: { audioFile: true } },
         },
         orderBy: { offset: 'asc' },
       },
@@ -37,23 +37,6 @@ const ViewShow: FC = () => {
   const show = useLoaderData<typeof loader>();
 
   const origin = useOrigin();
-
-  // useSse(
-  //   '/admin/file-uploads/events',
-  //   FileProcessingEventNames,
-  //   useCallback((eventName, data) => {
-  //     if (eventName === 'new set') {
-  //       const newSet = data as FileProcessingNewSetData;
-  //       console.log('new set', newSet);
-  //     } else if (eventName === 'set update') {
-  //       const setUpdate = data as FileProcessingSetUpdateData;
-  //       console.log('set update', setUpdate);
-  //     } else if (eventName === 'file update') {
-  //       const fileUpdate = data as FileProcessingFileUpdateData;
-  //       console.log('file update', fileUpdate);
-  //     }
-  //   }, [])
-  // );
 
   return (
     <>
@@ -93,7 +76,7 @@ const ViewShow: FC = () => {
                 </li>
                 <li>
                   <strong>Duration:</strong>{' '}
-                  {set.fileUpload?.file?.duration ?? <em>Unknown</em>}
+                  {set.audioFileUpload?.audioFile?.duration ?? <em>Unknown</em>}
                 </li>
               </ul>
             </li>

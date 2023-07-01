@@ -23,7 +23,7 @@ export const loader = (async ({ params }) => {
     include: {
       sets: {
         include: {
-          fileUpload: { select: { file: true } },
+          audioFileUpload: { select: { audioFile: true } },
         },
         orderBy: { offset: 'asc' },
       },

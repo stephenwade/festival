@@ -30,21 +30,21 @@ model Set {
   show   Show   @relation(fields: [showId], references: [id], onDelete: Cascade)
   showId String
 
-  fileUpload   FileUpload? @relation(fields: [fileUploadId], references: [id])
-  fileUploadId String?     @unique
+  audioFileUpload   AudioFileUpload? @relation(fields: [audioFileUploadId], references: [id])
+  audioFileUploadId String?          @unique
 }
 
-model File {
+model AudioFile {
   id       String @id @default(uuid())
   name     String
   audioUrl String
   duration Float
 
-  fileUpload   FileUpload @relation(fields: [fileUploadId], references: [id])
-  fileUploadId String     @unique
+  audioFileUpload   AudioFileUpload @relation(fields: [audioFileUploadId], references: [id])
+  audioFileUploadId String          @unique
 }
 
-model FileUpload {
+model AudioFileUpload {
   id              String  @id @default(uuid())
   status          String
   name            String
@@ -53,6 +53,6 @@ model FileUpload {
   convertProgress Float?
   errorMessage    String?
 
-  set  Set?
-  file File?
+  set       Set?
+  audioFile AudioFile?
 }

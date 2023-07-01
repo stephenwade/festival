@@ -1,6 +1,6 @@
 import { rename, unlink } from 'node:fs/promises';
 
-import type { FileUpload } from '@prisma/client';
+import type { AudioFileUpload } from '@prisma/client';
 import type { ActionFunction } from '@remix-run/node';
 import {
   json,
@@ -13,9 +13,9 @@ import { db } from '~/db/db.server';
 import { ffmpeg } from '~/ffmpeg/ffmpeg.server';
 import type { FFprobeOutput } from '~/ffmpeg/ffprobe.server';
 import { ffprobe } from '~/ffmpeg/ffprobe.server';
-import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
+import { UPLOAD_AUDIO_FORM_KEY } from '~/forms/upload-audio';
 
-import { emitFileProcessingEvent } from './events';
+import { emitAudioFileProcessingEvent } from './events';
 
 const GIGABYTE = 1_000_000_000;
 const MICROSECONDS = 1 / 1_000_000;
@@ -27,11 +27,11 @@ const serverError = () =>
 export const action = (async ({ request }) => {
   const fileInfo = await getFileFromFormData(request);
 
-  const fileUpload = await saveFileUploadToDatabase(fileInfo.name);
-  emitFileProcessingEvent(fileUpload);
+  const fileUpload = await saveAudioFileUploadToDatabase(fileInfo.name);
+  emitAudioFileProcessingEvent(fileUpload);
 
   // Run this in the background after responding to the request
-  void processFileUpload(fileUpload);
+  void processAudioFileUpload(fileUpload);
 
   return json(fileUpload);
 }) satisfies ActionFunction;
@@ -44,32 +44,32 @@ async function getFileFromFormData(request: Request): Promise<globalThis.File> {
 
   const form = await unstable_parseMultipartFormData(request, uploadHandler);
 
-  const file = form.get(UPLOAD_FILE_FORM_KEY);
+  const file = form.get(UPLOAD_AUDIO_FORM_KEY);
   if (typeof file === 'string' || file === null) throw badRequest();
 
   return file;
 }
 
-async function saveFileUploadToDatabase(name: string) {
-  const fileUpload = await db.fileUpload.create({
+async function saveAudioFileUploadToDatabase(name: string) {
+  const fileUpload = await db.audioFileUpload.create({
     data: {
       status: 'Processing…',
       name,
     },
-    include: { file: true },
+    include: { audioFile: true },
   });
 
   return fileUpload;
 }
 
-async function processFileUpload(fileUpload: FileUpload) {
+async function processAudioFileUpload(fileUpload: AudioFileUpload) {
   try {
     const fileName = `upload/${fileUpload.name}`;
 
     const stats = await ffprobe(fileName);
     console.log(`ffprobe stats for ${fileName}:`, stats);
 
-    await updateFileUploadDuration(fileUpload.id, stats.format.duration);
+    await updateAudioFileUploadDuration(fileUpload.id, stats.format.duration);
 
     const needsConverting = checkNeedsConverting(stats);
     const newFileName = `upload/${fileUpload.id}.mp3`;
@@ -84,14 +84,17 @@ async function processFileUpload(fileUpload: FileUpload) {
           const currentTime = progress.out_time_us * MICROSECONDS;
           convertProgress = currentTime / total;
         }
-        void updateFileUploadConvertProgress(fileUpload.id, convertProgress);
+        void updateAudioFileUploadConvertProgress(
+          fileUpload.id,
+          convertProgress
+        );
       });
     } else {
       await rename(fileName, newFileName);
     }
 
-    await updateFileUploadFinishing(fileUpload.id);
-    const blobName = `${fileUpload.id}.mp3`;
+    await updateAudioFileUploadFinishing(fileUpload.id);
+    const blobName = `audio/${fileUpload.id}.mp3`;
     await uploadFileToAzure({
       blobName,
       fileName: newFileName,
@@ -99,66 +102,68 @@ async function processFileUpload(fileUpload: FileUpload) {
     });
     const audioUrl = getBlobUrl(blobName);
 
-    await db.fileUpload.update({
+    await db.audioFileUpload.update({
       where: { id: fileUpload.id },
       data: { audioUrl },
     });
 
     await unlink(newFileName);
 
-    await updateFileDoneProcessing(fileUpload.id, newFileName);
+    await updateAudioFileDoneProcessing(fileUpload.id, newFileName);
   } catch (error) {
     await handleError(error, fileUpload.id);
   }
 }
 
-async function updateFileUploadDuration(
-  fileUploadId: FileUpload['id'],
+async function updateAudioFileUploadDuration(
+  fileUploadId: AudioFileUpload['id'],
   duration: number
 ) {
-  const fileUpload = await db.fileUpload.update({
+  const fileUpload = await db.audioFileUpload.update({
     where: { id: fileUploadId },
     data: { duration },
-    include: { file: true },
+    include: { audioFile: true },
   });
 
-  emitFileProcessingEvent(fileUpload);
+  emitAudioFileProcessingEvent(fileUpload);
 }
 
-async function updateFileUploadConvertProgress(
-  fileUploadId: FileUpload['id'],
+async function updateAudioFileUploadConvertProgress(
+  fileUploadId: AudioFileUpload['id'],
   convertProgress: number
 ) {
-  const fileUpload = await db.fileUpload.update({
+  const fileUpload = await db.audioFileUpload.update({
     where: { id: fileUploadId },
     data: {
       status: 'Converting…',
       convertProgress,
     },
-    include: { file: true },
+    include: { audioFile: true },
   });
 
-  emitFileProcessingEvent(fileUpload);
+  emitAudioFileProcessingEvent(fileUpload);
 }
 
-async function updateFileUploadFinishing(fileUploadId: FileUpload['id']) {
-  const fileUpload = await db.fileUpload.update({
+async function updateAudioFileUploadFinishing(
+  fileUploadId: AudioFileUpload['id']
+) {
+  const fileUpload = await db.audioFileUpload.update({
     where: { id: fileUploadId },
     data: {
       status: 'Finishing up…',
       convertProgress: null,
     },
-    include: { file: true },
+    include: { audioFile: true },
   });
 
-  emitFileProcessingEvent(fileUpload);
+  emitAudioFileProcessingEvent(fileUpload);
 }
 
-async function updateFileDoneProcessing(
-  fileUploadId: FileUpload['id'],
+async function updateAudioFileDoneProcessing(
+  fileUploadId: AudioFileUpload['id'],
   newName: string
 ) {
-  const fileUpload = await db.fileUpload.findUnique({
+  const fileUpload = await db.audioFileUpload.findUnique({
     where: { id: fileUploadId },
   });
 
@@ -166,11 +171,11 @@ async function updateFileDoneProcessing(
     throw serverError();
   }
 
-  const newFileUpload = await db.fileUpload.update({
+  const newFileUpload = await db.audioFileUpload.update({
     where: { id: fileUploadId },
     data: {
       status: 'Done',
-      file: {
+      audioFile: {
         create: {
           name: newName,
           audioUrl: fileUpload.audioUrl,
@@ -178,27 +183,30 @@ async function updateFileDoneProcessing(
         },
       },
     },
-    include: { file: true },
+    include: { audioFile: true },
   });
 
-  emitFileProcessingEvent(newFileUpload);
+  emitAudioFileProcessingEvent(newFileUpload);
 }
 
-async function handleError(error: unknown, fileUploadId: FileUpload['id']) {
+async function handleError(
+  error: unknown,
+  fileUploadId: AudioFileUpload['id']
+) {
   const errorMessage = error instanceof Error ? error.message : String(error);
 
   console.error('Error while converting file', error);
 
-  const fileUpload = await db.fileUpload.update({
+  const fileUpload = await db.audioFileUpload.update({
     where: { id: fileUploadId },
     data: {
       status: 'Error',
       errorMessage,
     },
-    include: { file: true },
+    include: { audioFile: true },
   });
 
-  emitFileProcessingEvent(fileUpload);
+  emitAudioFileProcessingEvent(fileUpload);
 }
 
 /**

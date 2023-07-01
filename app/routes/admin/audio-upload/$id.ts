@@ -8,11 +8,11 @@ const notFound = () => new Response('Not Found', { status: 404 });
 export const loader = (async ({ params }) => {
   const id = params.id as string;
 
-  const fileUpload = await db.fileUpload.findUnique({
+  const audioFileUpload = await db.audioFileUpload.findUnique({
     where: { id },
-    include: { file: true },
+    include: { audioFile: true },
   });
-  if (!fileUpload) throw notFound();
+  if (!audioFileUpload) throw notFound();
 
-  return json(fileUpload);
+  return json(audioFileUpload);
 }) satisfies LoaderFunction;
