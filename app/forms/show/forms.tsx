@@ -12,6 +12,7 @@ import { useCounter, useUpdateEffect } from 'usehooks-ts';
 import type { z } from 'zod';
 
 import { AudioFileUpload } from '~/components/admin/AudioFileUpload';
+import { FileUpload } from '~/components/admin/FileUpload';
 import { Input } from '~/components/admin/Input';
 import { InputDateTime } from '~/components/admin/InputDateTime';
 import { SaveButton } from '~/components/admin/SaveButton';
@@ -87,6 +88,9 @@ const ShowForm: FC<ShowFormProps> = ({
     decrement: decUploading,
   } = useCounter();
 
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+  const [isUploadingBackground, setIsUploadingBackground] = useState(false);
+
   const saveDisabled = countUploading > 0;
 
   const onIsUploadingChanged = useCallback(
@@ -114,6 +118,18 @@ const ShowForm: FC<ShowFormProps> = ({
         <Input label="URL" prefix={`${origin ?? ''}/`} name="id" />
         <Input label="Description" name="description" />
         <InputDateTime label="Start date" name="startDate" step="1" />
+        Show logo:{' '}
+        <FileUpload
+          name="showLogoFileId"
+          isUploading={isUploadingLogo}
+          setIsUploading={setIsUploadingLogo}
+        />
+        Background image:{' '}
+        <FileUpload
+          name="backgroundImageFileId"
+          isUploading={isUploadingBackground}
+          setIsUploading={setIsUploadingBackground}
+        />
         <Input label="Background color" type="color" name="backgroundColor" />
         <Input
           label="Background color at 75% L"

@@ -10,7 +10,7 @@ type Props = InputProps & {
 };
 
 export const InputDateTime: FC<Props> = ({ name, label, prefix, ...rest }) => {
-  const { error } = useField(name);
+  const { error, validate } = useField(name);
   const [utcValue, setUtcValue] = useControlField<string>(name);
 
   const [inputValue, setInputValue] = useState(utcToLocalDateTime(utcValue));
@@ -29,7 +29,7 @@ export const InputDateTime: FC<Props> = ({ name, label, prefix, ...rest }) => {
           onChange={({ target: { value } }) => {
             setInputValue(value);
             setUtcValue(localDateTimeToUtc(value));
-            console.log(localDateTimeToUtc(value));
+            validate();
           }}
         />
       </label>

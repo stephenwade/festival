@@ -22,6 +22,8 @@ export const schema = zfd.formData({
   ),
   startDate: z.string().datetime(),
   description: zfd.text(),
+  showLogoFileId: zfd.text(),
+  backgroundImageFileId: zfd.text(),
   backgroundColor: zfd.text(z.string().regex(COLOR_REGEX)),
   backgroundColorSecondary: zfd.text(z.string().regex(COLOR_REGEX)),
   sets: zfd.repeatableOfType(setSchema),

@@ -1,16 +1,14 @@
 import type { SerializeFrom } from '@remix-run/node';
 import { useFetcher } from '@remix-run/react';
 import type { FC } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useControlField, useField } from 'remix-validated-form';
 
-import { UPLOAD_AUDIO_FORM_KEY } from '~/forms/upload-audio';
-import { useSse } from '~/hooks/useSse';
-import type { loader as audioUploadLoader } from '~/routes/admin/audio-upload/$id';
-import type { AudioFileUploadEvent } from '~/routes/admin/audio-upload/events';
-import type { action as newAudioUploadAction } from '~/routes/admin/audio-upload/new';
+import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
+import type { loader as fileUploadLoader } from '~/routes/admin/file-upload/$id';
+import type { action as newFileUploadAction } from '~/routes/admin/file-upload/new';
 
-type PutFormResponse = SerializeFrom<typeof newAudioUploadAction>;
+type PutFormResponse = SerializeFrom<typeof newFileUploadAction>;
 
 type PutFormOptions = {
   url: string;
@@ -60,46 +58,28 @@ type Props = {
   setIsUploading: (isUploading: boolean) => void;
 };
 
-export const AudioFileUpload: FC<Props> = ({
+export const FileUpload: FC<Props> = ({
   name,
   isUploading,
   setIsUploading,
 }) => {
   const { getInputProps } = useField(name);
-  const [fileUploadId, setFileUploadId] = useControlField<string | undefined>(
-    name
-  );
+  const [fileId, setFileId] = useControlField<string | undefined>(name);
 
-  const [fileUploadState, setFileUploadState] =
-    useState<SerializeFrom<typeof audioUploadLoader>>();
+  const [fileState, setFileState] =
+    useState<SerializeFrom<typeof fileUploadLoader>>();
 
-  useSse(
-    '/admin/audio-upload/events',
-    useCallback(
-      (data: AudioFileUploadEvent) => {
-        if (data.id !== fileUploadId) return;
-        setFileUploadState(data);
-      },
-      [fileUploadId]
-    )
-  );
-
-  const fetcher = useFetcher<typeof audioUploadLoader>();
+  const fetcher = useFetcher<typeof fileUploadLoader>();
   useEffect(() => {
-    if (
-      !fileUploadId ||
-      fetcher.data ||
-      fetcher.state === 'loading' ||
-      fileUploadState
-    ) {
+    if (!fileId || fetcher.data || fetcher.state === 'loading' || fileState) {
       return;
     }
 
-    // Only use fetcher if needed. Further data will be fetched from the SSE.
-    fetcher.load(`/admin/audio-upload/${fileUploadId}`);
-  }, [fetcher, fileUploadId, fileUploadState]);
+    // Only use fetcher if needed.
+    fetcher.load(`/admin/file-upload/${fileId}`);
+  }, [fetcher, fileId, fileState]);
 
-  const fileUpload = fileUploadState ?? fetcher.data;
+  const file = fileState ?? fetcher.data;
 
   const [fileName, setFileName] = useState<string>();
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -115,31 +95,31 @@ export const AudioFileUpload: FC<Props> = ({
     setUploadProgress(0);
 
     const form = new FormData();
-    form.append(UPLOAD_AUDIO_FORM_KEY, file);
+    form.append(UPLOAD_FILE_FORM_KEY, file);
     putForm(form, {
-      url: '/admin/audio-upload/new',
+      url: '/admin/file-upload/new',
       onProgress: setUploadProgress,
     })
-      .then((fileUpload) => {
-        setFileUploadState({ ...fileUpload, audioFile: null });
+      .then((file) => {
+        setFileState(file);
 
         // Wait a bit to make sure the fetcher is not triggered before the
         // file upload state is updated.
         setTimeout(() => {
-          setFileUploadId(fileUpload.id);
+          setFileId(file.id);
           setIsUploading(false);
         }, 100);
       })
       .catch((error: { reason: string; status?: number }) => {
-        console.error(`Audio file upload ${name} failed.`, error);
+        console.error(`File upload ${name} failed.`, error);
       });
 
     fileInput.value = '';
   };
 
   const onRemoveFileClick = () => {
-    setFileUploadId(undefined);
-    setFileUploadState(undefined);
+    setFileId(undefined);
+    setFileState(undefined);
   };
 
   return (
@@ -147,7 +127,7 @@ export const AudioFileUpload: FC<Props> = ({
       <input
         {...getInputProps({
           type: 'hidden',
-          value: fileUploadId ?? '',
+          value: fileId ?? '',
         })}
       />
       <p>
@@ -155,31 +135,20 @@ export const AudioFileUpload: FC<Props> = ({
           <>
             Uploading… <progress value={uploadProgress} /> {fileName}
           </>
-        ) : fileUploadId ? (
-          fileUpload ? (
-            fileUpload.audioFile ? (
-              <>
-                Duration: {fileUpload.audioFile.duration}{' '}
-                <button type="button" onClick={onRemoveFileClick}>
-                  Remove file
-                </button>
-              </>
-            ) : fileUpload.errorMessage ? (
-              <>Error while converting audio file: {fileUpload.errorMessage}</>
-            ) : (
-              <>
-                {fileUpload.status}{' '}
-                {fileUpload.convertProgress !== null && (
-                  <progress value={fileUpload.convertProgress} />
-                )}
-              </>
-            )
+        ) : fileId ? (
+          file ? (
+            <>
+              URL: <a href={file.url}>{file.name}</a>{' '}
+              <button type="button" onClick={onRemoveFileClick}>
+                Remove file
+              </button>
+            </>
           ) : (
             'Loading…'
           )
         ) : (
           <>
-            <input type="file" ref={fileInputRef} accept="audio/*" />{' '}
+            <input type="file" ref={fileInputRef} accept="image/*" />{' '}
             <button type="button" onClick={onUploadClick}>
               Upload
             </button>
