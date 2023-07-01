@@ -16,6 +16,9 @@ model Show {
   description String
   startDate   DateTime
 
+  backgroundColor          String
+  backgroundColorSecondary String
+
   sets Set[]
 }
 

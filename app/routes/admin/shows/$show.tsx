@@ -73,6 +73,10 @@ const ViewShow: FC = () => {
       <p>
         <strong>Start date:</strong> {show.startDate}
       </p>
+      <p>
+        <strong>Background colors:</strong> {show.backgroundColor},{' '}
+        {show.backgroundColorSecondary}
+      </p>
       <h3>Sets</h3>
       {show.sets.length === 0 ? (
         <p>

@@ -114,6 +114,12 @@ const ShowForm: FC<ShowFormProps> = ({
         <Input label="URL" prefix={`${origin ?? ''}/`} name="id" />
         <Input label="Description" name="description" />
         <InputDateTime label="Start date" name="startDate" step="1" />
+        <Input label="Background color" type="color" name="backgroundColor" />
+        <Input
+          label="Background color at 75% L"
+          type="color"
+          name="backgroundColorSecondary"
+        />
         <h4>Sets</h4>
         {sets.map((set, index) => (
           <SetForm
