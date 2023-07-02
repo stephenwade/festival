@@ -7,6 +7,7 @@ at the same time) without requiring live streaming infrastructure.
 
 ## Local Development
 
+- Run `doppler setup` to set up your [Doppler](https://www.doppler.com/) config.
 - Run `pnpm install` to install the required packages.
 - Run `pnpm dev` to serve the application locally.
 

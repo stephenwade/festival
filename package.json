@@ -8,9 +8,10 @@
     "url": "git+https://github.com/stephenwade/festival.git"
   },
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev",
-    "start": "remix-serve build",
+    "build": "doppler run -- remix build",
+    "dev": "doppler run -- remix dev",
+    "start": "doppler run -- remix-serve build",
+    "prisma": "doppler run -- prisma",
     "lint:eslint": "eslint . --ignore-path .lintignore --max-warnings 0",
     "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .lintignore --max-warnings 0",
     "lint:prettier": "prettier . --check --ignore-path .lintignore --loglevel warn",
