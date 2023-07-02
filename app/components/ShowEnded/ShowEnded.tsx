@@ -9,7 +9,11 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },
 ];
 
-export const ShowEnded: FC = () => {
+type Props = {
+  logoUrl: string;
+};
+
+export const ShowEnded: FC<Props> = ({ logoUrl }) => {
   useEffectOnce(() => {
     toast.dismiss();
   });
@@ -22,11 +26,8 @@ export const ShowEnded: FC = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img
-          className="logo"
-          src="/images/impulse-logo.png"
-          alt="Impulse Music Festival"
-        />
+        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+        <img className="logo" src={logoUrl} />
       </a>
       <a
         href="https://twitter.com/URLFESTIVAL"

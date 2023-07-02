@@ -9,6 +9,8 @@ export type SetData = {
 export type ShowData = {
   name: string;
   description: string;
+  showLogoUrl: string;
+  backgroundImageUrl: string;
   sets: SetData[];
   serverDate: string;
 };

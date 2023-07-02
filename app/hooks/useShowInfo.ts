@@ -60,9 +60,6 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
         const end = addMilliseconds(set.end, clientTimeSkewMs);
 
         return { ...set, start, end };
-      })
-      .sort(function byDate(a, b) {
-        return a.start.valueOf() - b.start.valueOf();
       });
   }, [audioDurations, clientTimeSkewMs, data.sets]);
 

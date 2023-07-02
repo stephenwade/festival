@@ -5,7 +5,7 @@ import type {
 } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import { formatISO } from 'date-fns';
+import { addSeconds, formatISO } from 'date-fns';
 import type { FC } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 
@@ -13,10 +13,13 @@ import { AudioController } from '~/components/AudioController';
 import { links as endedLinks, ShowEnded } from '~/components/ShowEnded';
 import { links as introLinks, ShowIntro } from '~/components/ShowIntro';
 import { links as playingLinks, ShowPlaying } from '~/components/ShowPlaying';
+import { db } from '~/db/db.server';
 import { useShowInfo } from '~/hooks/useShowInfo';
 import elevationStylesUrl from '~/styles/elevation.css';
 import showStylesUrl from '~/styles/show.css';
 import type { ShowData } from '~/types/ShowData';
+
+const notFound = () => new Response('Not Found', { status: 404 });
 
 export const meta: V2_MetaFunction<typeof loader> = ({ data, params }) => {
   const id = params.show as string;
@@ -36,47 +39,36 @@ export const links: LinksFunction = () => [
   ...endedLinks(),
 ];
 
-export const loader = (() => {
+export const loader = (async ({ params }) => {
+  const id = params.show as string;
+
+  const show = await db.show.findUnique({
+    where: { id },
+    include: {
+      showLogoFile: true,
+      backgroundImageFile: true,
+      sets: {
+        include: {
+          audioFileUpload: { select: { audioFile: true } },
+        },
+        orderBy: { offset: 'asc' },
+      },
+    },
+  });
+  if (!show) throw notFound();
+
   const data: ShowData = {
-    name: 'Sample Show',
-    description: 'November 8–15, 2023',
-    sets: [
-      {
-        id: 'd4cf8bbe-79ab-4cd8-a319-0ea391f38413',
-        audioUrl: '/media/sample/energy-fix.mp3',
-        artist: 'Computer Music All‑stars',
-        start: '2023-06-25T20:00:00-0400',
-        duration: 181.34,
-      },
-      {
-        id: '53d233eb-8326-4767-995b-10759bb2bd6f',
-        audioUrl: '/media/sample/bust-this-bust-that.mp3',
-        artist: 'Professor Kliq',
-        start: '2023-06-25T20:03:06-0400',
-        duration: 268.64,
-      },
-      {
-        id: '4b4c209f-c26e-4a6e-a2e3-e3c88c6c0958',
-        audioUrl: '/media/sample/one-ride.mp3',
-        artist: "'Etikit",
-        start: '2023-06-25T20:07:40-0400',
-        duration: 183.72,
-      },
-      {
-        id: 'c88d9242-7be4-499c-abe9-ba4f62063ba9',
-        audioUrl: '/media/sample/total-breakdown.mp3',
-        artist: 'Brad Sucks',
-        start: '2023-06-25T20:10:49-0400',
-        duration: 139,
-      },
-      {
-        id: '0b2c85e8-9614-471a-a645-b5f44c657c1c',
-        audioUrl: '/media/sample/distant-thunder-sunday-morning.mp3',
-        artist: 'springtide',
-        start: '2023-06-25T20:13:13-0400',
-        duration: 226.06,
-      },
-    ],
+    name: show.name,
+    description: show.description,
+    showLogoUrl: show.showLogoFile.url,
+    backgroundImageUrl: show.backgroundImageFile.url,
+    sets: show.sets.map((set) => ({
+      id: set.id,
+      audioUrl: set.audioFileUpload?.audioFile?.audioUrl ?? '',
+      artist: set.artist,
+      start: addSeconds(show.startDate, set.offset).toISOString(),
+      duration: set.audioFileUpload?.audioFile?.duration ?? 0,
+    })),
     serverDate: formatISO(new Date()),
   };
 
@@ -110,6 +102,7 @@ const Show: FC = () => {
         if (showInfo.status === 'WAITING_FOR_AUDIO_CONTEXT') {
           return (
             <ShowIntro
+              logoUrl={loaderData.showLogoUrl}
               onListenClicked={() => {
                 void initializeAudio();
               }}
@@ -118,7 +111,7 @@ const Show: FC = () => {
         }
 
         if (showInfo.status === 'ENDED') {
-          return <ShowEnded />;
+          return <ShowEnded logoUrl={loaderData.showLogoUrl} />;
         }
 
         return (

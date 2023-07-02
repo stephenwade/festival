@@ -8,10 +8,11 @@ export const links: LinksFunction = () => [
 ];
 
 type Props = {
+  logoUrl: string;
   onListenClicked: () => void;
 };
 
-export const ShowIntro: FC<Props> = ({ onListenClicked }) => {
+export const ShowIntro: FC<Props> = ({ logoUrl, onListenClicked }) => {
   return (
     <div className="intro-container">
       <a
@@ -20,11 +21,8 @@ export const ShowIntro: FC<Props> = ({ onListenClicked }) => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img
-          className="logo"
-          src="/images/impulse-logo.png"
-          alt="Impulse Music Festival"
-        />
+        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+        <img className="logo" src={logoUrl} />
       </a>
       <div className="buttons">
         <span className="elevation-z2">
