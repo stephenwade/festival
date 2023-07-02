@@ -139,7 +139,7 @@ const ShowForm: FC<ShowFormProps> = ({
         <h4>Sets</h4>
         {sets.map((set, index) => (
           <SetForm
-            key={set.id}
+            key={set.key}
             name={`sets[${index}]`}
             remove={() => remove(index)}
             onIsUploadingChanged={onIsUploadingChanged}
