@@ -1,7 +1,7 @@
 import type {
   LinksFunction,
   LoaderFunction,
-  MetaFunction,
+  V2_MetaFunction,
 } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
@@ -14,24 +14,29 @@ import { links as endedLinks, ShowEnded } from '~/components/ShowEnded';
 import { links as introLinks, ShowIntro } from '~/components/ShowIntro';
 import { links as playingLinks, ShowPlaying } from '~/components/ShowPlaying';
 import { useShowInfo } from '~/hooks/useShowInfo';
-import { addTrailingSlash } from '~/route-util/addTrailingSlash';
 import elevationStylesUrl from '~/styles/elevation.css';
 import showStylesUrl from '~/styles/show.css';
 import type { ShowData } from '~/types/ShowData';
 
+export const meta: V2_MetaFunction<typeof loader> = ({ data, params }) => {
+  const id = params.show as string;
+
+  return [
+    { title: data ? `${data.name} | Festival` : 'Festival' },
+    { name: 'description', content: data?.description },
+    { tagName: 'link', rel: 'stylesheet', href: `/${id}/styles.css` },
+  ];
+};
+
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: elevationStylesUrl },
   { rel: 'stylesheet', href: showStylesUrl },
-  { rel: 'stylesheet', href: './styles.css' },
   ...introLinks(),
   ...playingLinks(),
   ...endedLinks(),
 ];
 
-export const loader = (({ request }) => {
-  // required for the `./styles.css` link to work
-  addTrailingSlash(request.url);
-
+export const loader = (() => {
   const data: ShowData = {
     name: 'Sample Show',
     description: 'November 8–15, 2023',
@@ -77,13 +82,6 @@ export const loader = (({ request }) => {
 
   return json(data);
 }) satisfies LoaderFunction;
-
-export const meta: MetaFunction = ({ data }: { data: ShowData }) => {
-  return {
-    title: `${data.name} | Festival`,
-    description: data.description,
-  };
-};
 
 const Show: FC = () => {
   const loaderData = useLoaderData<typeof loader>();

@@ -1,7 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  MetaFunction,
+  V2_MetaFunction,
 } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
@@ -14,6 +14,10 @@ import { replaceNullsWithUndefined } from '~/forms/utils/replaceNullsWithUndefin
 import { replaceUndefinedsWithNull } from '~/forms/utils/replaceUndefinedsWithNull';
 
 const notFound = () => new Response('Not Found', { status: 404 });
+
+export const meta: V2_MetaFunction = () => [
+  { title: 'Edit show | Festival admin' },
+];
 
 export const loader = (async ({ params }) => {
   const id = params.show as string;
@@ -33,12 +37,6 @@ export const loader = (async ({ params }) => {
 
   return json(replaceNullsWithUndefined(show));
 }) satisfies LoaderFunction;
-
-export const meta: MetaFunction = () => {
-  return {
-    title: 'Edit show | Festival admin',
-  };
-};
 
 export const action = (async ({ params, request }) => {
   const previousId = params.show as string;

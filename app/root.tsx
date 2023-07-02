@@ -1,4 +1,4 @@
-import type { MetaFunction } from '@remix-run/node';
+import type { V2_MetaFunction } from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -8,19 +8,20 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 
-export const meta: MetaFunction = () => ({
-  // eslint-disable-next-line unicorn/text-encoding-identifier-case
-  charset: 'utf-8',
-  title: 'Festival',
-  description: 'Host online music festivals',
-  viewport:
-    'width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes',
-});
+export const meta: V2_MetaFunction = () => [
+  { title: 'Festival' },
+  { name: 'description', content: 'Host online music festivals' },
+];
 
 export default function App() {
   return (
     <html lang="en">
       <head>
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"
+        />
         <Meta />
         <Links />
 

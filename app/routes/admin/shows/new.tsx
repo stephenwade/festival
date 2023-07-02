@@ -1,4 +1,4 @@
-import type { ActionFunction, MetaFunction } from '@remix-run/node';
+import type { ActionFunction, V2_MetaFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
@@ -6,11 +6,9 @@ import { validationError } from 'remix-validated-form';
 import { db } from '~/db/db.server';
 import { makeServerValidator, NewShowForm } from '~/forms/show';
 
-export const meta: MetaFunction = () => {
-  return {
-    title: 'New show | Festival admin',
-  };
-};
+export const meta: V2_MetaFunction = () => [
+  { title: 'New show | Festival admin' },
+];
 
 export const action = (async ({ request }) => {
   const validator = makeServerValidator();

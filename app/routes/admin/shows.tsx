@@ -1,12 +1,10 @@
-import type { MetaFunction } from '@remix-run/node';
+import type { V2_MetaFunction } from '@remix-run/node';
 import { Outlet } from '@remix-run/react';
 import type { FC } from 'react';
 
-export const meta: MetaFunction = () => {
-  return {
-    title: 'Shows | Festival admin',
-  };
-};
+export const meta: V2_MetaFunction = () => [
+  { title: 'Shows | Festival admin' },
+];
 
 const Shows: FC = () => {
   return (

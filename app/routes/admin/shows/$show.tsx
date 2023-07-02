@@ -1,4 +1,4 @@
-import type { LoaderFunction, MetaFunction } from '@remix-run/node';
+import type { LoaderFunction, V2_MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
@@ -7,6 +7,10 @@ import { db } from '~/db/db.server';
 import { useOrigin } from '~/hooks/useOrigin';
 
 const notFound = () => new Response('Not Found', { status: 404 });
+
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => [
+  { title: data ? `${data.name} | Festival admin` : 'Show | Festival admin' },
+];
 
 export const loader = (async ({ params }) => {
   const id = params.show as string;
@@ -28,12 +32,6 @@ export const loader = (async ({ params }) => {
 
   return json(show);
 }) satisfies LoaderFunction;
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return {
-    title: `${data.name} | Festival admin`,
-  };
-};
 
 const ViewShow: FC = () => {
   const show = useLoaderData<typeof loader>();
