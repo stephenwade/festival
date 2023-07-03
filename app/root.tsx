@@ -1,4 +1,6 @@
-import type { V2_MetaFunction } from '@remix-run/node';
+import { ClerkApp, ClerkCatchBoundary } from '@clerk/remix';
+import { rootAuthLoader } from '@clerk/remix/ssr.server';
+import type { LoaderFunction, V2_MetaFunction } from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -13,7 +15,11 @@ export const meta: V2_MetaFunction = () => [
   { name: 'description', content: 'Host online music festivals' },
 ];
 
-export default function App() {
+export const loader = rootAuthLoader satisfies LoaderFunction;
+
+export const CatchBoundary = ClerkCatchBoundary();
+
+function App() {
   return (
     <html lang="en">
       <head>
@@ -40,3 +46,5 @@ export default function App() {
     </html>
   );
 }
+
+export default ClerkApp(App);

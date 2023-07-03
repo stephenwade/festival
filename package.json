@@ -8,6 +8,7 @@
     "url": "git+https://github.com/stephenwade/festival.git"
   },
   "scripts": {
+    "prepare": "husky install; prisma generate",
     "build": "doppler run -- remix build",
     "dev": "doppler run -- remix dev",
     "start": "doppler run -- remix-serve build",
@@ -23,6 +24,7 @@
   },
   "dependencies": {
     "@azure/storage-blob": "12.14.0",
+    "@clerk/remix": "2.6.16",
     "@prisma/client": "4.16.2",
     "@remix-run/node": "1.18.1",
     "@remix-run/react": "1.18.1",

@@ -70,3 +70,7 @@ model File {
   showLogo            Show? @relation(name: "ShowLogoFile")
   showBackgroundImage Show? @relation(name: "BackgroundImageFile")
 }
+
+model AdminUserAllowlist {
+  emailAddress String @unique
+}

@@ -1,8 +1,13 @@
-import type { ActionFunction, V2_MetaFunction } from '@remix-run/node';
+import type {
+  ActionFunction,
+  LoaderFunction,
+  V2_MetaFunction,
+} from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
 
+import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db/db.server';
 import { makeServerValidator, NewShowForm } from '~/forms/show';
 
@@ -10,10 +15,12 @@ export const meta: V2_MetaFunction = () => [
   { title: 'New show | Festival admin' },
 ];
 
-export const action = (async ({ request }) => {
+export const action = (async (args) => {
+  await redirectToLogin(args);
+
   const validator = makeServerValidator();
 
-  const form = await request.formData();
+  const form = await args.request.formData();
   const { data, error } = await validator.validate(form);
   if (error) return validationError(error);
 
@@ -27,6 +34,12 @@ export const action = (async ({ request }) => {
   });
   return redirect(`/admin/shows/${show.id}`);
 }) satisfies ActionFunction;
+
+export const loader = (async (args) => {
+  await redirectToLogin(args);
+
+  return null;
+}) satisfies LoaderFunction;
 
 const NewShow: FC = () => {
   return (

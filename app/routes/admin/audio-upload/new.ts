@@ -8,6 +8,7 @@ import {
   unstable_parseMultipartFormData,
 } from '@remix-run/node';
 
+import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
 import { db } from '~/db/db.server';
 import { ffmpeg } from '~/ffmpeg/ffmpeg.server';
@@ -24,8 +25,10 @@ const badRequest = () => new Response('Bad Request', { status: 400 });
 const serverError = () =>
   new Response('Internal Server Error', { status: 500 });
 
-export const action = (async ({ request }) => {
-  const fileInfo = await getFileFromFormData(request);
+export const action = (async (args) => {
+  await redirectToLogin(args);
+
+  const fileInfo = await getFileFromFormData(args.request);
 
   const fileUpload = await saveAudioFileUploadToDatabase(fileInfo.name);
   emitAudioFileProcessingEvent(fileUpload);

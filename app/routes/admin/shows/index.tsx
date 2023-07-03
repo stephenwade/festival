@@ -3,9 +3,12 @@ import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 
+import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db/db.server';
 
-export const loader = (async () => {
+export const loader = (async (args) => {
+  await redirectToLogin(args);
+
   const shows = await db.show.findMany();
 
   return json(shows);

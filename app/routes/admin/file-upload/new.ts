@@ -7,6 +7,7 @@ import {
   unstable_parseMultipartFormData,
 } from '@remix-run/node';
 
+import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
 import { db } from '~/db/db.server';
 import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
@@ -15,8 +16,10 @@ const MEGABYTE = 1_000_000;
 
 const badRequest = () => new Response('Bad Request', { status: 400 });
 
-export const action = (async ({ request }) => {
-  const fileInfo = await getFileFromFormData(request);
+export const action = (async (args) => {
+  await redirectToLogin(args);
+
+  const fileInfo = await getFileFromFormData(args.request);
 
   const file = await saveFileAndUploadToAzure(fileInfo);
 

@@ -1,6 +1,7 @@
 import type { Prisma } from '@prisma/client';
 import type { LoaderFunction, SerializeFrom } from '@remix-run/node';
 
+import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import {
   adminEventStream,
   dispatchAdminEvent,
@@ -18,6 +19,8 @@ export function emitAudioFileProcessingEvent(data: AudioFileUploadEvent) {
   dispatchAdminEvent(EVENT_TYPE, data);
 }
 
-export const loader = (({ request }) => {
-  return adminEventStream(request, EVENT_TYPE);
+export const loader = (async (args) => {
+  await redirectToLogin(args);
+
+  return adminEventStream(args.request, EVENT_TYPE);
 }) satisfies LoaderFunction;

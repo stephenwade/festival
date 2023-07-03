@@ -3,6 +3,7 @@ import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 
+import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db/db.server';
 import { useOrigin } from '~/hooks/useOrigin';
 
@@ -12,8 +13,10 @@ export const meta: V2_MetaFunction<typeof loader> = ({ data }) => [
   { title: data ? `${data.name} | Festival admin` : 'Show | Festival admin' },
 ];
 
-export const loader = (async ({ params }) => {
-  const id = params.show as string;
+export const loader = (async (args) => {
+  await redirectToLogin(args);
+
+  const id = args.params.show as string;
 
   const show = await db.show.findUnique({
     where: { id },

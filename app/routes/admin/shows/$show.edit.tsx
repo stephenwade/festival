@@ -8,6 +8,7 @@ import { useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
 
+import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db/db.server';
 import { EditShowForm, makeServerValidator } from '~/forms/show';
 import { replaceNullsWithUndefined } from '~/forms/utils/replaceNullsWithUndefined';
@@ -19,8 +20,10 @@ export const meta: V2_MetaFunction = () => [
   { title: 'Edit show | Festival admin' },
 ];
 
-export const loader = (async ({ params }) => {
-  const id = params.show as string;
+export const loader = (async (args) => {
+  await redirectToLogin(args);
+
+  const id = args.params.show as string;
 
   const show = await db.show.findUnique({
     where: { id },
@@ -38,10 +41,12 @@ export const loader = (async ({ params }) => {
   return json(replaceNullsWithUndefined(show));
 }) satisfies LoaderFunction;
 
-export const action = (async ({ params, request }) => {
-  const previousId = params.show as string;
+export const action = (async (args) => {
+  await redirectToLogin(args);
 
-  if (request.method === 'DELETE') {
+  const previousId = args.params.show as string;
+
+  if (args.request.method === 'DELETE') {
     await db.show.delete({ where: { id: previousId } });
 
     return redirect('/admin/shows');
@@ -49,7 +54,7 @@ export const action = (async ({ params, request }) => {
 
   const validator = makeServerValidator({ previousId });
 
-  const form = await request.formData();
+  const form = await args.request.formData();
   const { data, error } = await validator.validate(form);
   if (error) return validationError(error);
 

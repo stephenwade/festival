@@ -5,7 +5,9 @@ module.exports = {
   ignoredRouteFiles: ['**/.*'],
   serverDependenciesToBundle: [],
   future: {
-    v2_errorBoundary: true,
+    // Clerk doesn't support ErrorBoundaryV2 yet
+    v2_errorBoundary: false,
+
     v2_meta: true,
     v2_normalizeFormMethod: true,
   },
