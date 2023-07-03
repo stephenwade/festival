@@ -1,0 +1,110 @@
+import type {
+  ActionFunction,
+  LoaderFunction,
+  V2_MetaFunction,
+} from '@remix-run/node';
+import { json, redirect } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
+import type { FC } from 'react';
+import { validationError } from 'remix-validated-form';
+
+import { redirectToLogin } from '~/auth/redirect-to-login.server';
+import { db } from '~/db/db.server';
+import { EditShowForm, makeServerValidator } from '~/forms/show';
+import { replaceNullsWithUndefined } from '~/forms/utils/replaceNullsWithUndefined';
+import { replaceUndefinedsWithNull } from '~/forms/utils/replaceUndefinedsWithNull';
+
+const notFound = () => new Response('Not Found', { status: 404 });
+
+export const meta: V2_MetaFunction = () => [
+  { title: 'Edit show | Festival admin' },
+];
+
+export const loader = (async (args) => {
+  await redirectToLogin(args);
+
+  const id = args.params.show as string;
+
+  const show = await db.show.findUnique({
+    where: { id },
+    include: {
+      sets: {
+        include: {
+          audioFileUpload: { select: { audioFile: true } },
+        },
+        orderBy: { offset: 'asc' },
+      },
+    },
+  });
+  if (!show) throw notFound();
+
+  return json(replaceNullsWithUndefined(show));
+}) satisfies LoaderFunction;
+
+export const action = (async (args) => {
+  await redirectToLogin(args);
+
+  const previousId = args.params.show as string;
+
+  if (args.request.method === 'DELETE') {
+    await db.show.delete({ where: { id: previousId } });
+
+    return redirect('/admin/shows');
+  }
+
+  const validator = makeServerValidator({ previousId });
+
+  const form = await args.request.formData();
+  const { data, error } = await validator.validate(form);
+  if (error) return validationError(error);
+
+  const { sets, ...rest } = replaceUndefinedsWithNull(data);
+
+  await db.show.update({
+    where: { id: previousId },
+    data: {
+      ...rest,
+      sets: {
+        deleteMany: {
+          showId: previousId,
+          id: { notIn: sets.map((set) => set.id) },
+        },
+        upsert: sets.map((set) => ({
+          create: set,
+          update: set,
+          where: { id: set.id },
+        })),
+      },
+    },
+  });
+  await Promise.all([
+    db.set.deleteMany({
+      where: {
+        showId: rest.id,
+        id: { notIn: sets.map((set) => set.id) },
+      },
+    }),
+    sets.map((set) =>
+      db.set.upsert({
+        create: { ...set, showId: rest.id },
+        update: set,
+        where: { id: set.id },
+      })
+    ),
+  ]);
+
+  return redirect(`/admin/shows/${data.id}`);
+}) satisfies ActionFunction;
+
+const EditShow: FC = () => {
+  const show = useLoaderData<typeof loader>();
+
+  return (
+    <>
+      <h3>Edit show</h3>
+      <EditShowForm defaultValues={show} showId={show.id} />
+    </>
+  );
+};
+
+export default EditShow;

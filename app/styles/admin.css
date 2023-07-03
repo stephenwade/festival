@@ -1,0 +1,19 @@
+body {
+  --error-color: #b00020;
+
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.input-error-wrapper {
+  color: var(--error-color);
+  font-size: 0.8em;
+}

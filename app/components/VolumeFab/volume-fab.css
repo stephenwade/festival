@@ -1,0 +1,115 @@
+.volume-fab-container {
+  transform: rotate(-90deg);
+}
+
+.volume-fab-container button {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  background-color: white;
+  outline: none;
+  transform: rotate(90deg);
+}
+
+.volume-fab-container button:active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  background-color: var(--background-color);
+  opacity: 0.2;
+}
+
+.volume-fab-container svg {
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  fill: var(--background-color);
+}
+
+.volume-fab-container .slider-container {
+  position: absolute;
+  top: 50%;
+  left: calc(56px - 12em);
+  width: 12em;
+  height: 30px;
+  padding-right: 15px;
+  padding-left: 45px;
+  border-radius: 15px;
+  background-color: white;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-property: left, clip-path;
+  transform: translateY(-50%);
+  clip-path: inset(-24px -24px -24px calc(100% - 30px));
+}
+
+.volume-fab-container .slider-container[aria-expanded='true'] {
+  left: calc(100% - 30px);
+  transition-duration: 200ms;
+  clip-path: inset(-24px);
+}
+
+.styled-range-input {
+  --range-color-primary: var(--background-color, #050595);
+  --range-color-secondary: var(--background-color-lighter, #8383fb);
+
+  position: relative;
+  top: 1px;
+  width: 100%;
+  margin: 7px 0;
+  background-color: transparent;
+  appearance: none;
+}
+
+.styled-range-input:focus {
+  outline: none;
+}
+
+.styled-range-input::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--range-color-secondary);
+  cursor: pointer;
+}
+
+.styled-range-input::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+  margin-top: -7px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--range-color-primary);
+  cursor: pointer;
+  appearance: none;
+}
+
+.styled-range-input:focus::-webkit-slider-runnable-track {
+  background: var(--range-color-secondary);
+}
+
+.styled-range-input::-moz-range-track {
+  width: 100%;
+  height: 2px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--range-color-secondary);
+  cursor: pointer;
+}
+
+.styled-range-input::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--range-color-primary);
+  cursor: pointer;
+}

@@ -13,41 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js 16.x
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: 16.x
-          cache: yarn
+          version: latest
 
-      - run: yarn --immutable
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: pnpm
 
-      - run: yarn lint
+      - run: pnpm install
 
-      - run: yarn imagemin
-        working-directory: frontend
-
-      - name: Check working directory
-        run: |
-          status() {
-            git status --porcelain | \
-              # ignore modified images
-              # imagemin can produce different files on different computers
-              grep --invert-match ' M frontend/images/'
-          }
-
-          if [[ -z "$(status)" ]]; then
-            echo "Git repo is clean."
-          else
-            echo "Git repo is dirty."
-            status
-
-            if status | grep -q images; then
-              # shellcheck disable=SC2016
-              echo 'Did you forget to run `yarn imagemin`?'
-            fi
-
-            false
-          fi
+      - run: pnpm lint

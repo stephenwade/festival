@@ -1,0 +1,44 @@
+.playing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* <fab-volume-button> causes overflow */
+  padding: 0 1em;
+  color: white;
+}
+
+.current-time,
+.artist {
+  z-index: 1;
+}
+
+.current-time {
+  margin-bottom: 0.2em;
+  font-weight: 900;
+  font-size: 5em;
+}
+
+.next-up {
+  margin-bottom: 0.2em;
+  font-size: 2em;
+  text-transform: uppercase;
+}
+
+.artist {
+  max-width: calc(min(60vh, 10em));
+  margin-bottom: -0.1em;
+  font-weight: 900;
+  font-size: 3em;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  user-select: text;
+}
+
+.volume-fab-container {
+  position: absolute;
+  right: 1.5em;
+  bottom: 1.5em;
+}

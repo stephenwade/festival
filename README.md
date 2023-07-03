@@ -7,54 +7,44 @@ at the same time) without requiring live streaming infrastructure.
 
 ## Local Development
 
-- Run `cd frontend` to change to the frontend directory.
-- Run `yarn` to install the required packages.
-- Add media files to the `media/` folder and add the information to
-  `media/sets.json`. Use `media/sets-sample.json` as a guide to format
-  your `sets.json` file.
-- If you add images, run `yarn imagemin` to convert them to WEBP.
-- Run `yarn start` to serve the application locally.
+- Run `doppler setup` to set up your [Doppler](https://www.doppler.com/) config.
+- Run `pnpm install` to install the required packages.
+- Run `pnpm dev` to serve the application locally.
 
-## Sample Media
+## MySQL Setup
 
-- The `frontend/media/sets-sample.json` file has references to several sample
-  media files available under
-  [CC0](https://creativecommons.org/share-your-work/public-domain/cc0/).
-  To get the sample media files, download
-  [this ZIP file](https://stephenwade.me/sh/f/sample.zip)
-  and expand it into the `media/` folder.
+Run the following commands to create a MySQL user for Festival. Prisma Migrate
+requires the user account to have
+[permission to create databases](https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database#shadow-database-user-permissions).
+
+```
+CREATE USER festival@localhost IDENTIFIED BY 'your-password-here';
+GRANT ALL ON festival.* TO festival@localhost;
+GRANT CREATE, ALTER, DROP, REFERENCES ON *.* TO festival@localhost;
+```
 
 ## Building
 
-- `yarn build` will bundle the application in the `dist/` folder.
-- `yarn start:build` will serve the bundled application.
+- `pnpm build` will bundle the application for production.
+- `pnpm start` will serve the bundled application.
 
 ## Testing
 
-- Run `cd frontend` to change to the frontend directory.
-- Run `yarn playwright install` to install the required dependencies for
-  Playwright, the end-to-end test runner.
-- Run `yarn test:js` to run the component and store tests with
-  [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/).
-- Run `yarn test:e2e` to run the end-to-end tests with
-  [Playwright](https://playwright.dev/).
-- You can also run `yarn test` to run all tests at once.
+TODO
 
 ## Deploying
 
-The site is deployed to a web server via rsync over SSH. The media is deployed
-to Azure blob storage.
+TODO
 
 1. Make sure that your Azure storage account is set to allow
    [CORS requests](https://stackoverflow.com/a/41351674).
    This is required for the visualizer to work.
-1. Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest).
+1. Install the
+   [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
 1. Add the following environment variables to your `.env` file:
    - `FESTIVAL_SITE_DEPLOY_LOCATION`: The rsync destination for the site.
-   - `FESTIVAL_AZURE_STORAGE_ACCOUNT`: The name of the Azure storage account
-     for the media.
-   - `FESTIVAL_AZURE_STORAGE_KEY`: The access key for the Azure storage account.
-1. Run `yarn build` to build the site for production.
-1. Run `yarn deploy` to deploy both the site and the media.
-   You can also run `yarn deploy:site` to deploy only the site,
-   or `yarn deploy:media` to deploy only the media.
+   - `AZURE_STORAGE_ACCOUNT`: The name of the Azure storage account for the
+     media.
+   - `AZURE_STORAGE_KEY`: The access key for the Azure storage account.
+1. Run `pnpm build` to build the site for production.
+1. Run `pnpm deploy` to deploy both the site and the media.

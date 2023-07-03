@@ -1,0 +1,76 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Show {
+  id          String   @id
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  description String
+  startDate   DateTime
+
+  backgroundColor          String
+  backgroundColorSecondary String
+
+  showLogoFile          File   @relation(name: "ShowLogoFile", fields: [showLogoFileId], references: [id])
+  showLogoFileId        String @unique
+  backgroundImageFile   File   @relation(name: "BackgroundImageFile", fields: [backgroundImageFileId], references: [id])
+  backgroundImageFileId String @unique
+
+  sets Set[]
+}
+
+model Set {
+  id     String @id @default(uuid())
+  artist String
+  offset Float
+
+  show   Show   @relation(fields: [showId], references: [id], onDelete: Cascade)
+  showId String
+
+  audioFileUpload   AudioFileUpload? @relation(fields: [audioFileUploadId], references: [id])
+  audioFileUploadId String?          @unique
+}
+
+model AudioFile {
+  id       String @id @default(uuid())
+  name     String
+  audioUrl String
+  duration Float
+
+  audioFileUpload   AudioFileUpload @relation(fields: [audioFileUploadId], references: [id])
+  audioFileUploadId String          @unique
+}
+
+model AudioFileUpload {
+  id              String  @id @default(uuid())
+  status          String
+  name            String
+  audioUrl        String?
+  duration        Float?
+  convertProgress Float?
+  errorMessage    String?
+
+  set       Set?
+  audioFile AudioFile?
+}
+
+model File {
+  id   String @id @default(uuid())
+  name String
+  url  String
+
+  showLogo            Show? @relation(name: "ShowLogoFile")
+  showBackgroundImage Show? @relation(name: "BackgroundImageFile")
+}
+
+model AdminUserAllowlist {
+  emailAddress String @unique
+}

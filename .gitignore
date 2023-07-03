@@ -1,20 +1,13 @@
 # system files
 .DS_Store
 
-# yarn
+# npm
 node_modules/
-.yarn/*
-!.yarn/patches
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
-
-# testing
-coverage/
 
 # build
-dist/
-media/
+.cache/
+build/
 .env
+
+# runtime
+upload
