@@ -17,11 +17,11 @@
     "lint:eslint": "eslint . --ignore-path .lintignore --max-warnings 0",
     "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .lintignore --max-warnings 0",
     "lint:prettier": "prettier . --check --ignore-path .lintignore --loglevel warn",
-    "lint": "pnpm lint:eslint && pnpm lint:stylelint && pnpm lint:prettier",
+    "lint": "npm run lint:eslint && npm run lint:stylelint && npm run lint:prettier",
     "format:eslint": "eslint . --fix --ignore-path .lintignore",
     "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .lintignore",
     "format:prettier": "prettier . --write --ignore-path .lintignore --loglevel warn",
-    "format": "pnpm format:eslint; pnpm format:stylelint; pnpm format:prettier"
+    "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier"
   },
   "dependencies": {
     "@azure/storage-blob": "12.14.0",

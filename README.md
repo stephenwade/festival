@@ -8,8 +8,8 @@ at the same time) without requiring live streaming infrastructure.
 ## Local Development
 
 - Run `doppler setup` to set up your [Doppler](https://www.doppler.com/) config.
-- Run `pnpm install` to install the required packages.
-- Run `pnpm dev` to serve the application locally.
+- Run `npm install` to install the required packages.
+- Run `npm run dev` to serve the application locally.
 
 ## MySQL Setup
 
@@ -25,8 +25,8 @@ GRANT CREATE, ALTER, DROP, REFERENCES ON *.* TO festival@localhost;
 
 ## Building
 
-- `pnpm build` will bundle the application for production.
-- `pnpm start` will serve the bundled application.
+- `npm run build` will bundle the application for production.
+- `npm start` will serve the bundled application.
 
 ## Testing
 
@@ -46,5 +46,5 @@ TODO
    - `AZURE_STORAGE_ACCOUNT`: The name of the Azure storage account for the
      media.
    - `AZURE_STORAGE_KEY`: The access key for the Azure storage account.
-1. Run `pnpm build` to build the site for production.
-1. Run `pnpm deploy` to deploy both the site and the media.
+1. Run `npm run build` to build the site for production.
+1. Run `npm run deploy` to deploy both the site and the media.
