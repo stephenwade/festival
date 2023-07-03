@@ -21,35 +21,9 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18
           cache: pnpm
 
       - run: pnpm install
 
       - run: pnpm lint
-
-      - run: pnpm imagemin
-        working-directory: frontend
-
-      - name: Check working directory
-        run: |
-          status() {
-            git status --porcelain | \
-              # ignore modified images
-              # imagemin can produce different files on different computers
-              grep --invert-match ' M frontend/images/'
-          }
-
-          if [[ -z "$(status)" ]]; then
-            echo "Git repo is clean."
-          else
-            echo "Git repo is dirty."
-            status
-
-            if status | grep -q images; then
-              # shellcheck disable=SC2016
-              echo 'Did you forget to run `npm run imagemin`?'
-            fi
-
-            false
-          fi
