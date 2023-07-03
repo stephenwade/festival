@@ -13,21 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      # - uses: pnpm/action-setup@v2
-      #   with:
-      #     version: latest
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
 
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 18
-      #     cache: pnpm
+      - run: npm install
 
-      # - run: pnpm install
-
-      # - run: pnpm test:js
-
+      # - run: npm run test:js
       - run: true
 
   e2e:
@@ -36,19 +31,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      # - uses: pnpm/action-setup@v2
-      #   with:
-      #     version: latest
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
 
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 18
-      #     cache: pnpm
+      - run: npm install
 
-      # - run: pnpm install
-
-      # - run: pnpm test:e2e
-
+      # - run: npm run test:e2e
       - run: true

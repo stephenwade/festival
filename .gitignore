@@ -1,13 +1,10 @@
-# system files
 .DS_Store
 
-# npm
 node_modules/
+npm-debug.log
 
-# build
 .cache/
 build/
-.env
 
 # runtime
 upload
