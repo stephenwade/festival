@@ -1,6 +1,6 @@
 # Festival
 
-Festival is a website to host online music festivals. It plays the same audio
+Festival is a web app to host online music festivals. It plays the same audio
 file for all users at the same time based on their system clock, allowing for
 the social aspect of a live broadcast (everyone can react to the same music
 at the same time) without requiring live streaming infrastructure.
@@ -9,7 +9,7 @@ at the same time) without requiring live streaming infrastructure.
 
 - Run `doppler setup` to set up your [Doppler](https://www.doppler.com/) config.
 - Run `npm install` to install the required packages.
-- Run `npm run dev` to serve the application locally.
+- Run `doppler run -- npm run dev` to serve the application locally.
 
 ## MySQL Setup
 
@@ -26,7 +26,7 @@ GRANT CREATE, ALTER, DROP, REFERENCES ON *.* TO festival@localhost;
 ## Building
 
 - `npm run build` will bundle the application for production.
-- `npm start` will serve the bundled application.
+- `doppler run -- npm start` will serve the bundled application.
 
 ## Testing
 
@@ -41,10 +41,4 @@ TODO
    This is required for the visualizer to work.
 1. Install the
    [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
-1. Add the following environment variables to your `.env` file:
-   - `FESTIVAL_SITE_DEPLOY_LOCATION`: The rsync destination for the site.
-   - `AZURE_STORAGE_ACCOUNT`: The name of the Azure storage account for the
-     media.
-   - `AZURE_STORAGE_KEY`: The access key for the Azure storage account.
-1. Run `npm run build` to build the site for production.
-1. Run `npm run deploy` to deploy both the site and the media.
+1. Run `railway up` to build and deploy the app on Railway.

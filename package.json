@@ -10,10 +10,9 @@
   "scripts": {
     "prepare": "husky install; prisma generate",
     "type-check": "tsc",
-    "build": "doppler run -- remix build",
-    "dev": "doppler run -- remix dev",
-    "start": "doppler run -- remix-serve build",
-    "prisma": "doppler run -- prisma",
+    "build": "remix build",
+    "dev": "remix dev",
+    "start": "remix-serve build",
     "lint:eslint": "eslint . --ignore-path .lintignore --max-warnings 0",
     "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .lintignore --max-warnings 0",
     "lint:prettier": "prettier . --check --ignore-path .lintignore --loglevel warn",
