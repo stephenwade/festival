@@ -23,6 +23,12 @@ GRANT ALL ON festival.* TO festival@localhost;
 GRANT CREATE, ALTER, DROP, REFERENCES ON *.* TO festival@localhost;
 ```
 
+## Azure Setup
+
+Make sure that your Azure storage account is set to allow
+[CORS requests](https://stackoverflow.com/a/41351674).
+This is required for the visualizer to work.
+
 ## Building
 
 - `npm run build` will bundle the application for production.
@@ -34,11 +40,15 @@ TODO
 
 ## Deploying
 
-TODO
+Pushing to main triggers a deploy on Railway.
 
-1. Make sure that your Azure storage account is set to allow
-   [CORS requests](https://stackoverflow.com/a/41351674).
-   This is required for the visualizer to work.
-1. Install the
-   [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
-1. Run `railway up` to build and deploy the app on Railway.
+## External Dependencies
+
+- [Azure](https://azure.microsoft.com/en-us/) for file storage
+  <!-- - [BrowserStack](https://www.browserstack.com/) for testing -->
+  <!-- - [BetterStack](https://betterstack.com/) for monitoring -->
+- [Clerk](https://clerk.com/) for authentication
+- [DigitalOcean](https://www.digitalocean.com/) for database hosting, DNS, and proxying to Railway
+- [Doppler](https://www.doppler.com/) for secrets management
+- [Railway](https://railway.app/) for hosting
+- [Sentry](https://sentry.io/) for error reporting
