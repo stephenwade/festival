@@ -58,7 +58,7 @@ export const AudioController: FC<Props> = ({
   const [showInfo, setShowInfo] = useState<ShowInfo>(
     targetShowInfo.status === 'ENDED'
       ? { status: 'ENDED' }
-      : { status: 'WAITING_FOR_AUDIO_CONTEXT' }
+      : { status: 'WAITING_FOR_AUDIO_CONTEXT' },
   );
   const [audioError, setAudioError] = useState(false);
 
@@ -86,7 +86,7 @@ export const AudioController: FC<Props> = ({
         | 'RESET_AUDIO_STATUS'
         | 'AUDIO_PAUSED'
         | 'AUDIO_STALLED'
-        | 'AUDIO_WAITING'
+        | 'AUDIO_WAITING',
     ) => {
       switch (action) {
         case 'RESET_AUDIO_STATUS':
@@ -105,7 +105,7 @@ export const AudioController: FC<Props> = ({
           return state;
       }
     },
-    initialAudioStatus
+    initialAudioStatus,
   );
 
   const setupAudioContext = useCallback(() => {
@@ -218,7 +218,7 @@ export const AudioController: FC<Props> = ({
         doNextStatusChange();
       }
     },
-    [doNextStatusChange, showInfo.status]
+    [doNextStatusChange, showInfo.status],
   );
 
   const updateTime = useCallback(
@@ -248,7 +248,7 @@ export const AudioController: FC<Props> = ({
         ) {
           const setDifference = differenceInSeconds(
             change.currentSet.start,
-            showInfo.currentSet.start
+            showInfo.currentSet.start,
           );
           delay += setDifference;
         }
@@ -265,7 +265,7 @@ export const AudioController: FC<Props> = ({
         setShowInfo(newShowInfo);
       }
     },
-    [showInfo]
+    [showInfo],
   );
 
   const checkTargetShowInfo = useCallback(
@@ -314,7 +314,13 @@ export const AudioController: FC<Props> = ({
         }
       }
     },
-    [audioError, queueStatusChange, showInfo.status, targetShowInfo, updateTime]
+    [
+      audioError,
+      queueStatusChange,
+      showInfo.status,
+      targetShowInfo,
+      updateTime,
+    ],
   );
 
   const initializeAudio = useCallback(async () => {
@@ -367,7 +373,7 @@ export const AudioController: FC<Props> = ({
 
       dispatchAudioStatus('AUDIO_STALLED');
     },
-    [audioStatus.waiting]
+    [audioStatus.waiting],
   );
 
   const audioEvents: AudioHTMLAttributes<HTMLAudioElement> = useMemo(
@@ -467,7 +473,7 @@ export const AudioController: FC<Props> = ({
         }, 10 * 1000);
       },
     }),
-    [doNextStatusChange, onLoadedMetadata, onStalled, showInfo]
+    [doNextStatusChange, onLoadedMetadata, onStalled, showInfo],
   );
 
   useEffectOnce(() => {

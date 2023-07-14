@@ -89,7 +89,7 @@ async function processAudioFileUpload(fileUpload: AudioFileUpload) {
         }
         void updateAudioFileUploadConvertProgress(
           fileUpload.id,
-          convertProgress
+          convertProgress,
         );
       });
     } else {
@@ -120,7 +120,7 @@ async function processAudioFileUpload(fileUpload: AudioFileUpload) {
 
 async function updateAudioFileUploadDuration(
   fileUploadId: AudioFileUpload['id'],
-  duration: number
+  duration: number,
 ) {
   const fileUpload = await db.audioFileUpload.update({
     where: { id: fileUploadId },
@@ -133,7 +133,7 @@ async function updateAudioFileUploadDuration(
 
 async function updateAudioFileUploadConvertProgress(
   fileUploadId: AudioFileUpload['id'],
-  convertProgress: number
+  convertProgress: number,
 ) {
   const fileUpload = await db.audioFileUpload.update({
     where: { id: fileUploadId },
@@ -148,7 +148,7 @@ async function updateAudioFileUploadConvertProgress(
 }
 
 async function updateAudioFileUploadFinishing(
-  fileUploadId: AudioFileUpload['id']
+  fileUploadId: AudioFileUpload['id'],
 ) {
   const fileUpload = await db.audioFileUpload.update({
     where: { id: fileUploadId },
@@ -164,7 +164,7 @@ async function updateAudioFileUploadFinishing(
 
 async function updateAudioFileDoneProcessing(
   fileUploadId: AudioFileUpload['id'],
-  newName: string
+  newName: string,
 ) {
   const fileUpload = await db.audioFileUpload.findUnique({
     where: { id: fileUploadId },
@@ -194,7 +194,7 @@ async function updateAudioFileDoneProcessing(
 
 async function handleError(
   error: unknown,
-  fileUploadId: AudioFileUpload['id']
+  fileUploadId: AudioFileUpload['id'],
 ) {
   const errorMessage = error instanceof Error ? error.message : String(error);
 
@@ -218,7 +218,7 @@ async function handleError(
  */
 function getAudioStreamIndex(stats: FFprobeOutput) {
   const streamIndex = stats.streams.findIndex(
-    (stream) => stream.codec_type === 'audio'
+    (stream) => stream.codec_type === 'audio',
   );
 
   if (streamIndex === -1) {

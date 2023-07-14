@@ -22,7 +22,7 @@ const ffprobeOutputSchema = z.preprocess(
         codec_type: z.string().min(1),
         duration: numericString,
         bit_rate: numericString.optional(),
-      })
+      }),
     ),
     format: z.object({
       filename: z.string().min(1),
@@ -30,7 +30,7 @@ const ffprobeOutputSchema = z.preprocess(
       duration: numericString,
       bit_rate: numericString,
     }),
-  })
+  }),
 );
 
 export type FFprobeOutput = z.infer<typeof ffprobeOutputSchema>;

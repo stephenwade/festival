@@ -9,7 +9,7 @@ const websiteHostingDomain = process.env.AZURE_STORAGE_WEBSITE_DOMAIN;
 
 if (!account || !accountKey || !websiteHostingDomain) {
   throw new Error(
-    'AZURE_STORAGE_ACCOUNT, AZURE_STORAGE_KEY, and AZURE_STORAGE_WEBSITE_URL must be set'
+    'AZURE_STORAGE_ACCOUNT, AZURE_STORAGE_KEY, and AZURE_STORAGE_WEBSITE_URL must be set',
   );
 }
 
@@ -17,7 +17,7 @@ const sharedKeyCredential = new StorageSharedKeyCredential(account, accountKey);
 
 const blobServiceClient = new BlobServiceClient(
   `https://${account}.blob.core.windows.net`,
-  sharedKeyCredential
+  sharedKeyCredential,
 );
 
 const containerName = '$web';

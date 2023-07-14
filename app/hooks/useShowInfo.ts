@@ -24,7 +24,7 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
         [id]: duration,
       }));
     },
-    []
+    [],
   );
 
   const showId = useCurrentShowId();
@@ -64,7 +64,7 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
   }, [audioDurations, clientTimeSkewMs, data.sets]);
 
   const currentSetIndex = sets.findIndex((set) =>
-    isBefore(Date.now(), set.end)
+    isBefore(Date.now(), set.end),
   );
   const currentSet = currentSetIndex === -1 ? undefined : sets[currentSetIndex];
   const nextSet =
@@ -75,13 +75,13 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
       ? {
           status: 'WAITING_UNTIL_START',
           secondsUntilSet: Math.ceil(
-            (currentSet.start.valueOf() - Date.now()) / 1000
+            (currentSet.start.valueOf() - Date.now()) / 1000,
           ),
         }
       : {
           status: 'PLAYING',
           currentTime: Math.floor(
-            (Date.now() - currentSet.start.valueOf()) / 1000
+            (Date.now() - currentSet.start.valueOf()) / 1000,
           ),
         }
     : { status: 'ENDED' };

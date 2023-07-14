@@ -6,5 +6,5 @@ hydrateRoot(
   document,
   <StrictMode>
     <RemixBrowser />
-  </StrictMode>
+  </StrictMode>,
 );

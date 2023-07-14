@@ -12,7 +12,7 @@ type RecursivelyReplaceNullWithUndefined<T> = T extends null
  * Recursively replaces all `null`s with `undefined`.
  */
 export function replaceNullsWithUndefined<T>(
-  obj: T
+  obj: T,
 ): RecursivelyReplaceNullWithUndefined<T> {
   if (obj === null || obj === undefined) {
     return undefined as RecursivelyReplaceNullWithUndefined<T>;

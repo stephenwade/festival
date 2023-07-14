@@ -18,7 +18,7 @@ export const schema = zfd.formData({
   id: zfd.text(
     z.string().refine((id) => id !== 'new', {
       message: 'Invalid show URL',
-    })
+    }),
   ),
   startDate: z.string().datetime(),
   description: zfd.text(),
@@ -44,6 +44,6 @@ export const makeServerValidator = ({
       {
         path: ['id'],
         message: 'A show already exists with that URL.',
-      }
-    )
+      },
+    ),
   );

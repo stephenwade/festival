@@ -98,12 +98,12 @@ const ShowForm: FC<ShowFormProps> = ({
       if (isUploading) incUploading();
       else decUploading();
     },
-    [incUploading, decUploading]
+    [incUploading, decUploading],
   );
 
   const [sets, { push, remove }] = useFieldArray<z.infer<typeof setSchema>>(
     'sets',
-    { formId: SHOW_FORM_ID }
+    { formId: SHOW_FORM_ID },
   );
 
   return (
