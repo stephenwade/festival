@@ -89,7 +89,7 @@ export const action = (async (args) => {
         create: { ...set, showId: rest.id },
         update: set,
         where: { id: set.id },
-      })
+      }),
     ),
   ]);
 

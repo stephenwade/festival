@@ -26,7 +26,7 @@ const ffmpegProgressSchema = z.preprocess(
         .parse(str)
         .trim()
         .split('\n')
-        .map((x) => x.split('='))
+        .map((x) => x.split('=')),
     ),
   z.object({
     total_size: integerString,
@@ -34,7 +34,7 @@ const ffmpegProgressSchema = z.preprocess(
     out_time: z.string(),
     speed: z.string(),
     progress: z.string(),
-  })
+  }),
 );
 
 export type FFmpegProgress = z.infer<typeof ffmpegProgressSchema>;
@@ -45,7 +45,7 @@ export function ffmpeg(
   inputFileName: string,
   streamIndex: number,
   outputFileName: string,
-  progressCallback?: FFmpegProgressCallback
+  progressCallback?: FFmpegProgressCallback,
 ) {
   console.log('Running ffmpeg', { inputFileName, outputFileName });
 

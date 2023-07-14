@@ -26,6 +26,6 @@ export const loader = (async ({ params }) => {
   --background-color: ${backgroundColor};
   --background-color-lighter: ${backgroundColorLighter};
 }`,
-    { headers: { 'content-type': 'text/css' } }
+    { headers: { 'content-type': 'text/css' } },
   );
 }) satisfies LoaderFunction;

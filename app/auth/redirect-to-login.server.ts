@@ -10,7 +10,7 @@ type RedirectToLoginArgs = {
 
 export async function redirectToLogin(
   args: LoaderArgs,
-  { onHoldPage }: RedirectToLoginArgs = {}
+  { onHoldPage }: RedirectToLoginArgs = {},
 ) {
   const auth = await getAuth(args);
   const { userId } = await getAuth(args);

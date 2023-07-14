@@ -81,7 +81,7 @@ export const AudioCanvas: FC<Props> = ({
 
       return [x, y];
     },
-    [sizeMultiplier]
+    [sizeMultiplier],
   );
 
   const drawCircle = useCallback(
@@ -128,7 +128,7 @@ export const AudioCanvas: FC<Props> = ({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.restore();
     },
-    [getCirclePoint, sizeMultiplier]
+    [getCirclePoint, sizeMultiplier],
   );
 
   const calculateProgress = useCallback(() => {
@@ -189,11 +189,11 @@ export const AudioCanvas: FC<Props> = ({
         midY - Math.cos(progressAngle) * distance,
         dotRadius,
         0,
-        2 * Math.PI
+        2 * Math.PI,
       );
       ctx.fill();
     },
-    [calculateProgress, sizeMultiplier]
+    [calculateProgress, sizeMultiplier],
   );
 
   const animate = useCallback(() => {

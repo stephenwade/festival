@@ -67,7 +67,7 @@ export const AudioFileUpload: FC<Props> = ({
 }) => {
   const { getInputProps } = useField(name);
   const [fileUploadId, setFileUploadId] = useControlField<string | undefined>(
-    name
+    name,
   );
 
   const [fileUploadState, setFileUploadState] =
@@ -80,8 +80,8 @@ export const AudioFileUpload: FC<Props> = ({
         if (data.id !== fileUploadId) return;
         setFileUploadState(data);
       },
-      [fileUploadId]
-    )
+      [fileUploadId],
+    ),
   );
 
   const fetcher = useFetcher<typeof audioUploadLoader>();
