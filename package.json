@@ -23,7 +23,7 @@
     "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.14.0",
+    "@azure/storage-blob": "12.15.0",
     "@clerk/remix": "2.7.0",
     "@prisma/client": "5.0.0",
     "@remix-run/node": "1.18.1",
