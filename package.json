@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@azure/storage-blob": "12.14.0",
-    "@clerk/remix": "2.6.16",
+    "@clerk/remix": "2.7.0",
     "@prisma/client": "5.0.0",
     "@remix-run/node": "1.18.1",
     "@remix-run/react": "1.18.1",

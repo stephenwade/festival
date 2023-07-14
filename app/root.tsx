@@ -1,4 +1,4 @@
-import { ClerkApp, ClerkCatchBoundary } from '@clerk/remix';
+import { ClerkApp, V2_ClerkErrorBoundary } from '@clerk/remix';
 import { rootAuthLoader } from '@clerk/remix/ssr.server';
 import type { LoaderFunction, V2_MetaFunction } from '@remix-run/node';
 import {
@@ -17,7 +17,7 @@ export const meta: V2_MetaFunction = () => [
 
 export const loader = rootAuthLoader satisfies LoaderFunction;
 
-export const CatchBoundary = ClerkCatchBoundary();
+export const ErrorBoundary = V2_ClerkErrorBoundary();
 
 function App() {
   return (
