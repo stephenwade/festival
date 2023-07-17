@@ -11,7 +11,7 @@
     "prepare": "husky install; prisma generate",
     "type-check": "tsc",
     "build": "remix build",
-    "dev": "remix dev",
+    "dev": "doppler run -- remix dev",
     "start": "remix-serve build",
     "lint:eslint": "eslint . --ignore-path .lintignore --max-warnings 0",
     "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .lintignore --max-warnings 0",
