@@ -8,3 +8,6 @@ build/
 
 # runtime
 upload
+/test-results/
+/playwright-report/
+/playwright/.cache/
