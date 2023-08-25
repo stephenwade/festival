@@ -15,11 +15,11 @@
     "start": "remix-serve build",
     "lint:eslint": "eslint . --ignore-path .lintignore --max-warnings 0",
     "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .lintignore --max-warnings 0",
-    "lint:prettier": "prettier . --check --ignore-path .lintignore --loglevel warn",
+    "lint:prettier": "prettier . --check --ignore-path .lintignore --log-level warn",
     "lint": "npm run lint:eslint && npm run lint:stylelint && npm run lint:prettier",
     "format:eslint": "eslint . --fix --ignore-path .lintignore",
     "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .lintignore",
-    "format:prettier": "prettier . --write --ignore-path .lintignore --loglevel warn",
+    "format:prettier": "prettier . --write --ignore-path .lintignore --log-level warn",
     "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier"
   },
   "dependencies": {
