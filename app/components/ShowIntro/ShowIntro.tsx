@@ -30,7 +30,7 @@ export const ShowIntro: FC<Props> = ({ logoUrl, onListenClicked }) => {
         </span>
         <span className="elevation-z2">
           <a
-            href="https://discord.io/festival"
+            href="https://discord.gg/8dFvsGV"
             target="_blank"
             rel="noopener noreferrer"
           >
