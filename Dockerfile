@@ -1,11 +1,18 @@
-FROM node:lts-alpine as deps
+FROM ubuntu:jammy as base
+
+WORKDIR /node
+
+RUN apt-get update && apt-get install -y curl && curl -fsSL https://deb.nodesource.com/setup_20.x > setup.sh
+RUN bash setup.sh && apt-get install -y nodejs
+
+FROM base as deps
 
 WORKDIR /app
 
 ADD package.json .npmrc ./
 RUN npm install --include=dev
 
-FROM node:lts-alpine as production-deps
+FROM base as production-deps
 
 WORKDIR /app
 
@@ -13,7 +20,7 @@ COPY --from=deps /app/node_modules /app/node_modules
 ADD package.json .npmrc ./
 RUN npm prune --omit=dev
 
-FROM node:lts-alpine as build
+FROM base as build
 
 WORKDIR /app
 
@@ -25,7 +32,12 @@ RUN npx prisma generate
 ADD . .
 RUN npm run build
 
-FROM node:lts-alpine
+FROM lscr.io/linuxserver/ffmpeg:version-5.1.2-cli
+
+WORKDIR /node
+
+COPY --from=base /node/setup.sh /node/setup.sh
+RUN bash setup.sh && apt-get install -y nodejs
 
 WORKDIR /app
 
