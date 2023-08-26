@@ -1,0 +1,28 @@
+---
+services:
+  mysql:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      MYSQL_DATABASE: festival_test
+      MYSQL_USER: festival
+      MYSQL_PASSWORD: mypass
+      MYSQL_RANDOM_ROOT_PASSWORD: 'true'
+  festival:
+    build: ..
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - AZURE_STORAGE_ACCOUNT
+      - AZURE_STORAGE_KEY
+      - AZURE_STORAGE_WEBSITE_DOMAIN
+      - CLERK_PUBLISHABLE_KEY
+      - CLERK_SECRET_KEY
+      - DATABASE_URL
+      - FIRST_ADMIN_EMAIL_ADDRESS
+      - NODE_ENV
+      - PORT
+    depends_on:
+      - mysql
