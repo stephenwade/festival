@@ -12,7 +12,6 @@ export async function redirectToLogin(
   args: LoaderArgs,
   { onHoldPage }: RedirectToLoginArgs = {},
 ) {
-  const auth = await getAuth(args);
   const { userId } = await getAuth(args);
 
   if (!userId) {
@@ -22,7 +21,6 @@ export async function redirectToLogin(
   const user = await createClerkClient({
     apiKey: process.env.CLERK_SECRET_KEY,
   }).users.getUser(userId);
-  console.dir({ auth, user }, { depth: null });
 
   const allowed = await userIsAllowed(user);
   if (!allowed && !onHoldPage) {
