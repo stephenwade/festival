@@ -9,7 +9,6 @@
   },
   "scripts": {
     "prepare": "husky install; prisma generate",
-    "type-check": "tsc",
     "build": "remix build",
     "dev": "doppler run -- remix dev",
     "start": "remix-serve build",
