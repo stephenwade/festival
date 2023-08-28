@@ -9,9 +9,8 @@
   },
   "scripts": {
     "prepare": "husky install; prisma generate",
-    "type-check": "tsc",
     "build": "remix build",
-    "dev": "remix dev",
+    "dev": "doppler run -- remix dev",
     "start": "remix-serve build",
     "lint:eslint": "eslint . --ignore-path .lintignore --max-warnings 0",
     "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .lintignore --max-warnings 0",
@@ -20,7 +19,9 @@
     "format:eslint": "eslint . --fix --ignore-path .lintignore",
     "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .lintignore",
     "format:prettier": "prettier . --write --ignore-path .lintignore --log-level warn",
-    "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier"
+    "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier",
+    "test": "playwright test",
+    "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
     "@azure/storage-blob": "12.15.0",
@@ -44,6 +45,8 @@
     "zod-form-data": "2.0.1"
   },
   "devDependencies": {
+    "@playwright/experimental-ct-react": "1.37.1",
+    "@playwright/test": "1.37.1",
     "@remix-run/dev": "1.18.1",
     "@remix-run/eslint-config": "1.18.1",
     "@types/react": "18.2.21",
