@@ -19,9 +19,9 @@ const ToastClose: FC<CloseButtonProps> = ({ type, closeToast }) => {
           window.location.reload();
         }}
       >
-        Reload
+        RELOAD
       </button>
-      {type !== 'error' && <button onClick={closeToast}>Close</button>}
+      {type !== 'error' && <button onClick={closeToast}>CLOSE</button>}
     </>
   );
 };

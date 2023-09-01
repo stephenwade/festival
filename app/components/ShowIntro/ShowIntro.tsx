@@ -26,7 +26,7 @@ export const ShowIntro: FC<Props> = ({ logoUrl, onListenClicked }) => {
       </a>
       <div className="buttons">
         <span className="elevation-z2">
-          <button onClick={onListenClicked}>Listen Live</button>
+          <button onClick={onListenClicked}>LISTEN LIVE</button>
         </span>
         <span className="elevation-z2">
           <a
@@ -34,7 +34,7 @@ export const ShowIntro: FC<Props> = ({ logoUrl, onListenClicked }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Join Discord
+            JOIN DISCORD
           </a>
         </span>
       </div>

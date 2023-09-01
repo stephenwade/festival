@@ -22,7 +22,6 @@
 .next-up {
   margin-bottom: 0.2em;
   font-size: 2em;
-  text-transform: uppercase;
 }
 
 .artist {
@@ -33,7 +32,6 @@
   line-height: 0.9;
   letter-spacing: -0.05em;
   text-align: center;
-  text-transform: uppercase;
   user-select: text;
 }
 
