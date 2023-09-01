@@ -84,7 +84,7 @@ export const ShowPlaying: FC<Props> = ({
 
       <CurrentTime showInfo={showInfo} audioStatus={audioStatus} />
 
-      {waitingUntilStart && <div className="next-up">Next up</div>}
+      {waitingUntilStart && <div className="next-up">NEXT UP</div>}
       <div className="artist">{showInfo.currentSet?.artist}</div>
 
       <VolumeFab volume={volume} onVolumeInput={onVolumeInput} />
