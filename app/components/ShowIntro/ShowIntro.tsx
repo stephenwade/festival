@@ -37,6 +37,15 @@ export const ShowIntro: FC<Props> = ({ logoUrl, onListenClicked }) => {
             JOIN DISCORD
           </a>
         </span>
+        <span className="elevation-z2">
+          <a
+            href="https://robclemz.lnk.to/HOLOBRIGHT"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            STREAM / DOWNLOAD
+          </a>
+        </span>
       </div>
     </div>
   );
