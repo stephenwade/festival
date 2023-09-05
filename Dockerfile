@@ -2,8 +2,14 @@ FROM ubuntu:jammy as base
 
 WORKDIR /node
 
-RUN apt-get update && apt-get install -y curl && curl -fsSL https://deb.nodesource.com/setup_20.x > setup.sh
-RUN bash setup.sh && apt-get install -y nodejs
+# Install Node.js
+# Keep in sync with final image
+RUN apt-get update && \
+  apt-get install -y ca-certificates curl gnupg && \
+  mkdir -p /etc/apt/keyrings && \
+  echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+RUN apt-get update && apt-get install -y nodejs
 
 FROM base as deps
 
@@ -32,12 +38,18 @@ RUN npx prisma generate
 ADD . .
 RUN npm run build
 
-FROM lscr.io/linuxserver/ffmpeg:version-5.1.2-cli
+FROM lscr.io/linuxserver/ffmpeg:version-5.1.2-cli as final
 
 WORKDIR /node
 
-COPY --from=base /node/setup.sh /node/setup.sh
-RUN bash setup.sh && apt-get install -y nodejs
+# Install Node.js
+# Keep in sync with base image
+RUN apt-get update && \
+  apt-get install -y ca-certificates curl gnupg && \
+  mkdir -p /etc/apt/keyrings && \
+  echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+RUN apt-get update && apt-get install -y nodejs
 
 WORKDIR /app
 
