@@ -26,7 +26,7 @@
   "dependencies": {
     "@azure/storage-blob": "12.16.0",
     "@clerk/remix": "2.10.3",
-    "@prisma/client": "5.2.0",
+    "@prisma/client": "5.3.1",
     "@remix-run/node": "1.19.3",
     "@remix-run/react": "1.19.3",
     "@remix-run/serve": "1.19.3",
@@ -61,7 +61,7 @@
     "husky": "8.0.3",
     "lint-staged": "14.0.1",
     "prettier": "3.0.3",
-    "prisma": "5.2.0",
+    "prisma": "5.3.1",
     "stylelint": "15.10.3",
     "stylelint-config-hudochenkov": "9.0.0",
     "stylelint-config-standard": "34.0.0",
