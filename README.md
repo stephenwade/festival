@@ -9,7 +9,7 @@ at the same time) without requiring live streaming infrastructure.
 
 - Run `doppler setup` to set up your [Doppler](https://www.doppler.com/) config.
 - Run `npm install` to install the required packages.
-- Run `doppler run -- npm run dev` to serve the application locally.
+- Run `npm run dev` to serve the application locally.
 
 ## MySQL Setup
 
