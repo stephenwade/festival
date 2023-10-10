@@ -3,7 +3,7 @@
  */
 module.exports = {
   ignoredRouteFiles: ['**/.*'],
-  serverDependenciesToBundle: [],
+  serverDependenciesToBundle: ['use-local-storage-state'],
   serverModuleFormat: 'cjs',
   future: {
     v2_errorBoundary: true,
