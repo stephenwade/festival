@@ -69,7 +69,6 @@
     "typescript": "5.2.2"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": "eslint --fix",
     "*.css": "stylelint --fix",
     "*.prisma": "prisma format --schema",
     "*": "prettier --ignore-unknown --write --ignore-path .lintignore"
