@@ -15,8 +15,7 @@ import { ffmpeg } from '~/ffmpeg/ffmpeg.server';
 import type { FFprobeOutput } from '~/ffmpeg/ffprobe.server';
 import { ffprobe } from '~/ffmpeg/ffprobe.server';
 import { UPLOAD_AUDIO_FORM_KEY } from '~/forms/upload-audio';
-
-import { emitAudioFileProcessingEvent } from './events';
+import { emitAudioFileProcessingEvent } from '~/routes/admin.audio-upload.events';
 
 const GIGABYTE = 1_000_000_000;
 const MICROSECONDS = 1 / 1_000_000;

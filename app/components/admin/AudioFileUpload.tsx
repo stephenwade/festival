@@ -6,9 +6,9 @@ import { useControlField, useField } from 'remix-validated-form';
 
 import { UPLOAD_AUDIO_FORM_KEY } from '~/forms/upload-audio';
 import { useSse } from '~/hooks/useSse';
-import type { loader as audioUploadLoader } from '~/routes/admin/audio-upload/$id';
-import type { AudioFileUploadEvent } from '~/routes/admin/audio-upload/events';
-import type { action as newAudioUploadAction } from '~/routes/admin/audio-upload/new';
+import type { loader as audioUploadLoader } from '~/routes/admin.audio-upload.$id';
+import type { AudioFileUploadEvent } from '~/routes/admin.audio-upload.events';
+import type { action as newAudioUploadAction } from '~/routes/admin.audio-upload.new';
 
 type PutFormResponse = SerializeFrom<typeof newAudioUploadAction>;
 

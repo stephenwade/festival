@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useControlField, useField } from 'remix-validated-form';
 
 import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
-import type { loader as fileUploadLoader } from '~/routes/admin/file-upload/$id';
-import type { action as newFileUploadAction } from '~/routes/admin/file-upload/new';
+import type { loader as fileUploadLoader } from '~/routes/admin.file-upload.$id';
+import type { action as newFileUploadAction } from '~/routes/admin.file-upload.new';
 
 type PutFormResponse = SerializeFrom<typeof newFileUploadAction>;
 

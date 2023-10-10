@@ -1,7 +1,7 @@
 import type {
   LinksFunction,
   LoaderFunction,
-  V2_MetaFunction,
+  MetaFunction,
 } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
@@ -21,7 +21,7 @@ import type { ShowData } from '~/types/ShowData';
 
 const notFound = () => new Response('Not Found', { status: 404 });
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data, params }) => {
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const id = params.show as string;
 
   return [
