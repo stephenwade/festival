@@ -1,6 +1,6 @@
-import { ClerkApp, V2_ClerkErrorBoundary } from '@clerk/remix';
+import { ClerkApp, ClerkErrorBoundary } from '@clerk/remix';
 import { rootAuthLoader } from '@clerk/remix/ssr.server';
-import type { LoaderFunction, V2_MetaFunction } from '@remix-run/node';
+import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -10,14 +10,14 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 
-export const meta: V2_MetaFunction = () => [
+export const meta: MetaFunction = () => [
   { title: 'Festival' },
   { name: 'description', content: 'Host online music festivals' },
 ];
 
 export const loader = rootAuthLoader satisfies LoaderFunction;
 
-export const ErrorBoundary = V2_ClerkErrorBoundary();
+export const ErrorBoundary = ClerkErrorBoundary();
 
 function App() {
   return (

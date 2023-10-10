@@ -1,6 +1,6 @@
 import { createClerkClient } from '@clerk/remix/api.server';
 import { getAuth } from '@clerk/remix/ssr.server';
-import { type LoaderArgs, redirect } from '@remix-run/node';
+import { type DataFunctionArgs, redirect } from '@remix-run/node';
 
 import { userIsAllowed } from './user-is-allowed.server';
 
@@ -9,7 +9,7 @@ type RedirectToLoginArgs = {
 };
 
 export async function redirectToLogin(
-  args: LoaderArgs,
+  args: DataFunctionArgs,
   { onHoldPage }: RedirectToLoginArgs = {},
 ) {
   const { userId } = await getAuth(args);

@@ -1,7 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  V2_MetaFunction,
+  MetaFunction,
 } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
@@ -16,7 +16,7 @@ import { replaceUndefinedsWithNull } from '~/forms/utils/replaceUndefinedsWithNu
 
 const notFound = () => new Response('Not Found', { status: 404 });
 
-export const meta: V2_MetaFunction = () => [
+export const meta: MetaFunction = () => [
   { title: 'Edit show | Festival admin' },
 ];
 

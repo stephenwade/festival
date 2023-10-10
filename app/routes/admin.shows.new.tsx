@@ -1,7 +1,7 @@
 import type {
   ActionFunction,
   LoaderFunction,
-  V2_MetaFunction,
+  MetaFunction,
 } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import type { FC } from 'react';
@@ -11,7 +11,7 @@ import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db/db.server';
 import { makeServerValidator, NewShowForm } from '~/forms/show';
 
-export const meta: V2_MetaFunction = () => [
+export const meta: MetaFunction = () => [
   { title: 'New show | Festival admin' },
 ];
 
