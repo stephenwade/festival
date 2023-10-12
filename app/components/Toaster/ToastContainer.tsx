@@ -21,7 +21,7 @@ const ToastClose: FC<CloseButtonProps> = ({ type, closeToast }) => {
       >
         RELOAD
       </button>
-      {type !== 'error' && <button onClick={closeToast}>CLOSE</button>}
+      {type === 'error' ? null : <button onClick={closeToast}>CLOSE</button>}
     </>
   );
 };

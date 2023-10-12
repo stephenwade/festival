@@ -2,13 +2,13 @@ import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useUpdateEffect, useWindowSize } from 'usehooks-ts';
 
-type Props = {
+interface Props {
   currentTime: number;
   setLength: number;
   progressLineFrozen: boolean;
 
   getAudioVisualizerData: (() => Uint8Array) | null;
-};
+}
 
 export const AudioCanvas: FC<Props> = ({
   currentTime,

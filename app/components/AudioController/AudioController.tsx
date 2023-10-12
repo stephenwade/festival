@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/media-has-caption */
+
 import { differenceInSeconds } from 'date-fns';
 import type { AudioHTMLAttributes, FC, ReactNode, SyntheticEvent } from 'react';
 import {
@@ -14,7 +16,7 @@ import { useEffectOnce } from 'usehooks-ts';
 import type { AudioStatus } from '~/types/AudioStatus';
 import type { ShowInfo, TargetShowInfo } from '~/types/ShowInfo';
 
-type State = {
+interface State {
   activeAudio: HTMLAudioElement | null;
   inactiveAudio: HTMLAudioElement | null;
 
@@ -26,7 +28,7 @@ type State = {
   nextChange: ShowInfo | null;
 
   stalledTimeout: NodeJS.Timeout | null;
-};
+}
 
 const initialAudioStatus: AudioStatus = {
   waiting: false,
@@ -34,7 +36,7 @@ const initialAudioStatus: AudioStatus = {
   paused: false,
 };
 
-type Props = {
+interface Props {
   targetShowInfo: TargetShowInfo;
   volume: number;
   onLoadedMetadata: (args: { id: string; duration: number }) => void;
@@ -47,7 +49,7 @@ type Props = {
     initializeAudio: () => Promise<void>;
     getAudioVisualizerData: (() => Uint8Array) | null;
   }) => ReactNode;
-};
+}
 
 export const AudioController: FC<Props> = ({
   targetShowInfo,

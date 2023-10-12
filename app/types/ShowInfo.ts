@@ -5,10 +5,10 @@ type SetInfo = Omit<SetData, 'start'> & {
   end: Date;
 };
 
-type SetsInfo = {
+interface SetsInfo {
   currentSet?: SetInfo;
   nextSet?: SetInfo;
-};
+}
 
 export type TargetTimeInfo =
   | { status: 'WAITING_UNTIL_START'; secondsUntilSet?: number }

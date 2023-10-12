@@ -10,10 +10,10 @@ import type { action as newFileUploadAction } from '~/routes/admin.file-upload.n
 
 type PutFormResponse = SerializeFrom<typeof newFileUploadAction>;
 
-type PutFormOptions = {
+interface PutFormOptions {
   url: string;
   onProgress?: (progress: number) => void;
-};
+}
 
 function putForm(form: FormData, options: PutFormOptions) {
   const { url, onProgress } = options;
@@ -52,11 +52,11 @@ function putForm(form: FormData, options: PutFormOptions) {
   return request;
 }
 
-type Props = {
+interface Props {
   name: string;
   isUploading: boolean;
   setIsUploading: (isUploading: boolean) => void;
-};
+}
 
 export const FileUpload: FC<Props> = ({
   name,
@@ -87,7 +87,7 @@ export const FileUpload: FC<Props> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const onUploadClick = () => {
     const fileInput = fileInputRef.current;
-    if (!fileInput || !fileInput.files?.length) return;
+    if (!fileInput?.files?.length) return;
 
     const file = fileInput.files[0];
     setIsUploading(true);

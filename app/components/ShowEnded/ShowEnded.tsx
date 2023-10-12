@@ -9,9 +9,9 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },
 ];
 
-type Props = {
+interface Props {
   logoUrl: string;
-};
+}
 
 export const ShowEnded: FC<Props> = ({ logoUrl }) => {
   useEffectOnce(() => {

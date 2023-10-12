@@ -7,10 +7,10 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },
 ];
 
-type Props = {
+interface Props {
   logoUrl: string;
   onListenClicked: () => void;
-};
+}
 
 export const ShowIntro: FC<Props> = ({ logoUrl, onListenClicked }) => {
   return (

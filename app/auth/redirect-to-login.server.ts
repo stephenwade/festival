@@ -4,9 +4,9 @@ import { type DataFunctionArgs, redirect } from '@remix-run/node';
 
 import { userIsAllowed } from './user-is-allowed.server';
 
-type RedirectToLoginArgs = {
+interface RedirectToLoginArgs {
   onHoldPage?: boolean;
-};
+}
 
 export async function redirectToLogin(
   args: DataFunctionArgs,
