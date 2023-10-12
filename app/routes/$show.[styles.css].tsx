@@ -5,7 +5,7 @@ import { db } from '~/db/db.server';
 const notFound = () => new Response('Not Found', { status: 404 });
 
 export const loader = (async ({ params }) => {
-  const id = params.show as string;
+  const id = params.show!;
 
   const show = await db.show.findUnique({
     where: { id },

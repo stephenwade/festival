@@ -8,14 +8,14 @@ import type { TargetShowInfo, TargetTimeInfo } from '~/types/ShowInfo';
 import { useClock } from './useClock';
 import { useCurrentShowId } from './useCurrentShowId';
 
-type UseShowStatusProps = {
+interface UseShowStatusProps {
   loaderData: ShowData;
-};
+}
 
 export function useShowInfo({ loaderData }: UseShowStatusProps) {
-  const [audioDurations, setAudioDurations] = useState<{
-    [audioUrl: string]: number;
-  }>({});
+  const [audioDurations, setAudioDurations] = useState<Record<string, number>>(
+    {},
+  );
 
   const onLoadedMetadata = useCallback(
     ({ id, duration }: { id: string; duration: number }) => {

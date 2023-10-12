@@ -169,7 +169,7 @@ async function updateAudioFileDoneProcessing(
     where: { id: fileUploadId },
   });
 
-  if (!fileUpload || !fileUpload.duration || !fileUpload.audioUrl) {
+  if (!fileUpload?.duration || !fileUpload.audioUrl) {
     throw serverError();
   }
 

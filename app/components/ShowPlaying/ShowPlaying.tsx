@@ -20,7 +20,7 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },
 ];
 
-type Props = {
+interface Props {
   volume: number;
   audioStatus: AudioStatus;
   audioError: boolean;
@@ -28,7 +28,7 @@ type Props = {
 
   getAudioVisualizerData: (() => Uint8Array) | null;
   onVolumeInput: (volume: number) => void;
-};
+}
 
 export const ShowPlaying: FC<Props> = ({
   volume,
@@ -71,7 +71,7 @@ export const ShowPlaying: FC<Props> = ({
 
   return (
     <div className="playing-container full-page">
-      {showInfo.currentSet && playing && (
+      {showInfo.currentSet && playing ? (
         <AudioCanvas
           currentTime={showInfo.currentTime}
           setLength={showInfo.currentSet.duration}
@@ -80,11 +80,11 @@ export const ShowPlaying: FC<Props> = ({
           }
           getAudioVisualizerData={getAudioVisualizerData}
         />
-      )}
+      ) : null}
 
       <CurrentTime showInfo={showInfo} audioStatus={audioStatus} />
 
-      {waitingUntilStart && <div className="next-up">NEXT UP</div>}
+      {waitingUntilStart ? <div className="next-up">NEXT UP</div> : null}
       <div className="artist">{showInfo.currentSet?.artist}</div>
 
       <VolumeFab volume={volume} onVolumeInput={onVolumeInput} />

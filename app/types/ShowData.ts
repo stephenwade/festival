@@ -1,16 +1,16 @@
-export type SetData = {
+export interface SetData {
   id: string;
   audioUrl: string;
   artist: string;
   start: string;
   duration: number;
-};
+}
 
-export type ShowData = {
+export interface ShowData {
   name: string;
   description: string;
   showLogoUrl: string;
   backgroundImageUrl: string;
   sets: SetData[];
   serverDate: string;
-};
+}

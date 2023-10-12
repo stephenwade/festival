@@ -11,9 +11,7 @@ export async function userIsAllowed(user: ClerkUser) {
   }
 
   const inAllowlist =
-    verifiedEmailAddresses.includes(
-      process.env.FIRST_ADMIN_EMAIL_ADDRESS as string,
-    ) ||
+    verifiedEmailAddresses.includes(process.env.FIRST_ADMIN_EMAIL_ADDRESS!) ||
     (await db.adminUserAllowlist.count({
       where: {
         emailAddress: { in: verifiedEmailAddresses },

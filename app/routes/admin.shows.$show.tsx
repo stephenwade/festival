@@ -16,7 +16,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => [
 export const loader = (async (args) => {
   await redirectToLogin(args);
 
-  const id = args.params.show as string;
+  const id = args.params.show!;
 
   const show = await db.show.findUnique({
     where: { id },

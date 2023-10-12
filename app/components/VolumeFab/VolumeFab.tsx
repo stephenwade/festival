@@ -14,17 +14,17 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },
 ];
 
-type Props = {
+interface Props {
   volume: number;
   onVolumeChange?: (volume: number) => void;
   onVolumeInput?: (volume: number) => void;
-};
+}
 
 export const VolumeFab: FC<Props> = memo(function VolumeFab({
   volume,
   onVolumeChange,
   onVolumeInput,
-}) {
+}: Props) {
   const [opened, setOpened] = useState(false);
 
   const close = useCallback(() => {

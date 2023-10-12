@@ -9,7 +9,7 @@ const notFound = () => new Response('Not Found', { status: 404 });
 export const loader = (async (args) => {
   await redirectToLogin(args);
 
-  const id = args.params.id as string;
+  const id = args.params.id!;
 
   const file = await db.file.findUnique({
     where: { id },

@@ -23,7 +23,7 @@ export const meta: MetaFunction = () => [
 export const loader = (async (args) => {
   await redirectToLogin(args);
 
-  const id = args.params.show as string;
+  const id = args.params.show!;
 
   const show = await db.show.findUnique({
     where: { id },
@@ -44,7 +44,7 @@ export const loader = (async (args) => {
 export const action = (async (args) => {
   await redirectToLogin(args);
 
-  const previousId = args.params.show as string;
+  const previousId = args.params.show!;
 
   if (args.request.method === 'DELETE') {
     await db.show.delete({ where: { id: previousId } });

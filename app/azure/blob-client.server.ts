@@ -25,14 +25,14 @@ const containerName = '$web';
 const containerClient = blobServiceClient.getContainerClient(containerName);
 
 export function getBlobUrl(blobName: string) {
-  return `https://${websiteHostingDomain as string}/${blobName}`;
+  return `https://${websiteHostingDomain!}/${blobName}`;
 }
 
-type UploadFileToAzureProps = {
+interface UploadFileToAzureProps {
   blobName: string;
   fileName: string;
   contentType: string;
-};
+}
 
 export async function uploadFileToAzure({
   blobName,

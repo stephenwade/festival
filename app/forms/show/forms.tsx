@@ -23,13 +23,13 @@ import { clientValidator } from './validators';
 
 const SHOW_FORM_ID = 'show-form';
 
-type SetFormProps = {
+interface SetFormProps {
   name: string;
   remove: () => void;
 
   /** Changes to this prop are ignored. */
   onIsUploadingChanged: (isUploading: boolean) => void;
-};
+}
 
 const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
   const [isUploading, setIsUploading] = useState(false);
@@ -64,11 +64,11 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
   );
 };
 
-type ShowFormProps = {
+interface ShowFormProps {
   defaultValues?: z.infer<typeof schema>;
   cancelLinkTo: string;
   showDeleteButton?: boolean;
-};
+}
 
 const ShowForm: FC<ShowFormProps> = ({
   defaultValues,
@@ -164,7 +164,7 @@ const ShowForm: FC<ShowFormProps> = ({
           <SaveButton disabled={saveDisabled} />
         </p>
       </ValidatedForm>
-      {showDeleteButton && (
+      {showDeleteButton ? (
         <Form method="delete">
           <p>
             <button disabled={isDeleting}>
@@ -172,7 +172,7 @@ const ShowForm: FC<ShowFormProps> = ({
             </button>
           </p>
         </Form>
-      )}
+      ) : null}
     </>
   );
 };
