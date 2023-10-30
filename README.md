@@ -13,14 +13,10 @@ at the same time) without requiring live streaming infrastructure.
 
 ## MySQL Setup
 
-Run the following commands to create a MySQL user for Festival. Prisma Migrate
-requires the user account to have
-[permission to create databases](https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database#shadow-database-user-permissions).
+Run the following command to create a MySQL database for Festival using Docker.
 
-```
-CREATE USER festival@localhost IDENTIFIED BY 'your-password-here';
-GRANT ALL ON festival.* TO festival@localhost;
-GRANT CREATE, ALTER, DROP, REFERENCES ON *.* TO festival@localhost;
+```shell
+doppler run --mount .env -- docker compose up -d
 ```
 
 ## Azure Setup

@@ -33,7 +33,7 @@ jobs:
           name: playwright-report
           path: playwright-report/
 
-  ct:
+  test-ct:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

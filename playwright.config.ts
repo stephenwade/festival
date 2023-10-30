@@ -12,8 +12,15 @@ export default defineConfig({
   reporter: process.env.CI ? 'github' : 'html',
 
   use: {
-    baseURL: `http://127.0.0.1:${String(process.env.PORT)}`,
+    baseURL: `http://127.0.0.1:${process.env.PORT}`,
     trace: 'on-first-retry',
+  },
+
+  webServer: {
+    command: [
+      'doppler run -- npx prisma migrate dev',
+      'doppler run -- npx remix dev',
+    ].join(' && '),
   },
 
   projects: [
