@@ -17,10 +17,7 @@ export default defineConfig({
   },
 
   webServer: {
-    command: [
-      'doppler run -- npx prisma migrate dev',
-      'doppler run -- npx remix dev',
-    ].join(' && '),
+    command: ['npx prisma migrate dev', 'npx remix dev'].join(' && '),
   },
 
   projects: [
