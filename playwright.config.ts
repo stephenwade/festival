@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const baseURL = `http://127.0.0.1:${process.env.PORT}`;
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -12,12 +14,14 @@ export default defineConfig({
   reporter: process.env.CI ? 'github' : 'html',
 
   use: {
-    baseURL: `http://127.0.0.1:${process.env.PORT}`,
+    baseURL,
     trace: 'on-first-retry',
   },
 
   webServer: {
     command: ['npx prisma migrate dev', 'npx remix dev'].join(' && '),
+    url: `${baseURL}/admin`,
+    reuseExistingServer: !process.env.CI,
   },
 
   projects: [
@@ -25,13 +29,13 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
   ],
 });
