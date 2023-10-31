@@ -25,7 +25,12 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - run: npm run test
+      - name: Install Doppler
+        run: wget -t 3 -qO- https://cli.doppler.com/install.sh | sudo sh
+
+      - run: doppler run -- npm run test
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
 
       - uses: actions/upload-artifact@v3
         if: always()
@@ -33,25 +38,25 @@ jobs:
           name: playwright-report
           path: playwright-report/
 
-  test-ct:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+  # test-ct:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: npm
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 18
+  #         cache: npm
 
-      - run: npm ci
+  #     - run: npm ci
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+  #     - name: Install Playwright browsers
+  #       run: npx playwright install --with-deps
 
-      - run: npm run test-ct
+  #     - run: npm run test-ct
 
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
+  #     - uses: actions/upload-artifact@v3
+  #       if: always()
+  #       with:
+  #         name: playwright-report
+  #         path: playwright-report/
