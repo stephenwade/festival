@@ -38,6 +38,8 @@ module.exports = {
     'unused-imports/no-unused-imports': 'warn',
     'unused-imports/no-unused-vars': 'warn',
 
+    '@typescript-eslint/consistent-type-exports': 'warn',
+    '@typescript-eslint/consistent-type-imports': 'warn',
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     'unicorn/filename-case': 'off',
     'unicorn/no-null': 'off',
@@ -62,12 +64,18 @@ module.exports = {
   },
 
   overrides: [
-    // Node
     {
       files: ['.eslintrc.js', 'remix.config.js', 'stylelint.config.js'],
 
       env: {
         node: true,
+      },
+    },
+    {
+      files: ['playwright/**/*.ts'],
+
+      rules: {
+        'no-empty-pattern': 'off',
       },
     },
   ],

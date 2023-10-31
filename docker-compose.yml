@@ -1,0 +1,15 @@
+---
+name: festival-dev
+services:
+  db:
+    image: mysql
+    env_file: .env
+    environment:
+      MYSQL_USER: festival
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+volumes:
+  db-data:
