@@ -24,7 +24,7 @@
     "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.16.0",
+    "@azure/storage-blob": "12.17.0",
     "@clerk/remix": "3.1.5",
     "@prisma/client": "5.5.2",
     "@remix-run/node": "2.2.0",
