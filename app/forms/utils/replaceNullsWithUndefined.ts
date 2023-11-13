@@ -3,10 +3,10 @@
 type RecursivelyReplaceNullWithUndefined<T> = T extends null
   ? undefined
   : T extends (infer U)[]
-  ? RecursivelyReplaceNullWithUndefined<U>[]
-  : T extends Record<string, unknown>
-  ? { [K in keyof T]: RecursivelyReplaceNullWithUndefined<T[K]> }
-  : T;
+    ? RecursivelyReplaceNullWithUndefined<U>[]
+    : T extends Record<string, unknown>
+      ? { [K in keyof T]: RecursivelyReplaceNullWithUndefined<T[K]> }
+      : T;
 
 /**
  * Recursively replaces all `null`s with `undefined`.
