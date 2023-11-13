@@ -76,8 +76,8 @@ export const VolumeFab: FC<Props> = memo(function VolumeFab({
     volume === INPUT_MIN
       ? VolumeMuteIcon
       : volume < (INPUT_MIN + INPUT_MAX) / 2
-      ? VolumeDownIcon
-      : VolumeUpIcon;
+        ? VolumeDownIcon
+        : VolumeUpIcon;
 
   return (
     <div ref={buttonRef} className="volume-fab-container">
