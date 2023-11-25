@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "config:base",
-    ":separateMultipleMajorReleases",
-    ":separatePatchReleases"
-  ],
+  "extends": ["config:best-practices", "config:js-app"],
 
   "packageRules": [
     {
@@ -16,8 +12,6 @@
       "automerge": false
     }
   ],
-
-  "rangeStrategy": "pin",
 
   "lockFileMaintenance": {
     "enabled": true,
