@@ -1,5 +1,6 @@
 {
   "extends": ["config:best-practices", "config:js-app"],
+
   "packageRules": [
     {
       "matchUpdateTypes": ["patch"],
@@ -11,6 +12,7 @@
       "automerge": false
     }
   ],
+
   "lockFileMaintenance": {
     "enabled": true,
     "extends": ["schedule:weekly"],
