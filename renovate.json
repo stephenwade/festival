@@ -3,11 +3,11 @@
 
   "packageRules": [
     {
-      "updateTypes": ["patch"],
+      "matchUpdateTypes": ["patch"],
       "automerge": false
     },
     {
-      "updateTypes": ["minor"],
+      "matchUpdateTypes": ["minor"],
       "matchCurrentVersion": "!/^[~^]?0/",
       "automerge": false
     }
