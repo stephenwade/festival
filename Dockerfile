@@ -1,4 +1,4 @@
-FROM ubuntu:jammy as base
+FROM ubuntu:jammy@sha256:2b7412e6465c3c7fc5bb21d3e6f1917c167358449fecac8176c6e496e5c1f05f as base
 
 WORKDIR /node
 
@@ -38,7 +38,7 @@ RUN npx prisma generate
 ADD . .
 RUN npm run build
 
-FROM lscr.io/linuxserver/ffmpeg:version-5.1.2-cli as final
+FROM lscr.io/linuxserver/ffmpeg:version-5.1.2-cli@sha256:e691582facf5ec1b4f59ad7872e0c763a96875128c38e0fe703dca06a8ed1212 as final
 
 WORKDIR /node
 
