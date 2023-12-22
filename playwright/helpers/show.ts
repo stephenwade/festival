@@ -1,22 +1,9 @@
-import { test as base } from '@playwright/test';
 import { PrismaClient, type Show } from '@prisma/client';
 import { addSeconds } from 'date-fns';
 
 const prisma = new PrismaClient();
 
-interface ShowFixtures {
-  show: Show;
-}
-
-export const test = base.extend<ShowFixtures>({
-  show: async ({}, use) => {
-    const show = await seedShow();
-    await use(show);
-    await deleteShow(show);
-  },
-});
-
-async function seedShow(): Promise<Show> {
+export async function seedShow(): Promise<Show> {
   const [showLogoFile, backgroundImageFile] = await Promise.all([
     prisma.file.create({
       data: {
@@ -72,6 +59,25 @@ async function seedShow(): Promise<Show> {
   return show;
 }
 
-async function deleteShow(show: Show) {
-  await prisma.show.delete({ where: { id: show.id } });
+export async function deleteShow(showId: string) {
+  const show = await prisma.show.findUniqueOrThrow({
+    where: { id: showId },
+    include: { sets: true },
+  });
+
+  await prisma.show.delete({ where: { id: showId } });
+  await prisma.file.deleteMany({
+    where: { id: { in: [show.showLogoFileId, show.backgroundImageFileId] } },
+  });
+  await prisma.audioFileUpload.deleteMany({
+    where: {
+      id: {
+        in: show.sets.map((set) => set.audioFileUploadId).filter(isDefined),
+      },
+    },
+  });
+}
+
+function isDefined<T>(value: T | undefined | null): value is T {
+  return value !== undefined && value !== null;
 }

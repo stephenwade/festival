@@ -1,9 +1,7 @@
-import { expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-import { test } from '../helpers/show';
-
-test('has URL', async ({ page, show }) => {
+test('has URL', async ({ page }) => {
   await page.goto('/');
 
-  await expect(page).toHaveURL(new RegExp(show.id, 'u'));
+  await expect(page).toHaveURL(new RegExp(process.env.SHOW_ID!, 'u'));
 });

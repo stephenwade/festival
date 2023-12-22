@@ -44,7 +44,7 @@ model AudioFile {
   audioUrl String
   duration Float
 
-  audioFileUpload   AudioFileUpload @relation(fields: [audioFileUploadId], references: [id])
+  audioFileUpload   AudioFileUpload @relation(fields: [audioFileUploadId], references: [id], onDelete: Cascade)
   audioFileUploadId String          @unique
 }
 
