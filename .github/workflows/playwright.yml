@@ -18,6 +18,7 @@ jobs:
       - name: Install Doppler
         run: wget -t 3 -qO- https://cli.doppler.com/install.sh | sudo sh
 
+      # Docker isn't included in the macOS images
       - uses: docker-practice/actions-setup-docker@master
         timeout-minutes: 12
 
