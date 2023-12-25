@@ -79,6 +79,13 @@ export async function deleteShow(showId: string) {
   });
 }
 
+export async function delayShow(showId: string) {
+  await prisma.show.update({
+    where: { id: showId },
+    data: { startDate: addSeconds(new Date(), 10) },
+  });
+}
+
 function isDefined<T>(value: T | undefined | null): value is T {
   return value !== undefined && value !== null;
 }

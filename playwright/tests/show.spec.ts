@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+import { delayShow } from '../helpers/show';
+
 test('has URL', async ({ page, baseURL }) => {
   await page.goto('/');
 
@@ -7,6 +9,8 @@ test('has URL', async ({ page, baseURL }) => {
 });
 
 test('plays the show', async ({ page }) => {
+  await delayShow(process.env.SHOW_ID!);
+
   await page.goto('/');
 
   await page.getByRole('button', { name: 'LISTEN LIVE' }).click();
