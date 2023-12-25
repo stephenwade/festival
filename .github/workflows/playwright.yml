@@ -11,12 +11,13 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
       - name: Install Doppler
-        run: wget -t 3 -qO- https://cli.doppler.com/install.sh | sudo sh
+        run: mkdir -p $HOME/bin; curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh | sh -s -- --install-path $HOME/bin
+        shell: bash
 
       - name: Start Docker Compose
         run: doppler run --mount .env -- docker compose up -d
