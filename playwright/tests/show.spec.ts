@@ -15,7 +15,7 @@ test('plays the show', async ({ page }) => {
 
   await page.getByRole('button', { name: 'LISTEN LIVE' }).click();
 
-  await page.waitForSelector('.current-time >> text="0:01"');
+  await page.waitForSelector('.current-time >> text="0:02"');
   await expect(page.locator('.next-up')).toHaveText('NEXT UP');
 
   await page.waitForSelector('.current-time >> text="0:05"');

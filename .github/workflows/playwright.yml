@@ -41,8 +41,8 @@ jobs:
       - uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4
         if: always()
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: test-results
+          path: test-results/
 
   # test-ct:
   #   runs-on: ubuntu-latest
