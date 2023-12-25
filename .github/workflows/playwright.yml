@@ -11,13 +11,15 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
       - name: Install Doppler
-        run: mkdir -p $HOME/bin; curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh | sh -s -- --install-path $HOME/bin
-        shell: bash
+        run: wget -t 3 -qO- https://cli.doppler.com/install.sh | sudo sh
+
+      - uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
 
       - name: Start Docker Compose
         run: doppler run --mount .env -- docker compose up -d
