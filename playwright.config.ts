@@ -35,20 +35,20 @@ export default defineConfig({
       name: 'global teardown',
       testMatch: 'global.teardown.ts',
     },
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    //   dependencies: ['global setup'],
-    // },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+      dependencies: ['global setup'],
+    },
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
       dependencies: ['global setup'],
     },
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    //   dependencies: ['global setup'],
-    // },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+      dependencies: ['global setup'],
+    },
   ],
 });
