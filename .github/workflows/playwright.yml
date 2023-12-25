@@ -21,7 +21,7 @@ jobs:
       # Docker isn't included in the macOS images
       - name: Install Docker
         run: |
-          brew install docker
+          brew install docker docker-compose
           colima start
 
       - name: Start Docker Compose stack
