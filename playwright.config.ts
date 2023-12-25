@@ -16,6 +16,7 @@ export default defineConfig({
   use: {
     baseURL,
     trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
+    video: 'retain-on-failure',
   },
 
   webServer: {
