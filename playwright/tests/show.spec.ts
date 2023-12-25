@@ -12,6 +12,7 @@ test('plays the show', async ({ page }) => {
   await delayShow(process.env.SHOW_ID!);
 
   await page.goto('/');
+  await page.waitForTimeout(1000);
 
   await page.getByRole('button', { name: 'LISTEN LIVE' }).click();
 
