@@ -14,4 +14,5 @@ setup('seed show', async () => {
   const show = await seedShow();
 
   process.env.SHOW_ID = show.id;
+  process.env.FIRST_ARTIST_NAME = show.sets[0].artist;
 });

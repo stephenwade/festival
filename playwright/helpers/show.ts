@@ -1,9 +1,9 @@
-import { PrismaClient, type Show } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { addSeconds } from 'date-fns';
 
 const prisma = new PrismaClient();
 
-export async function seedShow(): Promise<Show> {
+export async function seedShow() {
   const [showLogoFile, backgroundImageFile] = await Promise.all([
     prisma.file.create({
       data: {
@@ -20,6 +20,7 @@ export async function seedShow(): Promise<Show> {
   ]);
 
   const show = await prisma.show.create({
+    include: { sets: true },
     data: {
       id: `test-show-${crypto.randomUUID().slice(-12)}`,
       name: 'Test Show',
