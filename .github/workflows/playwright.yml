@@ -19,13 +19,11 @@ jobs:
         run: wget -t 3 -qO- https://cli.doppler.com/install.sh | sudo sh
 
       # Docker isn't included in the macOS images
-      - name: Install Docker
-        run: |
-          brew install docker docker-compose
-          colima start --network-address  # Flag enables reachable IP addresses
+      - uses: better0fdead/actions-setup-docker@better0fdead/increase-timeout
+        timeout-minutes: 10
 
-      - name: Start Docker Compose stack
-        run: doppler run --mount .env -- docker-compose up -d
+      - name: Start Docker Compose
+        run: doppler run --mount .env -- docker compose up -d
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
 
