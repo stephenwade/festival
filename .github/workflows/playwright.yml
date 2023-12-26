@@ -11,12 +11,16 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
       - name: Install Doppler
         run: wget -t 3 -qO- https://cli.doppler.com/install.sh | sudo sh
+
+      # Docker isn't included in the macOS images
+      - uses: better0fdead/actions-setup-docker@better0fdead/increase-timeout
+        timeout-minutes: 10
 
       - name: Start Docker Compose
         run: doppler run --mount .env -- docker compose up -d
@@ -41,8 +45,8 @@ jobs:
       - uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4
         if: always()
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: test-results
+          path: test-results/
 
   # test-ct:
   #   runs-on: ubuntu-latest

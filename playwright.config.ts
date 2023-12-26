@@ -15,7 +15,7 @@ export default defineConfig({
 
   use: {
     baseURL,
-    trace: 'on-first-retry',
+    trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
   },
 
   webServer: {
@@ -26,16 +26,28 @@ export default defineConfig({
 
   projects: [
     {
+      name: 'global setup',
+      testMatch: 'global.setup.ts',
+      teardown: 'global teardown',
+    },
+    {
+      name: 'global teardown',
+      testMatch: 'global.teardown.ts',
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      dependencies: ['global setup'],
     },
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+      dependencies: ['global setup'],
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+      dependencies: ['global setup'],
+    },
   ],
 });

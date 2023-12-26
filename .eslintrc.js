@@ -42,6 +42,7 @@ module.exports = {
     '@typescript-eslint/consistent-type-imports': 'warn',
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     'unicorn/filename-case': 'off',
+    'unicorn/no-array-callback-reference': 'off',
     'unicorn/no-null': 'off',
     'unicorn/no-useless-undefined': 'off',
     'unicorn/prefer-module': 'off',
