@@ -21,16 +21,11 @@ jobs:
       # Docker isn't included in the macOS images
       - name: Install Docker
         run: |
-          # Install Docker and Docker Compose
           brew install docker docker-compose
-          # Link Docker Compose into Docker CLI
-          mkdir -p ~/.docker/cli-plugins
-          ln -sfn $HOMEBREW_PREFIX/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
-          # Start Docker runtime
           colima start
 
       - name: Start Docker Compose stack
-        run: doppler run --mount .env -- docker compose up -d
+        run: doppler run --mount .env -- docker-compose up -d
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
 
