@@ -17,7 +17,7 @@ jobs:
 
       # Docker isn't included in the macOS images
       - uses: better0fdead/actions-setup-docker@better0fdead/increase-timeout
-        timeout-minutes: 15
+        timeout-minutes: 20
 
       - name: Start Docker Compose
         run: doppler run --mount .env -- docker compose up -d
