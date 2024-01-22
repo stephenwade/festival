@@ -45,8 +45,8 @@
     "zod-form-data": "2.0.2"
   },
   "devDependencies": {
-    "@playwright/experimental-ct-react": "1.41.0",
-    "@playwright/test": "1.41.0",
+    "@playwright/experimental-ct-react": "1.41.1",
+    "@playwright/test": "1.41.1",
     "@remix-run/dev": "2.5.1",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
