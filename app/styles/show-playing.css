@@ -5,7 +5,7 @@
   align-items: center;
   overflow: hidden; /* <fab-volume-button> causes overflow */
   padding: 0 1em;
-  color: #3a3f93;
+  color: white;
 }
 
 .current-time,

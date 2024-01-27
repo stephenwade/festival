@@ -48,7 +48,7 @@ export const AudioCanvas: FC<Props> = ({
 
     // canvas properties must be reset after canvas is resized
     ctx.lineWidth = 4 * sizeMultiplier;
-    const color = '#eb75ac';
+    const color = '#fff';
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
   }, [height, width]);
