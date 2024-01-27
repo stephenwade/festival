@@ -1,11 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 function getCurrentSecond() {
   return Math.floor(Date.now() / 1000);
 }
 
 export function useClock(enabled = true): void {
-  const [, forceUpdate] = useState(0);
+  const [, setCounter] = useState(0);
+  const forceUpdate = useCallback(() => {
+    setCounter((c) => c + 1);
+  }, []);
 
   const lastSecond = useRef(getCurrentSecond());
 
@@ -15,7 +18,7 @@ export function useClock(enabled = true): void {
         const now = getCurrentSecond();
         if (lastSecond.current !== now) {
           lastSecond.current = now;
-          forceUpdate((x) => x + 1);
+          forceUpdate();
         }
       }, 200);
 
@@ -23,5 +26,5 @@ export function useClock(enabled = true): void {
         clearInterval(interval);
       };
     }
-  }, [enabled]);
+  }, [enabled, forceUpdate]);
 }
