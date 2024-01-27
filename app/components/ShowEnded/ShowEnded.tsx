@@ -34,7 +34,7 @@ export const ShowEnded: FC<Props> = ({ logoUrl }) => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img className="heart" src="/images/heart-3a3f93.svg" alt="heart" />
+        <img className="heart" src="/images/heart-white.svg" alt="heart" />
       </a>
     </div>
   );
