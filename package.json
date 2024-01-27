@@ -8,7 +8,7 @@
     "url": "git+https://github.com/stephenwade/festival.git"
   },
   "scripts": {
-    "prepare": "husky install; prisma generate",
+    "prepare": "husky; prisma generate",
     "build": "remix build",
     "dev": "doppler run -- remix dev",
     "start": "remix-serve ./build/index.js",
