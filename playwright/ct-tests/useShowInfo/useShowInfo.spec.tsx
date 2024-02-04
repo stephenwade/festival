@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/experimental-ct-react';
-import { formatDistanceToNowStrict, subSeconds } from 'date-fns';
+import { addSeconds, formatDistanceToNowStrict, subSeconds } from 'date-fns';
 
 import { ShowInfoTest } from './ShowInfoTest';
 
@@ -72,4 +72,18 @@ test('after the show', async ({ mount }) => {
   await expect(component).toContainText('Status: ENDED');
   await expect(component).toContainText('Current set: None');
   await expect(component).toContainText('Next set: None');
+});
+
+test('adjusts start time based on server clock', async ({ mount }) => {
+  const component = await mount(
+    <ShowInfoTest
+      offsetSec={0}
+      serverDateOverride={addSeconds(new Date(), 10)}
+    />,
+  );
+
+  await expect(component).toContainText('Status: PLAYING');
+  await expect(component).toContainText('Current time: 9');
+  await expect(component).toContainText('Current set: Artist 1');
+  await expect(component).toContainText('Next set: Artist 2');
 });

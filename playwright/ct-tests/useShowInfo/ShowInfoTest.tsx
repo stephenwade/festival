@@ -6,13 +6,19 @@ import { addSeconds } from 'date-fns';
 import { useShowInfo } from '~/hooks/useShowInfo';
 import type { ShowData } from '~/types/ShowData';
 
-function getMockDataAtOffset(
-  offsetSec: number,
-): Pick<ShowData, 'serverDate' | 'sets'> {
+interface Props {
+  offsetSec: number;
+  serverDateOverride?: Date;
+}
+
+function getMockDataAtOffset({
+  offsetSec,
+  serverDateOverride,
+}: Props): Pick<ShowData, 'serverDate' | 'sets'> {
   const now = new Date();
 
   return {
-    serverDate: now.toISOString(),
+    serverDate: (serverDateOverride ?? now).toISOString(),
     sets: [
       {
         id: 'cd062b08-596b-3dc7-8e7a-67f4395361a1',
@@ -83,17 +89,13 @@ function ShowInfoDisplay() {
   );
 }
 
-interface Props {
-  offsetSec: number;
-}
-
-export function ShowInfoTest({ offsetSec }: Props) {
+export function ShowInfoTest(props: Props) {
   const RemixStub = createRemixStub([
     {
       path: '/',
       Component: ShowInfoDisplay,
       loader() {
-        return json(getMockDataAtOffset(offsetSec));
+        return json(getMockDataAtOffset(props));
       },
     },
   ]);
