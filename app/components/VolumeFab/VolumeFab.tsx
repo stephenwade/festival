@@ -16,13 +16,11 @@ export const links: LinksFunction = () => [
 
 interface Props {
   volume: number;
-  onVolumeChange?: (volume: number) => void;
-  onVolumeInput?: (volume: number) => void;
+  onVolumeInput: (volume: number) => void;
 }
 
 export const VolumeFab: FC<Props> = memo(function VolumeFab({
   volume,
-  onVolumeChange,
   onVolumeInput,
 }: Props) {
   const [opened, setOpened] = useState(false);
@@ -35,39 +33,34 @@ export const VolumeFab: FC<Props> = memo(function VolumeFab({
 
   useOnClickOutside(buttonRef, close);
 
-  const updateVolume = (volume: number) => {
-    onVolumeChange?.(volume);
-    onVolumeInput?.(volume);
-  };
-
   const handleKeyDown: KeyboardEventHandler<HTMLButtonElement> = (e) => {
     if (e.ctrlKey || e.altKey || e.metaKey) return;
 
     switch (e.key) {
       case 'ArrowLeft':
       case 'ArrowDown':
-        updateVolume(volume - INPUT_STEP);
+        onVolumeInput(volume - INPUT_STEP);
         break;
 
       case 'ArrowRight':
       case 'ArrowUp':
-        updateVolume(volume + INPUT_STEP);
+        onVolumeInput(volume + INPUT_STEP);
         break;
 
       case 'PageUp':
-        updateVolume(volume + INPUT_STEP * 2);
+        onVolumeInput(volume + INPUT_STEP * 2);
         break;
 
       case 'PageDown':
-        updateVolume(volume - INPUT_STEP * 2);
+        onVolumeInput(volume - INPUT_STEP * 2);
         break;
 
       case 'Home':
-        updateVolume(INPUT_MIN);
+        onVolumeInput(INPUT_MIN);
         break;
 
       case 'End':
-        updateVolume(INPUT_MAX);
+        onVolumeInput(INPUT_MAX);
         break;
     }
   };
@@ -108,11 +101,6 @@ export const VolumeFab: FC<Props> = memo(function VolumeFab({
           step={INPUT_STEP}
           aria-label="Volume"
           disabled={!opened}
-          onChange={(e) => {
-            const input = e.target as HTMLInputElement;
-            const volume = Number(input.value);
-            onVolumeChange?.(volume);
-          }}
           onInput={(e) => {
             const input = e.target as HTMLInputElement;
             const volume = Number(input.value);

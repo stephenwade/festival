@@ -12,8 +12,17 @@ export default defineConfig({
   reporter: process.env.CI ? 'github' : 'html',
 
   use: {
-    trace: 'on-first-retry',
+    trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
     ctPort: 3100,
+    ctTemplateDir: 'playwright/ct-tests',
+    ctViteConfig: {
+      resolve: {
+        // Match "paths" in tsconfig.json
+        alias: {
+          '~': '/app',
+        },
+      },
+    },
   },
 
   projects: [

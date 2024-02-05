@@ -8,7 +8,7 @@ test('has URL', async ({ page, baseURL }) => {
   await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
 });
 
-test('plays the show', async ({ page }) => {
+test('plays the default show', async ({ page }) => {
   await delayShow(process.env.SHOW_ID!);
 
   await page.goto('/');

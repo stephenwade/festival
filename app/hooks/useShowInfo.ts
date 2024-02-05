@@ -8,17 +8,21 @@ import type { TargetShowInfo, TargetTimeInfo } from '~/types/ShowInfo';
 import { useClock } from './useClock';
 import { useCurrentShowId } from './useCurrentShowId';
 
-interface UseShowStatusProps {
-  loaderData: ShowData;
-}
+export type LoadedMetadataHandler = (args: {
+  id: string;
+  duration: number;
+}) => void;
 
-export function useShowInfo({ loaderData }: UseShowStatusProps) {
+export function useShowInfo(
+  data: Pick<ShowData, 'serverDate' | 'sets'>,
+  { test = false } = {},
+) {
   const [audioDurations, setAudioDurations] = useState<Record<string, number>>(
     {},
   );
 
-  const onLoadedMetadata = useCallback(
-    ({ id, duration }: { id: string; duration: number }) => {
+  const onLoadedMetadata = useCallback<LoadedMetadataHandler>(
+    ({ id, duration }) => {
       setAudioDurations((audioLengths) => ({
         ...audioLengths,
         [id]: duration,
@@ -27,7 +31,7 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
     [],
   );
 
-  const showId = useCurrentShowId();
+  const showId = useCurrentShowId({ test });
 
   const revalidator = useRevalidator();
   useEffect(() => {
@@ -38,7 +42,6 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
     };
   }, [revalidator.revalidate, showId]);
 
-  const data = loaderData;
   const clientTimeSkewMs = useMemo(() => {
     const serverDate = parseISO(data.serverDate);
 
@@ -86,7 +89,7 @@ export function useShowInfo({ loaderData }: UseShowStatusProps) {
         }
     : { status: 'ENDED' };
 
-  useClock(timeInfo.status !== 'ENDED');
+  useClock(!test && timeInfo.status !== 'ENDED');
 
   const targetShowInfo: TargetShowInfo = { ...timeInfo, currentSet, nextSet };
 

@@ -78,7 +78,7 @@ export const loader = (async ({ params }) => {
 const Show: FC = () => {
   const loaderData = useLoaderData<typeof loader>();
 
-  const { targetShowInfo, onLoadedMetadata } = useShowInfo({ loaderData });
+  const { targetShowInfo, onLoadedMetadata } = useShowInfo(loaderData);
 
   const [volume, setVolume] = useLocalStorageState('volume', {
     defaultValue: 100,
