@@ -19,7 +19,7 @@ export default defineConfig({
   },
 
   webServer: {
-    command: 'npx remix dev',
+    command: ['npx prisma migrate dev', 'npx remix dev'].join(' && '),
     url: `${baseURL}/admin`,
     reuseExistingServer: !process.env.CI,
   },
