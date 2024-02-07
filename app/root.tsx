@@ -6,6 +6,7 @@ import {
   LiveReload,
   Meta,
   Outlet,
+  redirect,
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
@@ -15,7 +16,16 @@ export const meta: MetaFunction = () => [
   { name: 'description', content: 'Host online music festivals' },
 ];
 
-export const loader = rootAuthLoader satisfies LoaderFunction;
+export const loader = ((args) => {
+  const { pathname, search } = new URL(args.request.url);
+
+  if (pathname.endsWith('/') && pathname !== '/') {
+    // Redirect to the same URL without a trailing slash
+    throw redirect(`${pathname.slice(0, -1)}${search}`, 301);
+  }
+
+  return rootAuthLoader(args);
+}) satisfies LoaderFunction;
 
 export const ErrorBoundary = ClerkErrorBoundary();
 
