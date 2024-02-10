@@ -68,8 +68,6 @@ export const ShowPlaying: FC<Props> = ({
       toast(
         `Looks like your audio player is out of sync. Delay: ${showInfo.delay} seconds`,
       );
-    } else {
-      toast('No longer out of sync!');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showDelayToast]);
