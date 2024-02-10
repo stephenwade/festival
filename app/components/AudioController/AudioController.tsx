@@ -330,15 +330,10 @@ export const AudioController: FC<Props> = ({
 
     const state = stateRef.current;
 
-    // skip setting up AudioContext on iOS
-    const iOS = /iPad|iPhone|iPod/u.test(navigator.userAgent);
-
-    if (!iOS) {
-      try {
-        state.audioContext = setupAudioContext();
-      } catch {
-        // ignore errors
-      }
+    try {
+      state.audioContext = setupAudioContext();
+    } catch {
+      // ignore errors
     }
 
     for (const audio of [audio1Ref.current, audio2Ref.current]) {
