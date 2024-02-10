@@ -330,15 +330,10 @@ export const AudioController: FC<Props> = ({
 
     const state = stateRef.current;
 
-    // skip setting up AudioContext on iOS
-    const iOS = /iPad|iPhone|iPod/u.test(navigator.userAgent);
-
-    if (!iOS) {
-      try {
-        state.audioContext = setupAudioContext();
-      } catch {
-        // ignore errors
-      }
+    try {
+      state.audioContext = setupAudioContext();
+    } catch {
+      // ignore errors
     }
 
     for (const audio of [audio1Ref.current, audio2Ref.current]) {
@@ -364,19 +359,16 @@ export const AudioController: FC<Props> = ({
     checkTargetShowInfo({ ignoreAudioContext: true });
   }, [checkTargetShowInfo, setupAudioContext, targetShowInfo.status]);
 
-  const onStalled = useCallback(
-    (e?: SyntheticEvent<HTMLAudioElement>) => {
-      const state = stateRef.current;
+  const onStalled = useCallback((e?: SyntheticEvent<HTMLAudioElement>) => {
+    const state = stateRef.current;
 
-      if (e?.target !== state.activeAudio) return;
+    if (e?.target !== state.activeAudio) return;
 
-      // Safari: only listen to stalled event if audio is waiting
-      if (audioStatus.waiting) return;
+    // Safari: stalled events fire for seemingly no reason
+    if (navigator.userAgent.includes('Safari')) return;
 
-      dispatchAudioStatus('AUDIO_STALLED');
-    },
-    [audioStatus.waiting],
-  );
+    dispatchAudioStatus('AUDIO_STALLED');
+  }, []);
 
   const audioEvents: AudioHTMLAttributes<HTMLAudioElement> = useMemo(
     () => ({
