@@ -114,6 +114,7 @@ const Show: FC = () => {
           return <ShowEnded logoUrl={loaderData.showLogoUrl} />;
         }
 
+        // showInfo.status: "WAITING_UNTIL_START" | "PLAYING"
         return (
           <ShowPlaying
             volume={volume}
