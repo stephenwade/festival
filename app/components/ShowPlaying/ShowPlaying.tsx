@@ -66,6 +66,9 @@ export const ShowPlaying: FC<Props> = ({
   useEffect(() => {
     if (showDelayToast) {
       toast('Looks like your audio player is out of sync.');
+      return () => {
+        toast.dismiss();
+      };
     }
   }, [showDelayToast]);
 
