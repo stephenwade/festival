@@ -65,11 +65,8 @@ export const ShowPlaying: FC<Props> = ({
     'delay' in showInfo && showInfo.delay && showInfo.delay >= 30;
   useEffect(() => {
     if (showDelayToast) {
-      toast(
-        `Looks like your audio player is out of sync. Delay: ${showInfo.delay} seconds`,
-      );
+      toast('Looks like your audio player is out of sync.');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showDelayToast]);
 
   return (
@@ -85,14 +82,7 @@ export const ShowPlaying: FC<Props> = ({
         />
       ) : null}
 
-      <CurrentTime
-        showInfo={{
-          ...showInfo,
-          // @ts-expect-error testing
-          currentTime: 'delay' in showInfo ? showInfo.delay ?? 0 : undefined,
-        }}
-        audioStatus={audioStatus}
-      />
+      <CurrentTime showInfo={showInfo} audioStatus={audioStatus} />
 
       {waitingUntilStart ? <div className="next-up">NEXT UP</div> : null}
       <div className="artist">{showInfo.currentSet?.artist}</div>
