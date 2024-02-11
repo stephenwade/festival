@@ -477,6 +477,7 @@ export const AudioController: FC<Props> = ({
 
         dispatchAudioStatus('AUDIO_WAITING');
 
+        if (state.stalledTimeout) clearTimeout(state.stalledTimeout);
         state.stalledTimeout = setTimeout(() => {
           onStalled();
         }, 10 * 1000);

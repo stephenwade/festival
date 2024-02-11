@@ -19,15 +19,15 @@ const ID_3 = '55672a19-ba5d-3974-9cc7-2e2f2b2c716f';
 const ID_4 = '565a5b79-111e-3f89-8ccf-fa28acb8ad9b';
 
 interface Props {
-  offsetSec?: number;
+  offsetSec: number;
   alternate?: boolean;
   empty?: boolean;
 
-  forceSkipAudioContext?: boolean;
+  forceSkipAudioContext: boolean;
 }
 
 function getMockData({
-  offsetSec = -5,
+  offsetSec,
   alternate = false,
   empty = false,
 
