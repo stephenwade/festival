@@ -2,6 +2,7 @@ import { expect as baseExpect, test } from '@playwright/experimental-ct-react';
 import type { Locator } from '@playwright/test';
 
 import { AudioControllerTest } from './AudioControllerTest';
+import { AUDIO_FILE_LENGTH, AUDIO_FILE_URL, ID_1 } from './shared-data';
 
 const expect = baseExpect.extend({
   toAlmostEqual: (value: number, expected: number) => {
@@ -15,16 +16,8 @@ const expect = baseExpect.extend({
   },
 });
 
-async function expectLocatorIsAudio(locator: Locator) {
-  const isAudio = await locator.evaluate(
-    (el) => el instanceof HTMLAudioElement,
-  );
-  expect(isAudio, 'Locator is an HTMLAudioElement').toBeTruthy();
-}
-
 async function expectAudioIsPlaying(component: Locator, message?: string) {
   const audio = component.locator('audio[src]').nth(0);
-  await expectLocatorIsAudio(audio);
   const currentTime = await audio.evaluate(
     (el: HTMLAudioElement) => el.currentTime,
   );
@@ -42,7 +35,6 @@ async function expectAudioIsNotPlaying(component: Locator, message?: string) {
     // If neither of the audio elements have a src, the test should pass.
     .or(component.locator('audio'))
     .nth(0);
-  await expectLocatorIsAudio(audio);
   const currentTime = await audio.evaluate(
     (el: HTMLAudioElement) => el.currentTime,
   );
@@ -59,7 +51,6 @@ async function expectAudioCurrentTimeToAlmostEqual(
   expected: number,
 ) {
   const audio = component.locator('audio[src]').nth(0);
-  await expectLocatorIsAudio(audio);
   const currentTime = await audio.evaluate(
     (el: HTMLAudioElement) => el.currentTime,
   );
@@ -78,10 +69,9 @@ function commonTests({ forceSkipAudioContext = false }) {
         />,
       );
 
-      const audios = await component.locator('audio').all();
-      expect(audios).toHaveLength(2);
-
-      for (const audio of audios) {
+      const audios = component.locator('audio');
+      await expect(audios).toHaveCount(2);
+      for (const audio of await audios.all()) {
         await expect(audio).toHaveAttribute('crossorigin', 'anonymous');
       }
     });
@@ -107,7 +97,7 @@ function commonTests({ forceSkipAudioContext = false }) {
   });
 
   test.describe('before the show', () => {
-    const offsetSec = 2;
+    const offsetSec = -2;
 
     test('does not play audio until the show starts', async ({
       mount,
@@ -128,6 +118,46 @@ function commonTests({ forceSkipAudioContext = false }) {
       await page.waitForTimeout(1000);
       await expectAudioIsPlaying(component, 'during the show');
       await expectAudioCurrentTimeToAlmostEqual(component, 0.4);
+    });
+
+    test('calls onLoadedMetadata with id and duration', async ({ mount }) => {
+      const component = await mount(
+        <AudioControllerTest
+          offsetSec={offsetSec}
+          forceSkipAudioContext={forceSkipAudioContext}
+        />,
+      );
+      await component.getByTestId('init-button').click();
+
+      await expect(component.getByTestId('metadata-event-id')).toHaveText(ID_1);
+      const duration = await component
+        .getByTestId('metadata-event-duration')
+        .textContent();
+      expect(Number(duration)).toAlmostEqual(AUDIO_FILE_LENGTH);
+    });
+
+    test('updates src immediately if set info is changed', async ({
+      mount,
+    }) => {
+      const component = await mount(
+        <AudioControllerTest
+          offsetSec={offsetSec}
+          forceSkipAudioContext={forceSkipAudioContext}
+        />,
+      );
+      await component.getByTestId('init-button').click();
+
+      await expect(component.locator('audio[src]').nth(0)).toHaveAttribute(
+        'src',
+        `${AUDIO_FILE_URL}?1`,
+      );
+
+      await component.getByTestId('alternate-button').click();
+
+      await expect(component.locator('audio[src]').nth(0)).toHaveAttribute(
+        'src',
+        `${AUDIO_FILE_URL}?3`,
+      );
     });
   });
 }
