@@ -36,10 +36,17 @@ const initialAudioStatus: AudioStatus = {
   paused: false,
 };
 
+export interface AudioMetadata {
+  id: string;
+  duration: number;
+}
+
 interface Props {
   targetShowInfo: TargetShowInfo;
   volume: number;
-  onLoadedMetadata: (args: { id: string; duration: number }) => void;
+  onLoadedMetadata: (args: AudioMetadata) => void;
+  /** Used in CI */
+  forceSkipAudioContext?: boolean;
 
   children: (args: {
     showInfo: ShowInfo;
@@ -55,6 +62,7 @@ export const AudioController: FC<Props> = ({
   targetShowInfo,
   volume,
   onLoadedMetadata,
+  forceSkipAudioContext,
   children,
 }) => {
   const [showInfo, setShowInfo] = useState<ShowInfo>(
@@ -330,10 +338,12 @@ export const AudioController: FC<Props> = ({
 
     const state = stateRef.current;
 
-    try {
-      state.audioContext = setupAudioContext();
-    } catch {
-      // ignore errors
+    if (!forceSkipAudioContext) {
+      try {
+        state.audioContext = setupAudioContext();
+      } catch {
+        // ignore errors
+      }
     }
 
     for (const audio of [audio1Ref.current, audio2Ref.current]) {
@@ -357,7 +367,12 @@ export const AudioController: FC<Props> = ({
     }
 
     checkTargetShowInfo({ ignoreAudioContext: true });
-  }, [checkTargetShowInfo, setupAudioContext, targetShowInfo.status]);
+  }, [
+    checkTargetShowInfo,
+    forceSkipAudioContext,
+    setupAudioContext,
+    targetShowInfo.status,
+  ]);
 
   const onStalled = useCallback((e?: SyntheticEvent<HTMLAudioElement>) => {
     const state = stateRef.current;

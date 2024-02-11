@@ -15,7 +15,7 @@ export type LoadedMetadataHandler = (args: {
 
 export function useShowInfo(
   data: Pick<ShowData, 'serverDate' | 'sets'>,
-  { test = false } = {},
+  { ci = false, enableClock = true } = {},
 ) {
   const [audioDurations, setAudioDurations] = useState<Record<string, number>>(
     {},
@@ -31,7 +31,7 @@ export function useShowInfo(
     [],
   );
 
-  const showId = useCurrentShowId({ test });
+  const showId = useCurrentShowId({ ci });
 
   const revalidator = useRevalidator();
   useEffect(() => {
@@ -89,7 +89,7 @@ export function useShowInfo(
         }
     : { status: 'ENDED' };
 
-  useClock(!test && timeInfo.status !== 'ENDED');
+  useClock(enableClock && timeInfo.status !== 'ENDED');
 
   const targetShowInfo: TargetShowInfo = { ...timeInfo, currentSet, nextSet };
 
