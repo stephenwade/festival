@@ -1,8 +1,9 @@
 import { expect as baseExpect, test } from '@playwright/experimental-ct-react';
-import type { Locator } from '@playwright/test';
+import type { Locator, PlaywrightWorkerOptions } from '@playwright/test';
 
 import { AudioControllerTest } from './AudioControllerTest';
-import { AUDIO_FILE_LENGTH, AUDIO_FILE_URL, ID_1 } from './shared-data';
+import type { Props } from './shared';
+import { AUDIO_FILE_LENGTH, AUDIO_FILE_URL, ID_1 } from './shared';
 
 const expect = baseExpect.extend({
   toAlmostEqual: (value: number, expected: number) => {
@@ -57,17 +58,44 @@ async function expectAudioCurrentTimeToAlmostEqual(
   expect(currentTime).toAlmostEqual(expected);
 }
 
+interface InitProps extends Props {
+  skipInit?: boolean;
+}
+
+async function init<T extends Locator>(
+  props: InitProps,
+  {
+    mount,
+    browserName,
+  }: {
+    mount: (component: JSX.Element) => Promise<T>;
+    browserName: PlaywrightWorkerOptions['browserName'];
+  },
+): Promise<T> {
+  const { skipInit, ...testProps } = props;
+
+  const component = await mount(<AudioControllerTest {...testProps} />);
+  if (!skipInit) {
+    await component.getByTestId('init-button').click();
+    if (browserName === 'firefox') {
+      // Firefox sometimes needs two clicks to initialize properly.
+      await component.getByTestId('init-button').click();
+    }
+  }
+
+  return component;
+}
+
 function commonTests({ forceSkipAudioContext = false }) {
   test.describe('init', () => {
-    const offsetSec = -5;
+    const initProps: InitProps = {
+      offsetSec: -5,
+      forceSkipAudioContext,
+      skipInit: true,
+    };
 
-    test('renders two audio elements', async ({ mount }) => {
-      const component = await mount(
-        <AudioControllerTest
-          offsetSec={offsetSec}
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
-      );
+    test('renders two audio elements', async ({ mount, browserName }) => {
+      const component = await init(initProps, { mount, browserName });
 
       const audios = component.locator('audio');
       await expect(audios).toHaveCount(2);
@@ -78,13 +106,9 @@ function commonTests({ forceSkipAudioContext = false }) {
 
     test('calling initializeAudio() sets the show status', async ({
       mount,
+      browserName,
     }) => {
-      const component = await mount(
-        <AudioControllerTest
-          offsetSec={offsetSec}
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
-      );
+      const component = await init(initProps, { mount, browserName });
 
       await expect(component).toContainText(
         'Show status: WAITING_FOR_AUDIO_CONTEXT',
@@ -97,19 +121,17 @@ function commonTests({ forceSkipAudioContext = false }) {
   });
 
   test.describe('before the show', () => {
-    const offsetSec = -2;
+    const initProps: InitProps = {
+      offsetSec: -2,
+      forceSkipAudioContext,
+    };
 
     test('does not play audio until the show starts', async ({
       mount,
       page,
+      browserName,
     }) => {
-      const component = await mount(
-        <AudioControllerTest
-          offsetSec={offsetSec}
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
-      );
-      await component.getByTestId('init-button').click();
+      const component = await init(initProps, { mount, browserName });
 
       await page.waitForTimeout(400);
       await expectAudioIsNotPlaying(component, '2 seconds before the show');
@@ -120,14 +142,11 @@ function commonTests({ forceSkipAudioContext = false }) {
       await expectAudioCurrentTimeToAlmostEqual(component, 0.4);
     });
 
-    test('calls onLoadedMetadata with id and duration', async ({ mount }) => {
-      const component = await mount(
-        <AudioControllerTest
-          offsetSec={offsetSec}
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
-      );
-      await component.getByTestId('init-button').click();
+    test('calls onLoadedMetadata with id and duration', async ({
+      mount,
+      browserName,
+    }) => {
+      const component = await init(initProps, { mount, browserName });
 
       await expect(component.getByTestId('metadata-event-id')).toHaveText(ID_1);
       const duration = await component
@@ -138,14 +157,9 @@ function commonTests({ forceSkipAudioContext = false }) {
 
     test('updates src immediately if set info is changed', async ({
       mount,
+      browserName,
     }) => {
-      const component = await mount(
-        <AudioControllerTest
-          offsetSec={offsetSec}
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
-      );
-      await component.getByTestId('init-button').click();
+      const component = await init(initProps, { mount, browserName });
 
       await expect(component.locator('audio[src]')).toHaveAttribute(
         'src',
@@ -165,14 +179,15 @@ function commonTests({ forceSkipAudioContext = false }) {
     test('starts audio at the correct time if initialized during the show', async ({
       mount,
       page,
+      browserName,
     }) => {
-      const component = await mount(
-        <AudioControllerTest
-          offsetSec={5}
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
+      const component = await init(
+        {
+          offsetSec: 5,
+          forceSkipAudioContext,
+        },
+        { mount, browserName },
       );
-      await component.getByTestId('init-button').click();
 
       await page.waitForTimeout(400);
       await expectAudioIsPlaying(component);
@@ -183,14 +198,15 @@ function commonTests({ forceSkipAudioContext = false }) {
     test('preloads the next set 60 seconds before the end of the first set', async ({
       mount,
       page,
+      browserName,
     }) => {
-      const component = await mount(
-        <AudioControllerTest
-          offsetSec={AUDIO_FILE_LENGTH - 62}
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
+      const component = await init(
+        {
+          offsetSec: AUDIO_FILE_LENGTH - 62,
+          forceSkipAudioContext,
+        },
+        { mount, browserName },
       );
-      await component.getByTestId('init-button').click();
 
       await page.waitForTimeout(400);
       await expect(
@@ -212,14 +228,15 @@ function commonTests({ forceSkipAudioContext = false }) {
     test('does not update src if set info is changed', async ({
       mount,
       page,
+      browserName,
     }) => {
-      const component = await mount(
-        <AudioControllerTest
-          offsetSec={AUDIO_FILE_LENGTH - 10}
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
+      const component = await init(
+        {
+          offsetSec: AUDIO_FILE_LENGTH - 10,
+          forceSkipAudioContext,
+        },
+        { mount, browserName },
       );
-      await component.getByTestId('init-button').click();
 
       await expect(
         component.locator('audio').nth(0),
@@ -237,28 +254,28 @@ function commonTests({ forceSkipAudioContext = false }) {
   });
 
   test.describe('after the show', () => {
-    test('sets the show status', async ({ mount }) => {
-      const component = await mount(
-        <AudioControllerTest
-          offsetSec={AUDIO_FILE_LENGTH * 3}
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
+    test('sets the show status', async ({ mount, browserName }) => {
+      const component = await init(
+        {
+          offsetSec: AUDIO_FILE_LENGTH * 3,
+          forceSkipAudioContext,
+        },
+        { mount, browserName },
       );
-      await component.getByTestId('init-button').click();
 
       await expect(component).toContainText('Show status: ENDED');
     });
   });
 
   test.describe('empty show', () => {
-    test('sets the show status to ENDED', async ({ mount }) => {
-      const component = await mount(
-        <AudioControllerTest
-          empty
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
+    test('sets the show status to ENDED', async ({ mount, browserName }) => {
+      const component = await init(
+        {
+          empty: true,
+          forceSkipAudioContext,
+        },
+        { mount, browserName },
       );
-      await component.getByTestId('init-button').click();
 
       await expect(component).toContainText('Show status: ENDED');
     });
@@ -271,14 +288,14 @@ test.describe('with AudioContext', () => {
   commonTests({ forceSkipAudioContext });
 
   test.describe('init with AudioContext', () => {
-    test('visualizer data is available', async ({ mount }) => {
-      const component = await mount(
-        <AudioControllerTest
-          offsetSec={-5}
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
+    test('visualizer data is available', async ({ mount, browserName }) => {
+      const component = await init(
+        {
+          offsetSec: -5,
+          forceSkipAudioContext,
+        },
+        { mount, browserName },
       );
-      await component.getByTestId('init-button').click();
 
       await expect(component).toContainText('Visualizer data is available');
     });
@@ -291,14 +308,18 @@ test.describe('without AudioContext', () => {
   commonTests({ forceSkipAudioContext });
 
   test.describe('init without AudioContext', () => {
-    test('visualizer data is not available', async ({ mount, page }) => {
-      const component = await mount(
-        <AudioControllerTest
-          empty
-          forceSkipAudioContext={forceSkipAudioContext}
-        />,
+    test('visualizer data is not available', async ({
+      mount,
+      page,
+      browserName,
+    }) => {
+      const component = await init(
+        {
+          offsetSec: -5,
+          forceSkipAudioContext,
+        },
+        { mount, browserName },
       );
-      await component.getByTestId('init-button').click();
 
       await page.waitForTimeout(1000);
       await expect(component).toContainText('Visualizer data is not available');

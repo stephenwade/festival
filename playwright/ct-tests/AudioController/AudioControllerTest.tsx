@@ -9,6 +9,7 @@ import { AudioController } from '~/components/AudioController';
 import { useShowInfo } from '~/hooks/useShowInfo';
 import type { ShowData } from '~/types/ShowData';
 
+import type { GetMockDataProps, Props } from './shared';
 import {
   AUDIO_FILE_LENGTH,
   AUDIO_FILE_URL,
@@ -16,13 +17,7 @@ import {
   ID_2,
   ID_3,
   ID_4,
-} from './shared-data';
-
-interface GetMockDataProps {
-  offsetSec?: number;
-  alternate?: boolean;
-  empty?: boolean;
-}
+} from './shared';
 
 function getMockData({
   offsetSec = 0,
@@ -54,10 +49,6 @@ function getMockData({
     serverDate: now.toISOString(),
     sets,
   };
-}
-
-interface Props extends Omit<GetMockDataProps, 'alternate'> {
-  forceSkipAudioContext: boolean;
 }
 
 function AudioControllerDisplay() {
