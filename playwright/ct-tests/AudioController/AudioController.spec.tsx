@@ -147,25 +147,161 @@ function commonTests({ forceSkipAudioContext = false }) {
       );
       await component.getByTestId('init-button').click();
 
-      await expect(component.locator('audio[src]').nth(0)).toHaveAttribute(
+      await expect(component.locator('audio[src]')).toHaveAttribute(
         'src',
         `${AUDIO_FILE_URL}?1`,
       );
 
       await component.getByTestId('alternate-button').click();
 
-      await expect(component.locator('audio[src]').nth(0)).toHaveAttribute(
+      await expect(component.locator('audio[src]')).toHaveAttribute(
         'src',
         `${AUDIO_FILE_URL}?3`,
       );
     });
   });
+
+  test.describe('during the show', () => {
+    test('starts audio at the correct time if initialized during the show', async ({
+      mount,
+      page,
+    }) => {
+      const component = await mount(
+        <AudioControllerTest
+          offsetSec={5}
+          forceSkipAudioContext={forceSkipAudioContext}
+        />,
+      );
+      await component.getByTestId('init-button').click();
+
+      await page.waitForTimeout(400);
+      await expectAudioIsPlaying(component);
+      await expect(component).toContainText('Show status: PLAYING');
+      await expectAudioCurrentTimeToAlmostEqual(component, 5.4);
+    });
+
+    test('preloads the next set 60 seconds before the end of the first set', async ({
+      mount,
+      page,
+    }) => {
+      const component = await mount(
+        <AudioControllerTest
+          offsetSec={AUDIO_FILE_LENGTH - 62}
+          forceSkipAudioContext={forceSkipAudioContext}
+        />,
+      );
+      await component.getByTestId('init-button').click();
+
+      await page.waitForTimeout(400);
+      await expect(
+        component.locator('audio').nth(1),
+        '62 seconds before the end of the first set',
+      ).not.toHaveAttribute('src');
+      await page.waitForTimeout(1000);
+      await expect(
+        component.locator('audio').nth(1),
+        '61 seconds before the end of the first set',
+      ).not.toHaveAttribute('src');
+      await page.waitForTimeout(1000);
+      await expect(
+        component.locator('audio').nth(1),
+        '61 seconds before the end of the first set',
+      ).toHaveAttribute('src', `${AUDIO_FILE_URL}?2`);
+    });
+
+    test('does not update src if set info is changed', async ({
+      mount,
+      page,
+    }) => {
+      const component = await mount(
+        <AudioControllerTest
+          offsetSec={AUDIO_FILE_LENGTH - 10}
+          forceSkipAudioContext={forceSkipAudioContext}
+        />,
+      );
+      await component.getByTestId('init-button').click();
+
+      await expect(
+        component.locator('audio').nth(0),
+        '10 seconds before the end of the first set',
+      ).toHaveAttribute('src', /\?1(#t=\d+)?$/u);
+
+      await component.getByTestId('alternate-button').click();
+
+      await page.waitForTimeout(1000);
+      await expect(
+        component.locator('audio').nth(0),
+        '9 seconds before the end of the first set',
+      ).toHaveAttribute('src', /\?1(#t=\d+)?$/u);
+    });
+  });
+
+  test.describe('after the show', () => {
+    test('sets the show status', async ({ mount }) => {
+      const component = await mount(
+        <AudioControllerTest
+          offsetSec={AUDIO_FILE_LENGTH * 3}
+          forceSkipAudioContext={forceSkipAudioContext}
+        />,
+      );
+      await component.getByTestId('init-button').click();
+
+      await expect(component).toContainText('Show status: ENDED');
+    });
+  });
+
+  test.describe('empty show', () => {
+    test('sets the show status to ENDED', async ({ mount }) => {
+      const component = await mount(
+        <AudioControllerTest
+          empty
+          forceSkipAudioContext={forceSkipAudioContext}
+        />,
+      );
+      await component.getByTestId('init-button').click();
+
+      await expect(component).toContainText('Show status: ENDED');
+    });
+  });
 }
 
 test.describe('with AudioContext', () => {
-  commonTests({ forceSkipAudioContext: false });
+  const forceSkipAudioContext = false;
+
+  commonTests({ forceSkipAudioContext });
+
+  test.describe('init with AudioContext', () => {
+    test('visualizer data is available', async ({ mount }) => {
+      const component = await mount(
+        <AudioControllerTest
+          offsetSec={-5}
+          forceSkipAudioContext={forceSkipAudioContext}
+        />,
+      );
+      await component.getByTestId('init-button').click();
+
+      await expect(component).toContainText('Visualizer data is available');
+    });
+  });
 });
 
 test.describe('without AudioContext', () => {
-  commonTests({ forceSkipAudioContext: true });
+  const forceSkipAudioContext = true;
+
+  commonTests({ forceSkipAudioContext });
+
+  test.describe('init without AudioContext', () => {
+    test('visualizer data is not available', async ({ mount, page }) => {
+      const component = await mount(
+        <AudioControllerTest
+          empty
+          forceSkipAudioContext={forceSkipAudioContext}
+        />,
+      );
+      await component.getByTestId('init-button').click();
+
+      await page.waitForTimeout(1000);
+      await expect(component).toContainText('Visualizer data is not available');
+    });
+  });
 });

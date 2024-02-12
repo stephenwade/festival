@@ -19,13 +19,13 @@ import {
 } from './shared-data';
 
 interface GetMockDataProps {
-  offsetSec: number;
+  offsetSec?: number;
   alternate?: boolean;
   empty?: boolean;
 }
 
 function getMockData({
-  offsetSec,
+  offsetSec = 0,
   alternate = false,
   empty = false,
 }: GetMockDataProps): Pick<ShowData, 'serverDate' | 'sets'> {
@@ -80,14 +80,7 @@ function AudioControllerDisplay() {
       onLoadedMetadata={onLoadedMetadata}
       forceSkipAudioContext={forceSkipAudioContext}
     >
-      {({
-        showInfo,
-        audioStatus,
-        audioError,
-
-        initializeAudio,
-        getAudioVisualizerData,
-      }) => (
+      {({ showInfo, initializeAudio, getAudioVisualizerData }) => (
         <div>
           <p>
             <button
@@ -126,6 +119,11 @@ function AudioControllerDisplay() {
                 </li>
               ))}
             </ul>
+          </p>
+          <p>
+            {getAudioVisualizerData
+              ? 'Visualizer data is available'
+              : 'Visualizer data is not available'}
           </p>
         </div>
       )}
