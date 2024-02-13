@@ -1,6 +1,6 @@
 import { useMatches } from '@remix-run/react';
 
-export function useCurrentShowId({ test = false } = {}): string {
+export function useCurrentShowId({ ci = false } = {}): string {
   const matches = useMatches();
 
   for (const match of matches) {
@@ -9,7 +9,7 @@ export function useCurrentShowId({ test = false } = {}): string {
     }
   }
 
-  if (test) {
+  if (ci) {
     return '';
   }
   throw new Error('No show found');

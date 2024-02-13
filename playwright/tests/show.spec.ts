@@ -8,6 +8,12 @@ test('has URL', async ({ page, baseURL }) => {
   await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
 });
 
+test('redirects to path without trailing slash', async ({ page, baseURL }) => {
+  await page.goto(`/${process.env.SHOW_ID!}/`);
+
+  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
+});
+
 test('plays the default show', async ({ page }) => {
   await delayShow(process.env.SHOW_ID!);
 

@@ -11,7 +11,7 @@ interface Props {
   serverDateOverride?: Date;
 }
 
-function getMockDataAtOffset({
+function getMockData({
   offsetSec,
   serverDateOverride,
 }: Props): Pick<ShowData, 'serverDate' | 'sets'> {
@@ -46,8 +46,11 @@ function getMockDataAtOffset({
 }
 
 function ShowInfoDisplay() {
-  const data = useLoaderData<ReturnType<typeof getMockDataAtOffset>>();
-  const { targetShowInfo } = useShowInfo(data, { test: true });
+  const data = useLoaderData<ReturnType<typeof getMockData>>();
+  const { targetShowInfo } = useShowInfo(data, {
+    ci: true,
+    enableClock: false,
+  });
 
   const { status, currentSet, nextSet } = targetShowInfo;
 
@@ -95,7 +98,7 @@ export function ShowInfoTest(props: Props) {
       path: '/',
       Component: ShowInfoDisplay,
       loader() {
-        return json(getMockDataAtOffset(props));
+        return json(getMockData(props));
       },
     },
   ]);
