@@ -4,7 +4,10 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { links as spinnerLinks } from '~/components/Spinner';
-import { links as toasterLinks, ToastContainer } from '~/components/Toaster';
+import {
+  links as toastLinks,
+  ToastContainer,
+} from '~/components/ToastContainer';
 import { links as volumeLinks, VolumeFab } from '~/components/VolumeFab';
 import stylesUrl from '~/styles/show-playing.css';
 import type { AudioStatus } from '~/types/AudioStatus';
@@ -16,7 +19,7 @@ import { CurrentTime } from './CurrentTime';
 export const links: LinksFunction = () => [
   ...spinnerLinks(),
   ...volumeLinks(),
-  ...toasterLinks(),
+  ...toastLinks(),
   { rel: 'stylesheet', href: stylesUrl },
 ];
 
