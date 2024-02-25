@@ -1,14 +1,14 @@
 import type { Show } from '@prisma/client';
 import { Form, useNavigate, useNavigation } from '@remix-run/react';
 import type { FC } from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   useControlField,
   useField,
   useFieldArray,
   ValidatedForm,
 } from 'remix-validated-form';
-import { useCounter, useUpdateEffect } from 'usehooks-ts';
+import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
 
 import { AudioFileUpload } from '~/components/admin/AudioFileUpload';
@@ -34,7 +34,7 @@ interface SetFormProps {
 const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
   const [isUploading, setIsUploading] = useState(false);
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     if (isUploading) {
       onIsUploadingChanged(isUploading);
       return () => {

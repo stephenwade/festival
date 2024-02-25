@@ -23,7 +23,7 @@ export async function redirectToLogin(
   }
 
   const user = await createClerkClient({
-    apiKey: process.env.CLERK_SECRET_KEY,
+    secretKey: process.env.CLERK_SECRET_KEY,
   }).users.getUser(userId);
 
   const allowed = await userIsAllowed(user);

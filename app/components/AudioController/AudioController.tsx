@@ -11,7 +11,6 @@ import {
   useState,
 } from 'react';
 import { AudioContext } from 'standardized-audio-context';
-import { useEffectOnce } from 'usehooks-ts';
 
 import type { AudioStatus } from '~/types/AudioStatus';
 import type { ShowInfo, TargetShowInfo } from '~/types/ShowInfo';
@@ -486,12 +485,13 @@ export const AudioController: FC<Props> = ({
     [doNextStatusChange, onLoadedMetadata, onStalled, showInfo],
   );
 
-  useEffectOnce(() => {
+  // This will only run once.
+  useEffect(() => {
     const state = stateRef.current;
 
     state.activeAudio = audio1Ref.current;
     state.inactiveAudio = audio2Ref.current;
-  });
+  }, []);
 
   useEffect(() => {
     const state = stateRef.current;

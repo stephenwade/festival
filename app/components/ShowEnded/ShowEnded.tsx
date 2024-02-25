@@ -1,7 +1,6 @@
 import type { LinksFunction } from '@remix-run/node';
-import type { FC } from 'react';
+import { type FC, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useEffectOnce } from 'usehooks-ts';
 
 import stylesUrl from '~/styles/show-ended.css';
 
@@ -14,9 +13,10 @@ interface Props {
 }
 
 export const ShowEnded: FC<Props> = ({ logoUrl }) => {
-  useEffectOnce(() => {
+  // This will only run once.
+  useEffect(() => {
     toast.dismiss();
-  });
+  }, []);
 
   return (
     <div className="ended-container full-page">
