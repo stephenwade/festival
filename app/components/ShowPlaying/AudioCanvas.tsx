@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useMediaQuery, useUpdateEffect, useWindowSize } from 'usehooks-ts';
+import { useMediaQuery, useWindowSize } from 'usehooks-ts';
 
 interface Props {
   currentTime: number;
@@ -216,7 +216,7 @@ export const AudioCanvas: FC<Props> = ({
     animationRequestIdRef.current = requestAnimationFrame(animate);
   }, [drawCircle, drawProgress, getAudioVisualizerData, reduceMotion]);
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     if (animationRequestIdRef.current) {
       cancelAnimationFrame(animationRequestIdRef.current);
     }
