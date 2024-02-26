@@ -2,18 +2,18 @@ import { expect, test } from '@playwright/experimental-ct-react';
 
 import { VolumeFab } from '~/components/VolumeFab';
 
+function defaultVolumeFab() {
+  return <VolumeFab volume={20} onVolumeInput={() => void 0} />;
+}
+
 test('should display the current volume', async ({ mount }) => {
-  const component = await mount(
-    <VolumeFab volume={20} onVolumeInput={() => void 0} />,
-  );
+  const component = await mount(defaultVolumeFab());
 
   await expect(component.locator('input')).toHaveValue('20');
 });
 
 test('should expand when clicked', async ({ mount }) => {
-  const component = await mount(
-    <VolumeFab volume={20} onVolumeInput={() => void 0} />,
-  );
+  const component = await mount(defaultVolumeFab());
 
   await expect(component.locator('.slider-container')).not.toHaveAttribute(
     'aria-expanded',

@@ -3,3 +3,9 @@ export interface AudioStatus {
   stalled: boolean;
   paused: boolean;
 }
+
+export const initialAudioStatus: AudioStatus = {
+  waiting: false,
+  stalled: false,
+  paused: false,
+};
