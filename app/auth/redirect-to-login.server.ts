@@ -1,10 +1,7 @@
 import { createClerkClient } from '@clerk/remix/api.server';
 import { getAuth } from '@clerk/remix/ssr.server';
-import {
-  type ActionFunctionArgs,
-  type LoaderFunctionArgs,
-  redirect,
-} from '@remix-run/node';
+import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 
 import { userIsAllowed } from './user-is-allowed.server';
 

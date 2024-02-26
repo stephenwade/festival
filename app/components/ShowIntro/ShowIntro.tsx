@@ -7,12 +7,12 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },
 ];
 
-interface Props {
+interface ShowIntroProps {
   logoUrl: string;
   onListenClicked: () => void;
 }
 
-export const ShowIntro: FC<Props> = ({ logoUrl, onListenClicked }) => {
+export const ShowIntro: FC<ShowIntroProps> = ({ logoUrl, onListenClicked }) => {
   return (
     <div className="intro-container">
       <a

@@ -6,7 +6,7 @@ import { addSeconds } from 'date-fns';
 import { useShowInfo } from '~/hooks/useShowInfo';
 import type { ShowData } from '~/types/ShowData';
 
-interface Props {
+interface TestProps {
   offsetSec: number;
   serverDateOverride?: Date;
 }
@@ -14,7 +14,7 @@ interface Props {
 function getMockData({
   offsetSec,
   serverDateOverride,
-}: Props): Pick<ShowData, 'serverDate' | 'sets'> {
+}: TestProps): Pick<ShowData, 'serverDate' | 'sets'> {
   const now = new Date();
 
   return {
@@ -92,7 +92,7 @@ function ShowInfoDisplay() {
   );
 }
 
-export function ShowInfoTest(props: Props) {
+export function ShowInfoTest(props: TestProps) {
   const RemixStub = createRemixStub([
     {
       path: '/',

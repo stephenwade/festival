@@ -1,13 +1,13 @@
 import type { FC, ReactNode } from 'react';
 import { useFormContext, useIsSubmitting } from 'remix-validated-form';
 
-interface Props {
+interface SaveButtonProps {
   text?: ReactNode;
   textSubmitting?: ReactNode;
   disabled?: boolean;
 }
 
-export const SaveButton: FC<Props> = ({
+export const SaveButton: FC<SaveButtonProps> = ({
   text = 'Save',
   textSubmitting = 'Saving…',
   disabled: disabledProp,

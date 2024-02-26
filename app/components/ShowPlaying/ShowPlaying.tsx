@@ -23,7 +23,7 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },
 ];
 
-interface Props {
+export interface ShowPlayingProps {
   volume: number;
   audioStatus: AudioStatus;
   audioError: boolean;
@@ -33,7 +33,7 @@ interface Props {
   onVolumeInput: (volume: number) => void;
 }
 
-export const ShowPlaying: FC<Props> = ({
+export const ShowPlaying: FC<ShowPlayingProps> = ({
   volume,
   audioStatus,
   audioError,

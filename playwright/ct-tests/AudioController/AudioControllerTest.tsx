@@ -56,12 +56,12 @@ function getMockData({
   };
 }
 
-interface Props extends Omit<GetMockDataProps, 'alternate'> {
+interface TestProps extends Omit<GetMockDataProps, 'alternate'> {
   forceSkipAudioContext: boolean;
 }
 
 function AudioControllerDisplay() {
-  const { forceSkipAudioContext, ...props } = useLoaderData<Props>();
+  const { forceSkipAudioContext, ...props } = useLoaderData<TestProps>();
 
   const [alternate, setAlternate] = useState(false);
 
@@ -131,7 +131,7 @@ function AudioControllerDisplay() {
   );
 }
 
-export function AudioControllerTest(props: Props) {
+export function AudioControllerTest(props: TestProps) {
   const RemixStub = createRemixStub([
     {
       path: '/',

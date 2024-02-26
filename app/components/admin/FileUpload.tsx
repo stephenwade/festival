@@ -52,13 +52,13 @@ function putForm(form: FormData, options: PutFormOptions) {
   return request;
 }
 
-interface Props {
+interface FileUploadProps {
   name: string;
   isUploading: boolean;
   setIsUploading: (isUploading: boolean) => void;
 }
 
-export const FileUpload: FC<Props> = ({
+export const FileUpload: FC<FileUploadProps> = ({
   name,
   isUploading,
   setIsUploading,

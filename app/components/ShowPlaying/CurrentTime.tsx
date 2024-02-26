@@ -6,12 +6,15 @@ import type { ShowInfo } from '~/types/ShowInfo';
 
 import { Spinner } from '../Spinner';
 
-interface Props {
+interface CurrentTimeProps {
   showInfo: ShowInfo;
   audioStatus: AudioStatus;
 }
 
-export const CurrentTime: FC<Props> = ({ showInfo, audioStatus }) => {
+export const CurrentTime: FC<CurrentTimeProps> = ({
+  showInfo,
+  audioStatus,
+}) => {
   const waitingUntilStart = showInfo.status === 'WAITING_UNTIL_START';
   const playing = showInfo.status === 'PLAYING';
   const waitingForNetwork = audioStatus.waiting;

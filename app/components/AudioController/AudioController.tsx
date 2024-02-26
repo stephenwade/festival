@@ -40,7 +40,7 @@ export interface AudioMetadata {
   duration: number;
 }
 
-interface Props {
+interface AudioControllerProps {
   targetShowInfo: TargetShowInfo;
   volume: number;
   onLoadedMetadata: (args: AudioMetadata) => void;
@@ -57,7 +57,7 @@ interface Props {
   }) => ReactNode;
 }
 
-export const AudioController: FC<Props> = ({
+export const AudioController: FC<AudioControllerProps> = ({
   targetShowInfo,
   volume,
   onLoadedMetadata,

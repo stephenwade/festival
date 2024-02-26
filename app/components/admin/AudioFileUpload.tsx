@@ -54,13 +54,13 @@ function putForm(form: FormData, options: PutFormOptions) {
   return request;
 }
 
-interface Props {
+interface AudioFileUploadProps {
   name: string;
   isUploading: boolean;
   setIsUploading: (isUploading: boolean) => void;
 }
 
-export const AudioFileUpload: FC<Props> = ({
+export const AudioFileUpload: FC<AudioFileUploadProps> = ({
   name,
   isUploading,
   setIsUploading,
