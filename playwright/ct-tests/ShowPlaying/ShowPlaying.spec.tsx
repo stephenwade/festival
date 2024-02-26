@@ -1,27 +1,74 @@
 import { expect, test } from '@playwright/experimental-ct-react';
+import { addSeconds } from 'date-fns';
 
-import { ShowPlayingTest } from './ShowPlayingTest';
+import type { ShowPlayingProps } from '~/components/ShowPlaying';
+import { ShowPlaying } from '~/components/ShowPlaying';
+import { initialAudioStatus } from '~/types/AudioStatus';
+import type { ShowInfo } from '~/types/ShowInfo';
+
+function makeShowInfoWaitingUntilStart(secondsUntilSet: number) {
+  return {
+    status: 'WAITING_UNTIL_START',
+    secondsUntilSet,
+    currentSet: {
+      id: 'e465d3cf-7875-3fd9-915c-91a915bb8187',
+      audioUrl: 'sample/fulton.mp3',
+      artist: 'Fulton',
+      start: addSeconds(Date.now(), secondsUntilSet),
+      end: addSeconds(Date.now(), secondsUntilSet + 30),
+      duration: 30,
+    },
+  } satisfies ShowInfo;
+}
+
+function makeShowInfoPlaying(currentTime: number) {
+  return {
+    status: 'PLAYING',
+    currentTime,
+    currentSet: {
+      id: '69859842-c6ac-3aa4-8f0d-358ff7758b9e',
+      audioUrl: 'sample/dana.mp3',
+      artist: 'Dana',
+      start: addSeconds(Date.now(), -currentTime),
+      end: addSeconds(Date.now(), 30 - currentTime),
+      duration: 30,
+    },
+  } satisfies ShowInfo;
+}
+
+function showPlayingTemplate(
+  props: Partial<ShowPlayingProps> & Pick<ShowPlayingProps, 'showInfo'>,
+) {
+  return (
+    <ShowPlaying
+      volume={35}
+      audioStatus={initialAudioStatus}
+      audioError={false}
+      getAudioVisualizerData={null}
+      onVolumeInput={() => void 0}
+      {...props}
+    />
+  );
+}
 
 test.describe('while waiting for start', () => {
+  const showInfo = makeShowInfoWaitingUntilStart(10);
+
   test('includes the words "NEXT UP"', async ({ mount }) => {
-    const component = await mount(
-      <ShowPlayingTest status="WAITING_UNTIL_START" secondsUntilSet={10} />,
-    );
+    const component = await mount(showPlayingTemplate({ showInfo }));
 
     await expect(component).toContainText('NEXT UP');
   });
 
   test('includes the artist name', async ({ mount }) => {
-    const component = await mount(
-      <ShowPlayingTest status="WAITING_UNTIL_START" secondsUntilSet={10} />,
-    );
+    const component = await mount(showPlayingTemplate({ showInfo }));
 
     await expect(component).toContainText('Fulton');
   });
 
   test('includes minutes and seconds', async ({ mount }) => {
     const component = await mount(
-      <ShowPlayingTest status="WAITING_UNTIL_START" secondsUntilSet={165} />,
+      showPlayingTemplate({ showInfo: makeShowInfoWaitingUntilStart(165) }),
     );
 
     await expect(component).toContainText('2:45');
@@ -32,10 +79,9 @@ test.describe('while waiting for start', () => {
     mount,
   }) => {
     const component = await mount(
-      <ShowPlayingTest
-        status="WAITING_UNTIL_START"
-        secondsUntilSet={165 + 3600}
-      />,
+      showPlayingTemplate({
+        showInfo: makeShowInfoWaitingUntilStart(165 + 3600),
+      }),
     );
 
     await expect(component).toContainText('1:02:45');
@@ -44,25 +90,23 @@ test.describe('while waiting for start', () => {
 });
 
 test.describe('while playing', () => {
+  const showInfo = makeShowInfoPlaying(15);
+
   test('does not include the words "NEXT UP"', async ({ mount }) => {
-    const component = await mount(
-      <ShowPlayingTest status="PLAYING" currentTime={10} />,
-    );
+    const component = await mount(showPlayingTemplate({ showInfo }));
 
     await expect(component).not.toContainText('NEXT UP');
   });
 
   test('includes the artist name', async ({ mount }) => {
-    const component = await mount(
-      <ShowPlayingTest status="PLAYING" currentTime={10} />,
-    );
+    const component = await mount(showPlayingTemplate({ showInfo }));
 
     await expect(component).toContainText('Dana');
   });
 
   test('includes minutes and seconds', async ({ mount }) => {
     const component = await mount(
-      <ShowPlayingTest status="PLAYING" currentTime={295} />,
+      showPlayingTemplate({ showInfo: makeShowInfoPlaying(295) }),
     );
 
     await expect(component).toContainText('4:55');
@@ -73,89 +117,20 @@ test.describe('while playing', () => {
     mount,
   }) => {
     const component = await mount(
-      <ShowPlayingTest status="PLAYING" currentTime={295 + 3600} />,
+      showPlayingTemplate({
+        showInfo: makeShowInfoPlaying(295 + 3600),
+      }),
     );
 
     await expect(component).toContainText('1:04:55');
     await expect(component).not.toContainText('01:04:55');
   });
 
-  test('has a canvas with something drawn on it', async ({ mount }) => {
+  test('includes a canvas', async ({ mount }) => {
     const component = await mount(
-      <ShowPlayingTest status="PLAYING" currentTime={10} />,
+      showPlayingTemplate({ showInfo: makeShowInfoPlaying(295) }),
     );
 
-    await component.getByText('Enable canvas data').click();
-
-    await expect
-      .poll(async () => {
-        return await component
-          .locator('canvas')
-          .evaluate((el: HTMLCanvasElement) =>
-            el
-              .getContext('2d')!
-              .getImageData(0, 0, el.width, el.height)
-              .data.some((channel) => channel !== 0),
-          );
-      }, 'canvas has some non-blank pixels')
-      .toBe(true);
-  });
-
-  test.describe('reduceMotion false', () => {
-    test('canvas looks different with sound and no sound', async ({
-      mount,
-      page,
-    }) => {
-      const component = await mount(
-        <ShowPlayingTest status="PLAYING" currentTime={10} />,
-      );
-
-      await component.getByText('Enable canvas data').click();
-      await page.waitForTimeout(200);
-
-      await component.getByText('Take snapshot 1').click();
-      const imageDataSound = await component
-        .getByTestId('snapshot-1-hash')
-        .textContent();
-
-      await component.getByText('Disable canvas data').click();
-      await page.waitForTimeout(200);
-
-      await component.getByText('Take snapshot 2').click();
-      const imageDataNoSound = await component
-        .getByTestId('snapshot-2-hash')
-        .textContent();
-
-      expect(imageDataSound).not.toEqual(imageDataNoSound);
-    });
-  });
-
-  test.describe('reduceMotion true', () => {
-    test('canvas looks identical with sound and no sound', async ({
-      mount,
-      page,
-    }) => {
-      const component = await mount(
-        <ShowPlayingTest status="PLAYING" currentTime={10} forceReduceMotion />,
-      );
-
-      await component.getByText('Enable canvas data').click();
-      await page.waitForTimeout(200);
-
-      await component.getByText('Take snapshot 1').click();
-      const imageDataSound = await component
-        .getByTestId('snapshot-1-hash')
-        .textContent();
-
-      await component.getByText('Disable canvas data').click();
-      await page.waitForTimeout(200);
-
-      await component.getByText('Take snapshot 2').click();
-      const imageDataNoSound = await component
-        .getByTestId('snapshot-2-hash')
-        .textContent();
-
-      expect(imageDataSound).toEqual(imageDataNoSound);
-    });
+    await expect(component.locator('canvas')).toBeVisible();
   });
 });

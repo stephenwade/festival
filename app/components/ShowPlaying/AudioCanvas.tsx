@@ -2,24 +2,23 @@ import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useWindowSize } from 'usehooks-ts';
 
-interface AudioCanvasProps {
+export interface AudioCanvasProps {
   currentTime: number;
   setLength: number;
   progressLineFrozen: boolean;
+  /** Used in CI */
+  forceReduceMotion?: boolean;
 
   getAudioVisualizerData: (() => Uint8Array) | null;
-
-  forceReduceMotion?: boolean;
 }
 
 export const AudioCanvas: FC<AudioCanvasProps> = ({
   currentTime,
   setLength,
   progressLineFrozen,
+  forceReduceMotion,
 
   getAudioVisualizerData,
-
-  forceReduceMotion,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
