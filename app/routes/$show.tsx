@@ -3,7 +3,7 @@ import type {
   LoaderFunction,
   MetaFunction,
 } from '@remix-run/node';
-import { json } from '@remix-run/node';
+import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { addSeconds, formatISO } from 'date-fns';
 import type { FC } from 'react';
@@ -18,8 +18,6 @@ import { useShowInfo } from '~/hooks/useShowInfo';
 import elevationStylesUrl from '~/styles/elevation.css';
 import showStylesUrl from '~/styles/show.css';
 import type { ShowData } from '~/types/ShowData';
-
-const notFound = () => new Response('Not Found', { status: 404 });
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const id = params.show!;
@@ -55,7 +53,7 @@ export const loader = (async ({ params }) => {
       },
     },
   });
-  if (!show) throw notFound();
+  if (!show) throw redirect('/');
 
   const data: ShowData = {
     name: show.name,
