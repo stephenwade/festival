@@ -2,6 +2,7 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { createRemixStub } from '@remix-run/testing';
 import { addSeconds } from 'date-fns';
+import type { FC } from 'react';
 import { useState } from 'react';
 
 import type { AudioMetadata } from '~/components/AudioController';
@@ -131,7 +132,7 @@ function AudioControllerDisplay() {
   );
 }
 
-export function AudioControllerTest(props: TestProps) {
+export const AudioControllerTest: FC<TestProps> = (props) => {
   const RemixStub = createRemixStub([
     {
       path: '/',
@@ -143,4 +144,4 @@ export function AudioControllerTest(props: TestProps) {
   ]);
 
   return <RemixStub />;
-}
+};

@@ -2,6 +2,7 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { createRemixStub } from '@remix-run/testing';
 import { addSeconds } from 'date-fns';
+import type { FC } from 'react';
 
 import { useShowInfo } from '~/hooks/useShowInfo';
 import type { ShowData } from '~/types/ShowData';
@@ -92,7 +93,7 @@ function ShowInfoDisplay() {
   );
 }
 
-export function ShowInfoTest(props: TestProps) {
+export const ShowInfoTest: FC<TestProps> = (props) => {
   const RemixStub = createRemixStub([
     {
       path: '/',
@@ -104,4 +105,4 @@ export function ShowInfoTest(props: TestProps) {
   ]);
 
   return <RemixStub />;
-}
+};
