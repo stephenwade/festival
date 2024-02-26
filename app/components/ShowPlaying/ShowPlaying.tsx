@@ -31,6 +31,8 @@ export interface ShowPlayingProps {
 
   getAudioVisualizerData: (() => Uint8Array) | null;
   onVolumeInput: (volume: number) => void;
+
+  forceReduceMotion?: boolean;
 }
 
 export const ShowPlaying: FC<ShowPlayingProps> = ({
@@ -41,6 +43,8 @@ export const ShowPlaying: FC<ShowPlayingProps> = ({
 
   getAudioVisualizerData,
   onVolumeInput,
+
+  forceReduceMotion,
 }) => {
   const waitingUntilStart = showInfo.status === 'WAITING_UNTIL_START';
   const playing = showInfo.status === 'PLAYING';
@@ -85,6 +89,7 @@ export const ShowPlaying: FC<ShowPlayingProps> = ({
             audioStatus.paused || audioStatus.stalled || audioStatus.waiting
           }
           getAudioVisualizerData={getAudioVisualizerData}
+          forceReduceMotion={forceReduceMotion}
         />
       ) : null}
 

@@ -8,6 +8,8 @@ interface AudioCanvasProps {
   progressLineFrozen: boolean;
 
   getAudioVisualizerData: (() => Uint8Array) | null;
+
+  forceReduceMotion?: boolean;
 }
 
 export const AudioCanvas: FC<AudioCanvasProps> = ({
@@ -16,10 +18,13 @@ export const AudioCanvas: FC<AudioCanvasProps> = ({
   progressLineFrozen,
 
   getAudioVisualizerData,
+
+  forceReduceMotion,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const reduceMotion =
+    useMediaQuery('(prefers-reduced-motion: reduce)') || forceReduceMotion;
 
   const [sizeMultiplier, setSizeMultiplier] = useState(1);
 
