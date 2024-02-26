@@ -1,5 +1,6 @@
 import type { LinksFunction } from '@remix-run/node';
-import { type FC, useEffect } from 'react';
+import type { FC } from 'react';
+import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import stylesUrl from '~/styles/show-ended.css';
@@ -8,11 +9,11 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },
 ];
 
-interface Props {
+interface ShowEndedProps {
   logoUrl: string;
 }
 
-export const ShowEnded: FC<Props> = ({ logoUrl }) => {
+export const ShowEnded: FC<ShowEndedProps> = ({ logoUrl }) => {
   // This will only run once.
   useEffect(() => {
     toast.dismiss();

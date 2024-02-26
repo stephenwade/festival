@@ -2,24 +2,28 @@ import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useWindowSize } from 'usehooks-ts';
 
-interface Props {
+export interface AudioCanvasProps {
   currentTime: number;
   setLength: number;
   progressLineFrozen: boolean;
+  /** Used in CI */
+  forceReduceMotion?: boolean;
 
   getAudioVisualizerData: (() => Uint8Array) | null;
 }
 
-export const AudioCanvas: FC<Props> = ({
+export const AudioCanvas: FC<AudioCanvasProps> = ({
   currentTime,
   setLength,
   progressLineFrozen,
+  forceReduceMotion,
 
   getAudioVisualizerData,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const reduceMotion =
+    useMediaQuery('(prefers-reduced-motion: reduce)') || forceReduceMotion;
 
   const [sizeMultiplier, setSizeMultiplier] = useState(1);
 

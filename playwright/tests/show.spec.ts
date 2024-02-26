@@ -2,13 +2,22 @@ import { expect, test } from '@playwright/test';
 
 import { delayShow } from '../helpers/show';
 
-test('has URL', async ({ page, baseURL }) => {
+test('root URL redirects to default show', async ({ page, baseURL }) => {
   await page.goto('/');
 
   await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
 });
 
-test('redirects to path without trailing slash', async ({ page, baseURL }) => {
+test('not found show redirects to default show', async ({ page, baseURL }) => {
+  await page.goto('/not-found');
+
+  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
+});
+
+test('show URL redirects to path without trailing slash', async ({
+  page,
+  baseURL,
+}) => {
   await page.goto(`/${process.env.SHOW_ID!}/`);
 
   await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
@@ -17,7 +26,7 @@ test('redirects to path without trailing slash', async ({ page, baseURL }) => {
 test('plays the default show', async ({ page }) => {
   await delayShow(process.env.SHOW_ID!);
 
-  await page.goto('/');
+  await page.goto(`/${process.env.SHOW_ID!}`);
   await page.waitForTimeout(2000);
 
   await page.getByRole('button', { name: 'LISTEN LIVE' }).click();

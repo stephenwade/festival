@@ -2,11 +2,12 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { createRemixStub } from '@remix-run/testing';
 import { addSeconds } from 'date-fns';
+import type { FC } from 'react';
 
 import { useShowInfo } from '~/hooks/useShowInfo';
 import type { ShowData } from '~/types/ShowData';
 
-interface Props {
+interface TestProps {
   offsetSec: number;
   serverDateOverride?: Date;
 }
@@ -14,7 +15,7 @@ interface Props {
 function getMockData({
   offsetSec,
   serverDateOverride,
-}: Props): Pick<ShowData, 'serverDate' | 'sets'> {
+}: TestProps): Pick<ShowData, 'serverDate' | 'sets'> {
   const now = new Date();
 
   return {
@@ -92,7 +93,7 @@ function ShowInfoDisplay() {
   );
 }
 
-export function ShowInfoTest(props: Props) {
+export const ShowInfoTest: FC<TestProps> = (props) => {
   const RemixStub = createRemixStub([
     {
       path: '/',
@@ -104,4 +105,4 @@ export function ShowInfoTest(props: Props) {
   ]);
 
   return <RemixStub />;
-}
+};

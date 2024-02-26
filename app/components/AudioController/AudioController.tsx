@@ -13,6 +13,7 @@ import {
 import { AudioContext } from 'standardized-audio-context';
 
 import type { AudioStatus } from '~/types/AudioStatus';
+import { initialAudioStatus } from '~/types/AudioStatus';
 import type { ShowInfo, TargetShowInfo } from '~/types/ShowInfo';
 
 interface State {
@@ -29,18 +30,12 @@ interface State {
   stalledTimeout: NodeJS.Timeout | null;
 }
 
-const initialAudioStatus: AudioStatus = {
-  waiting: false,
-  stalled: false,
-  paused: false,
-};
-
 export interface AudioMetadata {
   id: string;
   duration: number;
 }
 
-interface Props {
+interface AudioControllerProps {
   targetShowInfo: TargetShowInfo;
   volume: number;
   onLoadedMetadata: (args: AudioMetadata) => void;
@@ -57,7 +52,7 @@ interface Props {
   }) => ReactNode;
 }
 
-export const AudioController: FC<Props> = ({
+export const AudioController: FC<AudioControllerProps> = ({
   targetShowInfo,
   volume,
   onLoadedMetadata,
@@ -90,7 +85,7 @@ export const AudioController: FC<Props> = ({
 
   const [audioStatus, dispatchAudioStatus] = useReducer(
     (
-      state: typeof initialAudioStatus,
+      state: AudioStatus,
       action:
         | 'RESET_AUDIO_STATUS'
         | 'AUDIO_PAUSED'
