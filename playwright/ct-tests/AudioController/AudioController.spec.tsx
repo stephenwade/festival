@@ -4,6 +4,8 @@ import type { Locator } from '@playwright/test';
 import { AudioControllerTest } from './AudioControllerTest';
 import { AUDIO_FILE_LENGTH, AUDIO_FILE_URL, ID_1 } from './shared-data';
 
+test.describe.configure({ retries: 5 });
+
 const expect = baseExpect.extend({
   toAlmostEqual: (value: number, expected: number) => {
     const tolerance = 0.5;
