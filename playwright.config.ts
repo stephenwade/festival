@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { authFile } from 'playwright/tests/shared-data';
 
 const baseURL = `http://127.0.0.1:${process.env.PORT}`;
 
@@ -36,17 +37,26 @@ export default defineConfig({
     },
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: authFile,
+      },
       dependencies: ['global setup'],
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: {
+        ...devices['Desktop Firefox'],
+        storageState: authFile,
+      },
       dependencies: ['global setup'],
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: {
+        ...devices['Desktop Safari'],
+        storageState: authFile,
+      },
       dependencies: ['global setup'],
     },
   ],
