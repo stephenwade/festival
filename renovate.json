@@ -4,11 +4,16 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["patch"],
-      "automerge": false
+      "automerge": true
     },
     {
       "matchUpdateTypes": ["minor"],
       "matchCurrentVersion": "!/^[~^]?0/",
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "matchPackagePatterns": ["^@remix-run/"],
       "automerge": false
     }
   ],
@@ -16,6 +21,6 @@
   "lockFileMaintenance": {
     "enabled": true,
     "extends": ["schedule:weekly"],
-    "automerge": false
+    "automerge": true
   }
 }
