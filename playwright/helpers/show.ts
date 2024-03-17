@@ -3,7 +3,11 @@ import { addSeconds } from 'date-fns';
 
 const prisma = new PrismaClient();
 
-export async function seedShow() {
+export function randomShowId() {
+  return `test-show-${crypto.randomUUID().slice(-12)}`;
+}
+
+export async function seedShow(startDate: Date) {
   const [showLogoFile, backgroundImageFile] = await Promise.all([
     prisma.file.create({
       data: {
@@ -22,10 +26,10 @@ export async function seedShow() {
   const show = await prisma.show.create({
     include: { sets: true },
     data: {
-      id: `test-show-${crypto.randomUUID().slice(-12)}`,
+      id: randomShowId(),
       name: 'Test Show',
       description: 'The best radio show on GitHub Actions!',
-      startDate: addSeconds(new Date(), 10),
+      startDate,
       backgroundColor: '#000000',
       backgroundColorSecondary: '#000000',
 

@@ -1,3 +1,5 @@
+/* eslint-disable playwright/no-wait-for-timeout */
+
 import { expect, test } from '@playwright/experimental-ct-react';
 
 import { AudioCanvasTest } from './AudioCanvasTest';

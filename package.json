@@ -12,13 +12,13 @@
     "build": "remix build",
     "dev": "doppler run -- remix dev",
     "start": "remix-serve ./build/index.js",
-    "lint:eslint": "eslint . --ignore-path .lintignore --max-warnings 0",
-    "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .lintignore --max-warnings 0",
-    "lint:prettier": "prettier . --check --ignore-path .lintignore --log-level warn",
+    "lint:eslint": "eslint . --ignore-path .gitignore --max-warnings 0",
+    "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .gitignore --max-warnings 0",
+    "lint:prettier": "prettier . --check --ignore-path .gitignore --log-level warn",
     "lint": "npm run lint:eslint && npm run lint:stylelint && npm run lint:prettier",
-    "format:eslint": "eslint . --fix --ignore-path .lintignore",
-    "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .lintignore",
-    "format:prettier": "prettier . --write --ignore-path .lintignore --log-level warn",
+    "format:eslint": "eslint . --fix --ignore-path .gitignore",
+    "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .gitignore",
+    "format:prettier": "prettier . --write --ignore-path .gitignore --log-level warn",
     "format": "npm run format:eslint; npm run format:stylelint; npm run format:prettier",
     "test": "playwright test",
     "test-ct": "playwright test -c playwright-ct.config.ts"
@@ -58,6 +58,7 @@
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-jsx-a11y": "6.8.0",
     "eslint-plugin-no-only-tests": "3.1.0",
+    "eslint-plugin-playwright": "1.5.2",
     "eslint-plugin-react": "7.34.1",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-simple-import-sort": "12.0.0",
@@ -71,11 +72,12 @@
     "stylelint-config-hudochenkov": "10.0.0",
     "stylelint-config-standard": "36.0.0",
     "stylelint-order": "6.0.4",
-    "typescript": "5.4.2"
+    "typescript": "5.4.2",
+    "use-deep-compare": "1.2.1"
   },
   "lint-staged": {
     "*.css": "stylelint --fix",
     "*.prisma": "prisma format --schema",
-    "*": "prettier --ignore-unknown --write --ignore-path .lintignore"
+    "*": "prettier --ignore-unknown --write --ignore-path .gitignore"
   }
 }

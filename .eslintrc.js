@@ -13,6 +13,7 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
+    'plugin:playwright/recommended',
 
     'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:@typescript-eslint/stylistic-type-checked',
@@ -33,6 +34,17 @@ module.exports = {
 
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
+
+    'playwright/expect-expect': [
+      'warn',
+      {
+        assertFunctionNames: [
+          'expectAudioIsPlaying',
+          'expectAudioIsNotPlaying',
+          'expectAudioCurrentTimeToAlmostEqual',
+        ],
+      },
+    ],
 
     '@typescript-eslint/no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'warn',
