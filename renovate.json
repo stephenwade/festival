@@ -10,6 +10,11 @@
       "matchUpdateTypes": ["minor"],
       "matchCurrentVersion": "!/^[~^]?0/",
       "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "matchPackagePatterns": ["^@remix-run/"],
+      "automerge": false
     }
   ],
 
