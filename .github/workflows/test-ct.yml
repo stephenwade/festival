@@ -1,0 +1,81 @@
+---
+name: Component tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-ct:
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3]
+        shardTotal: [3]
+    runs-on: macos-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - run: npm run test-ct -- --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+
+      - name: Upload test results
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
+        if: always()
+        with:
+          name: blob-report-ct-${{ matrix.shardIndex }}
+          path: blob-report/
+
+  merge-reports-ct:
+    if: always()
+    needs: [test-ct]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Download blob reports
+        uses: actions/download-artifact@v4
+        with:
+          path: all-blob-reports
+          pattern: blob-report-ct-*
+          merge-multiple: true
+
+      - name: Merge into HTML report
+        run: npx playwright merge-reports --reporter html ./all-blob-reports
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report-ct--attempt-${{ github.run_attempt }}
+          path: playwright-report
+
+  ct-success:
+    needs: [test-ct]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check for failure
+        if: needs.test-ct.result == 'failure'
+        run: exit 1

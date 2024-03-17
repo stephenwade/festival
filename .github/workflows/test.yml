@@ -1,5 +1,5 @@
 ---
-name: Playwright
+name: E2E tests
 
 on:
   pull_request:
@@ -42,30 +42,4 @@ jobs:
         if: always()
         with:
           name: test-results
-          path: test-results/
-
-  test-ct:
-    runs-on: macos-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - run: npm ci
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
-
-      - run: npm run test-ct
-
-      - name: Upload test results
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
-        if: always()
-        with:
-          name: test-results-ct
           path: test-results/
