@@ -1,3 +1,5 @@
+/* eslint-disable playwright/no-wait-for-timeout */
+
 import { expect as baseExpect, test } from '@playwright/experimental-ct-react';
 import type { Locator } from '@playwright/test';
 
@@ -28,7 +30,7 @@ async function expectAudioIsPlaying(component: Locator, message?: string) {
   expect(
     currentTime > 0 && !paused,
     `audio element is playing${message ? ` ${message}` : ''}`,
-  );
+  ).toBeTruthy();
 }
 
 async function expectAudioIsNotPlaying(component: Locator, message?: string) {
@@ -45,7 +47,7 @@ async function expectAudioIsNotPlaying(component: Locator, message?: string) {
   expect(
     currentTime === 0 || paused,
     `audio element is not playing${message ? ` ${message}` : ''}`,
-  );
+  ).toBeTruthy();
 }
 
 async function expectAudioCurrentTimeToAlmostEqual(

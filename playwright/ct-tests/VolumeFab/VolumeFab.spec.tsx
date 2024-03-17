@@ -27,7 +27,7 @@ test('should expand when clicked', async ({ mount }) => {
     'aria-expanded',
     'true',
   );
-  await expect(component.locator('input')).not.toBeDisabled();
+  await expect(component.locator('input')).toBeEnabled();
 });
 
 test('should fire onVolumeInput when the volume is dragged', async ({
