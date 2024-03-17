@@ -1,4 +1,5 @@
 import { test as setup } from '@playwright/test';
+import { addSeconds } from 'date-fns';
 
 import { seedShow } from '../helpers/show';
 import { authFile } from './shared-data';
@@ -12,7 +13,7 @@ import { authFile } from './shared-data';
  */
 
 setup('seed show', async () => {
-  const show = await seedShow();
+  const show = await seedShow(addSeconds(new Date(), 10));
 
   process.env.SHOW_ID = show.id;
   process.env.FIRST_ARTIST_NAME = show.sets[0].artist;
