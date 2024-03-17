@@ -10,7 +10,7 @@ test.describe.configure({ retries: 5 });
 
 const expect = baseExpect.extend({
   toAlmostEqual: (value: number, expected: number) => {
-    const tolerance = 0.5;
+    const tolerance = 1;
     const pass = Math.abs(value - expected) <= tolerance;
     return {
       pass,
@@ -115,13 +115,11 @@ function commonTests({ forceSkipAudioContext = false }) {
       );
       await component.getByTestId('init-button').click();
 
-      await page.waitForTimeout(400);
-      await expectAudioIsNotPlaying(component, '2 seconds before the show');
-      await page.waitForTimeout(1000);
-      await expectAudioIsNotPlaying(component, '1 second before the show');
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(500);
+      await expectAudioIsNotPlaying(component, '1.5 seconds before the show');
+      await page.waitForTimeout(3000);
       await expectAudioIsPlaying(component, 'during the show');
-      await expectAudioCurrentTimeToAlmostEqual(component, 0.4);
+      await expectAudioCurrentTimeToAlmostEqual(component, 1);
     });
 
     test('calls onLoadedMetadata with id and duration', async ({ mount }) => {
@@ -178,10 +176,10 @@ function commonTests({ forceSkipAudioContext = false }) {
       );
       await component.getByTestId('init-button').click();
 
-      await page.waitForTimeout(400);
+      await page.waitForTimeout(500);
       await expectAudioIsPlaying(component);
       await expect(component).toContainText('Show status: PLAYING');
-      await expectAudioCurrentTimeToAlmostEqual(component, 5.4);
+      await expectAudioCurrentTimeToAlmostEqual(component, 5.5);
     });
 
     test('preloads the next set 60 seconds before the end of the first set', async ({

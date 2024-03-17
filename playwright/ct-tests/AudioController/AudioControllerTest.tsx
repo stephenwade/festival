@@ -4,6 +4,7 @@ import { createRemixStub } from '@remix-run/testing';
 import { addSeconds } from 'date-fns';
 import type { FC } from 'react';
 import { useState } from 'react';
+import { useDeepCompareMemo } from 'use-deep-compare';
 
 import type { AudioMetadata } from '~/components/AudioController';
 import { AudioController } from '~/components/AudioController';
@@ -66,7 +67,10 @@ function AudioControllerDisplay() {
 
   const [alternate, setAlternate] = useState(false);
 
-  const data = getMockData({ ...props, alternate });
+  const data = useDeepCompareMemo(
+    () => getMockData({ ...props, alternate }),
+    [alternate, props],
+  );
   const { targetShowInfo } = useShowInfo(data, { ci: true });
 
   const [metadatas, setMetadatas] = useState<AudioMetadata[]>([]);

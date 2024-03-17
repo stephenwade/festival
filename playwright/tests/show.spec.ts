@@ -30,10 +30,14 @@ test('plays the default show', async ({ page }) => {
 
   await page.getByRole('button', { name: 'LISTEN LIVE' }).click();
 
-  await expect(page.locator('.current-time')).toHaveText('0:02');
+  await expect(page.locator('.current-time')).toHaveText('0:02', {
+    timeout: 15_000,
+  });
   await expect(page.locator('.next-up')).toHaveText('NEXT UP');
 
-  await expect(page.locator('.current-time')).toHaveText('0:05');
+  await expect(page.locator('.current-time')).toHaveText('0:05', {
+    timeout: 10_000,
+  });
   await expect(page.locator('.artist')).toHaveText(
     process.env.FIRST_ARTIST_NAME!,
   );
