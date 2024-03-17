@@ -4,18 +4,18 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["patch"],
-      "automerge": false
+      "automerge": true
     },
     {
       "matchUpdateTypes": ["minor"],
       "matchCurrentVersion": "!/^[~^]?0/",
-      "automerge": false
+      "automerge": true
     }
   ],
 
   "lockFileMaintenance": {
     "enabled": true,
     "extends": ["schedule:weekly"],
-    "automerge": false
+    "automerge": true
   }
 }
