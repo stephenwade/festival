@@ -40,7 +40,7 @@
     "remix-validated-form": "5.1.5",
     "standardized-audio-context": "25.3.66",
     "use-local-storage-state": "19.1.0",
-    "usehooks-ts": "3.0.1",
+    "usehooks-ts": "3.0.2",
     "zod": "3.22.4",
     "zod-form-data": "2.0.2"
   },
