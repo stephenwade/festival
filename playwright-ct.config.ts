@@ -1,3 +1,5 @@
+import { resolve } from 'node:path';
+
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
 
 /**
@@ -19,7 +21,7 @@ export default defineConfig({
       resolve: {
         // Match "paths" in tsconfig.json
         alias: {
-          '~': '/app',
+          '~': resolve(__dirname, 'app'),
         },
       },
     },
