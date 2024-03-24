@@ -7,6 +7,10 @@ export function randomShowId() {
   return `test-show-${crypto.randomUUID().slice(-12)}`;
 }
 
+export async function deleteTestShows() {
+  await prisma.show.deleteMany({ where: { id: { startsWith: 'test-show-' } } });
+}
+
 export async function seedShow(startDate: Date) {
   const [showLogoFile, backgroundImageFile] = await Promise.all([
     prisma.file.create({

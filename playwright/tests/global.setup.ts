@@ -1,7 +1,7 @@
 import { test as setup } from '@playwright/test';
 import { addSeconds } from 'date-fns';
 
-import { seedShow } from '../helpers/show';
+import { deleteTestShows, seedShow } from '../helpers/show';
 import { authFile } from './shared-data';
 
 /**
@@ -13,6 +13,8 @@ import { authFile } from './shared-data';
  */
 
 setup('seed show', async () => {
+  await deleteTestShows();
+
   const show = await seedShow(addSeconds(new Date(), 10));
 
   process.env.SHOW_ID = show.id;

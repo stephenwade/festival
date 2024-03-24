@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
-import { authFile } from 'playwright/tests/shared-data';
+
+import { authFile } from './playwright/tests/shared-data';
 
 const baseURL = `http://127.0.0.1:${process.env.PORT}`;
 
