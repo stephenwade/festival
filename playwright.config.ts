@@ -1,5 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
-import { authFile } from 'playwright/tests/shared-data';
+import dotenv from 'dotenv';
+
+import { authFile } from './playwright/tests/shared-data';
+
+dotenv.config();
 
 const baseURL = `http://127.0.0.1:${process.env.PORT}`;
 
@@ -23,6 +27,9 @@ export default defineConfig({
     command: ['npx prisma migrate dev', 'npx remix dev'].join(' && '),
     url: `${baseURL}/admin`,
     reuseExistingServer: !process.env.CI,
+    env: {
+      FIRST_ADMIN_EMAIL_ADDRESS: 'ci@urlfest.com',
+    },
   },
 
   projects: [

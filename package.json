@@ -10,7 +10,7 @@
   "scripts": {
     "prepare": "husky; prisma generate",
     "build": "remix build",
-    "dev": "doppler run -- remix dev",
+    "dev": "remix dev",
     "start": "remix-serve ./build/index.js",
     "lint:eslint": "eslint . --ignore-path .gitignore --max-warnings 0",
     "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .gitignore --max-warnings 0",

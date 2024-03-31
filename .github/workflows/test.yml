@@ -13,9 +13,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      - name: Install Doppler
-        run: wget -t 3 -qO- https://cli.doppler.com/install.sh | sudo sh
-
       - name: Install MySQL
         run: |
           brew install mysql
@@ -33,9 +30,16 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run tests
-        run: doppler run -- npm run test
+        run: npm run test
         env:
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+          AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
+          AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
+          AZURE_STORAGE_WEBSITE_DOMAIN: ${{ secrets.AZURE_STORAGE_WEBSITE_DOMAIN }}
+          CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          DATABASE_URL: mysql://root:@localhost:3306/festival
+          FIRST_ADMIN_EMAIL_ADDRESS: ci@urlfest.com
+          PORT: '3000'
 
       - name: Upload test results
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
