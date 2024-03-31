@@ -15,8 +15,8 @@ import { links as introLinks, ShowIntro } from '~/components/ShowIntro';
 import { links as playingLinks, ShowPlaying } from '~/components/ShowPlaying';
 import { db } from '~/db/db.server';
 import { useShowInfo } from '~/hooks/useShowInfo';
-import elevationStylesUrl from '~/styles/elevation.css';
-import showStylesUrl from '~/styles/show.css';
+import elevationStylesUrl from '~/styles/elevation.css?url';
+import showStylesUrl from '~/styles/show.css?url';
 import type { ShowData } from '~/types/ShowData';
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {

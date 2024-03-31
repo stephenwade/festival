@@ -4,7 +4,7 @@ import { memo, useCallback, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
-import stylesUrl from './volume-fab.css';
+import stylesUrl from './volume-fab.css?url';
 
 const INPUT_MIN = 0;
 const INPUT_MAX = 100;

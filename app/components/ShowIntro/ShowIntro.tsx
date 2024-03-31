@@ -1,7 +1,7 @@
 import type { LinksFunction } from '@remix-run/node';
 import type { FC } from 'react';
 
-import stylesUrl from '~/styles/show-intro.css';
+import stylesUrl from '~/styles/show-intro.css?url';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },

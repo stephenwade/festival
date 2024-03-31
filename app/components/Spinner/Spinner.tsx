@@ -1,7 +1,7 @@
 import type { LinksFunction } from '@remix-run/node';
 import type { FC } from 'react';
 
-import stylesUrl from './spinner.css';
+import stylesUrl from './spinner.css?url';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },

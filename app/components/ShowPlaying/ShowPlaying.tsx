@@ -9,7 +9,7 @@ import {
   ToastContainer,
 } from '~/components/ToastContainer';
 import { links as volumeLinks, VolumeFab } from '~/components/VolumeFab';
-import stylesUrl from '~/styles/show-playing.css';
+import stylesUrl from '~/styles/show-playing.css?url';
 import type { AudioStatus } from '~/types/AudioStatus';
 import type { ShowInfo } from '~/types/ShowInfo';
 

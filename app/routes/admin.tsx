@@ -3,7 +3,7 @@ import type { LinksFunction, MetaFunction } from '@remix-run/node';
 import { Outlet } from '@remix-run/react';
 import type { FC } from 'react';
 
-import adminStylesUrl from '~/styles/admin.css';
+import adminStylesUrl from '~/styles/admin.css?url';
 
 export const meta: MetaFunction = () => [{ title: 'Festival admin' }];
 

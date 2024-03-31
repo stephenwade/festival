@@ -9,9 +9,9 @@
   },
   "scripts": {
     "prepare": "husky; prisma generate",
-    "build": "remix build",
-    "dev": "remix dev",
-    "start": "remix-serve ./build/index.js",
+    "dev": "remix vite:dev",
+    "build": "remix vite:build",
+    "start": "remix-serve ./build/server/index.js",
     "lint:eslint": "eslint . --ignore-path .gitignore --max-warnings 0",
     "lint:stylelint": "stylelint \"**/*.css\" --ignore-path .gitignore --max-warnings 0",
     "lint:prettier": "prettier . --check --ignore-path .gitignore --log-level warn",
@@ -73,7 +73,9 @@
     "stylelint-config-standard": "36.0.0",
     "stylelint-order": "6.0.4",
     "typescript": "5.4.3",
-    "use-deep-compare": "1.2.1"
+    "use-deep-compare": "1.2.1",
+    "vite": "5.2.7",
+    "vite-tsconfig-paths": "4.3.2"
   },
   "lint-staged": {
     "*.css": "stylelint --fix",

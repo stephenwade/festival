@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-import stylesUrl from '~/styles/show-ended.css';
+import stylesUrl from '~/styles/show-ended.css?url';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },
