@@ -4,8 +4,6 @@ services:
   db:
     image: mysql@sha256:4552fcc5d3cdb8cdee76ee25cce28bf60b0eb3ce93d25ba3bfff7a66bfdcdee8
     env_file: .env
-    environment:
-      MYSQL_USER: festival
     volumes:
       - db-data:/var/lib/mysql
       - ./db-init:/docker-entrypoint-initdb.d

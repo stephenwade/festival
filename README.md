@@ -7,17 +7,10 @@ at the same time) without requiring live streaming infrastructure.
 
 ## Local Development
 
-- Run `doppler setup` to set up your [Doppler](https://www.doppler.com/) config.
+- Copy `.env.sample` to `.env` and fill out the required values.
+- Run `docker compose up -d` to start a MySQL database.
 - Run `npm install` to install the required packages.
 - Run `npm run dev` to serve the application locally.
-
-## MySQL Setup
-
-Run the following command to create a MySQL database for Festival using Docker.
-
-```shell
-doppler run --mount .env -- docker compose up -d
-```
 
 ## Azure Setup
 
@@ -25,14 +18,15 @@ Make sure that your Azure storage account is set to allow
 [CORS requests](https://stackoverflow.com/a/41351674).
 This is required for the visualizer to work.
 
+## Testing
+
+- `npm run test` will run the end-to-end tests.
+- `npm run test-ct` will run the component tests.
+
 ## Building
 
 - `npm run build` will bundle the application for production.
-- `doppler run -- npm start` will serve the bundled application.
-
-## Testing
-
-TODO
+- `npm start` will serve the bundled application.
 
 ## Deploying
 
@@ -45,6 +39,5 @@ Pushing to main triggers a deploy on Railway.
   <!-- - [BetterStack](https://betterstack.com/) for monitoring -->
 - [Clerk](https://clerk.com/) for authentication
 - [DigitalOcean](https://www.digitalocean.com/) for database hosting, DNS, and proxying to Railway
-- [Doppler](https://www.doppler.com/) for secrets management
 - [Railway](https://railway.app/) for hosting
 - [Sentry](https://sentry.io/) for error reporting
