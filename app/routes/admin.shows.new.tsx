@@ -9,7 +9,8 @@ import { validationError } from 'remix-validated-form';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db/db.server';
-import { makeServerValidator, NewShowForm } from '~/forms/show';
+import { NewShowForm } from '~/forms/show/forms';
+import { makeServerValidator } from '~/forms/show/validator.server';
 
 export const meta: MetaFunction = () => [
   { title: 'New show | Festival admin' },

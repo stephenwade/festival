@@ -1,17 +1,12 @@
 {
-  "include": [
-    "remix.env.d.ts",
-    ".eslintrc.js",
-    "**/*.js",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": ["build", "public/build"],
+  "include": ["env.d.ts", ".eslintrc.cjs", "**/*.js", "**/*.ts", "**/*.tsx"],
+  "exclude": ["build"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
+    "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "target": "ES2020",

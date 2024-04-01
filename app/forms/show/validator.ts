@@ -2,8 +2,6 @@ import { withZod } from '@remix-validated-form/with-zod';
 import { z } from 'zod';
 import { zfd } from 'zod-form-data';
 
-import { db } from '~/db/db.server';
-
 export const setSchema = z.object({
   id: zfd.text(),
   artist: zfd.text(),
@@ -30,20 +28,3 @@ export const schema = zfd.formData({
 });
 
 export const clientValidator = withZod(schema);
-
-export const makeServerValidator = ({
-  previousId,
-}: { previousId?: string } = {}) =>
-  withZod(
-    schema.refine(
-      async ({ id }) => {
-        if (id === previousId) return true;
-        const existingShow = await db.show.findUnique({ where: { id } });
-        return !existingShow;
-      },
-      {
-        path: ['id'],
-        message: 'A show already exists with that URL.',
-      },
-    ),
-  );

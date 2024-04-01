@@ -1,15 +1,9 @@
-import type { LinksFunction } from '@remix-run/node';
+import 'react-toastify/dist/ReactToastify.min.css';
+import './toast.css';
+
 import type { CloseButtonProps } from 'node_modules/react-toastify/dist/components';
 import type { FC } from 'react';
 import { cssTransition, ToastContainer as Container } from 'react-toastify';
-import toastStylesUrl from 'react-toastify/dist/ReactToastify.min.css';
-
-import stylesUrl from './toast.css';
-
-export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: toastStylesUrl },
-  { rel: 'stylesheet', href: stylesUrl },
-];
 
 const ToastClose: FC<CloseButtonProps> = ({ type, closeToast }) => {
   return (

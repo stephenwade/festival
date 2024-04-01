@@ -10,7 +10,8 @@ import { validationError } from 'remix-validated-form';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db/db.server';
-import { EditShowForm, makeServerValidator } from '~/forms/show';
+import { EditShowForm } from '~/forms/show/forms';
+import { makeServerValidator } from '~/forms/show/validator.server';
 import { replaceNullsWithUndefined } from '~/forms/utils/replaceNullsWithUndefined';
 import { replaceUndefinedsWithNull } from '~/forms/utils/replaceUndefinedsWithNull';
 

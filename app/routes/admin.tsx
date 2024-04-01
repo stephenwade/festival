@@ -1,15 +1,11 @@
+import '~/styles/admin.css';
+
 import { UserButton } from '@clerk/remix';
-import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import type { MetaFunction } from '@remix-run/node';
 import { Outlet } from '@remix-run/react';
 import type { FC } from 'react';
 
-import adminStylesUrl from '~/styles/admin.css';
-
 export const meta: MetaFunction = () => [{ title: 'Festival admin' }];
-
-export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: adminStylesUrl },
-];
 
 const Admin: FC = () => {
   return (

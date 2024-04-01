@@ -3,7 +3,6 @@ import { rootAuthLoader } from '@clerk/remix/ssr.server';
 import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   redirect,
@@ -51,7 +50,6 @@ function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );
