@@ -18,8 +18,8 @@ import { InputDateTime } from '~/components/admin/InputDateTime';
 import { SaveButton } from '~/components/admin/SaveButton';
 import { useOrigin } from '~/hooks/useOrigin';
 
-import type { schema, setSchema } from './validators';
-import { clientValidator } from './validators';
+import type { schema, setSchema } from './validator';
+import { clientValidator } from './validator';
 
 const SHOW_FORM_ID = 'show-form';
 
