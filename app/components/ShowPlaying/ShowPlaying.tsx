@@ -1,27 +1,16 @@
-import type { LinksFunction } from '@remix-run/node';
+import '~/styles/show-playing.css';
+
 import type { FC } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-import { links as spinnerLinks } from '~/components/Spinner';
-import {
-  links as toastLinks,
-  ToastContainer,
-} from '~/components/ToastContainer';
-import { links as volumeLinks, VolumeFab } from '~/components/VolumeFab';
-import stylesUrl from '~/styles/show-playing.css?url';
+import { ToastContainer } from '~/components/ToastContainer';
+import { VolumeFab } from '~/components/VolumeFab';
 import type { AudioStatus } from '~/types/AudioStatus';
 import type { ShowInfo } from '~/types/ShowInfo';
 
 import { AudioCanvas } from './AudioCanvas';
 import { CurrentTime } from './CurrentTime';
-
-export const links: LinksFunction = () => [
-  ...spinnerLinks(),
-  ...volumeLinks(),
-  ...toastLinks(),
-  { rel: 'stylesheet', href: stylesUrl },
-];
 
 export interface ShowPlayingProps {
   volume: number;

@@ -1,11 +1,6 @@
-import type { LinksFunction } from '@remix-run/node';
+import '~/styles/show-intro.css';
+
 import type { FC } from 'react';
-
-import stylesUrl from '~/styles/show-intro.css?url';
-
-export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: stylesUrl },
-];
 
 interface ShowIntroProps {
   logoUrl: string;

@@ -1,18 +1,14 @@
-import type { LinksFunction } from '@remix-run/node';
+import './volume-fab.css';
+
 import type { FC, KeyboardEventHandler } from 'react';
 import { memo, useCallback, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
-import stylesUrl from './volume-fab.css?url';
 
 const INPUT_MIN = 0;
 const INPUT_MAX = 100;
 const INPUT_STEP = 5;
-
-export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: stylesUrl },
-];
 
 export interface VolumeFabProps {
   volume: number;

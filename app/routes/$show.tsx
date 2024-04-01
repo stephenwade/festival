@@ -1,8 +1,7 @@
-import type {
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-} from '@remix-run/node';
+import '~/styles/elevation.css';
+import '~/styles/show.css';
+
+import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { addSeconds, formatISO } from 'date-fns';
@@ -10,13 +9,11 @@ import type { FC } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 
 import { AudioController } from '~/components/AudioController';
-import { links as endedLinks, ShowEnded } from '~/components/ShowEnded';
-import { links as introLinks, ShowIntro } from '~/components/ShowIntro';
-import { links as playingLinks, ShowPlaying } from '~/components/ShowPlaying';
+import { ShowEnded } from '~/components/ShowEnded';
+import { ShowIntro } from '~/components/ShowIntro';
+import { ShowPlaying } from '~/components/ShowPlaying';
 import { db } from '~/db/db.server';
 import { useShowInfo } from '~/hooks/useShowInfo';
-import elevationStylesUrl from '~/styles/elevation.css?url';
-import showStylesUrl from '~/styles/show.css?url';
 import type { ShowData } from '~/types/ShowData';
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
@@ -28,14 +25,6 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
     { tagName: 'link', rel: 'stylesheet', href: `/${id}/styles.css` },
   ];
 };
-
-export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: elevationStylesUrl },
-  { rel: 'stylesheet', href: showStylesUrl },
-  ...introLinks(),
-  ...playingLinks(),
-  ...endedLinks(),
-];
 
 export const loader = (async ({ params }) => {
   const id = params.show!;
