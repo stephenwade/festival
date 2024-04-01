@@ -24,7 +24,9 @@ export default defineConfig({
   },
 
   webServer: {
-    command: ['npx prisma migrate dev', 'npm run dev'].join(' && '),
+    command: ['npx prisma migrate dev', 'npm run build', 'npm run start'].join(
+      ' && ',
+    ),
     url: `${baseURL}/admin`,
     reuseExistingServer: !process.env.CI,
     env: {

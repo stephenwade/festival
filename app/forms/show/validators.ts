@@ -1,4 +1,5 @@
 import { withZod } from '@remix-validated-form/with-zod';
+import { serverOnly$ } from 'vite-env-only';
 import { z } from 'zod';
 import { zfd } from 'zod-form-data';
 
@@ -31,19 +32,19 @@ export const schema = zfd.formData({
 
 export const clientValidator = withZod(schema);
 
-export const makeServerValidator = ({
-  previousId,
-}: { previousId?: string } = {}) =>
-  withZod(
-    schema.refine(
-      async ({ id }) => {
-        if (id === previousId) return true;
-        const existingShow = await db.show.findUnique({ where: { id } });
-        return !existingShow;
-      },
-      {
-        path: ['id'],
-        message: 'A show already exists with that URL.',
-      },
+export const makeServerValidator = serverOnly$(
+  ({ previousId }: { previousId?: string } = {}) =>
+    withZod(
+      schema.refine(
+        async ({ id }) => {
+          if (id === previousId) return true;
+          const existingShow = await db.show.findUnique({ where: { id } });
+          return !existingShow;
+        },
+        {
+          path: ['id'],
+          message: 'A show already exists with that URL.',
+        },
+      ),
     ),
-  );
+);
