@@ -1,5 +1,3 @@
-import { eventStream } from 'remix-utils/sse/server';
-
 /**
  * Workaround for Remix App Server reloading all files on each request.
  *
@@ -24,8 +22,10 @@ export function dispatchAdminEvent(type: string, data: unknown) {
   eventTarget.dispatchEvent(new CustomEvent(type, { detail: data }));
 }
 
-export function adminEventStream(request: Request, type: string) {
+export async function adminEventStream(request: Request, type: string) {
   const eventTarget = getAdminEventTarget();
+
+  const { eventStream } = await import('remix-utils/sse/server');
 
   return eventStream(request.signal, (send) => {
     const callback = (event: Event) => {
