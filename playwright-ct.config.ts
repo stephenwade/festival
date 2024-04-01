@@ -21,7 +21,7 @@ export default defineConfig({
       resolve: {
         // Match "paths" in tsconfig.json
         alias: {
-          '~': resolve(__dirname, 'app'),
+          '~': resolve(import.meta.dirname, 'app'),
         },
       },
     },
