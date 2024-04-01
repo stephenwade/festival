@@ -7,6 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/stephenwade/festival.git"
   },
+  "type": "module",
   "scripts": {
     "prepare": "husky; prisma generate",
     "dev": "remix vite:dev",

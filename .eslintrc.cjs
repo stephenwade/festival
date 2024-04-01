@@ -78,7 +78,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ['.eslintrc.js', 'remix.config.js', 'stylelint.config.js'],
+      files: ['.eslintrc.cjs', 'stylelint.config.js'],
 
       env: {
         node: true,
