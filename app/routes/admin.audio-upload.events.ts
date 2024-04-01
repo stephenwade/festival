@@ -7,5 +7,5 @@ import { AUDIO_FILE_EVENT_TYPE } from '~/sse.server/audio-file-events';
 export const loader = (async (args) => {
   await redirectToLogin(args);
 
-  return await adminEventStream(args.request, AUDIO_FILE_EVENT_TYPE);
+  return adminEventStream(args.request, AUDIO_FILE_EVENT_TYPE);
 }) satisfies LoaderFunction;

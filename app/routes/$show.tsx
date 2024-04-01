@@ -5,7 +5,8 @@ import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { addSeconds, formatISO } from 'date-fns';
-import { type FC, useState } from 'react';
+import type { FC } from 'react';
+import useLocalStorageState from 'use-local-storage-state';
 
 import { AudioController } from '~/components/AudioController';
 import { ShowEnded } from '~/components/ShowEnded';
@@ -66,7 +67,10 @@ const Show: FC = () => {
 
   const { targetShowInfo, onLoadedMetadata } = useShowInfo(loaderData);
 
-  const [volume, setVolume] = useState(100);
+  const [volume, setVolume] = useLocalStorageState('volume', {
+    defaultValue: 100,
+    storageSync: false,
+  });
 
   return (
     <AudioController
