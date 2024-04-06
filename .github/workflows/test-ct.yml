@@ -77,5 +77,5 @@ jobs:
 
     steps:
       - name: Check for failure
-        if: needs.test-ct.result == 'failure'
+        if: needs.test-ct.result == 'failure' || needs.test-ct.result == 'cancelled'
         run: exit 1
