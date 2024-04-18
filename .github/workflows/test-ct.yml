@@ -13,8 +13,13 @@ jobs:
       matrix:
         shardIndex: [1, 2, 3]
         shardTotal: [3]
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
+      # https://github.com/actions/runner-images/issues/9330
+      - name: Allow microphone access to all apps
+        run: |
+          sqlite3 $HOME/Library/Application\ Support/com.apple.TCC/TCC.db "INSERT OR IGNORE INTO access VALUES ('kTCCServiceMicrophone','/usr/local/opt/runner/provisioner/provisioner',1,2,4,1,NULL,NULL,0,'UNUSED',NULL,0,1687786159,NULL,NULL,'UNUSED',1687786159);"
+
       - name: Check out repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
