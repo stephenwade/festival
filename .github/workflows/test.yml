@@ -52,3 +52,13 @@ jobs:
         with:
           name: test-results
           path: test-results/
+
+  test-success:
+    needs: [test]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check for failure
+        if: needs.test.result == 'failure' || needs.test.result == 'cancelled'
+        run: exit 1
