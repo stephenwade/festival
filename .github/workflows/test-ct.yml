@@ -75,7 +75,7 @@ jobs:
           name: html-report-ct--attempt-${{ github.run_attempt }}
           path: playwright-report
 
-  ct-success:
+  test-ct-success:
     needs: [test-ct]
     runs-on: ubuntu-latest
     if: always()
