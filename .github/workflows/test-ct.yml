@@ -11,14 +11,24 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-22.04, macos-14]
         shardIndex: [1, 2, 3]
-        shardTotal: [3]
-    runs-on: macos-14
+    env:
+      shardTotal: 3
+    runs-on: ${{ matrix.os }}
     steps:
       # https://github.com/actions/runner-images/issues/9330
-      - name: Allow microphone access to all apps
+      - name: Allow microphone access to all apps (macOS)
+        if: matrix.os == 'macos-14'
         run: |
           sqlite3 $HOME/Library/Application\ Support/com.apple.TCC/TCC.db "INSERT OR IGNORE INTO access VALUES ('kTCCServiceMicrophone','/usr/local/opt/runner/provisioner/provisioner',1,2,4,1,NULL,NULL,0,'UNUSED',NULL,0,1687786159,NULL,NULL,'UNUSED',1687786159);"
+
+      - name: Set up PulseAudio (Ubuntu)
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pulseaudio
+          systemctl --user start pulseaudio.socket
 
       - name: Check out repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
@@ -34,19 +44,23 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - run: npm run test-ct -- --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - run: npm run test-ct -- --shard=${{ matrix.shardIndex }}/${{ env.shardTotal }}
 
       - name: Upload test results
         uses: actions/upload-artifact@1746f4ab65b179e0ea60a494b83293b640dd5bba # v4
         if: always()
         with:
-          name: blob-report-ct-${{ matrix.shardIndex }}
+          name: blob-report-ct-${{ matrix.os }}-${{ matrix.shardIndex }}
           path: blob-report/
 
   merge-reports-ct:
     if: always()
     needs: [test-ct]
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-14]
     steps:
       - name: Check out repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
@@ -63,7 +77,7 @@ jobs:
         uses: actions/download-artifact@8caf195ad4b1dee92908e23f56eeb0696f1dd42d # v4
         with:
           path: all-blob-reports
-          pattern: blob-report-ct-*
+          pattern: blob-report-ct-${{ matrix.os }}-*
           merge-multiple: true
 
       - name: Merge into HTML report
@@ -72,7 +86,7 @@ jobs:
       - name: Upload HTML report
         uses: actions/upload-artifact@1746f4ab65b179e0ea60a494b83293b640dd5bba # v4
         with:
-          name: html-report-ct--attempt-${{ github.run_attempt }}
+          name: html-report-ct-${{ matrix.os }}--attempt-${{ github.run_attempt }}
           path: playwright-report
 
   test-ct-success:
