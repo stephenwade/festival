@@ -8,20 +8,37 @@ on:
 
 jobs:
   test:
-    runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-14]
+    runs-on: ${{ matrix.os }}
     steps:
       # https://github.com/actions/runner-images/issues/9330
-      - name: Allow microphone access to all apps
+      - name: Allow microphone access to all apps (macOS)
+        if: matrix.os == 'macos-14'
         run: |
           sqlite3 $HOME/Library/Application\ Support/com.apple.TCC/TCC.db "INSERT OR IGNORE INTO access VALUES ('kTCCServiceMicrophone','/usr/local/opt/runner/provisioner/provisioner',1,2,4,1,NULL,NULL,0,'UNUSED',NULL,0,1687786159,NULL,NULL,'UNUSED',1687786159);"
 
-      - name: Check out repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - name: Set up PulseAudio (Ubuntu)
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pulseaudio
+          systemctl --user start pulseaudio.socket
 
-      - name: Install MySQL
+      - name: Install MySQL (macOS)
+        if: matrix.os == 'macos-14'
         run: |
           brew install mysql
           brew services start mysql
+
+      - name: Start MySQL (Ubuntu)
+        if: matrix.os == 'ubuntu-22.04'
+        run: sudo systemctl start mysql
+
+      - name: Check out repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
       - name: Set up Node.js
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
@@ -42,7 +59,9 @@ jobs:
           AZURE_STORAGE_WEBSITE_DOMAIN: ${{ secrets.AZURE_STORAGE_WEBSITE_DOMAIN }}
           CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
-          DATABASE_URL: mysql://root:@localhost:3306/festival
+          # On macOS (installed via Homebrew), the MySQL root password is empty by default
+          # On Ubuntu (included in runner image), the MySQL root password is "root" by default
+          DATABASE_URL: mysql://root:${{ matrix.os == 'ubuntu-22.04' && 'root' || '' }}@localhost:3306/festival
           FIRST_ADMIN_EMAIL_ADDRESS: ci@urlfest.com
           PORT: '3000'
 
@@ -50,7 +69,7 @@ jobs:
         uses: actions/upload-artifact@1746f4ab65b179e0ea60a494b83293b640dd5bba # v4
         if: always()
         with:
-          name: test-results
+          name: test-results-${{ matrix.os }}
           path: test-results/
 
   test-success:
