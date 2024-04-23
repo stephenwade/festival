@@ -42,7 +42,7 @@
     "standardized-audio-context": "25.3.70",
     "use-local-storage-state": "19.2.0",
     "usehooks-ts": "3.1.0",
-    "zod": "3.23.0",
+    "zod": "3.23.3",
     "zod-form-data": "2.0.2"
   },
   "devDependencies": {
