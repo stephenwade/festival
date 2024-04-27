@@ -1,0 +1,22 @@
+---
+name: E2E tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-12, macos-13, macos-14]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
+        with:
+          node-version: 20
+
+      - run: node -e 'console.log(require("os").release())'
