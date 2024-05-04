@@ -39,7 +39,7 @@
     "react-toastify": "10.0.5",
     "remix-utils": "7.6.0",
     "remix-validated-form": "5.1.5",
-    "standardized-audio-context": "25.3.71",
+    "standardized-audio-context": "25.3.72",
     "use-local-storage-state": "19.2.0",
     "usehooks-ts": "3.1.0",
     "zod": "3.23.6",
