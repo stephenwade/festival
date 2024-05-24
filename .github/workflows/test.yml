@@ -8,34 +8,35 @@ on:
 
 jobs:
   test:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-22.04, macos-14]
-    runs-on: ${{ matrix.os }}
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     os: [ubuntu-22.04, macos-14]
+    # runs-on: ${{ matrix.os }}
+    runs-on: macos-14
     steps:
       # https://github.com/actions/runner-images/issues/9330
       - name: Allow microphone access to all apps (macOS)
-        if: matrix.os == 'macos-14'
+        # if: matrix.os == 'macos-14'
         run: |
           sqlite3 $HOME/Library/Application\ Support/com.apple.TCC/TCC.db "INSERT OR IGNORE INTO access VALUES ('kTCCServiceMicrophone','/usr/local/opt/runner/provisioner/provisioner',1,2,4,1,NULL,NULL,0,'UNUSED',NULL,0,1687786159,NULL,NULL,'UNUSED',1687786159);"
 
-      - name: Set up PulseAudio (Ubuntu)
-        if: matrix.os == 'ubuntu-22.04'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pulseaudio
-          systemctl --user start pulseaudio.socket
+      # - name: Set up PulseAudio (Ubuntu)
+      #   if: matrix.os == 'ubuntu-22.04'
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y pulseaudio
+      #     systemctl --user start pulseaudio.socket
 
       - name: Install MySQL (macOS)
-        if: matrix.os == 'macos-14'
+        # if: matrix.os == 'macos-14'
         run: |
           brew install mysql
           brew services start mysql
 
-      - name: Start MySQL (Ubuntu)
-        if: matrix.os == 'ubuntu-22.04'
-        run: sudo systemctl start mysql
+      # - name: Start MySQL (Ubuntu)
+      #   if: matrix.os == 'ubuntu-22.04'
+      #   run: sudo systemctl start mysql
 
       - name: Check out repository
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
@@ -61,7 +62,8 @@ jobs:
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
           # On macOS (installed via Homebrew), the MySQL root password is empty by default
           # On Ubuntu (included in runner image), the MySQL root password is "root" by default
-          DATABASE_URL: mysql://root:${{ matrix.os == 'ubuntu-22.04' && 'root' || '' }}@localhost:3306/festival
+          # DATABASE_URL: mysql://root:${{ matrix.os == 'ubuntu-22.04' && 'root' || '' }}@localhost:3306/festival
+          DATABASE_URL: mysql://root:@localhost:3306/festival
           FIRST_ADMIN_EMAIL_ADDRESS: ci@urlfest.com
           PORT: '3000'
 
@@ -69,7 +71,8 @@ jobs:
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
         if: always()
         with:
-          name: test-results-${{ matrix.os }}--attempt-${{ github.run_attempt }}
+          # name: test-results-${{ matrix.os }}--attempt-${{ github.run_attempt }}
+          name: test-results--attempt-${{ github.run_attempt }}
           path: test-results/
 
   test-success:
