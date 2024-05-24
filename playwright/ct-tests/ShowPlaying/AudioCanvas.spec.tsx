@@ -29,6 +29,7 @@ test.describe('reduceMotion false', () => {
       .getByTestId('snapshot-2-hash')
       .textContent();
 
+    // eslint-disable-next-line playwright/prefer-web-first-assertions
     expect(imageDataSound).not.toEqual(imageDataNoSound);
   });
 });
@@ -56,6 +57,7 @@ test.describe('reduceMotion true', () => {
       .getByTestId('snapshot-2-hash')
       .textContent();
 
+    // eslint-disable-next-line playwright/prefer-web-first-assertions
     expect(imageDataSound).toEqual(imageDataNoSound);
   });
 });
