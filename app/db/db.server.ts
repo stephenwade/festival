@@ -9,7 +9,9 @@ declare global {
 // the server with every change, but we want to make sure we don't
 // create a new connection to the DB with every change either.
 if (!global.__db) {
-  global.__db = new PrismaClient();
+  global.__db = new PrismaClient({
+    log: ['query', 'info', 'warn', 'error'],
+  });
 }
 const db = global.__db;
 
