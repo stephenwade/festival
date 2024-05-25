@@ -11,13 +11,13 @@ type Props = InputProps & {
 
 export const InputDateTime: FC<Props> = ({ name, label, prefix, ...rest }) => {
   const { error, validate } = useField(name);
-  const [utcValue, setUtcValue] = useControlField<string>(name);
+  const [utcValue, setUtcValue] = useControlField<string | undefined>(name);
 
   const [inputValue, setInputValue] = useState(utcToLocalDateTime(utcValue));
 
   return (
     <div className="input-wrapper">
-      <input type="hidden" name={name} value={utcValue} />
+      <input type="hidden" name={name} value={utcValue ?? ''} />
       <label>
         {label}: {prefix}
         <input
@@ -50,7 +50,10 @@ function localDateTimeToUtc(localDateTime: string): string {
   return date.toISOString();
 }
 
-function utcToLocalDateTime(utcDateTime: string): string {
+function utcToLocalDateTime(utcDateTime: string | undefined): string {
+  if (!utcDateTime) {
+    return '';
+  }
   const date = new Date(utcDateTime);
   if (Number.isNaN(date.getTime())) {
     return '';
