@@ -19,6 +19,8 @@ export const meta: MetaFunction = () => [
 export const action = (async (args) => {
   await redirectToLogin(args);
 
+  console.log('Creating new show');
+
   const validator = makeServerValidator();
 
   const form = await args.request.formData();

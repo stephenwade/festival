@@ -14,6 +14,7 @@ export async function redirectToLogin(
   { onHoldPage }: RedirectToLoginArgs = {},
 ) {
   const { userId } = await getAuth(args);
+  console.log(`Checking if user is logged in: ${userId}`);
 
   if (!userId) {
     throw redirect(`/admin/sign-in?redirect_url=${args.request.url}`);

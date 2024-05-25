@@ -39,6 +39,8 @@ export async function uploadFileToAzure({
   fileName,
   contentType,
 }: UploadFileToAzureProps) {
+  console.log('Uploading file to Azure', { blobName, fileName, contentType });
+
   const blobClient = containerClient.getBlockBlobClient(blobName);
 
   await blobClient.uploadFile(fileName, {
