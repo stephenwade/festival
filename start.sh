@@ -1,3 +1,3 @@
 #!/bin/sh
 
-npx prisma migrate deploy && NO_UPDATE_NOTIFIER=1 npm run start
+npx prisma migrate deploy && NPM_CONFIG_UPDATE_NOTIFIER=false npm run start

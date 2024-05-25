@@ -35,8 +35,6 @@ Pushing to main triggers a deploy on Railway.
 ## External Dependencies
 
 - [Azure](https://azure.microsoft.com/en-us/) for file storage
-  <!-- - [BrowserStack](https://www.browserstack.com/) for testing -->
-  <!-- - [BetterStack](https://betterstack.com/) for monitoring -->
 - [Clerk](https://clerk.com/) for authentication
 - [DigitalOcean](https://www.digitalocean.com/) for database hosting, DNS, and proxying to Railway
 - [Railway](https://railway.app/) for hosting
