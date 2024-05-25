@@ -45,6 +45,8 @@ export const loader = (async (args) => {
 export const action = (async (args) => {
   await redirectToLogin(args);
 
+  console.log('Editing show', { method: args.request.method });
+
   const previousId = args.params.show!;
 
   if (args.request.method === 'DELETE') {

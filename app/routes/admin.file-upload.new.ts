@@ -19,6 +19,8 @@ const badRequest = () => new Response('Bad Request', { status: 400 });
 export const action = (async (args) => {
   await redirectToLogin(args);
 
+  console.log('Uploading file');
+
   const fileInfo = await getFileFromFormData(args.request);
 
   const file = await saveFileAndUploadToAzure(fileInfo);

@@ -27,6 +27,8 @@ const serverError = () =>
 export const action = (async (args) => {
   await redirectToLogin(args);
 
+  console.log('Uploading audio file');
+
   const fileInfo = await getFileFromFormData(args.request);
 
   const fileUpload = await saveAudioFileUploadToDatabase(fileInfo.name);
@@ -68,6 +70,8 @@ async function processAudioFileUpload(fileUpload: AudioFileUpload) {
   try {
     const fileName = `upload/${fileUpload.name}`;
 
+    console.log('Processing audio file:', fileName);
+
     const stats = await ffprobe(fileName);
     console.log(`ffprobe stats for ${fileName}:`, stats);
 
@@ -76,6 +80,8 @@ async function processAudioFileUpload(fileUpload: AudioFileUpload) {
     const needsConverting = checkNeedsConverting(stats);
     const newFileName = `upload/${fileUpload.id}.mp3`;
     if (needsConverting) {
+      console.log('Converting audio file:', fileName);
+
       const streamIndex = getAudioStreamIndex(stats);
       await ffmpeg(fileName, streamIndex, newFileName, (progress) => {
         let convertProgress: number;
@@ -92,6 +98,8 @@ async function processAudioFileUpload(fileUpload: AudioFileUpload) {
         );
       });
     } else {
+      console.log('Audio file does not need converting:', fileName);
+
       await rename(fileName, newFileName);
     }
 
