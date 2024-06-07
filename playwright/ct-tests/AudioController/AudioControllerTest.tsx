@@ -71,7 +71,7 @@ function AudioControllerDisplay() {
     () => getMockData({ ...props, alternate }),
     [alternate, props],
   );
-  const { targetShowInfo } = useShowInfo(data, { ci: true });
+  const { targetShowInfo } = useShowInfo({ id: 'test', ...data }, { ci: true });
 
   const [metadatas, setMetadatas] = useState<AudioMetadata[]>([]);
   function onLoadedMetadata(metadata: AudioMetadata) {

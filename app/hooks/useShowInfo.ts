@@ -1,12 +1,12 @@
-import { useRevalidator } from '@remix-run/react';
+import { useFetcher } from '@remix-run/react';
 import { addMilliseconds, addSeconds, isBefore, parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import type { loader as showDataLoader } from '~/routes/$show.[data.json]';
 import type { ShowData } from '~/types/ShowData';
 import type { TargetShowInfo, TargetTimeInfo } from '~/types/ShowInfo';
 
 import { useClock } from './useClock';
-import { useCurrentShowId } from './useCurrentShowId';
 
 export type LoadedMetadataHandler = (args: {
   id: string;
@@ -14,7 +14,7 @@ export type LoadedMetadataHandler = (args: {
 }) => void;
 
 export function useShowInfo(
-  data: Pick<ShowData, 'serverDate' | 'sets'>,
+  loaderData: Pick<ShowData, 'id' | 'serverDate' | 'sets'>,
   { ci = false, enableClock = true } = {},
 ) {
   const [audioDurations, setAudioDurations] = useState<Record<string, number>>(
@@ -31,16 +31,20 @@ export function useShowInfo(
     [],
   );
 
-  const showId = useCurrentShowId({ ci });
-
-  const revalidator = useRevalidator();
+  const fetcher = useFetcher<typeof showDataLoader>();
   useEffect(() => {
-    const refetchInterval = setInterval(revalidator.revalidate, 1000 * 60);
+    if (ci) return;
+
+    const refetchInterval = setInterval(() => {
+      fetcher.load(`/${loaderData.id}/data.json`);
+    }, 1000 * 60);
 
     return () => {
       clearTimeout(refetchInterval);
     };
-  }, [revalidator.revalidate, showId]);
+  }, [ci, fetcher, loaderData.id]);
+
+  const data = fetcher.data ?? loaderData;
 
   const clientTimeSkewMs = useMemo(() => {
     const serverDate = parseISO(data.serverDate);

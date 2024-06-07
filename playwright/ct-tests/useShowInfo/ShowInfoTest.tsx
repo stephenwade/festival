@@ -48,10 +48,13 @@ function getMockData({
 
 function ShowInfoDisplay() {
   const data = useLoaderData<ReturnType<typeof getMockData>>();
-  const { targetShowInfo } = useShowInfo(data, {
-    ci: true,
-    enableClock: false,
-  });
+  const { targetShowInfo } = useShowInfo(
+    { id: 'test', ...data },
+    {
+      ci: true,
+      enableClock: false,
+    },
+  );
 
   const { status, currentSet, nextSet } = targetShowInfo;
 
