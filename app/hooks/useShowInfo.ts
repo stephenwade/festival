@@ -1,4 +1,3 @@
-import { useFetcher } from '@remix-run/react';
 import { addMilliseconds, addSeconds, isBefore, parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -7,6 +6,7 @@ import type { ShowData } from '~/types/ShowData';
 import type { TargetShowInfo, TargetTimeInfo } from '~/types/ShowInfo';
 
 import { useClock } from './useClock';
+import { useFetcherIgnoreErrors } from './useFetcherIgnoreErrors';
 
 export type LoadedMetadataHandler = (args: {
   id: string;
@@ -31,7 +31,7 @@ export function useShowInfo(
     [],
   );
 
-  const fetcher = useFetcher<typeof showDataLoader>();
+  const fetcher = useFetcherIgnoreErrors<typeof showDataLoader>();
   useEffect(() => {
     if (ci) return;
 
