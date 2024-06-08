@@ -12,10 +12,8 @@ export function useFetcherIgnoreErrors<TData>() {
     setState('loading');
 
     fetch(url)
-      .then((response) => response.json())
-      .then((data: SerializeFrom<TData>) => {
-        setData(data);
-      })
+      .then((response) => response.json() as Promise<SerializeFrom<TData>>)
+      .then(setData)
       .catch(() => {
         // Ignore errors
       })
