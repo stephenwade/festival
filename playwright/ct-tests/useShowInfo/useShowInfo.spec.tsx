@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/experimental-ct-react';
 import { addSeconds, formatDistanceToNowStrict, subSeconds } from 'date-fns';
 
+import { getMockData } from './helpers';
 import { ShowInfoTest } from './ShowInfoTest';
 
 test('1 minute before the show', async ({ mount }) => {
@@ -86,4 +87,27 @@ test('adjusts start time based on server clock', async ({ mount }) => {
   await expect(component).toContainText('Current time: 9');
   await expect(component).toContainText('Current set: Artist 1');
   await expect(component).toContainText('Next set: Artist 2');
+});
+
+test('should fetch new data from data.json after a few seconds', async ({
+  mount,
+  page,
+}) => {
+  await page.route('/test/data.json', async (route) => {
+    const data = getMockData({ offsetSec: 0 });
+    const json = {
+      ...data,
+      sets: data.sets.map((set) => ({
+        ...set,
+        artist: `${set.artist} (from data.json)`,
+      })),
+    };
+    await route.fulfill({ json });
+  });
+
+  const component = await mount(<ShowInfoTest offsetSec={0} />);
+
+  await expect(component).not.toContainText('(from data.json)');
+
+  await expect(component).toContainText('(from data.json)');
 });

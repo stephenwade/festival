@@ -30,7 +30,7 @@ function getMockData({
   offsetSec = 0,
   alternate = false,
   empty = false,
-}: GetMockDataProps): Pick<ShowData, 'serverDate' | 'sets'> {
+}: GetMockDataProps): Pick<ShowData, 'id' | 'serverDate' | 'sets'> {
   const now = new Date();
 
   const sets: ShowData['sets'] = empty
@@ -53,6 +53,7 @@ function getMockData({
       ];
 
   return {
+    id: 'test',
     serverDate: now.toISOString(),
     sets,
   };

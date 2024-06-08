@@ -7,6 +7,7 @@ export interface SetData {
 }
 
 export interface ShowData {
+  id: string;
   name: string;
   description: string;
   showLogoUrl: string;
