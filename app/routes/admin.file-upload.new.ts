@@ -9,7 +9,7 @@ import {
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
-import { db } from '~/db/db.server';
+import { db } from '~/db.server/db';
 import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
 
 const MEGABYTE = 1_000_000;

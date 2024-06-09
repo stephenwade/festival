@@ -4,7 +4,7 @@ import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
-import { db } from '~/db/db.server';
+import { db } from '~/db.server/db';
 
 export const loader = (async (args) => {
   await redirectToLogin(args);

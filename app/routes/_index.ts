@@ -1,7 +1,7 @@
 import type { LoaderFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 
-import { db } from '~/db/db.server';
+import { db } from '~/db.server/db';
 
 const notFound = () => new Response('Not Found', { status: 404 });
 

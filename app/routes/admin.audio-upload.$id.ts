@@ -2,7 +2,7 @@ import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
-import { db } from '~/db/db.server';
+import { db } from '~/db.server/db';
 
 const notFound = () => new Response('Not Found', { status: 404 });
 

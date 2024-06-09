@@ -9,7 +9,7 @@ import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
-import { db } from '~/db/db.server';
+import { db } from '~/db.server/db';
 import { EditShowForm } from '~/forms/show/forms';
 import { makeServerValidator } from '~/forms/show/validator.server';
 import { replaceNullsWithUndefined } from '~/forms/utils/replaceNullsWithUndefined';

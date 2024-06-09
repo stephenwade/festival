@@ -1,6 +1,6 @@
 import type { User as ClerkUser } from '@clerk/remix/api.server';
 
-import { db } from '~/db/db.server';
+import { db } from '~/db.server/db';
 
 export async function userIsAllowed(user: ClerkUser) {
   const verifiedEmailAddresses = user.emailAddresses
