@@ -14,8 +14,6 @@ model Show {
   name        String
   description String
   startDate   DateTime
-  // Calculated by the app
-  endDate     DateTime
 
   backgroundColor          String
   backgroundColorSecondary String

@@ -10,7 +10,6 @@ import { validationError } from 'remix-validated-form';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db.server/db';
-import { updateShowEndDate } from '~/db.server/update-show-end-date';
 import { EditShowForm } from '~/forms/show/forms';
 import { makeServerValidator } from '~/forms/show/validator.server';
 import { replaceNullsWithUndefined } from '~/forms/utils/replaceNullsWithUndefined';
@@ -96,7 +95,6 @@ export const action = (async (args) => {
       }),
     ),
   ]);
-  await updateShowEndDate(rest.id);
 
   return redirect(`/admin/shows/${data.id}`);
 }) satisfies ActionFunction;
