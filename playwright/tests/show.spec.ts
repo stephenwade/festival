@@ -4,13 +4,19 @@ import { expect, test } from '@playwright/test';
 
 import { delayShow } from '../helpers/show';
 
-test('root URL redirects to default show', async ({ page, baseURL }) => {
+test('root URL redirects to earliest upcoming show', async ({
+  page,
+  baseURL,
+}) => {
   await page.goto('/');
 
   await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
 });
 
-test('not found show redirects to default show', async ({ page, baseURL }) => {
+test('not found show redirects to earliest upcoming show', async ({
+  page,
+  baseURL,
+}) => {
   await page.goto('/not-found');
 
   await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
