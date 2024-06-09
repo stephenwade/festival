@@ -9,6 +9,7 @@ import { validationError } from 'remix-validated-form';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db.server/db';
+import { updateShowEndDate } from '~/db.server/update-show-end-date';
 import { NewShowForm } from '~/forms/show/forms';
 import { makeServerValidator } from '~/forms/show/validator.server';
 
@@ -32,9 +33,11 @@ export const action = (async (args) => {
   const show = await db.show.create({
     data: {
       ...rest,
+      endDate: rest.startDate,
       sets: { create: sets },
     },
   });
+  await updateShowEndDate(show.id);
   return redirect(`/admin/shows/${show.id}`);
 }) satisfies ActionFunction;
 

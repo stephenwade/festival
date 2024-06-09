@@ -11,6 +11,8 @@ export async function deleteTestShows() {
   await prisma.show.deleteMany({ where: { id: { startsWith: 'test-show-' } } });
 }
 
+const SEEDED_SET_LENGTH = 10;
+
 export async function seedShow(startDate: Date) {
   const [showLogoFile, backgroundImageFile] = await Promise.all([
     prisma.file.create({
@@ -34,6 +36,7 @@ export async function seedShow(startDate: Date) {
       name: 'Test Show',
       description: 'The best radio show on GitHub Actions!',
       startDate,
+      endDate: addSeconds(startDate, SEEDED_SET_LENGTH),
       backgroundColor: '#000000',
       backgroundColorSecondary: '#000000',
 
@@ -55,7 +58,7 @@ export async function seedShow(startDate: Date) {
                   name: '10-sec-silence.mp3',
                   audioUrl:
                     'https://festivalci.z13.web.core.windows.net/10-sec-silence.mp3',
-                  duration: 10,
+                  duration: SEEDED_SET_LENGTH,
                 },
               },
             },
