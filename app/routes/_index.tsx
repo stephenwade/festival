@@ -9,7 +9,7 @@ import { cache, INDEX_SHOW_ID_KEY } from '~/cache.server/cache';
 import { db } from '~/db.server/db';
 
 /**
- * Returns the ID of the last show that hasn't ended yet.
+ * Returns the ID of the earliest show that hasn't ended yet.
  */
 async function calculateIndexShowId(): Promise<string | null> {
   const result = await db.$queryRaw<{ id: string }[]>`
@@ -33,7 +33,7 @@ async function calculateIndexShowId(): Promise<string | null> {
     SELECT id
     FROM ShowsWithEndDate
     WHERE endDate >= NOW()
-    ORDER BY startDate DESC
+    ORDER BY startDate ASC
     LIMIT 1
   `;
 
