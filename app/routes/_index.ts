@@ -7,7 +7,9 @@ const notFound = () => new Response('Not Found', { status: 404 });
 
 export const loader = (async () => {
   const show = await db.show.findFirst({
-    orderBy: { startDate: 'asc' },
+    // Find the last show that hasn't ended yet
+    where: { endDate: { gte: new Date() } },
+    orderBy: { startDate: 'desc' },
   });
   if (!show) throw notFound();
 
