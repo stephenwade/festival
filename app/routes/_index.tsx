@@ -1,10 +1,12 @@
+import '~/styles/show.css';
+import '~/styles/index.css';
+
 import type { LoaderFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
+import type { FC } from 'react';
 
 import { cache, INDEX_SHOW_ID_KEY } from '~/cache.server/cache';
 import { db } from '~/db.server/db';
-
-const notFound = () => new Response('Not Found', { status: 404 });
 
 /**
  * Returns the ID of the last show that hasn't ended yet.
@@ -59,5 +61,19 @@ export const loader = (async () => {
   const indexShowId = await getIndexShowId();
   if (indexShowId) return redirect(`/${indexShowId}`);
 
-  throw notFound();
+  return null;
 }) satisfies LoaderFunction;
+
+const Index: FC = () => (
+  <div className="index-container full-page">
+    <img className="logo" src="/images/festival.svg" alt="FESTIVAL" />
+    <div className="attribution">
+      Photo by <a href="https://unsplash.com/@yvettedewit">Yvette de Wit</a> on{' '}
+      <a href="https://unsplash.com/photos/group-of-people-attending-a-performance-8XLapfNMW04">
+        Unsplash
+      </a>
+    </div>
+  </div>
+);
+
+export default Index;
