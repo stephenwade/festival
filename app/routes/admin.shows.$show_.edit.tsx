@@ -9,6 +9,7 @@ import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
+import { cache, INDEX_SHOW_ID_KEY } from '~/cache.server/cache';
 import { db } from '~/db.server/db';
 import { EditShowForm } from '~/forms/show/forms';
 import { makeServerValidator } from '~/forms/show/validator.server';
@@ -95,6 +96,8 @@ export const action = (async (args) => {
       }),
     ),
   ]);
+
+  cache.del(INDEX_SHOW_ID_KEY);
 
   return redirect(`/admin/shows/${data.id}`);
 }) satisfies ActionFunction;
