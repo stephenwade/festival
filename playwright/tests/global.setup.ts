@@ -15,15 +15,15 @@ import { authFile } from './shared-data';
 setup('seed show', async () => {
   await deleteTestShows();
 
-  const show = await seedShow(addSeconds(new Date(), 10));
+  const show = await seedShow(addSeconds(new Date(), 30));
   process.env.SHOW_ID = show.id;
   process.env.FIRST_ARTIST_NAME = show.sets[0].artist;
 
   // Add other shows to ensure that the root URL redirects to the earliest
   // upcoming show
-  const showLater = await seedShow(addSeconds(new Date(), 60));
+  const showLater = await seedShow(addSeconds(new Date(), 120));
   process.env.SHOW_LATER_ID = showLater.id;
-  const showEarlier = await seedShow(addSeconds(new Date(), -60));
+  const showEarlier = await seedShow(addSeconds(new Date(), -120));
   process.env.SHOW_EARLIER_ID = showEarlier.id;
 });
 
