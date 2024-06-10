@@ -48,14 +48,14 @@ export async function seedShow(startDate: Date) {
           audioFileUpload: {
             create: {
               status: '',
-              name: '10-sec-silence.mp3',
+              name: '5-min-silence.mp3',
 
               audioFile: {
                 create: {
-                  name: '10-sec-silence.mp3',
+                  name: '5-min-silence.mp3',
                   audioUrl:
-                    'https://festivalci.z13.web.core.windows.net/10-sec-silence.mp3',
-                  duration: 10,
+                    'https://festivalci.z13.web.core.windows.net/5-min-silence.mp3',
+                  duration: 5 * 60,
                 },
               },
             },

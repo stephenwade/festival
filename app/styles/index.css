@@ -1,0 +1,37 @@
+body {
+  --background-image: url('https://sndfli.z13.web.core.windows.net/assets/8XLapfNMW04.jpg');
+  --background-color: #212121;
+}
+
+.index-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 1em;
+  backdrop-filter: blur(1px);
+}
+
+.logo {
+  max-width: 900px;
+}
+
+.attribution {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 2px 8px;
+  border-top-left-radius: 10px;
+  background-color: #fff7;
+  color: var(--background-color);
+  font-size: 10pt;
+}
+
+.attribution a {
+  color: inherit;
+}
+
+.attribution a:hover {
+  text-decoration: none;
+}

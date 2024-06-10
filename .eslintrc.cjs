@@ -93,7 +93,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ['.eslintrc.cjs', 'stylelint.config.js'],
+      files: ['.eslintrc.cjs', 'stylelint.config.js', 'svgo.config.js'],
 
       env: {
         node: true,

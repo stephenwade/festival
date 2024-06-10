@@ -1,6 +1,6 @@
 import { withZod } from '@remix-validated-form/with-zod';
 
-import { db } from '~/db/db.server';
+import { db } from '~/db.server/db';
 
 import { schema } from './validator';
 

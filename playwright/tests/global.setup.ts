@@ -1,5 +1,5 @@
 import { test as setup } from '@playwright/test';
-import { addSeconds } from 'date-fns';
+import { addMinutes } from 'date-fns';
 
 import { deleteTestShows, seedShow } from '../helpers/show';
 import { authFile } from './shared-data';
@@ -15,10 +15,16 @@ import { authFile } from './shared-data';
 setup('seed show', async () => {
   await deleteTestShows();
 
-  const show = await seedShow(addSeconds(new Date(), 10));
-
+  const show = await seedShow(addMinutes(new Date(), 1));
   process.env.SHOW_ID = show.id;
   process.env.FIRST_ARTIST_NAME = show.sets[0].artist;
+
+  // Add other shows to ensure that the root URL redirects to the earliest
+  // upcoming show
+  const showLater = await seedShow(addMinutes(new Date(), 10));
+  process.env.SHOW_LATER_ID = showLater.id;
+  const showEarlier = await seedShow(addMinutes(new Date(), -10));
+  process.env.SHOW_EARLIER_ID = showEarlier.id;
 });
 
 setup('authenticate', async ({ page, baseURL }) => {

@@ -10,10 +10,10 @@ import {
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
-import { db } from '~/db/db.server';
-import { ffmpeg } from '~/ffmpeg/ffmpeg.server';
-import type { FFprobeOutput } from '~/ffmpeg/ffprobe.server';
-import { ffprobe } from '~/ffmpeg/ffprobe.server';
+import { db } from '~/db.server/db';
+import { ffmpeg } from '~/ffmpeg.server/ffmpeg';
+import type { FFprobeOutput } from '~/ffmpeg.server/ffprobe';
+import { ffprobe } from '~/ffmpeg.server/ffprobe';
 import { UPLOAD_AUDIO_FORM_KEY } from '~/forms/upload-audio';
 import { emitAudioFileProcessingEvent } from '~/sse.server/audio-file-events';
 

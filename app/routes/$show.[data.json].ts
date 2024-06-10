@@ -2,7 +2,7 @@ import type { LoaderFunction } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { addSeconds, formatISO } from 'date-fns';
 
-import { db } from '~/db/db.server';
+import { db } from '~/db.server/db';
 import type { ShowData } from '~/types/ShowData';
 
 export const loader = (async ({ params }) => {

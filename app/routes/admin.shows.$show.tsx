@@ -4,7 +4,7 @@ import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
-import { db } from '~/db/db.server';
+import { db } from '~/db.server/db';
 import { useOrigin } from '~/hooks/useOrigin';
 
 const notFound = () => new Response('Not Found', { status: 404 });
