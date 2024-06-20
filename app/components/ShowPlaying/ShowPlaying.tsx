@@ -1,6 +1,6 @@
 import '~/styles/show-playing.css';
 
-import type { FC } from 'react';
+import type { Dispatch, FC, SetStateAction } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
@@ -19,7 +19,7 @@ export interface ShowPlayingProps {
   showInfo: ShowInfo;
 
   getAudioVisualizerData: (() => Uint8Array) | null;
-  onVolumeInput: (volume: number) => void;
+  onVolumeInput: Dispatch<SetStateAction<number>>;
 }
 
 export const ShowPlaying: FC<ShowPlayingProps> = ({

@@ -1,7 +1,7 @@
 import './volume-fab.css';
 
-import type { FC, KeyboardEventHandler } from 'react';
-import { memo, useCallback, useRef, useState } from 'react';
+import type { Dispatch, FC, SetStateAction } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
@@ -12,7 +12,7 @@ const INPUT_STEP = 5;
 
 export interface VolumeFabProps {
   volume: number;
-  onVolumeInput: (volume: number) => void;
+  onVolumeInput: Dispatch<SetStateAction<number>>;
 }
 
 export const VolumeFab: FC<VolumeFabProps> = memo(function VolumeFab({
@@ -29,37 +29,48 @@ export const VolumeFab: FC<VolumeFabProps> = memo(function VolumeFab({
 
   useOnClickOutside(buttonRef, close);
 
-  const handleKeyDown: KeyboardEventHandler<HTMLButtonElement> = (e) => {
-    if (e.ctrlKey || e.altKey || e.metaKey) return;
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.altKey || e.metaKey) return;
 
-    switch (e.key) {
-      case 'ArrowLeft':
-      case 'ArrowDown':
-        onVolumeInput(volume - INPUT_STEP);
-        break;
+      switch (e.key) {
+        case 'ArrowUp':
+        case 'ArrowRight':
+          onVolumeInput((v) => Math.min(v + INPUT_STEP, INPUT_MAX));
+          break;
 
-      case 'ArrowRight':
-      case 'ArrowUp':
-        onVolumeInput(volume + INPUT_STEP);
-        break;
+        case 'ArrowDown':
+        case 'ArrowLeft':
+          onVolumeInput((v) => Math.max(v - INPUT_STEP, INPUT_MIN));
+          break;
 
-      case 'PageUp':
-        onVolumeInput(volume + INPUT_STEP * 2);
-        break;
+        case 'PageUp':
+          onVolumeInput((v) => Math.min(v + INPUT_STEP * 2, INPUT_MAX));
+          break;
 
-      case 'PageDown':
-        onVolumeInput(volume - INPUT_STEP * 2);
-        break;
+        case 'PageDown':
+          onVolumeInput((v) => Math.max(v - INPUT_STEP * 2, INPUT_MIN));
+          break;
 
-      case 'Home':
-        onVolumeInput(INPUT_MIN);
-        break;
+        case 'Home':
+          onVolumeInput(INPUT_MIN);
+          break;
 
-      case 'End':
-        onVolumeInput(INPUT_MAX);
-        break;
-    }
-  };
+        case 'End':
+          onVolumeInput(INPUT_MAX);
+          break;
+      }
+    },
+    [onVolumeInput],
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   const VolumeIcon =
     volume === INPUT_MIN
@@ -78,7 +89,6 @@ export const VolumeFab: FC<VolumeFabProps> = memo(function VolumeFab({
         onClick={() => {
           setOpened((opened) => !opened);
         }}
-        onKeyDown={handleKeyDown}
       >
         <VolumeIcon />
       </button>
@@ -91,7 +101,7 @@ export const VolumeFab: FC<VolumeFabProps> = memo(function VolumeFab({
         <input
           className="styled-range-input"
           type="range"
-          defaultValue={volume}
+          value={volume}
           min={INPUT_MIN}
           max={INPUT_MAX}
           step={INPUT_STEP}
