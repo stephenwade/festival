@@ -2,7 +2,7 @@
 name: festival-dev
 services:
   db:
-    image: mysql@sha256:0ca0b071a08d5c9abebb9d4db755582ba5e0830c3723def877bc1ef223e5e482
+    image: mysql@sha256:dab7049abafe3a0e12cbe5e49050cf149881c0cd9665c289e5808b9dad39c9e0
     env_file: .env
     volumes:
       - db-data:/var/lib/mysql
