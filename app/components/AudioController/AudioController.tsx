@@ -12,6 +12,7 @@ import {
 } from 'react';
 import { AudioContext } from 'standardized-audio-context';
 
+import { useVolume } from '~/hooks/useVolume';
 import type { AudioStatus } from '~/types/AudioStatus';
 import { initialAudioStatus } from '~/types/AudioStatus';
 import type { ShowInfo, TargetShowInfo } from '~/types/ShowInfo';
@@ -37,7 +38,6 @@ export interface AudioMetadata {
 
 interface AudioControllerProps {
   targetShowInfo: TargetShowInfo;
-  volume: number;
   onLoadedMetadata: (args: AudioMetadata) => void;
   /** Used in CI */
   forceSkipAudioContext?: boolean;
@@ -54,11 +54,12 @@ interface AudioControllerProps {
 
 export const AudioController: FC<AudioControllerProps> = ({
   targetShowInfo,
-  volume,
   onLoadedMetadata,
   forceSkipAudioContext,
   children,
 }) => {
+  const { volume } = useVolume();
+
   const [showInfo, setShowInfo] = useState<ShowInfo>(
     targetShowInfo.status === 'ENDED'
       ? { status: 'ENDED' }

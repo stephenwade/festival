@@ -1,19 +1,16 @@
 import { expect, test } from '@playwright/experimental-ct-react';
 
-import { VolumeFab } from '~/components/VolumeFab';
-
-function defaultVolumeFab() {
-  return <VolumeFab volume={20} onVolumeInput={() => void 0} />;
-}
+import { INITIAL_VOLUME } from './shared-data';
+import { VolumeFabTest } from './VolumeFabTest';
 
 test('should display the current volume', async ({ mount }) => {
-  const component = await mount(defaultVolumeFab());
+  const component = await mount(<VolumeFabTest />);
 
-  await expect(component.locator('input')).toHaveValue('20');
+  await expect(component.locator('input')).toHaveValue(String(INITIAL_VOLUME));
 });
 
 test('should expand when clicked', async ({ mount }) => {
-  const component = await mount(defaultVolumeFab());
+  const component = await mount(<VolumeFabTest />);
 
   await expect(component.locator('.slider-container')).not.toHaveAttribute(
     'aria-expanded',
@@ -30,18 +27,10 @@ test('should expand when clicked', async ({ mount }) => {
   await expect(component.locator('input')).toBeEnabled();
 });
 
-test('should fire onVolumeInput when the volume is dragged', async ({
+test('should update the useVolume hook when the volume is dragged', async ({
   mount,
 }) => {
-  let volume = 20;
-  const component = await mount(
-    <VolumeFab
-      volume={volume}
-      onVolumeInput={(newVolume) => {
-        volume = newVolume;
-      }}
-    />,
-  );
+  const component = await mount(<VolumeFabTest />);
 
   await component.locator('button').click();
 
@@ -50,5 +39,5 @@ test('should fire onVolumeInput when the volume is dragged', async ({
     input.dispatchEvent(new Event('input', { bubbles: true }));
   });
 
-  expect(volume).toBe(30);
+  await expect(component).toContainText('Volume: 30');
 });

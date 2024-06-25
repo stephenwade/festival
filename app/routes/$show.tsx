@@ -4,7 +4,6 @@ import '~/styles/show.css';
 import type { MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
-import useLocalStorageState from 'use-local-storage-state';
 
 import { AudioController } from '~/components/AudioController';
 import { ShowEnded } from '~/components/ShowEnded';
@@ -31,15 +30,9 @@ const Show: FC = () => {
 
   const { targetShowInfo, onLoadedMetadata } = useShowInfo(loaderData);
 
-  const [volume, setVolume] = useLocalStorageState('volume', {
-    defaultValue: 100,
-    storageSync: false,
-  });
-
   return (
     <AudioController
       targetShowInfo={targetShowInfo}
-      volume={volume}
       onLoadedMetadata={onLoadedMetadata}
     >
       {({
@@ -68,12 +61,10 @@ const Show: FC = () => {
         // showInfo.status: "WAITING_UNTIL_START" | "PLAYING"
         return (
           <ShowPlaying
-            volume={volume}
             audioStatus={audioStatus}
             audioError={audioError}
             showInfo={showInfo}
             getAudioVisualizerData={getAudioVisualizerData}
-            onVolumeInput={setVolume}
           />
         );
       }}
