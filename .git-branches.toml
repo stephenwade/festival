@@ -4,6 +4,3 @@ ship-delete-tracking-branch = false
 
 [branches]
 main = "main"
-
-[sync-strategy]
-feature-branches = "rebase"
