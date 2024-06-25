@@ -82,7 +82,6 @@ function AudioControllerDisplay() {
   return (
     <AudioController
       targetShowInfo={targetShowInfo}
-      volume={42}
       onLoadedMetadata={onLoadedMetadata}
       forceSkipAudioContext={forceSkipAudioContext}
     >
