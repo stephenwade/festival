@@ -15,7 +15,7 @@ FROM base as deps
 
 WORKDIR /app
 
-ADD package.json .npmrc ./
+ADD package.json .npmrc prisma ./
 RUN npm install --include=dev
 
 FROM base as production-deps
@@ -23,7 +23,7 @@ FROM base as production-deps
 WORKDIR /app
 
 COPY --from=deps /app/node_modules /app/node_modules
-ADD package.json .npmrc ./
+ADD package.json .npmrc prisma ./
 RUN npm prune --omit=dev
 
 FROM base as build
