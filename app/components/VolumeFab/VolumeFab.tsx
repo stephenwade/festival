@@ -1,8 +1,10 @@
 import './volume-fab.css';
 
-import type { Dispatch, FC, SetStateAction } from 'react';
+import type { FC } from 'react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
+
+import { useVolume } from '~/hooks/useVolume';
 
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
 
@@ -10,15 +12,9 @@ const INPUT_MIN = 0;
 const INPUT_MAX = 100;
 const INPUT_STEP = 5;
 
-export interface VolumeFabProps {
-  volume: number;
-  onVolumeInput: Dispatch<SetStateAction<number>>;
-}
+export const VolumeFab: FC = memo(function VolumeFab() {
+  const { volume, setVolume, toggleMute } = useVolume();
 
-export const VolumeFab: FC<VolumeFabProps> = memo(function VolumeFab({
-  volume,
-  onVolumeInput,
-}: VolumeFabProps) {
   const [opened, setOpened] = useState(false);
 
   const close = useCallback(() => {
@@ -36,32 +32,36 @@ export const VolumeFab: FC<VolumeFabProps> = memo(function VolumeFab({
       switch (e.key) {
         case 'ArrowUp':
         case 'ArrowRight':
-          onVolumeInput((v) => Math.min(v + INPUT_STEP, INPUT_MAX));
+          setVolume((v) => Math.min(v + INPUT_STEP, INPUT_MAX));
           break;
 
         case 'ArrowDown':
         case 'ArrowLeft':
-          onVolumeInput((v) => Math.max(v - INPUT_STEP, INPUT_MIN));
+          setVolume((v) => Math.max(v - INPUT_STEP, INPUT_MIN));
           break;
 
         case 'PageUp':
-          onVolumeInput((v) => Math.min(v + INPUT_STEP * 2, INPUT_MAX));
+          setVolume((v) => Math.min(v + INPUT_STEP * 2, INPUT_MAX));
           break;
 
         case 'PageDown':
-          onVolumeInput((v) => Math.max(v - INPUT_STEP * 2, INPUT_MIN));
+          setVolume((v) => Math.max(v - INPUT_STEP * 2, INPUT_MIN));
           break;
 
         case 'Home':
-          onVolumeInput(INPUT_MIN);
+          setVolume(INPUT_MIN);
           break;
 
         case 'End':
-          onVolumeInput(INPUT_MAX);
+          setVolume(INPUT_MAX);
+          break;
+
+        case 'm':
+          toggleMute();
           break;
       }
     },
-    [onVolumeInput],
+    [setVolume, toggleMute],
   );
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export const VolumeFab: FC<VolumeFabProps> = memo(function VolumeFab({
           onInput={(e) => {
             const input = e.target as HTMLInputElement;
             const volume = Number(input.value);
-            onVolumeInput?.(volume);
+            setVolume(volume);
           }}
         />
       </div>

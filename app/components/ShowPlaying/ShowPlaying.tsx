@@ -1,6 +1,6 @@
 import '~/styles/show-playing.css';
 
-import type { Dispatch, FC, SetStateAction } from 'react';
+import type { FC } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
@@ -13,23 +13,19 @@ import { AudioCanvas } from './AudioCanvas';
 import { CurrentTime } from './CurrentTime';
 
 export interface ShowPlayingProps {
-  volume: number;
   audioStatus: AudioStatus;
   audioError: boolean;
   showInfo: ShowInfo;
 
   getAudioVisualizerData: (() => Uint8Array) | null;
-  onVolumeInput: Dispatch<SetStateAction<number>>;
 }
 
 export const ShowPlaying: FC<ShowPlayingProps> = ({
-  volume,
   audioStatus,
   audioError,
   showInfo,
 
   getAudioVisualizerData,
-  onVolumeInput,
 }) => {
   const waitingUntilStart = showInfo.status === 'WAITING_UNTIL_START';
   const playing = showInfo.status === 'PLAYING';
@@ -82,7 +78,7 @@ export const ShowPlaying: FC<ShowPlayingProps> = ({
       {waitingUntilStart ? <div className="next-up">NEXT UP</div> : null}
       <div className="artist">{showInfo.currentSet?.artist}</div>
 
-      <VolumeFab volume={volume} onVolumeInput={onVolumeInput} />
+      <VolumeFab />
 
       <ToastContainer />
     </div>

@@ -41,11 +41,9 @@ function showPlayingTemplate(
 ) {
   return (
     <ShowPlaying
-      volume={35}
       audioStatus={initialAudioStatus}
       audioError={false}
       getAudioVisualizerData={null}
-      onVolumeInput={() => void 0}
       {...props}
     />
   );
