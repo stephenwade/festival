@@ -33,11 +33,12 @@ export function useShowInfo(
 
   const fetcher = useFetcherIgnoreErrors<typeof showDataLoader>();
   useEffect(() => {
+    const SECONDS = 1000;
     const refetchInterval = setInterval(
       () => {
         fetcher.load(`/${loaderData.id}/data.json`);
       },
-      ci ? 1000 * 3 : 1000 * 60,
+      ci ? 3 * SECONDS : 60 * SECONDS,
     );
 
     return () => {
