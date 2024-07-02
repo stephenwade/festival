@@ -18,10 +18,10 @@ model Show {
   backgroundColor          String
   backgroundColorSecondary String
 
-  showLogoFile          File   @relation(name: "ShowLogoFile", fields: [showLogoFileId], references: [id])
-  showLogoFileId        String @unique
-  backgroundImageFile   File   @relation(name: "BackgroundImageFile", fields: [backgroundImageFileId], references: [id])
-  backgroundImageFileId String @unique
+  showLogoFile          ImageFile @relation(name: "ShowLogoImageFile", fields: [showLogoFileId], references: [id])
+  showLogoFileId        String    @unique
+  backgroundImageFile   ImageFile @relation(name: "ShowBackgroundImageFile", fields: [backgroundImageFileId], references: [id])
+  backgroundImageFileId String    @unique
 
   sets Set[]
 }
@@ -61,13 +61,13 @@ model AudioFileUpload {
   audioFile AudioFile?
 }
 
-model File {
+model ImageFile {
   id   String @id @default(uuid())
   name String
   url  String
 
-  showLogo            Show? @relation(name: "ShowLogoFile")
-  showBackgroundImage Show? @relation(name: "BackgroundImageFile")
+  showLogo       Show? @relation(name: "ShowLogoImageFile")
+  showBackground Show? @relation(name: "ShowBackgroundImageFile")
 }
 
 model AdminUserAllowlist {

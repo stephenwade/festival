@@ -13,13 +13,13 @@ export async function deleteTestShows() {
 
 export async function seedShow(startDate: Date) {
   const [showLogoFile, backgroundImageFile] = await Promise.all([
-    prisma.file.create({
+    prisma.imageFile.create({
       data: {
         name: 'test-show-logo.png',
         url: 'https://placehold.co/700x200@2x.png?text=Test+Show',
       },
     }),
-    prisma.file.create({
+    prisma.imageFile.create({
       data: {
         name: 'test-show-background.jpg',
         url: 'https://placehold.co/2400.jpg',
@@ -75,7 +75,7 @@ export async function deleteShow(showId: string) {
   });
 
   await prisma.show.delete({ where: { id: showId } });
-  await prisma.file.deleteMany({
+  await prisma.imageFile.deleteMany({
     where: { id: { in: [show.showLogoFileId, show.backgroundImageFileId] } },
   });
   await prisma.audioFileUpload.deleteMany({
