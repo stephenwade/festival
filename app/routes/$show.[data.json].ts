@@ -11,7 +11,7 @@ export const loader = (async ({ params }) => {
   const show = await db.show.findUnique({
     where: { id },
     include: {
-      showLogoFile: true,
+      logoImageFile: true,
       backgroundImageFile: true,
       sets: {
         include: { audioFile: true },
@@ -21,17 +21,18 @@ export const loader = (async ({ params }) => {
   });
   if (!show) throw redirect('/');
 
+  if (!show.startDate) throw redirect('/');
   const data: ShowData = {
     id,
     name: show.name,
-    description: show.description,
-    showLogoUrl: show.showLogoFile.url,
-    backgroundImageUrl: show.backgroundImageFile.url,
+    description: show.description ?? '',
+    showLogoUrl: show.logoImageFile?.url ?? '',
+    backgroundImageUrl: show.backgroundImageFile?.url ?? '',
     sets: show.sets.map((set) => ({
       id: set.id,
       audioUrl: set.audioFile?.url ?? '',
       artist: set.artist ?? '',
-      start: addSeconds(show.startDate, set.offset ?? 0).toISOString(),
+      start: addSeconds(show.startDate!, set.offset ?? 0).toISOString(),
       duration: set.audioFile?.duration ?? 0,
     })),
     serverDate: formatISO(new Date()),

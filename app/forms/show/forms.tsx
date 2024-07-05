@@ -115,12 +115,12 @@ const ShowForm: FC<ShowFormProps> = ({
         method="post"
       >
         <Input label="Name" name="name" />
-        <Input label="URL" prefix={`${origin ?? ''}/`} name="id" />
+        <Input label="URL" prefix={`${origin ?? ''}/`} name="slug" />
         <Input label="Description" name="description" />
         <InputDateTime label="Start date" name="startDate" step="1" />
         Show logo:{' '}
         <FileUpload
-          name="showLogoFileId"
+          name="logoImageFileId"
           isUploading={isUploadingLogo}
           setIsUploading={setIsUploadingLogo}
         />

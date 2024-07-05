@@ -54,7 +54,9 @@ export const action = (async (args) => {
     return redirect('/admin/shows');
   }
 
-  const validator = makeServerValidator({ previousId });
+  const show = await db.show.findUniqueOrThrow({ where: { id: previousId } });
+
+  const validator = makeServerValidator({ previousSlug: show.slug });
 
   const form = await args.request.formData();
   const { data, error } = await validator.validate(form);

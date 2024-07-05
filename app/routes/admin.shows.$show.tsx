@@ -21,7 +21,7 @@ export const loader = (async (args) => {
   const show = await db.show.findUnique({
     where: { id },
     include: {
-      showLogoFile: true,
+      logoImageFile: true,
       backgroundImageFile: true,
       sets: {
         include: { audioFile: true },
@@ -49,7 +49,7 @@ const ViewShow: FC = () => {
         <strong>Name:</strong> {show.name}
       </p>
       <p>
-        <strong>URL:</strong> {origin}/{show.id}
+        <strong>URL:</strong> {origin}/{show.slug}
       </p>
       <p>
         <strong>Description:</strong> {show.description}
@@ -58,14 +58,22 @@ const ViewShow: FC = () => {
         <strong>Start date:</strong> {show.startDate}
       </p>
       <p>
-        <strong>Show logo:</strong>{' '}
-        <a href={show.showLogoFile.url}>{show.showLogoFile.name}</a>
+        <strong>Logo image:</strong>{' '}
+        {show.logoImageFile ? (
+          <a href={show.logoImageFile.url}>{show.logoImageFile.name}</a>
+        ) : (
+          <em>No logo image yet</em>
+        )}
       </p>
       <p>
         <strong>Background image:</strong>{' '}
-        <a href={show.backgroundImageFile.url}>
-          {show.backgroundImageFile.name}
-        </a>
+        {show.backgroundImageFile ? (
+          <a href={show.backgroundImageFile.url}>
+            {show.backgroundImageFile.name}
+          </a>
+        ) : (
+          <em>No background image yet</em>
+        )}
       </p>
       <p>
         <strong>Background colors:</strong> {show.backgroundColor},{' '}

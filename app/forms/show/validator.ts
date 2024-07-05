@@ -12,18 +12,20 @@ export const setSchema = z.object({
 const COLOR_REGEX = /^#[\da-f]{6}$/iu;
 
 export const schema = zfd.formData({
+  id: zfd.text(),
   name: zfd.text(),
-  id: zfd.text(
-    z.string().refine((id) => id !== 'new', {
+  slug: zfd.text(
+    z.string().refine((id) => id !== 'admin', {
       message: 'Invalid show URL',
     }),
   ),
-  startDate: z.string().datetime(),
-  description: zfd.text(),
-  showLogoFileId: zfd.text(),
-  backgroundImageFileId: zfd.text(),
-  backgroundColor: zfd.text(z.string().regex(COLOR_REGEX)),
-  backgroundColorSecondary: zfd.text(z.string().regex(COLOR_REGEX)),
+  startDate: z.string().datetime().optional(),
+  timeZone: zfd.text(z.string().optional()), // TODO: add field, validate timezone
+  backgroundColor: zfd.text(z.string().regex(COLOR_REGEX).optional()),
+  backgroundColorSecondary: zfd.text(z.string().regex(COLOR_REGEX).optional()),
+  description: zfd.text(z.string().optional()),
+  logoImageFileId: zfd.text(z.string().optional()),
+  backgroundImageFileId: zfd.text(z.string().optional()),
   sets: zfd.repeatableOfType(setSchema),
 });
 

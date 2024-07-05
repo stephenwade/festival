@@ -10,13 +10,13 @@ export const loader = (async ({ params }) => {
   const show = await db.show.findUnique({
     where: { id },
     include: {
-      showLogoFile: true,
+      logoImageFile: true,
       backgroundImageFile: true,
     },
   });
   if (!show) throw notFound();
 
-  const backgroundImage = `url(${show.backgroundImageFile.url})`;
+  const backgroundImage = `url(${show.backgroundImageFile?.url})`;
   const backgroundColor = show.backgroundColor;
   const backgroundColorLighter = show.backgroundColorSecondary;
 

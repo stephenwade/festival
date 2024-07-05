@@ -3,7 +3,7 @@ import { addSeconds } from 'date-fns';
 
 const prisma = new PrismaClient();
 
-export function randomShowId() {
+export function randomShowSlug() {
   return `test-show-${crypto.randomUUID().slice(-12)}`;
 }
 
@@ -12,7 +12,7 @@ export async function deleteTestShows() {
 }
 
 export async function seedShow(startDate: Date) {
-  const [showLogoFile, backgroundImageFile] = await Promise.all([
+  const [logoImageFile, backgroundImageFile] = await Promise.all([
     prisma.imageFile.create({
       data: {
         name: 'test-show-logo.png',
@@ -30,14 +30,14 @@ export async function seedShow(startDate: Date) {
   const show = await prisma.show.create({
     include: { sets: true },
     data: {
-      id: randomShowId(),
       name: 'Test Show',
+      slug: randomShowSlug(),
       description: 'The best radio show on GitHub Actions!',
       startDate,
       backgroundColor: '#000000',
       backgroundColorSecondary: '#000000',
 
-      showLogoFile: { connect: { id: showLogoFile.id } },
+      logoImageFile: { connect: { id: logoImageFile.id } },
       backgroundImageFile: { connect: { id: backgroundImageFile.id } },
 
       sets: {
@@ -69,7 +69,13 @@ export async function deleteShow(showId: string) {
 
   await prisma.show.delete({ where: { id: showId } });
   await prisma.imageFile.deleteMany({
-    where: { id: { in: [show.showLogoFileId, show.backgroundImageFileId] } },
+    where: {
+      id: {
+        in: [show.logoImageFileId, show.backgroundImageFileId].filter(
+          isDefined,
+        ),
+      },
+    },
   });
   await prisma.audioFile.deleteMany({
     where: {
