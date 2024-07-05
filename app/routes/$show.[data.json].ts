@@ -14,9 +14,7 @@ export const loader = (async ({ params }) => {
       showLogoFile: true,
       backgroundImageFile: true,
       sets: {
-        include: {
-          audioFileUpload: { select: { audioFile: true } },
-        },
+        include: { audioFile: true },
         orderBy: { offset: 'asc' },
       },
     },
@@ -31,10 +29,10 @@ export const loader = (async ({ params }) => {
     backgroundImageUrl: show.backgroundImageFile.url,
     sets: show.sets.map((set) => ({
       id: set.id,
-      audioUrl: set.audioFileUpload?.audioFile?.audioUrl ?? '',
+      audioUrl: set.audioFile?.url ?? '',
       artist: set.artist,
       start: addSeconds(show.startDate, set.offset).toISOString(),
-      duration: set.audioFileUpload?.audioFile?.duration ?? 0,
+      duration: set.audioFile?.duration ?? 0,
     })),
     serverDate: formatISO(new Date()),
   };

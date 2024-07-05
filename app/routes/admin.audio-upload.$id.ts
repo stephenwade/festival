@@ -11,11 +11,10 @@ export const loader = (async (args) => {
 
   const id = args.params.id!;
 
-  const audioFileUpload = await db.audioFileUpload.findUnique({
+  const audioFile = await db.audioFile.findUnique({
     where: { id },
-    include: { audioFile: true },
   });
-  if (!audioFileUpload) throw notFound();
+  if (!audioFile) throw notFound();
 
-  return json(audioFileUpload);
+  return json(audioFile);
 }) satisfies LoaderFunction;

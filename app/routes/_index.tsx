@@ -23,12 +23,11 @@ async function calculateIndexShowId(): Promise<string | null> {
         SELECT
           \`Set\`.offset,
           \`Set\`.showId,
-          \`Set\`.audioFileUploadId,
+          \`Set\`.audioFileId,
           ROW_NUMBER() OVER (PARTITION BY showId ORDER BY offset DESC) AS rowNumber
         FROM \`Set\`
       ) AS SetRows ON \`Show\`.id = SetRows.showId AND SetRows.rowNumber = 1
-      JOIN AudioFileUpload ON SetRows.audioFileUploadId = AudioFileUpload.id
-      JOIN AudioFile ON AudioFileUpload.id = AudioFile.audioFileUploadId
+      JOIN AudioFile ON SetRows.audioFileId = AudioFile.id
     )
     SELECT id
     FROM ShowsWithEndDate

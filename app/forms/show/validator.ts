@@ -6,7 +6,7 @@ export const setSchema = z.object({
   id: zfd.text(),
   artist: zfd.text(),
   offset: zfd.numeric(),
-  audioFileUploadId: zfd.text(z.string().optional()),
+  audioFileId: zfd.text(z.string().optional()),
 });
 
 const COLOR_REGEX = /^#[\da-f]{6}$/iu;

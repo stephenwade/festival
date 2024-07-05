@@ -53,7 +53,7 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
       <Input label="Artist" name={`${name}.artist`} />
       <Input label="Offset" name={`${name}.offset`} />
       <AudioFileUpload
-        name={`${name}.audioFileUploadId`}
+        name={`${name}.audioFileId`}
         isUploading={isUploading}
         setIsUploading={setIsUploading}
       />

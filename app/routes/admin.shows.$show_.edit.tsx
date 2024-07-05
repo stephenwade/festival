@@ -31,9 +31,7 @@ export const loader = (async (args) => {
     where: { id },
     include: {
       sets: {
-        include: {
-          audioFileUpload: { select: { audioFile: true } },
-        },
+        include: { audioFile: true },
         orderBy: { offset: 'asc' },
       },
     },

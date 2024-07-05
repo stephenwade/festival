@@ -34,31 +34,29 @@ model Set {
   show   Show   @relation(fields: [showId], references: [id], onDelete: Cascade)
   showId String
 
-  audioFileUpload   AudioFileUpload? @relation(fields: [audioFileUploadId], references: [id])
-  audioFileUploadId String?          @unique
+  audioFile   AudioFile? @relation(fields: [audioFileId], references: [id])
+  audioFileId String?    @unique
+}
+
+enum AudioFileConversionStatus {
+  CHECKING
+  CONVERTING
+  UPLOADING
+  DONE
+  ERROR
 }
 
 model AudioFile {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   name     String
-  audioUrl String
-  duration Float
+  url      String? // After conversion
+  duration Float?
 
-  audioFileUpload   AudioFileUpload @relation(fields: [audioFileUploadId], references: [id], onDelete: Cascade)
-  audioFileUploadId String          @unique
-}
+  conversionStatus   AudioFileConversionStatus
+  conversionProgress Float?
+  errorMessage       String?
 
-model AudioFileUpload {
-  id              String  @id @default(uuid())
-  status          String
-  name            String
-  audioUrl        String?
-  duration        Float?
-  convertProgress Float?
-  errorMessage    String?
-
-  set       Set?
-  audioFile AudioFile?
+  set Set?
 }
 
 model ImageFile {

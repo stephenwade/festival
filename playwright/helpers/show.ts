@@ -45,19 +45,12 @@ export async function seedShow(startDate: Date) {
           artist: 'Test Artist',
           offset: 0,
 
-          audioFileUpload: {
+          audioFile: {
             create: {
-              status: '',
               name: '5-min-silence.mp3',
-
-              audioFile: {
-                create: {
-                  name: '5-min-silence.mp3',
-                  audioUrl:
-                    'https://festivalci.z13.web.core.windows.net/5-min-silence.mp3',
-                  duration: 5 * 60,
-                },
-              },
+              url: 'https://festivalci.z13.web.core.windows.net/5-min-silence.mp3',
+              duration: 5 * 60,
+              conversionStatus: 'DONE',
             },
           },
         },
@@ -78,10 +71,10 @@ export async function deleteShow(showId: string) {
   await prisma.imageFile.deleteMany({
     where: { id: { in: [show.showLogoFileId, show.backgroundImageFileId] } },
   });
-  await prisma.audioFileUpload.deleteMany({
+  await prisma.audioFile.deleteMany({
     where: {
       id: {
-        in: show.sets.map((set) => set.audioFileUploadId).filter(isDefined),
+        in: show.sets.map((set) => set.audioFileId).filter(isDefined),
       },
     },
   });

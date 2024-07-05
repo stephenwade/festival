@@ -24,9 +24,7 @@ export const loader = (async (args) => {
       showLogoFile: true,
       backgroundImageFile: true,
       sets: {
-        include: {
-          audioFileUpload: { select: { audioFile: true } },
-        },
+        include: { audioFile: true },
         orderBy: { offset: 'asc' },
       },
     },
@@ -89,7 +87,7 @@ const ViewShow: FC = () => {
                 </li>
                 <li>
                   <strong>Duration:</strong>{' '}
-                  {set.audioFileUpload?.audioFile?.duration ?? <em>Unknown</em>}
+                  {set.audioFile?.duration ?? <em>Unknown</em>}
                 </li>
               </ul>
             </li>
