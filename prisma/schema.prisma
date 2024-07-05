@@ -27,9 +27,9 @@ model Show {
 }
 
 model Set {
-  id     String @id @default(uuid())
-  artist String
-  offset Float
+  id     String  @id @default(uuid())
+  artist String?
+  offset Float?
 
   show   Show   @relation(fields: [showId], references: [id], onDelete: Cascade)
   showId String

@@ -80,10 +80,11 @@ const ViewShow: FC = () => {
         <ul>
           {show.sets.map((set) => (
             <li key={set.id}>
-              {set.artist || <em>No artist yet</em>}
+              {set.artist ?? <em>No artist yet</em>}
               <ul>
                 <li>
-                  <strong>Offset:</strong> {set.offset}
+                  <strong>Offset:</strong>{' '}
+                  {set.offset ?? <em>No offset yet</em>}
                 </li>
                 <li>
                   <strong>Duration:</strong>{' '}

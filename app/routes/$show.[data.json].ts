@@ -30,8 +30,8 @@ export const loader = (async ({ params }) => {
     sets: show.sets.map((set) => ({
       id: set.id,
       audioUrl: set.audioFile?.url ?? '',
-      artist: set.artist,
-      start: addSeconds(show.startDate, set.offset).toISOString(),
+      artist: set.artist ?? '',
+      start: addSeconds(show.startDate, set.offset ?? 0).toISOString(),
       duration: set.audioFile?.duration ?? 0,
     })),
     serverDate: formatISO(new Date()),

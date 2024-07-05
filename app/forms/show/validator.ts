@@ -4,8 +4,8 @@ import { zfd } from 'zod-form-data';
 
 export const setSchema = z.object({
   id: zfd.text(),
-  artist: zfd.text(),
-  offset: zfd.numeric(),
+  artist: zfd.text(z.string().optional()),
+  offset: zfd.numeric(z.number().optional()),
   audioFileId: zfd.text(z.string().optional()),
 });
 
