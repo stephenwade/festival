@@ -5,10 +5,10 @@ import { db } from '~/db.server/db';
 const notFound = () => new Response('Not Found', { status: 404 });
 
 export const loader = (async ({ params }) => {
-  const id = params.show!;
+  const slug = params.show!;
 
   const show = await db.show.findUnique({
-    where: { id },
+    where: { slug },
     include: {
       logoImageFile: true,
       backgroundImageFile: true,

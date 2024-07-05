@@ -6,10 +6,10 @@ import { db } from '~/db.server/db';
 import type { ShowData } from '~/types/ShowData';
 
 export const loader = (async ({ params }) => {
-  const id = params.show!;
+  const slug = params.show!;
 
   const show = await db.show.findUnique({
-    where: { id },
+    where: { slug },
     include: {
       logoImageFile: true,
       backgroundImageFile: true,
@@ -23,8 +23,8 @@ export const loader = (async ({ params }) => {
 
   if (!show.startDate) throw redirect('/');
   const data: ShowData = {
-    id,
     name: show.name,
+    slug,
     description: show.description ?? '',
     showLogoUrl: show.logoImageFile?.url ?? '',
     backgroundImageUrl: show.backgroundImageFile?.url ?? '',

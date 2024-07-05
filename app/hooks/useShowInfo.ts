@@ -14,7 +14,7 @@ export type LoadedMetadataHandler = (args: {
 }) => void;
 
 export function useShowInfo(
-  loaderData: Pick<ShowData, 'id' | 'serverDate' | 'sets'>,
+  loaderData: Pick<ShowData, 'slug' | 'serverDate' | 'sets'>,
   { ci = false, enableClock = true } = {},
 ) {
   const [audioDurations, setAudioDurations] = useState<Record<string, number>>(
@@ -36,7 +36,7 @@ export function useShowInfo(
     const SECONDS = 1000;
     const refetchInterval = setInterval(
       () => {
-        fetcher.load(`/${loaderData.id}/data.json`);
+        fetcher.load(`/${loaderData.slug}/data.json`);
       },
       ci ? 3 * SECONDS : 60 * SECONDS,
     );
@@ -44,7 +44,7 @@ export function useShowInfo(
     return () => {
       clearTimeout(refetchInterval);
     };
-  }, [ci, fetcher, loaderData.id]);
+  }, [ci, fetcher, loaderData.slug]);
 
   const data = fetcher.data ?? loaderData;
 

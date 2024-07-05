@@ -8,7 +8,11 @@ export function randomShowSlug() {
 }
 
 export async function deleteTestShows() {
-  await prisma.show.deleteMany({ where: { id: { startsWith: 'test-show-' } } });
+  await prisma.show.deleteMany({
+    where: {
+      slug: { startsWith: 'test-show-' },
+    },
+  });
 }
 
 export async function seedShow(startDate: Date) {
@@ -34,6 +38,7 @@ export async function seedShow(startDate: Date) {
       slug: randomShowSlug(),
       description: 'The best radio show on GitHub Actions!',
       startDate,
+      timeZone: 'GMT',
       backgroundColor: '#000000',
       backgroundColorSecondary: '#000000',
 
@@ -61,13 +66,13 @@ export async function seedShow(startDate: Date) {
   return show;
 }
 
-export async function deleteShow(showId: string) {
+export async function deleteShow(slug: string) {
   const show = await prisma.show.findUniqueOrThrow({
-    where: { id: showId },
+    where: { slug },
     include: { sets: true },
   });
 
-  await prisma.show.delete({ where: { id: showId } });
+  await prisma.show.delete({ where: { id: show.id } });
   await prisma.imageFile.deleteMany({
     where: {
       id: {
@@ -86,9 +91,13 @@ export async function deleteShow(showId: string) {
   });
 }
 
-export async function delayShow(showId: string) {
+export async function delayShow(slug: string) {
+  const show = await prisma.show.findUniqueOrThrow({
+    where: { slug },
+  });
+
   await prisma.show.update({
-    where: { id: showId },
+    where: { id: show.id },
     data: { startDate: addSeconds(new Date(), 10) },
   });
 }

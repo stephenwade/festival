@@ -10,11 +10,11 @@ export interface TestProps {
 export function getMockData({
   offsetSec,
   serverDateOverride,
-}: TestProps): Pick<ShowData, 'id' | 'serverDate' | 'sets'> {
+}: TestProps): Pick<ShowData, 'slug' | 'serverDate' | 'sets'> {
   const now = new Date();
 
   return {
-    id: 'test',
+    slug: 'test',
     serverDate: (serverDateOverride ?? now).toISOString(),
     sets: [
       {

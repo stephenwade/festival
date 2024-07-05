@@ -7,8 +7,8 @@ export interface SetData {
 }
 
 export interface ShowData {
-  id: string;
   name: string;
+  slug: string;
   description: string;
   showLogoUrl: string;
   backgroundImageUrl: string;

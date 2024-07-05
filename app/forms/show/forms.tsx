@@ -65,7 +65,7 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
 };
 
 interface ShowFormProps {
-  defaultValues?: z.infer<typeof schema>;
+  defaultValues?: Partial<z.infer<typeof schema>>;
   cancelLinkTo: string;
   showDeleteButton?: boolean;
 }
@@ -118,6 +118,7 @@ const ShowForm: FC<ShowFormProps> = ({
         <Input label="URL" prefix={`${origin ?? ''}/`} name="slug" />
         <Input label="Description" name="description" />
         <InputDateTime label="Start date" name="startDate" step="1" />
+        <Input label="Time zone" name="timeZone" />
         Show logo:{' '}
         <FileUpload
           name="logoImageFileId"
@@ -177,7 +178,14 @@ const ShowForm: FC<ShowFormProps> = ({
   );
 };
 
-export const NewShowForm: FC = () => <ShowForm cancelLinkTo="/admin/shows" />;
+export const NewShowForm: FC = () => (
+  <ShowForm
+    defaultValues={{
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    }}
+    cancelLinkTo="/admin/shows"
+  />
+);
 
 type EditShowFormProps = {
   showId: Show['id'];

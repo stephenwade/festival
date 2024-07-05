@@ -28,7 +28,7 @@ const ShowsIndex: FC = () => {
           {shows.map((show) => (
             <li key={show.id}>
               <Link to={`/admin/shows/${show.id}`}>
-                {show.name} ({show.id})
+                {show.name} ({show.slug})
               </Link>
             </li>
           ))}
