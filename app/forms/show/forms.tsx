@@ -15,6 +15,7 @@ import type { z } from 'zod';
 import { AudioFileUpload } from '~/components/admin/AudioFileUpload';
 import { FileUpload } from '~/components/admin/FileUpload';
 import { Input } from '~/components/admin/Input';
+import { InputTimeZone } from '~/components/admin/InputTimeZone';
 import { SaveButton } from '~/components/admin/SaveButton';
 import { useOrigin } from '~/hooks/useOrigin';
 
@@ -123,7 +124,7 @@ const ShowForm: FC<ShowFormProps> = ({
           type="datetime-local"
           step="1"
         />
-        <Input label="Time zone" name="timeZone" />
+        <InputTimeZone label="Time zone" name="timeZone" />
         Show logo:{' '}
         <FileUpload
           name="logoImageFileId"
