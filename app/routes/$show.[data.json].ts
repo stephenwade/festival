@@ -6,35 +6,34 @@ import { db } from '~/db.server/db';
 import type { ShowData } from '~/types/ShowData';
 
 export const loader = (async ({ params }) => {
-  const id = params.show!;
+  const slug = params.show!;
 
   const show = await db.show.findUnique({
-    where: { id },
+    where: { slug },
     include: {
-      showLogoFile: true,
+      logoImageFile: true,
       backgroundImageFile: true,
       sets: {
-        include: {
-          audioFileUpload: { select: { audioFile: true } },
-        },
+        include: { audioFile: true },
         orderBy: { offset: 'asc' },
       },
     },
   });
   if (!show) throw redirect('/');
 
+  if (!show.startDate) throw redirect('/');
   const data: ShowData = {
-    id,
     name: show.name,
-    description: show.description,
-    showLogoUrl: show.showLogoFile.url,
-    backgroundImageUrl: show.backgroundImageFile.url,
+    slug,
+    description: show.description ?? '',
+    showLogoUrl: show.logoImageFile?.url ?? '',
+    backgroundImageUrl: show.backgroundImageFile?.url ?? '',
     sets: show.sets.map((set) => ({
       id: set.id,
-      audioUrl: set.audioFileUpload?.audioFile?.audioUrl ?? '',
-      artist: set.artist,
-      start: addSeconds(show.startDate, set.offset).toISOString(),
-      duration: set.audioFileUpload?.audioFile?.duration ?? 0,
+      audioUrl: set.audioFile?.url ?? '',
+      artist: set.artist ?? '',
+      start: addSeconds(show.startDate!, set.offset ?? 0).toISOString(),
+      duration: set.audioFile?.duration ?? 0,
     })),
     serverDate: formatISO(new Date()),
   };

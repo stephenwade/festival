@@ -7,9 +7,10 @@ import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
+import { Temporal, toTemporalInstant } from 'temporal-polyfill';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
-import { cache, INDEX_SHOW_ID_KEY } from '~/cache.server/cache';
+import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
 import { db } from '~/db.server/db';
 import { EditShowForm } from '~/forms/show/forms';
 import { makeServerValidator } from '~/forms/show/validator.server';
@@ -31,16 +32,22 @@ export const loader = (async (args) => {
     where: { id },
     include: {
       sets: {
-        include: {
-          audioFileUpload: { select: { audioFile: true } },
-        },
+        include: { audioFile: true },
         orderBy: { offset: 'asc' },
       },
     },
   });
   if (!show) throw notFound();
 
-  return json(replaceNullsWithUndefined(show));
+  const startDate = show.startDate
+    ? toTemporalInstant
+        .call(show.startDate)
+        .toZonedDateTimeISO(show.timeZone)
+        .toPlainDateTime()
+        .toString({ smallestUnit: 'second' })
+    : null;
+
+  return json(replaceNullsWithUndefined({ ...show, startDate }));
 }) satisfies LoaderFunction;
 
 export const action = (async (args) => {
@@ -48,15 +55,17 @@ export const action = (async (args) => {
 
   console.log('Editing show', { method: args.request.method });
 
-  const previousId = args.params.show!;
+  const id = args.params.show!;
 
   if (args.request.method === 'DELETE') {
-    await db.show.delete({ where: { id: previousId } });
+    await db.show.delete({ where: { id } });
 
     return redirect('/admin/shows');
   }
 
-  const validator = makeServerValidator({ previousId });
+  const show = await db.show.findUniqueOrThrow({ where: { id } });
+
+  const validator = makeServerValidator({ previousSlug: show.slug });
 
   const form = await args.request.formData();
   const { data, error } = await validator.validate(form);
@@ -64,13 +73,22 @@ export const action = (async (args) => {
 
   const { sets, ...rest } = replaceUndefinedsWithNull(data);
 
+  const startDate = rest.startDate
+    ? new Date(
+        Temporal.PlainDateTime.from(rest.startDate).toZonedDateTime(
+          rest.timeZone,
+        ).epochMilliseconds,
+      )
+    : null;
+
   await db.show.update({
-    where: { id: previousId },
+    where: { id },
     data: {
       ...rest,
+      startDate,
       sets: {
         deleteMany: {
-          showId: previousId,
+          showId: id,
           id: { notIn: sets.map((set) => set.id) },
         },
         upsert: sets.map((set) => ({
@@ -84,22 +102,22 @@ export const action = (async (args) => {
   await Promise.all([
     db.set.deleteMany({
       where: {
-        showId: rest.id,
+        showId: id,
         id: { notIn: sets.map((set) => set.id) },
       },
     }),
     sets.map((set) =>
       db.set.upsert({
-        create: { ...set, showId: rest.id },
+        create: { ...set, showId: id },
         update: set,
         where: { id: set.id },
       }),
     ),
   ]);
 
-  cache.del(INDEX_SHOW_ID_KEY);
+  cache.del(INDEX_SHOW_SLUG_KEY);
 
-  return redirect(`/admin/shows/${data.id}`);
+  return redirect(`/admin/shows/${id}`);
 }) satisfies ActionFunction;
 
 const EditShow: FC = () => {

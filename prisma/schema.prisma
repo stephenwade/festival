@@ -8,66 +8,66 @@ datasource db {
 }
 
 model Show {
-  id          String   @id
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          String    @id @default(uuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   name        String
-  description String
-  startDate   DateTime
+  slug        String    @unique
+  description String?
+  startDate   DateTime? // UTC
+  timeZone    String
 
-  backgroundColor          String
-  backgroundColorSecondary String
+  backgroundColor          String?
+  backgroundColorSecondary String?
 
-  showLogoFile          File   @relation(name: "ShowLogoFile", fields: [showLogoFileId], references: [id])
-  showLogoFileId        String @unique
-  backgroundImageFile   File   @relation(name: "BackgroundImageFile", fields: [backgroundImageFileId], references: [id])
-  backgroundImageFileId String @unique
+  logoImageFile         ImageFile? @relation(name: "ShowLogoImageFile", fields: [logoImageFileId], references: [id])
+  logoImageFileId       String?    @unique
+  backgroundImageFile   ImageFile? @relation(name: "ShowBackgroundImageFile", fields: [backgroundImageFileId], references: [id])
+  backgroundImageFileId String?    @unique
 
   sets Set[]
 }
 
 model Set {
-  id     String @id @default(uuid())
-  artist String
-  offset Float
+  id     String  @id @default(uuid())
+  artist String?
+  offset Float?
 
   show   Show   @relation(fields: [showId], references: [id], onDelete: Cascade)
   showId String
 
-  audioFileUpload   AudioFileUpload? @relation(fields: [audioFileUploadId], references: [id])
-  audioFileUploadId String?          @unique
+  audioFile   AudioFile? @relation(fields: [audioFileId], references: [id])
+  audioFileId String?    @unique
+}
+
+enum AudioFileConversionStatus {
+  CHECKING
+  CONVERTING
+  UPLOADING
+  DONE
+  ERROR
 }
 
 model AudioFile {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   name     String
-  audioUrl String
-  duration Float
+  url      String? // After conversion
+  duration Float?
 
-  audioFileUpload   AudioFileUpload @relation(fields: [audioFileUploadId], references: [id], onDelete: Cascade)
-  audioFileUploadId String          @unique
+  conversionStatus   AudioFileConversionStatus
+  conversionProgress Float?
+  errorMessage       String?
+
+  set Set?
 }
 
-model AudioFileUpload {
-  id              String  @id @default(uuid())
-  status          String
-  name            String
-  audioUrl        String?
-  duration        Float?
-  convertProgress Float?
-  errorMessage    String?
-
-  set       Set?
-  audioFile AudioFile?
-}
-
-model File {
+model ImageFile {
   id   String @id @default(uuid())
   name String
   url  String
 
-  showLogo            Show? @relation(name: "ShowLogoFile")
-  showBackgroundImage Show? @relation(name: "BackgroundImageFile")
+  showLogo       Show? @relation(name: "ShowLogoImageFile")
+  showBackground Show? @relation(name: "ShowBackgroundImageFile")
 }
 
 model AdminUserAllowlist {

@@ -14,12 +14,12 @@ import { useShowInfo } from '~/hooks/useShowInfo';
 import { loader as showDataLoader } from './$show.[data.json]';
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
-  const id = params.show!;
+  const slug = params.show!;
 
   return [
     { title: data ? `${data.name} | Festival` : 'Festival' },
     { name: 'description', content: data?.description },
-    { tagName: 'link', rel: 'stylesheet', href: `/${id}/styles.css` },
+    { tagName: 'link', rel: 'stylesheet', href: `/${slug}/styles.css` },
   ];
 };
 

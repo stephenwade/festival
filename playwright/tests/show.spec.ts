@@ -10,7 +10,7 @@ test('root URL redirects to earliest upcoming show', async ({
 }) => {
   await page.goto('/');
 
-  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
+  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_SLUG!}`);
 });
 
 test('not found show redirects to earliest upcoming show', async ({
@@ -19,22 +19,22 @@ test('not found show redirects to earliest upcoming show', async ({
 }) => {
   await page.goto('/not-found');
 
-  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
+  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_SLUG!}`);
 });
 
 test('show URL redirects to path without trailing slash', async ({
   page,
   baseURL,
 }) => {
-  await page.goto(`/${process.env.SHOW_ID!}/`);
+  await page.goto(`/${process.env.SHOW_SLUG!}/`);
 
-  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_ID!}`);
+  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_SLUG!}`);
 });
 
 test('plays the default show', async ({ page, browserName }) => {
-  await delayShow(process.env.SHOW_ID!);
+  await delayShow(process.env.SHOW_SLUG!);
 
-  await page.goto(`/${process.env.SHOW_ID!}`);
+  await page.goto(`/${process.env.SHOW_SLUG!}`);
 
   await page.getByRole('button', { name: 'LISTEN LIVE' }).click();
 

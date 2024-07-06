@@ -5,18 +5,18 @@ import { db } from '~/db.server/db';
 const notFound = () => new Response('Not Found', { status: 404 });
 
 export const loader = (async ({ params }) => {
-  const id = params.show!;
+  const slug = params.show!;
 
   const show = await db.show.findUnique({
-    where: { id },
+    where: { slug },
     include: {
-      showLogoFile: true,
+      logoImageFile: true,
       backgroundImageFile: true,
     },
   });
   if (!show) throw notFound();
 
-  const backgroundImage = `url(${show.backgroundImageFile.url})`;
+  const backgroundImage = `url(${show.backgroundImageFile?.url})`;
   const backgroundColor = show.backgroundColor;
   const backgroundColorLighter = show.backgroundColorSecondary;
 

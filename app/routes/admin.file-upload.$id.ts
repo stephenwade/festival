@@ -11,10 +11,10 @@ export const loader = (async (args) => {
 
   const id = args.params.id!;
 
-  const file = await db.file.findUnique({
+  const imageFile = await db.imageFile.findUnique({
     where: { id },
   });
-  if (!file) throw notFound();
+  if (!imageFile) throw notFound();
 
-  return json(file);
+  return json(imageFile);
 }) satisfies LoaderFunction;

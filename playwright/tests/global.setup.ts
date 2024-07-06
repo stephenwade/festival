@@ -16,15 +16,15 @@ setup('seed show', async () => {
   await deleteTestShows();
 
   const show = await seedShow(addMinutes(new Date(), 1));
-  process.env.SHOW_ID = show.id;
-  process.env.FIRST_ARTIST_NAME = show.sets[0].artist;
+  process.env.SHOW_SLUG = show.slug;
+  process.env.FIRST_ARTIST_NAME = show.sets[0].artist ?? '';
 
   // Add other shows to ensure that the root URL redirects to the earliest
   // upcoming show
   const showLater = await seedShow(addMinutes(new Date(), 10));
-  process.env.SHOW_LATER_ID = showLater.id;
+  process.env.SHOW_LATER_SLUG = showLater.slug;
   const showEarlier = await seedShow(addMinutes(new Date(), -10));
-  process.env.SHOW_EARLIER_ID = showEarlier.id;
+  process.env.SHOW_EARLIER_SLUG = showEarlier.slug;
 });
 
 setup('authenticate', async ({ page, baseURL }) => {

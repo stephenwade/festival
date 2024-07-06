@@ -5,17 +5,17 @@ import type { LoaderFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import type { FC } from 'react';
 
-import { cache, INDEX_SHOW_ID_KEY } from '~/cache.server/cache';
+import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
 import { db } from '~/db.server/db';
 
 /**
- * Returns the ID of the earliest show that hasn't ended yet.
+ * Returns the slug of the earliest show that hasn't ended yet.
  */
-async function calculateIndexShowId(): Promise<string | null> {
-  const result = await db.$queryRaw<{ id: string }[]>`
+async function calculateIndexShowSlug(): Promise<string | null> {
+  const result = await db.$queryRaw<{ slug: string }[]>`
     WITH ShowsWithEndDate AS (
       SELECT
-        \`Show\`.id,
+        \`Show\`.slug,
         \`Show\`.startDate,
         TIMESTAMPADD(SECOND, SetRows.offset + AudioFile.duration, \`Show\`.startDate) as endDate
       FROM \`Show\`
@@ -23,14 +23,13 @@ async function calculateIndexShowId(): Promise<string | null> {
         SELECT
           \`Set\`.offset,
           \`Set\`.showId,
-          \`Set\`.audioFileUploadId,
+          \`Set\`.audioFileId,
           ROW_NUMBER() OVER (PARTITION BY showId ORDER BY offset DESC) AS rowNumber
         FROM \`Set\`
       ) AS SetRows ON \`Show\`.id = SetRows.showId AND SetRows.rowNumber = 1
-      JOIN AudioFileUpload ON SetRows.audioFileUploadId = AudioFileUpload.id
-      JOIN AudioFile ON AudioFileUpload.id = AudioFile.audioFileUploadId
+      JOIN AudioFile ON SetRows.audioFileId = AudioFile.id
     )
-    SELECT id
+    SELECT slug
     FROM ShowsWithEndDate
     WHERE endDate >= NOW()
     ORDER BY startDate ASC
@@ -39,27 +38,27 @@ async function calculateIndexShowId(): Promise<string | null> {
 
   if (result.length === 0) return null;
 
-  return result[0].id;
+  return result[0].slug;
 }
 
-async function getIndexShowId(): ReturnType<typeof calculateIndexShowId> {
+async function getIndexShowSlug(): ReturnType<typeof calculateIndexShowSlug> {
   const cachedValue =
-    cache.get<Awaited<ReturnType<typeof calculateIndexShowId>>>(
-      INDEX_SHOW_ID_KEY,
+    cache.get<Awaited<ReturnType<typeof calculateIndexShowSlug>>>(
+      INDEX_SHOW_SLUG_KEY,
     );
   if (cachedValue !== undefined) {
     return cachedValue;
   }
 
-  const showId = await calculateIndexShowId();
-  cache.set(INDEX_SHOW_ID_KEY, showId);
+  const slug = await calculateIndexShowSlug();
+  cache.set(INDEX_SHOW_SLUG_KEY, slug);
 
-  return showId;
+  return slug;
 }
 
 export const loader = (async () => {
-  const indexShowId = await getIndexShowId();
-  if (indexShowId) return redirect(`/${indexShowId}`);
+  const indexShowSlug = await getIndexShowSlug();
+  if (indexShowSlug) return redirect(`/${indexShowSlug}`);
 
   return null;
 }) satisfies LoaderFunction;

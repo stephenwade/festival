@@ -59,6 +59,9 @@ export const VolumeFab: FC = memo(function VolumeFab() {
         case 'm':
           toggleMute();
           break;
+
+        default:
+        // Ignore other keys
       }
     },
     [setVolume, toggleMute],

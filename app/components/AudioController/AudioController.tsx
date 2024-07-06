@@ -105,9 +105,6 @@ export const AudioController: FC<AudioControllerProps> = ({
 
         case 'AUDIO_WAITING':
           return { ...state, waiting: true };
-
-        default:
-          return state;
       }
     },
     initialAudioStatus,

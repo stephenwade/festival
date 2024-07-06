@@ -3,23 +3,27 @@ import { addSeconds } from 'date-fns';
 
 const prisma = new PrismaClient();
 
-export function randomShowId() {
+export function randomShowSlug() {
   return `test-show-${crypto.randomUUID().slice(-12)}`;
 }
 
 export async function deleteTestShows() {
-  await prisma.show.deleteMany({ where: { id: { startsWith: 'test-show-' } } });
+  await prisma.show.deleteMany({
+    where: {
+      slug: { startsWith: 'test-show-' },
+    },
+  });
 }
 
 export async function seedShow(startDate: Date) {
-  const [showLogoFile, backgroundImageFile] = await Promise.all([
-    prisma.file.create({
+  const [logoImageFile, backgroundImageFile] = await Promise.all([
+    prisma.imageFile.create({
       data: {
         name: 'test-show-logo.png',
         url: 'https://placehold.co/700x200@2x.png?text=Test+Show',
       },
     }),
-    prisma.file.create({
+    prisma.imageFile.create({
       data: {
         name: 'test-show-background.jpg',
         url: 'https://placehold.co/2400.jpg',
@@ -30,14 +34,15 @@ export async function seedShow(startDate: Date) {
   const show = await prisma.show.create({
     include: { sets: true },
     data: {
-      id: randomShowId(),
       name: 'Test Show',
+      slug: randomShowSlug(),
       description: 'The best radio show on GitHub Actions!',
       startDate,
+      timeZone: 'GMT',
       backgroundColor: '#000000',
       backgroundColorSecondary: '#000000',
 
-      showLogoFile: { connect: { id: showLogoFile.id } },
+      logoImageFile: { connect: { id: logoImageFile.id } },
       backgroundImageFile: { connect: { id: backgroundImageFile.id } },
 
       sets: {
@@ -45,19 +50,12 @@ export async function seedShow(startDate: Date) {
           artist: 'Test Artist',
           offset: 0,
 
-          audioFileUpload: {
+          audioFile: {
             create: {
-              status: '',
               name: '5-min-silence.mp3',
-
-              audioFile: {
-                create: {
-                  name: '5-min-silence.mp3',
-                  audioUrl:
-                    'https://festivalci.z13.web.core.windows.net/5-min-silence.mp3',
-                  duration: 5 * 60,
-                },
-              },
+              url: 'https://festivalci.z13.web.core.windows.net/5-min-silence.mp3',
+              duration: 5 * 60,
+              conversionStatus: 'DONE',
             },
           },
         },
@@ -68,28 +66,38 @@ export async function seedShow(startDate: Date) {
   return show;
 }
 
-export async function deleteShow(showId: string) {
+export async function deleteShow(slug: string) {
   const show = await prisma.show.findUniqueOrThrow({
-    where: { id: showId },
+    where: { slug },
     include: { sets: true },
   });
 
-  await prisma.show.delete({ where: { id: showId } });
-  await prisma.file.deleteMany({
-    where: { id: { in: [show.showLogoFileId, show.backgroundImageFileId] } },
-  });
-  await prisma.audioFileUpload.deleteMany({
+  await prisma.show.delete({ where: { id: show.id } });
+  await prisma.imageFile.deleteMany({
     where: {
       id: {
-        in: show.sets.map((set) => set.audioFileUploadId).filter(isDefined),
+        in: [show.logoImageFileId, show.backgroundImageFileId].filter(
+          isDefined,
+        ),
+      },
+    },
+  });
+  await prisma.audioFile.deleteMany({
+    where: {
+      id: {
+        in: show.sets.map((set) => set.audioFileId).filter(isDefined),
       },
     },
   });
 }
 
-export async function delayShow(showId: string) {
+export async function delayShow(slug: string) {
+  const show = await prisma.show.findUniqueOrThrow({
+    where: { slug },
+  });
+
   await prisma.show.update({
-    where: { id: showId },
+    where: { id: show.id },
     data: { startDate: addSeconds(new Date(), 10) },
   });
 }

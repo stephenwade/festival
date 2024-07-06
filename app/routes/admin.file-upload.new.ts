@@ -51,7 +51,7 @@ async function saveFileAndUploadToAzure(fileInfo: File) {
     contentType: fileInfo.type,
   });
 
-  const file = await db.file.create({
+  const imageFile = await db.imageFile.create({
     data: {
       name: fileInfo.name,
       url: getBlobUrl(blobName),
@@ -60,5 +60,5 @@ async function saveFileAndUploadToAzure(fileInfo: File) {
 
   await unlink(fileName);
 
-  return file;
+  return imageFile;
 }

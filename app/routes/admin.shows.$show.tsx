@@ -2,6 +2,7 @@ import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
+import { Temporal } from 'temporal-polyfill';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db.server/db';
@@ -21,12 +22,10 @@ export const loader = (async (args) => {
   const show = await db.show.findUnique({
     where: { id },
     include: {
-      showLogoFile: true,
+      logoImageFile: true,
       backgroundImageFile: true,
       sets: {
-        include: {
-          audioFileUpload: { select: { audioFile: true } },
-        },
+        include: { audioFile: true },
         orderBy: { offset: 'asc' },
       },
     },
@@ -51,23 +50,39 @@ const ViewShow: FC = () => {
         <strong>Name:</strong> {show.name}
       </p>
       <p>
-        <strong>URL:</strong> {origin}/{show.id}
+        <strong>URL:</strong> {origin}/{show.slug}
       </p>
       <p>
-        <strong>Description:</strong> {show.description}
+        <strong>Description:</strong>{' '}
+        {show.description ?? <em>No description yet</em>}
       </p>
       <p>
-        <strong>Start date:</strong> {show.startDate}
+        <strong>Start date:</strong>{' '}
+        {show.startDate ? (
+          Temporal.Instant.from(show.startDate)
+            .toZonedDateTimeISO(show.timeZone)
+            .toLocaleString()
+        ) : (
+          <em>No start date yet</em>
+        )}
       </p>
       <p>
-        <strong>Show logo:</strong>{' '}
-        <a href={show.showLogoFile.url}>{show.showLogoFile.name}</a>
+        <strong>Logo image:</strong>{' '}
+        {show.logoImageFile ? (
+          <a href={show.logoImageFile.url}>{show.logoImageFile.name}</a>
+        ) : (
+          <em>No logo image yet</em>
+        )}
       </p>
       <p>
         <strong>Background image:</strong>{' '}
-        <a href={show.backgroundImageFile.url}>
-          {show.backgroundImageFile.name}
-        </a>
+        {show.backgroundImageFile ? (
+          <a href={show.backgroundImageFile.url}>
+            {show.backgroundImageFile.name}
+          </a>
+        ) : (
+          <em>No background image yet</em>
+        )}
       </p>
       <p>
         <strong>Background colors:</strong> {show.backgroundColor},{' '}
@@ -82,14 +97,15 @@ const ViewShow: FC = () => {
         <ul>
           {show.sets.map((set) => (
             <li key={set.id}>
-              {set.artist || <em>No artist yet</em>}
+              {set.artist ?? <em>No artist yet</em>}
               <ul>
                 <li>
-                  <strong>Offset:</strong> {set.offset}
+                  <strong>Offset:</strong>{' '}
+                  {set.offset ?? <em>No offset yet</em>}
                 </li>
                 <li>
                   <strong>Duration:</strong>{' '}
-                  {set.audioFileUpload?.audioFile?.duration ?? <em>Unknown</em>}
+                  {set.audioFile?.duration ?? <em>Unknown</em>}
                 </li>
               </ul>
             </li>
