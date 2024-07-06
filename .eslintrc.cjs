@@ -67,8 +67,8 @@ module.exports = {
 
     '@typescript-eslint/consistent-type-exports': 'warn',
     '@typescript-eslint/consistent-type-imports': 'warn',
-    '@typescript-eslint/no-non-null-assertion': 'off', // Used for params and in tests
-    '@typescript-eslint/only-throw-error': 'off', // Remix allows throwing responses
+    '@typescript-eslint/no-non-null-assertion': 'off', // Used for route params and in tests
+    '@typescript-eslint/only-throw-error': 'off', // Remix allows throwing `Response`s
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/prefer-promise-reject-errors': 'off',
     '@typescript-eslint/restrict-template-expressions': [
