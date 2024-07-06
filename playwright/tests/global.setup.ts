@@ -34,7 +34,7 @@ setup('authenticate', async ({ page, baseURL }) => {
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await page.getByLabel('Password', { exact: true }).fill('cipassword');
   await page.getByRole('button', { name: 'Continue' }).click();
-  await page.waitForURL(`${baseURL}/admin/shows`);
+  await page.waitForURL(`${baseURL!}/admin/shows`);
 
   await page.context().storageState({ path: authFile });
 });

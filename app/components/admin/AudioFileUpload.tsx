@@ -138,7 +138,7 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
           setIsUploading(false);
         }, 100);
       })
-      .catch((error: { reason: string; status?: number }) => {
+      .catch((error: unknown) => {
         console.error(`Audio file upload ${name} failed.`, error);
       });
 

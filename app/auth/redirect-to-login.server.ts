@@ -14,11 +14,13 @@ export async function redirectToLogin(
   { onHoldPage }: RedirectToLoginArgs = {},
 ) {
   const { userId } = await getAuth(args);
-  console.log(`Checking if user is logged in: ${userId}`);
 
   if (!userId) {
+    console.log('User is not logged in');
     throw redirect(`/admin/sign-in?redirect_url=${args.request.url}`);
   }
+
+  console.log(`User is logged in: ${userId}`);
 
   const user = await createClerkClient({
     secretKey: process.env.CLERK_SECRET_KEY,

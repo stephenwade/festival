@@ -161,7 +161,6 @@ export const AudioCanvas: FC<AudioCanvasProps> = ({
       if (!ctx) return;
 
       const progress = calculateProgress();
-      if (progress === undefined) return;
 
       const midX = canvas.width / 2;
       const midY = canvas.height / 2;
