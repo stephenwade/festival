@@ -8,13 +8,13 @@ import {
   useFieldArray,
   ValidatedForm,
 } from 'remix-validated-form';
+import { Temporal } from 'temporal-polyfill';
 import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
 
 import { AudioFileUpload } from '~/components/admin/AudioFileUpload';
 import { FileUpload } from '~/components/admin/FileUpload';
 import { Input } from '~/components/admin/Input';
-import { InputDateTime } from '~/components/admin/InputDateTime';
 import { SaveButton } from '~/components/admin/SaveButton';
 import { useOrigin } from '~/hooks/useOrigin';
 
@@ -117,7 +117,12 @@ const ShowForm: FC<ShowFormProps> = ({
         <Input label="Name" name="name" />
         <Input label="URL" prefix={`${origin ?? ''}/`} name="slug" />
         <Input label="Description" name="description" />
-        <InputDateTime label="Start date" name="startDate" step="1" />
+        <Input
+          label="Start date"
+          name="startDate"
+          type="datetime-local"
+          step="1"
+        />
         <Input label="Time zone" name="timeZone" />
         Show logo:{' '}
         <FileUpload
@@ -181,7 +186,7 @@ const ShowForm: FC<ShowFormProps> = ({
 export const NewShowForm: FC = () => (
   <ShowForm
     defaultValues={{
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timeZone: Temporal.Now.timeZoneId(),
     }}
     cancelLinkTo="/admin/shows"
   />

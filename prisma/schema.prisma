@@ -15,7 +15,7 @@ model Show {
   slug        String    @unique
   description String?
   startDate   DateTime? // UTC
-  timeZone    String?
+  timeZone    String
 
   backgroundColor          String?
   backgroundColorSecondary String?

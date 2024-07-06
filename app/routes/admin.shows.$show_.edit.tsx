@@ -7,6 +7,7 @@ import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
+import { Temporal, toTemporalInstant } from 'temporal-polyfill';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
@@ -38,7 +39,15 @@ export const loader = (async (args) => {
   });
   if (!show) throw notFound();
 
-  return json(replaceNullsWithUndefined(show));
+  const startDate = show.startDate
+    ? toTemporalInstant
+        .call(show.startDate)
+        .toZonedDateTimeISO(show.timeZone)
+        .toPlainDateTime()
+        .toString({ smallestUnit: 'second' })
+    : null;
+
+  return json(replaceNullsWithUndefined({ ...show, startDate }));
 }) satisfies LoaderFunction;
 
 export const action = (async (args) => {
@@ -64,10 +73,19 @@ export const action = (async (args) => {
 
   const { sets, ...rest } = replaceUndefinedsWithNull(data);
 
+  const startDate = rest.startDate
+    ? new Date(
+        Temporal.PlainDateTime.from(rest.startDate).toZonedDateTime(
+          rest.timeZone,
+        ).epochMilliseconds,
+      )
+    : null;
+
   await db.show.update({
     where: { id },
     data: {
       ...rest,
+      startDate,
       sets: {
         deleteMany: {
           showId: id,

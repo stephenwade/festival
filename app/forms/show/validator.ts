@@ -1,4 +1,5 @@
 import { withZod } from '@remix-validated-form/with-zod';
+import { Temporal } from 'temporal-polyfill';
 import { z } from 'zod';
 import { zfd } from 'zod-form-data';
 
@@ -13,7 +14,7 @@ const COLOR_REGEX = /^#[\da-f]{6}$/iu;
 
 function isValidTimeZone(timeZone: string): boolean {
   try {
-    Intl.DateTimeFormat(undefined, { timeZone });
+    Temporal.TimeZone.from(timeZone);
     return true;
   } catch {
     return false;
@@ -27,12 +28,9 @@ export const schema = zfd.formData({
       message: 'Invalid show URL',
     }),
   ),
-  startDate: zfd.text(z.string().datetime().optional()),
+  startDate: zfd.text(z.string().datetime({ local: true }).optional()),
   timeZone: zfd.text(
-    z
-      .string()
-      .refine(isValidTimeZone, { message: 'Invalid time zone' })
-      .optional(),
+    z.string().refine(isValidTimeZone, { message: 'Invalid time zone' }),
   ),
   backgroundColor: zfd.text(z.string().regex(COLOR_REGEX).optional()),
   backgroundColorSecondary: zfd.text(z.string().regex(COLOR_REGEX).optional()),

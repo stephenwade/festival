@@ -3,14 +3,15 @@ import { useField } from 'remix-validated-form';
 
 export interface InputProps {
   name: string;
-  type?: 'color';
+  type?: 'color' | 'datetime-local';
+  step?: string;
   label: string;
   prefix?: string;
 }
 
 type Props = InputProps;
 
-export const Input: FC<Props> = ({ name, type, label, prefix }) => {
+export const Input: FC<Props> = ({ name, type, step, label, prefix }) => {
   const { error, getInputProps } = useField(name);
 
   return (
@@ -20,6 +21,7 @@ export const Input: FC<Props> = ({ name, type, label, prefix }) => {
         <input
           {...getInputProps({
             type,
+            step,
             'aria-invalid': Boolean(error) || undefined,
             'aria-errormessage': error ? `${name}-error` : undefined,
           })}

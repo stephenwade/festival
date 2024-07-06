@@ -2,6 +2,7 @@ import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
+import { Temporal } from 'temporal-polyfill';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db.server/db';
@@ -52,10 +53,18 @@ const ViewShow: FC = () => {
         <strong>URL:</strong> {origin}/{show.slug}
       </p>
       <p>
-        <strong>Description:</strong> {show.description}
+        <strong>Description:</strong>{' '}
+        {show.description ?? <em>No description yet</em>}
       </p>
       <p>
-        <strong>Start date:</strong> {show.startDate}
+        <strong>Start date:</strong>{' '}
+        {show.startDate ? (
+          Temporal.Instant.from(show.startDate)
+            .toZonedDateTimeISO(show.timeZone)
+            .toLocaleString()
+        ) : (
+          <em>No start date yet</em>
+        )}
       </p>
       <p>
         <strong>Logo image:</strong>{' '}
