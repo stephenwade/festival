@@ -10,7 +10,7 @@ test('root URL redirects to earliest upcoming show', async ({
 }) => {
   await page.goto('/');
 
-  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_SLUG!}`);
+  await expect(page).toHaveURL(`${baseURL!}/${process.env.SHOW_SLUG!}`);
 });
 
 test('not found show redirects to earliest upcoming show', async ({
@@ -19,7 +19,7 @@ test('not found show redirects to earliest upcoming show', async ({
 }) => {
   await page.goto('/not-found');
 
-  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_SLUG!}`);
+  await expect(page).toHaveURL(`${baseURL!}/${process.env.SHOW_SLUG!}`);
 });
 
 test('show URL redirects to path without trailing slash', async ({
@@ -28,7 +28,7 @@ test('show URL redirects to path without trailing slash', async ({
 }) => {
   await page.goto(`/${process.env.SHOW_SLUG!}/`);
 
-  await expect(page).toHaveURL(`${baseURL}/${process.env.SHOW_SLUG!}`);
+  await expect(page).toHaveURL(`${baseURL!}/${process.env.SHOW_SLUG!}`);
 });
 
 test('plays the default show', async ({ page, browserName }) => {

@@ -110,7 +110,7 @@ export const FileUpload: FC<FileUploadProps> = ({
           setIsUploading(false);
         }, 100);
       })
-      .catch((error: { reason: string; status?: number }) => {
+      .catch((error: unknown) => {
         console.error(`File upload ${name} failed.`, error);
       });
 

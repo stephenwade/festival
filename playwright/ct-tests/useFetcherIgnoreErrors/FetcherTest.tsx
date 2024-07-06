@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
+
 import { useCallback, useState } from 'react';
 
 import { useFetcherIgnoreErrors } from '~/hooks/useFetcherIgnoreErrors';

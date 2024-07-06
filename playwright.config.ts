@@ -5,7 +5,7 @@ import { authFile } from './playwright/tests/shared-data';
 
 dotenv.config();
 
-const baseURL = `http://127.0.0.1:${process.env.PORT}`;
+const baseURL = `http://127.0.0.1:${process.env.PORT!}`;
 
 /**
  * See https://playwright.dev/docs/test-configuration.

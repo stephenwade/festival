@@ -30,7 +30,7 @@ module.exports = {
     'plugin:playwright/recommended',
 
     // https://github.com/typescript-eslint/typescript-eslint/milestone/9
-    'plugin:@typescript-eslint/recommended-type-checked',
+    'plugin:@typescript-eslint/strict-type-checked',
     'plugin:@typescript-eslint/stylistic-type-checked',
 
     'plugin:unicorn/recommended',
@@ -67,7 +67,21 @@ module.exports = {
 
     '@typescript-eslint/consistent-type-exports': 'warn',
     '@typescript-eslint/consistent-type-imports': 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'off', // Used for params and in tests
+    '@typescript-eslint/only-throw-error': 'off', // Remix allows throwing responses
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
+    '@typescript-eslint/prefer-promise-reject-errors': 'off',
+    '@typescript-eslint/restrict-template-expressions': [
+      'error',
+      {
+        allowAny: false,
+        allowBoolean: false,
+        allowNullish: false,
+        allowNumber: true,
+        allowRegExp: false,
+        allowNever: false,
+      },
+    ],
     '@typescript-eslint/switch-exhaustiveness-check': [
       'error',
       {

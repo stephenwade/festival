@@ -39,7 +39,7 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
     if (isUploading) {
       onIsUploadingChanged(isUploading);
       return () => {
-        if (isUploading) onIsUploadingChanged(false);
+        onIsUploadingChanged(false);
       };
     }
   }, [isUploading, onIsUploadingChanged]);
@@ -58,7 +58,13 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
         isUploading={isUploading}
         setIsUploading={setIsUploading}
       />
-      <button type="button" onClick={() => remove()} disabled={isUploading}>
+      <button
+        type="button"
+        onClick={() => {
+          remove();
+        }}
+        disabled={isUploading}
+      >
         Remove set
       </button>
     </fieldset>
@@ -148,14 +154,18 @@ const ShowForm: FC<ShowFormProps> = ({
           <SetForm
             key={set.key}
             name={`sets[${index}]`}
-            remove={() => remove(index)}
+            remove={() => {
+              remove(index);
+            }}
             onIsUploadingChanged={onIsUploadingChanged}
           />
         ))}
         <p>
           <button
             type="button"
-            onClick={() => push({ id: crypto.randomUUID() })}
+            onClick={() => {
+              push({ id: crypto.randomUUID() });
+            }}
           >
             Add set
           </button>
@@ -163,7 +173,9 @@ const ShowForm: FC<ShowFormProps> = ({
         <p>
           <button
             type="button"
-            onClick={() => navigate(cancelLinkTo)}
+            onClick={() => {
+              navigate(cancelLinkTo);
+            }}
             disabled={saveDisabled}
           >
             Cancel

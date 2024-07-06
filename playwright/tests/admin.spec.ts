@@ -28,10 +28,10 @@ test('can change show name and URL', async ({ page, baseURL }) => {
   await page.getByLabel('URL:').fill(newShowSlug);
   await page.getByLabel('Name:').fill('Edited Show');
   await page.getByRole('button', { name: 'Save' }).click();
-  await expect(page).toHaveURL(`${baseURL}/admin/shows/${adminShowId}`);
+  await expect(page).toHaveURL(`${baseURL!}/admin/shows/${adminShowId}`);
 
   await page.goto(`/${newShowSlug}`);
-  await expect(page).toHaveURL(`${baseURL}/${newShowSlug}`);
+  await expect(page).toHaveURL(`${baseURL!}/${newShowSlug}`);
 
   await page.goto('/admin/shows');
   await page
@@ -40,5 +40,5 @@ test('can change show name and URL', async ({ page, baseURL }) => {
   await page.getByRole('link', { name: 'Edit', exact: true }).click();
   await page.getByLabel('URL:').fill(adminShowSlug);
   await page.getByRole('button', { name: 'Save' }).click();
-  await expect(page).toHaveURL(`${baseURL}/admin/shows/${adminShowId}`);
+  await expect(page).toHaveURL(`${baseURL!}/admin/shows/${adminShowId}`);
 });
