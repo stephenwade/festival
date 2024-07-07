@@ -1,9 +1,13 @@
 import type { LoaderFunction } from '@remix-run/node';
-import { json, redirect } from '@remix-run/node';
+import { json } from '@remix-run/node';
 import { addSeconds, formatISO } from 'date-fns';
 
 import { db } from '~/db.server/db';
 import type { ShowData } from '~/types/ShowData';
+import { validate } from '~/types/validate';
+
+const forbidden = () => new Response('Forbidden', { status: 403 });
+const notFound = () => new Response('Not Found', { status: 404 });
 
 export const loader = (async ({ params }) => {
   const slug = params.show!;
@@ -19,21 +23,22 @@ export const loader = (async ({ params }) => {
       },
     },
   });
-  if (!show) throw redirect('/');
+  if (!show) throw notFound();
 
-  if (!show.startDate) throw redirect('/');
+  if (!validate(show)) throw forbidden();
+
   const data: ShowData = {
     name: show.name,
     slug,
-    description: show.description ?? '',
-    showLogoUrl: show.logoImageFile?.url ?? '',
-    backgroundImageUrl: show.backgroundImageFile?.url ?? '',
+    description: show.description,
+    showLogoUrl: show.logoImageFile.url,
+    backgroundImageUrl: show.backgroundImageFile.url,
     sets: show.sets.map((set) => ({
       id: set.id,
-      audioUrl: set.audioFile?.url ?? '',
-      artist: set.artist ?? '',
-      start: addSeconds(show.startDate!, set.offset ?? 0).toISOString(),
-      duration: set.audioFile?.duration ?? 0,
+      audioUrl: set.audioFile.url,
+      artist: set.artist,
+      start: addSeconds(show.startDate, set.offset).toISOString(),
+      duration: set.audioFile.duration,
     })),
     serverDate: formatISO(new Date()),
   };
