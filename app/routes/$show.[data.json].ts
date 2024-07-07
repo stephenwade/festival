@@ -4,7 +4,8 @@ import { addSeconds, formatISO } from 'date-fns';
 
 import { db } from '~/db.server/db';
 import type { ShowData } from '~/types/ShowData';
-import { validate } from '~/types/validate';
+import { showIncludeData } from '~/types/ShowWithData';
+import { validateShow } from '~/types/validateShow';
 
 const forbidden = () => new Response('Forbidden', { status: 403 });
 const notFound = () => new Response('Not Found', { status: 404 });
@@ -14,18 +15,11 @@ export const loader = (async ({ params }) => {
 
   const show = await db.show.findUnique({
     where: { slug },
-    include: {
-      logoImageFile: true,
-      backgroundImageFile: true,
-      sets: {
-        include: { audioFile: true },
-        orderBy: { offset: 'asc' },
-      },
-    },
+    include: showIncludeData,
   });
   if (!show) throw notFound();
 
-  if (!validate(show)) throw forbidden();
+  if (!validateShow(show)) throw forbidden();
 
   const data: ShowData = {
     name: show.name,

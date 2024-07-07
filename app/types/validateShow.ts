@@ -1,3 +1,5 @@
+import type { ShowWithData } from './ShowWithData';
+
 type DeepNonNullable<T> = T extends (infer U)[]
   ? DeepNonNullable<U>[]
   : T extends Record<string, unknown>
@@ -7,12 +9,17 @@ type DeepNonNullable<T> = T extends (infer U)[]
 /**
  * Ensure that all of an object's properties are not null.
  */
-// @ts-expect-error TypeScript doesn't like the predicate
-export function validate<T>(obj: T): obj is DeepNonNullable<T> {
+function validate<T>(obj: T): boolean {
   if (obj === null) return false;
   if (typeof obj !== 'object') return true;
   for (const key in obj) {
     if (obj[key] === null) return false;
   }
   return true;
+}
+
+export function validateShow(
+  show: ShowWithData,
+): show is DeepNonNullable<ShowWithData> {
+  return validate(show) && show.sets.length > 0;
 }

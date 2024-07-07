@@ -1,7 +1,8 @@
 import type { LoaderFunction } from '@remix-run/node';
 
 import { db } from '~/db.server/db';
-import { validate } from '~/types/validate';
+import { showIncludeData } from '~/types/ShowWithData';
+import { validateShow } from '~/types/validateShow';
 
 const forbidden = () => new Response('Forbidden', { status: 403 });
 const notFound = () => new Response('Not Found', { status: 404 });
@@ -11,14 +12,11 @@ export const loader = (async ({ params }) => {
 
   const show = await db.show.findUnique({
     where: { slug },
-    include: {
-      logoImageFile: true,
-      backgroundImageFile: true,
-    },
+    include: showIncludeData,
   });
   if (!show) throw notFound();
 
-  if (!validate(show)) throw forbidden();
+  if (!validateShow(show)) throw forbidden();
 
   const backgroundImage = `url(${show.backgroundImageFile.url})`;
   const backgroundColor = show.backgroundColor;

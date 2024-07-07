@@ -3,42 +3,48 @@ import '~/styles/index.css';
 
 import type { LoaderFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
+import { addSeconds } from 'date-fns';
 import type { FC } from 'react';
+import { Temporal, toTemporalInstant } from 'temporal-polyfill';
 
 import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
 import { db } from '~/db.server/db';
+import { showIncludeData } from '~/types/ShowWithData';
+import { validateShow } from '~/types/validateShow';
 
 /**
  * Returns the slug of the earliest show that hasn't ended yet.
  */
 async function calculateIndexShowSlug(): Promise<string | null> {
-  const result = await db.$queryRaw<{ slug: string }[]>`
-    WITH ShowsWithEndDate AS (
-      SELECT
-        \`Show\`.slug,
-        \`Show\`.startDate,
-        TIMESTAMPADD(SECOND, SetRows.offset + AudioFile.duration, \`Show\`.startDate) as endDate
-      FROM \`Show\`
-      JOIN (
-        SELECT
-          \`Set\`.offset,
-          \`Set\`.showId,
-          \`Set\`.audioFileId,
-          ROW_NUMBER() OVER (PARTITION BY showId ORDER BY offset DESC) AS rowNumber
-        FROM \`Set\`
-      ) AS SetRows ON \`Show\`.id = SetRows.showId AND SetRows.rowNumber = 1
-      JOIN AudioFile ON SetRows.audioFileId = AudioFile.id
-    )
-    SELECT slug
-    FROM ShowsWithEndDate
-    WHERE endDate >= NOW()
-    ORDER BY startDate ASC
-    LIMIT 1
-  `;
+  const shows = await db.show.findMany({
+    include: showIncludeData,
+  });
 
-  if (result.length === 0) return null;
+  const validShows = shows.filter(validateShow);
 
-  return result[0].slug;
+  const showsWithEndDate = validShows.map((show) => {
+    // `validateShow` ensures there's at least one set
+    const lastSet = show.sets.at(-1)!;
+
+    return {
+      slug: show.slug,
+      startDate: toTemporalInstant.call(show.startDate),
+      endDate: addSeconds(
+        show.startDate,
+        lastSet.offset + lastSet.audioFile.duration,
+      ),
+    };
+  });
+
+  const upcomingShows = showsWithEndDate.filter(
+    ({ endDate }) => endDate > new Date(),
+  );
+
+  upcomingShows.sort((a, b) =>
+    Temporal.Instant.compare(a.startDate, b.startDate),
+  );
+
+  return upcomingShows[0]?.slug ?? null;
 }
 
 async function getIndexShowSlug(): ReturnType<typeof calculateIndexShowSlug> {
