@@ -16,9 +16,11 @@ import { loader as showDataLoader } from './$show.[data.json]';
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const slug = params.show!;
 
+  if (!data) return [];
+
   return [
-    { title: data ? `${data.name} | Festival` : 'Festival' },
-    { name: 'description', content: data?.description },
+    { title: `${data.name} | Festival` },
+    { name: 'description', content: data.description },
     { tagName: 'link', rel: 'stylesheet', href: `/${slug}/styles.css` },
   ];
 };

@@ -13,13 +13,10 @@ test('root URL redirects to earliest upcoming show', async ({
   await expect(page).toHaveURL(`${baseURL!}/${process.env.SHOW_SLUG!}`);
 });
 
-test('not found show redirects to earliest upcoming show', async ({
-  page,
-  baseURL,
-}) => {
+test('not found show shows "Not Found" message', async ({ page }) => {
   await page.goto('/not-found');
 
-  await expect(page).toHaveURL(`${baseURL!}/${process.env.SHOW_SLUG!}`);
+  await expect(page.locator('h1')).toHaveText('404');
 });
 
 test('show URL redirects to path without trailing slash', async ({
