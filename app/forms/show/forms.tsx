@@ -19,8 +19,8 @@ import { InputTimeZone } from '~/components/admin/InputTimeZone';
 import { SaveButton } from '~/components/admin/SaveButton';
 import { useOrigin } from '~/hooks/useOrigin';
 
-import type { schema, setSchema } from './validator';
-import { clientValidator } from './validator';
+import type { schema, setSchema } from './schema';
+import { clientValidator } from './schema';
 
 const SHOW_FORM_ID = 'show-form';
 

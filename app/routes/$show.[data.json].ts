@@ -6,7 +6,7 @@ import { db } from '~/db.server/db';
 import type { ShowData } from '~/types/ShowData';
 import { showIncludeData } from '~/types/ShowWithData';
 import { validateShow } from '~/types/validateShow';
-import { forbidden, notFound } from '~/utils.server/responses';
+import { forbidden, notFound } from '~/utils/responses.server';
 
 export const loader = (async ({ params }) => {
   const slug = params.show!;

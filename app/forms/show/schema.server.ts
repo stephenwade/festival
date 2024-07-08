@@ -2,7 +2,7 @@ import { withZod } from '@remix-validated-form/with-zod';
 
 import { db } from '~/db.server/db';
 
-import { schema } from './validator';
+import { schema } from './schema';
 
 export function makeServerValidator({
   previousSlug,
