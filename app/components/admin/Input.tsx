@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useField } from 'remix-validated-form';
 
-export interface InputProps {
+interface InputProps {
   name: string;
   type?: 'color' | 'datetime-local';
   step?: string;
@@ -9,9 +9,7 @@ export interface InputProps {
   prefix?: string;
 }
 
-type Props = InputProps;
-
-export const Input: FC<Props> = ({ name, type, step, label, prefix }) => {
+export const Input: FC<InputProps> = ({ name, type, step, label, prefix }) => {
   const { error, getInputProps } = useField(name);
 
   return (

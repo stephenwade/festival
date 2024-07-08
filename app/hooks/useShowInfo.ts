@@ -8,10 +8,7 @@ import type { TargetShowInfo, TargetTimeInfo } from '~/types/ShowInfo';
 import { useClock } from './useClock';
 import { useFetcherIgnoreErrors } from './useFetcherIgnoreErrors';
 
-export type LoadedMetadataHandler = (args: {
-  id: string;
-  duration: number;
-}) => void;
+type LoadedMetadataHandler = (args: { id: string; duration: number }) => void;
 
 export function useShowInfo(
   loaderData: Pick<ShowData, 'slug' | 'serverDate' | 'sets'>,
