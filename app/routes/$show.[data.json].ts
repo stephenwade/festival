@@ -6,9 +6,7 @@ import { db } from '~/db.server/db';
 import type { ShowData } from '~/types/ShowData';
 import { showIncludeData } from '~/types/ShowWithData';
 import { validateShow } from '~/types/validateShow';
-
-const forbidden = () => new Response('Forbidden', { status: 403 });
-const notFound = () => new Response('Not Found', { status: 404 });
+import { forbidden, notFound } from '~/utils.server/responses';
 
 export const loader = (async ({ params }) => {
   const slug = params.show!;

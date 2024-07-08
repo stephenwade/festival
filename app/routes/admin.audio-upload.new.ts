@@ -16,13 +16,10 @@ import type { FFprobeOutput } from '~/ffmpeg.server/ffprobe';
 import { ffprobe } from '~/ffmpeg.server/ffprobe';
 import { UPLOAD_AUDIO_FORM_KEY } from '~/forms/upload-audio';
 import { emitAudioFileProcessingEvent } from '~/sse.server/audio-file-events';
+import { badRequest, serverError } from '~/utils.server/responses';
 
 const GIGABYTE = 1_000_000_000;
 const MICROSECONDS = 1 / 1_000_000;
-
-const badRequest = () => new Response('Bad Request', { status: 400 });
-const serverError = () =>
-  new Response('Internal Server Error', { status: 500 });
 
 export const action = (async (args) => {
   await redirectToLogin(args);

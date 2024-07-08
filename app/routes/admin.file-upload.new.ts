@@ -11,10 +11,9 @@ import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
 import { db } from '~/db.server/db';
 import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
+import { badRequest } from '~/utils.server/responses';
 
 const MEGABYTE = 1_000_000;
-
-const badRequest = () => new Response('Bad Request', { status: 400 });
 
 export const action = (async (args) => {
   await redirectToLogin(args);
