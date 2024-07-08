@@ -13,10 +13,12 @@ import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
 import { db } from '~/db.server/db';
 import { EditShowForm } from '~/forms/show/forms';
-import { makeServerValidator } from '~/forms/show/validator.server';
+import { makeServerValidator } from '~/forms/show/schema.server';
 import { replaceNullsWithUndefined } from '~/forms/utils/replaceNullsWithUndefined';
 import { replaceUndefinedsWithNull } from '~/forms/utils/replaceUndefinedsWithNull';
-import { notFound } from '~/utils.server/responses';
+import { isDefined } from '~/utils/is-defined';
+import { omit } from '~/utils/omit';
+import { notFound } from '~/utils/responses.server';
 
 export const meta: MetaFunction = () => [
   { title: 'Edit show | Festival admin' },
@@ -87,32 +89,20 @@ export const action = (async (args) => {
       startDate,
       sets: {
         deleteMany: {
-          showId: id,
-          id: { notIn: sets.map((set) => set.id) },
+          id: { notIn: sets.map((set) => set.id).filter(isDefined) },
         },
-        upsert: sets.map((set) => ({
-          create: set,
-          update: set,
-          where: { id: set.id },
-        })),
+        update: sets
+          .filter((set) => isDefined(set.id))
+          .map((set) => ({
+            where: { id: set.id! },
+            data: omit(set, ['id']),
+          })),
+        create: sets
+          .filter((set) => !isDefined(set.id))
+          .map((set) => omit(set, ['id'])),
       },
     },
   });
-  await Promise.all([
-    db.set.deleteMany({
-      where: {
-        showId: id,
-        id: { notIn: sets.map((set) => set.id) },
-      },
-    }),
-    sets.map((set) =>
-      db.set.upsert({
-        create: { ...set, showId: id },
-        update: set,
-        where: { id: set.id },
-      }),
-    ),
-  ]);
 
   cache.del(INDEX_SHOW_SLUG_KEY);
 

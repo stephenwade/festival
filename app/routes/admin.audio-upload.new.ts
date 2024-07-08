@@ -16,7 +16,7 @@ import type { FFprobeOutput } from '~/ffmpeg.server/ffprobe';
 import { ffprobe } from '~/ffmpeg.server/ffprobe';
 import { UPLOAD_AUDIO_FORM_KEY } from '~/forms/upload-audio';
 import { emitAudioFileProcessingEvent } from '~/sse.server/audio-file-events';
-import { badRequest, serverError } from '~/utils.server/responses';
+import { badRequest, serverError } from '~/utils/responses.server';
 
 const GIGABYTE = 1_000_000_000;
 const MICROSECONDS = 1 / 1_000_000;

@@ -3,7 +3,7 @@ import { json } from '@remix-run/node';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db.server/db';
-import { notFound } from '~/utils.server/responses';
+import { notFound } from '~/utils/responses.server';
 
 export const loader = (async (args) => {
   await redirectToLogin(args);

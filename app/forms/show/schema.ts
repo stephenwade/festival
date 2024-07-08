@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { zfd } from 'zod-form-data';
 
 export const setSchema = z.object({
-  id: zfd.text(),
+  id: zfd.text(z.string().optional()),
   artist: zfd.text(z.string().optional()),
   offset: zfd.numeric(z.number().optional()),
   audioFileId: zfd.text(z.string().optional()),

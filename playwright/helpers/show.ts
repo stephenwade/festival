@@ -1,10 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import { addSeconds } from 'date-fns';
+import { nanoid } from 'nanoid';
+
+import { isDefined } from '~/utils/is-defined';
 
 const prisma = new PrismaClient();
 
 export function randomShowSlug() {
-  return `test-show-${crypto.randomUUID().slice(-12)}`;
+  return `test-show-${nanoid(12)}`;
 }
 
 export async function deleteTestShows() {
@@ -100,8 +103,4 @@ export async function delayShow(slug: string) {
     where: { id: show.id },
     data: { startDate: addSeconds(new Date(), 10) },
   });
-}
-
-function isDefined<T>(value: T | undefined | null): value is T {
-  return value !== undefined && value !== null;
 }

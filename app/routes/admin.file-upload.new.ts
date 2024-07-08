@@ -11,7 +11,7 @@ import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
 import { db } from '~/db.server/db';
 import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
-import { badRequest } from '~/utils.server/responses';
+import { badRequest } from '~/utils/responses.server';
 
 const MEGABYTE = 1_000_000;
 
