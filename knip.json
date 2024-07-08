@@ -1,7 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "entry": ["svgo.config.js"],
-  "ignoreBinaries": ["knip-bun"],
   "ignoreDependencies": ["node_modules/react-toastify/dist/components"],
 
   "playwright": {
