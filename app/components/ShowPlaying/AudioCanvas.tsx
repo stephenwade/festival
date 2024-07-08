@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMediaQuery, useWindowSize } from 'usehooks-ts';
 
-export interface AudioCanvasProps {
+interface AudioCanvasProps {
   currentTime: number;
   setLength: number;
   progressLineFrozen: boolean;

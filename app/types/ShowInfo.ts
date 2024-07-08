@@ -17,6 +17,6 @@ export type TargetTimeInfo =
 
 export type TargetShowInfo = TargetTimeInfo & SetsInfo;
 
-export type TimeInfo = TargetTimeInfo | { status: 'WAITING_FOR_AUDIO_CONTEXT' };
+type TimeInfo = TargetTimeInfo | { status: 'WAITING_FOR_AUDIO_CONTEXT' };
 
 export type ShowInfo = TimeInfo & SetsInfo;

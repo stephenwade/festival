@@ -2,14 +2,12 @@ import type { FC } from 'react';
 import { useTimezoneSelect } from 'react-timezone-select';
 import { useControlField, useField } from 'remix-validated-form';
 
-export interface InputTimeZoneProps {
+interface InputTimeZoneProps {
   name: string;
   label: string;
 }
 
-type Props = InputTimeZoneProps;
-
-export const InputTimeZone: FC<Props> = ({ name, label }) => {
+export const InputTimeZone: FC<InputTimeZoneProps> = ({ name, label }) => {
   const { error, getInputProps } = useField(name);
   const [value, setValue] = useControlField<string>(name);
 

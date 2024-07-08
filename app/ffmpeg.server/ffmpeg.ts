@@ -37,9 +37,9 @@ const ffmpegProgressSchema = z.preprocess(
   }),
 );
 
-export type FFmpegProgress = z.infer<typeof ffmpegProgressSchema>;
+type FFmpegProgress = z.infer<typeof ffmpegProgressSchema>;
 
-export type FFmpegProgressCallback = (progress: FFmpegProgress) => void;
+type FFmpegProgressCallback = (progress: FFmpegProgress) => void;
 
 export function ffmpeg(
   inputFileName: string,

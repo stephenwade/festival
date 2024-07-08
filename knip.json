@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": ["svgo.config.js"],
+  "ignoreDependencies": ["node_modules/react-toastify/dist/components"],
+
+  "playwright": {
+    "config": ["playwright.config.ts", "playwright-ct.config.ts"],
+    "entry": [
+      "playwright/?(ct-)tests/*.spec.ts?(x)",
+      "playwright/tests/global.?(setup|teardown).ts",
+      "playwright/ct-tests/index.tsx"
+    ]
+  }
+}
