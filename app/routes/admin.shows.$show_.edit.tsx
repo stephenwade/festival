@@ -16,8 +16,7 @@ import { EditShowForm } from '~/forms/show/forms';
 import { makeServerValidator } from '~/forms/show/validator.server';
 import { replaceNullsWithUndefined } from '~/forms/utils/replaceNullsWithUndefined';
 import { replaceUndefinedsWithNull } from '~/forms/utils/replaceUndefinedsWithNull';
-
-const notFound = () => new Response('Not Found', { status: 404 });
+import { notFound } from '~/utils.server/responses';
 
 export const meta: MetaFunction = () => [
   { title: 'Edit show | Festival admin' },
