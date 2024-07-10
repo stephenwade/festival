@@ -164,7 +164,7 @@ const ShowForm: FC<ShowFormProps> = ({
           <button
             type="button"
             onClick={() => {
-              push({ id: crypto.randomUUID() });
+              push({});
             }}
           >
             Add set
