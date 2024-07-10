@@ -45,6 +45,16 @@ async function getFileFromFormData(request: Request): Promise<globalThis.File> {
 
   const form = await unstable_parseMultipartFormData(request, uploadHandler);
 
+  // Run garbage collection immediately to free up memory (and save money on
+  // resource usage). If we don't do this, the file will be kept in memory until
+  // V8 decides to run garbage collection, which doesn't happen very often in
+  // a server environment.
+  if (globalThis.gc) {
+    globalThis.gc();
+  } else {
+    console.warn('globalThis.gc is not available. Run with --expose-gc flag.');
+  }
+
   const file = form.get(UPLOAD_AUDIO_FORM_KEY);
   if (typeof file === 'string' || file === null) throw badRequest();
 

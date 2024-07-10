@@ -1,3 +1,6 @@
 #!/bin/sh
 
-npx prisma migrate deploy && NPM_CONFIG_UPDATE_NOTIFIER=false npm run start
+set -ex
+
+npx prisma migrate deploy
+NPM_CONFIG_UPDATE_NOTIFIER=false node --expose-gc node_modules/.bin/remix-serve build/server/index.js
