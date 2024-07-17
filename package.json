@@ -73,7 +73,7 @@
     "eslint-plugin-simple-import-sort": "12.1.1",
     "eslint-plugin-unicorn": "54.0.0",
     "eslint-plugin-unused-imports": "3.2.0",
-    "husky": "9.0.11",
+    "husky": "9.1.0",
     "knip": "5.26.0",
     "lint-staged": "15.2.7",
     "npm-run-all2": "6.2.2",
