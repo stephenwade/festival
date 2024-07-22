@@ -235,7 +235,7 @@ function commonTests({ forceSkipAudioContext = false }) {
       await expect(
         component.locator('audio').nth(0),
         '10 seconds before the end of the first set',
-      ).toHaveAttribute('src', /\?1(#t=\d+)?$/u);
+      ).toHaveAttribute('src', /\?1(#t=[0-9]+)?$/u);
 
       await component.getByTestId('alternate-button').click();
 
@@ -243,7 +243,7 @@ function commonTests({ forceSkipAudioContext = false }) {
       await expect(
         component.locator('audio').nth(0),
         '9 seconds before the end of the first set',
-      ).toHaveAttribute('src', /\?1(#t=\d+)?$/u);
+      ).toHaveAttribute('src', /\?1(#t=[0-9]+)?$/u);
     });
   });
 

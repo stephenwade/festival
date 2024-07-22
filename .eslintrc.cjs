@@ -8,8 +8,10 @@ module.exports = {
   // Comments link to blockers for flat config
   plugins: [
     // https://github.com/import-js/eslint-plugin-import/pull/2873
+    // https://github.com/import-js/eslint-plugin-import/issues/2556
     // https://github.com/import-js/eslint-plugin-import/issues/2948
     // https://github.com/un-ts/eslint-plugin-import-x/issues/29
+    // https://github.com/un-ts/eslint-plugin-import-x/issues/90
     'import',
     // https://github.com/levibuzolic/eslint-plugin-no-only-tests/issues/43
     'no-only-tests',
@@ -20,12 +22,10 @@ module.exports = {
   extends: [
     'eslint:recommended',
 
-    // https://github.com/jsx-eslint/eslint-plugin-react/issues/3699
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     // https://github.com/facebook/react/issues/28313
     'plugin:react-hooks/recommended',
-    // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/pull/891
     // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/978
     'plugin:jsx-a11y/recommended',
     'plugin:playwright/recommended',
@@ -40,6 +40,7 @@ module.exports = {
   ],
 
   rules: {
+    'no-plusplus': 'error',
     'object-shorthand': 'warn',
     quotes: ['warn', 'single', { avoidEscape: true }],
     'require-unicode-regexp': 'warn',
@@ -90,6 +91,7 @@ module.exports = {
         requireDefaultForNonUnion: true,
       },
     ],
+    'unicorn/better-regex': 'off',
     'unicorn/filename-case': 'off',
     'unicorn/no-array-callback-reference': 'off',
     'unicorn/no-null': 'off',

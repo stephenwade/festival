@@ -10,7 +10,7 @@ export const setSchema = z.object({
   audioFileId: zfd.text(z.string().optional()),
 });
 
-const COLOR_REGEX = /^#[\da-f]{6}$/iu;
+const COLOR_REGEX = /^#[0-9a-f]{6}$/iu;
 
 function isValidTimeZone(timeZone: string): boolean {
   try {
