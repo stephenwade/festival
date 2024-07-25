@@ -6,13 +6,15 @@ import { nanoid } from 'nanoid';
 import { uploadAudioFileKeys } from '~/forms/upload-audio';
 import type { action as partialAudioUploadAction } from '~/routes/admin.audio-upload.partial';
 
+import { xhrPromise } from './xhrPromise';
+
 type UploadResponse = Exclude<
   SerializeFrom<typeof partialAudioUploadAction>,
   null
 >;
 
 const UPLOAD_ENDPOINT = '/admin/audio-upload/partial';
-const CHUNK_SIZE = 10_000_000; // 10 MB
+const CHUNK_SIZE = 50_000_000; // 50 MB
 const RETRIES = 5;
 const DELAY_BEFORE_RETRY = 5000;
 
@@ -104,9 +106,13 @@ export class AudioFileUploader {
     form.append(uploadAudioFileKeys.chunk, chunk, this.file.name);
 
     this.abortController = new AbortController();
-    return fetch(UPLOAD_ENDPOINT, {
-      method: 'POST',
-      body: form,
+    return xhrPromise(form, {
+      url: UPLOAD_ENDPOINT,
+      onProgress: (progress) => {
+        this.options.onProgress?.({
+          progress: (this.currentChunkIndex + progress) / this.totalChunks,
+        });
+      },
       signal: this.abortController.signal,
     });
   }
@@ -145,16 +151,13 @@ export class AudioFileUploader {
       const chunk = await this.getCurrentChunk();
       const response = await this.sendChunk(chunk);
       if ([200, 201, 204].includes(response.status)) {
-        const progress = (this.currentChunkIndex + 1) / this.totalChunks;
-        this.options.onProgress?.({ progress });
-
         this.currentChunkIndex += 1;
         if (this.currentChunkIndex < this.totalChunks) {
           void this.sendChunks();
         } else {
           this.status = 'done';
           this.cleanupEventListener();
-          const body = (await response.json()) as UploadResponse;
+          const body = JSON.parse(response.responseText) as UploadResponse;
           this.options.onFinish?.({ file: body });
         }
       } else if ([408, 502, 503, 504].includes(response.status)) {

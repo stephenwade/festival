@@ -8,49 +8,9 @@ import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
 import type { loader as fileUploadLoader } from '~/routes/admin.file-upload.$id';
 import type { action as newFileUploadAction } from '~/routes/admin.file-upload.new';
 
-type PutFormResponse = SerializeFrom<typeof newFileUploadAction>;
+import { xhrPromise } from './xhrPromise';
 
-interface PutFormOptions {
-  url: string;
-  onProgress?: (progress: number) => void;
-}
-
-function putForm(form: FormData, options: PutFormOptions) {
-  const { url, onProgress } = options;
-
-  // Can't use fetch because it doesn't support tracking upload progress
-  const request = new Promise<PutFormResponse>((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('PUT', url);
-
-    xhr.addEventListener('load', () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        const response = JSON.parse(xhr.responseText) as PutFormResponse;
-        resolve(response);
-      } else {
-        reject({ reason: 'Bad status code', status: xhr.status });
-      }
-    });
-
-    if (onProgress) {
-      xhr.upload.addEventListener('progress', (event) => {
-        onProgress(event.loaded / event.total);
-      });
-    }
-
-    xhr.addEventListener('error', () => {
-      reject({ reason: 'Error', status: xhr.status });
-    });
-
-    xhr.addEventListener('abort', () => {
-      reject({ reason: 'Aborted' });
-    });
-
-    xhr.send(form);
-  });
-
-  return request;
-}
+type UploadResponse = SerializeFrom<typeof newFileUploadAction>;
 
 interface FileUploadProps {
   name: string;
@@ -90,17 +50,21 @@ export const FileUpload: FC<FileUploadProps> = ({
     if (!fileInput?.files?.length) return;
 
     const file = fileInput.files[0]!;
+    fileInput.value = '';
     setIsUploading(true);
     setFileName(file.name);
     setUploadProgress(0);
 
     const form = new FormData();
     form.append(UPLOAD_FILE_FORM_KEY, file);
-    putForm(form, {
+    xhrPromise(form, {
       url: '/admin/file-upload/new',
       onProgress: setUploadProgress,
+      errorOnBadStatus: true,
     })
-      .then((file) => {
+      .then((response) => {
+        const file = JSON.parse(response.responseText) as UploadResponse;
+
         setFileState(file);
 
         // Wait a bit to make sure the fetcher is not triggered before the
@@ -113,8 +77,6 @@ export const FileUpload: FC<FileUploadProps> = ({
       .catch((error: unknown) => {
         console.error(`File upload ${name} failed.`, error);
       });
-
-    fileInput.value = '';
   };
 
   const onRemoveFileClick = () => {
