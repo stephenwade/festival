@@ -122,10 +122,11 @@ module.exports = {
       },
     },
     {
-      files: ['playwright/**/*.ts'],
+      files: ['playwright/**/*.ts', 'playwright/**/*.tsx'],
 
       rules: {
         'no-empty-pattern': 'off',
+        '@typescript-eslint/unbound-method': 'off',
       },
     },
   ],
