@@ -1,7 +1,8 @@
 module.exports = {
+  root: true,
+
   parserOptions: {
-    tsconfigRootDir: __dirname,
-    project: true,
+    EXPERIMENTAL_useProjectService: true,
   },
 
   // Comments link to blockers for flat config
