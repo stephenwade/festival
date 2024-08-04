@@ -8,7 +8,7 @@ import { useSse } from '~/hooks/useSse';
 import type { loader as audioUploadLoader } from '~/routes/admin.audio-upload.$id';
 import type { AudioFileProcessingEvent } from '~/sse.server/audio-file-events';
 
-import { AudioFileUploader } from './AudioFileUploader';
+import type { useUploadAudioFile } from './useUploadAudioFile';
 
 function displayConversionStatus(
   status: Exclude<AudioFileProcessingEvent['conversionStatus'], 'DONE'>,
@@ -27,14 +27,12 @@ function displayConversionStatus(
 
 interface AudioFileUploadProps {
   name: string;
-  isUploading: boolean;
-  setIsUploading: (isUploading: boolean) => void;
+  uploadAudioFile: ReturnType<typeof useUploadAudioFile>;
 }
 
 export const AudioFileUpload: FC<AudioFileUploadProps> = ({
   name,
-  isUploading,
-  setIsUploading,
+  uploadAudioFile,
 }) => {
   const { getInputProps } = useField(name);
   const [fileId, setFileId] = useControlField<string | undefined>(name);
@@ -66,38 +64,31 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
   const file = fileState ?? fetcher.data;
 
   const [fileName, setFileName] = useState<string>();
-  const [uploadProgress, setUploadProgress] = useState<number | undefined>();
-
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const { start, pause, resume, abort, state } = uploadAudioFile;
+
+  useEffect(() => {
+    if (state?.status === 'done') {
+      setFileState(state.file);
+
+      // Wait a bit to make sure the fetcher is not triggered before the
+      // file upload state is updated.
+      setTimeout(() => {
+        setFileId(state.file.id);
+      }, 100);
+    }
+  }, [setFileId, state]);
+
   const onUploadClick = () => {
     const fileInput = fileInputRef.current;
     if (!fileInput?.files?.length) return;
 
     const file = fileInput.files[0]!;
     fileInput.value = '';
-    setIsUploading(true);
     setFileName(file.name);
-    setUploadProgress(undefined);
 
-    const uploader = new AudioFileUploader(file, {
-      onProgress: ({ progress }) => {
-        setUploadProgress(progress);
-      },
-      onFinish: ({ file }) => {
-        setFileState(file);
-
-        // Wait a bit to make sure the fetcher is not triggered before the
-        // file upload state is updated.
-        setTimeout(() => {
-          setFileId(file.id);
-          setIsUploading(false);
-        }, 100);
-      },
-      onError: () => {
-        console.error(`Audio file upload ${name} failed.`);
-      },
-    });
-    uploader.start();
+    start(file);
   };
 
   const onRemoveFileClick = () => {
@@ -114,39 +105,43 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
         })}
       />
       <p>
-        {isUploading ? (
-          <>
-            Uploading… <progress value={uploadProgress} /> {fileName}
-          </>
-        ) : fileId ? (
-          file ? (
-            file.conversionStatus === 'DONE' ? (
-              <>
-                Duration: {file.duration}{' '}
-                <button type="button" onClick={onRemoveFileClick}>
-                  Remove file
-                </button>
-              </>
-            ) : file.errorMessage ? (
-              <>Error while converting audio file: {file.errorMessage}</>
-            ) : (
-              <>
-                {displayConversionStatus(file.conversionStatus)}{' '}
-                {file.conversionProgress === null ? null : (
-                  <progress value={file.conversionProgress} />
-                )}
-              </>
-            )
-          ) : (
-            'Loading…'
-          )
-        ) : (
+        {state === undefined ? (
           <>
             <input type="file" ref={fileInputRef} accept="audio/*" />{' '}
             <button type="button" onClick={onUploadClick}>
               Upload
             </button>
           </>
+        ) : state.status === 'in progress' ? (
+          <>
+            Uploading… <progress value={state.progress} /> {fileName}
+          </>
+        ) : state.status === 'paused' ? (
+          <>
+            Paused <progress value={state.progress} /> {fileName}
+          </>
+        ) : state.status === 'error' ? (
+          <>Error while uploading file</>
+        ) : file ? (
+          file.conversionStatus === 'DONE' ? (
+            <>
+              Duration: {file.duration}{' '}
+              <button type="button" onClick={onRemoveFileClick}>
+                Remove file
+              </button>
+            </>
+          ) : file.errorMessage ? (
+            <>Error while converting audio file: {file.errorMessage}</>
+          ) : (
+            <>
+              {displayConversionStatus(file.conversionStatus)}{' '}
+              {file.conversionProgress === null ? null : (
+                <progress value={file.conversionProgress} />
+              )}
+            </>
+          )
+        ) : (
+          'Loading…'
         )}
       </p>
     </>

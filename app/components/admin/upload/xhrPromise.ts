@@ -17,11 +17,18 @@ export function xhrPromise(
       const xhr = new XMLHttpRequest();
       xhr.open('PUT', url);
 
+      const abort = () => {
+        xhr.abort();
+      };
+      signal?.addEventListener('abort', abort);
+
       xhr.addEventListener('load', () => {
+        signal?.removeEventListener('abort', abort);
         if (errorOnBadStatus && xhr.status >= 400) {
           reject({ reason: 'Bad status code', status: xhr.status });
+        } else {
+          resolve({ status: xhr.status, responseText: xhr.responseText });
         }
-        resolve({ status: xhr.status, responseText: xhr.responseText });
       });
 
       if (onProgress) {
@@ -40,10 +47,6 @@ export function xhrPromise(
 
       xhr.addEventListener('abort', () => {
         reject({ reason: 'Aborted' });
-      });
-
-      signal?.addEventListener('abort', () => {
-        xhr.abort();
       });
 
       xhr.send(body);
