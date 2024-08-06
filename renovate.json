@@ -1,6 +1,5 @@
 {
   "extends": ["config:best-practices", "config:js-app"],
-
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "digest"],
@@ -13,11 +12,10 @@
     },
     {
       "matchUpdateTypes": ["minor"],
-      "matchPackagePatterns": ["^@remix-run/"],
-      "automerge": false
+      "automerge": false,
+      "matchPackageNames": ["/^@remix-run//"]
     }
   ],
-
   "lockFileMaintenance": {
     "enabled": true,
     "extends": ["schedule:weekly"],
