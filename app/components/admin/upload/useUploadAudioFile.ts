@@ -27,20 +27,23 @@ type UploadResponse = Exclude<
   null
 >;
 
-type UploadState =
-  | {
-      status: 'in progress' | 'paused' | 'error';
-      /** A number between 0 and 1 */ progress: number;
-      retriesCount: number;
-    }
-  | { status: 'done'; file: UploadResponse };
+interface UploadStateNotDone {
+  status: 'in progress' | 'paused' | 'error';
+  /** A number between 0 and 1 */ progress: number;
+  retriesCount: number;
+}
+interface UploadStateDone {
+  status: 'done';
+  file: UploadResponse;
+}
+type UploadState = UploadStateNotDone | UploadStateDone;
 
 export function isIdle(state: UploadState) {
   return ['error', 'done'].includes(state.status);
 }
 
 const uploadDataRecord: Record<string, UploadData> = {};
-const uploadStateRecord: Record<string, UploadState> = {};
+let uploadStateRecord: Record<string, UploadState> = {};
 const listeners = new Set<() => void>();
 
 export function useUploadStates() {
@@ -53,7 +56,7 @@ function getSnapshot() {
 }
 
 function getServerSnapshot() {
-  return {} as ReturnType<typeof getSnapshot>;
+  return uploadStateRecord;
 }
 
 function subscribe(onStoreChange: () => void) {
@@ -64,6 +67,7 @@ function subscribe(onStoreChange: () => void) {
 }
 
 function notifyListeners() {
+  uploadStateRecord = { ...uploadStateRecord };
   for (const listener of listeners) {
     listener();
   }
@@ -72,11 +76,14 @@ function notifyListeners() {
 function shouldContinue(uploadId: string) {
   const state = uploadStateRecord[uploadId];
 
-  return state.status === 'in progress' && navigator.onLine;
+  return state?.status === 'in progress' && navigator.onLine;
 }
 
 async function getCurrentChunk(uploadId: string) {
   const data = uploadDataRecord[uploadId];
+  if (!data) {
+    throw new Error('Upload data not found');
+  }
 
   const length = CHUNK_SIZE;
   const start = length * data.currentChunkIndex;
@@ -90,6 +97,9 @@ async function getCurrentChunk(uploadId: string) {
 
 function sendChunk(uploadId: string, chunk: Blob) {
   const data = uploadDataRecord[uploadId];
+  if (!data) {
+    throw new Error('Upload data not found');
+  }
 
   const form = new FormData();
   form.append(uploadAudioFileKeys.uploadId, uploadId);
@@ -105,13 +115,14 @@ function sendChunk(uploadId: string, chunk: Blob) {
     onProgress: (chunkProgress) => {
       const state = uploadStateRecord[uploadId];
 
-      if (!('progress' in state)) {
+      if (!state || !('progress' in state)) {
         return;
       }
 
       const progress =
         (data.currentChunkIndex + chunkProgress) / data.totalChunks;
       uploadStateRecord[uploadId] = { ...state, progress };
+      notifyListeners();
     },
     signal: data.abortController.signal,
   });
@@ -122,10 +133,7 @@ function retry(uploadId: string) {
     return;
   }
 
-  const state = uploadStateRecord[uploadId];
-  if (state.status === 'done') {
-    return;
-  }
+  const state = uploadStateRecord[uploadId] as UploadStateNotDone;
 
   const nextRetriesCount = state.retriesCount + 1;
   const isError = nextRetriesCount >= RETRIES;
@@ -152,6 +160,9 @@ async function sendChunks(uploadId: string) {
   }
 
   const data = uploadDataRecord[uploadId];
+  if (!data) {
+    throw new Error('Upload data not found');
+  }
 
   try {
     const chunk = await getCurrentChunk(uploadId);
@@ -180,10 +191,11 @@ async function sendChunks(uploadId: string) {
       }
 
       const state = uploadStateRecord[uploadId];
-      if (state.status === 'done') {
+      if (!state || state.status === 'done') {
         return;
       }
       uploadStateRecord[uploadId] = { ...state, status: 'error' };
+      notifyListeners();
     }
   } catch {
     // this type of error can happen after network disconnection on CORS setup
@@ -215,9 +227,12 @@ function start_(file: File): string {
 
 function pause_(uploadId: string) {
   const state = uploadStateRecord[uploadId];
-  const data = uploadDataRecord[uploadId];
+  if (!state || state.status !== 'in progress') {
+    return;
+  }
 
-  if (state.status !== 'in progress') {
+  const data = uploadDataRecord[uploadId];
+  if (!data) {
     return;
   }
 
@@ -229,8 +244,7 @@ function pause_(uploadId: string) {
 
 function resume_(uploadId: string) {
   const state = uploadStateRecord[uploadId];
-
-  if (state.status !== 'paused') {
+  if (!state || state.status !== 'paused') {
     return;
   }
 
@@ -242,9 +256,12 @@ function resume_(uploadId: string) {
 
 function abort_(uploadId: string) {
   const state = uploadStateRecord[uploadId];
-  const data = uploadDataRecord[uploadId];
+  if (!state || state.status === 'done') {
+    return;
+  }
 
-  if (state.status === 'done') {
+  const data = uploadDataRecord[uploadId];
+  if (!data) {
     return;
   }
 

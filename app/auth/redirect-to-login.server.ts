@@ -3,6 +3,8 @@ import { getAuth } from '@clerk/remix/ssr.server';
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 
+import { unauthorized } from '~/utils/responses.server';
+
 import { userIsAllowed } from './user-is-allowed.server';
 
 interface RedirectToLoginArgs {
@@ -17,7 +19,11 @@ export async function redirectToLogin(
 
   if (!userId) {
     console.log('User is not logged in');
-    throw redirect(`/admin/sign-in?redirect_url=${args.request.url}`);
+    const error =
+      args.request.method === 'GET'
+        ? redirect(`/admin/sign-in?redirect_url=${args.request.url}`)
+        : unauthorized();
+    throw error;
   }
 
   console.log(`User is logged in: ${userId}`);
