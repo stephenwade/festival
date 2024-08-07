@@ -229,8 +229,8 @@ function checkNeedsConverting(stats: FFprobeOutput) {
     stats.format.format_name === 'mp3' &&
     stats.format.bit_rate < MAX_BIT_RATE &&
     stats.streams.length === 1 &&
-    stats.streams[0].codec_name === 'mp3' &&
-    stats.streams[0].bit_rate &&
-    stats.streams[0].bit_rate < MAX_BIT_RATE
+    stats.streams[0]!.codec_name === 'mp3' &&
+    stats.streams[0]!.bit_rate &&
+    stats.streams[0]!.bit_rate < MAX_BIT_RATE
   );
 }

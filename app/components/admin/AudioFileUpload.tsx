@@ -117,7 +117,7 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
     const fileInput = fileInputRef.current;
     if (!fileInput?.files?.length) return;
 
-    const file = fileInput.files[0];
+    const file = fileInput.files[0]!;
     setIsUploading(true);
     setFileName(file.name);
     setUploadProgress(0);

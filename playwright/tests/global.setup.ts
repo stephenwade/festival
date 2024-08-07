@@ -17,7 +17,7 @@ setup('seed show', async () => {
 
   const show = await seedShow(addMinutes(new Date(), 1));
   process.env.SHOW_SLUG = show.slug;
-  process.env.FIRST_ARTIST_NAME = show.sets[0].artist ?? '';
+  process.env.FIRST_ARTIST_NAME = show.sets[0]?.artist ?? '';
 
   // Add other shows to ensure that the root URL redirects to the earliest
   // upcoming show
