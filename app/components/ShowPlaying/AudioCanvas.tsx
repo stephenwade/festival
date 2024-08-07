@@ -65,7 +65,7 @@ export const AudioCanvas: FC<AudioCanvasProps> = ({
       const midX = canvas.width / 2;
       const midY = canvas.height / 2;
 
-      const loudness = dataArray[i + 10];
+      const loudness = dataArray[i + 10] ?? 0;
 
       const p1 = 0.1275;
       const p2 = 2;
@@ -83,7 +83,7 @@ export const AudioCanvas: FC<AudioCanvasProps> = ({
       const x = midX + Math.sin(angleAroundCircle) * distanceFromCenter;
       const y = midY + Math.cos(angleAroundCircle) * distanceFromCenter;
 
-      return [x, y];
+      return [x, y] as const;
     },
     [sizeMultiplier],
   );
