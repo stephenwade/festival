@@ -1,4 +1,4 @@
-FROM ubuntu:jammy@sha256:ca9449d4bae930d098f5d05aa33d0d279db957461b06b16928f65794ba8b3c80 as base
+FROM ubuntu:jammy@sha256:adbb90115a21969d2fe6fa7f9af4253e16d45f8d4c1e930182610c4731962658 as base
 
 WORKDIR /node
 
