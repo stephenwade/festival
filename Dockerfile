@@ -38,7 +38,7 @@ RUN npx prisma generate
 ADD . .
 RUN npm run build
 
-FROM linuxserver/ffmpeg:version-5.1.2-cli as final
+FROM linuxserver/ffmpeg:version-5.1.2-cli@sha256:e691582facf5ec1b4f59ad7872e0c763a96875128c38e0fe703dca06a8ed1212 as final
 
 WORKDIR /node
 
