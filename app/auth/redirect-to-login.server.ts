@@ -1,9 +1,9 @@
-import { createClerkClient } from '@clerk/remix/api.server';
-import { getAuth } from '@clerk/remix/ssr.server';
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 
-import { userIsAllowed } from './user-is-allowed.server';
+import { forbidden, unauthorized } from '~/utils/responses.server';
+
+import { userAuthStatus } from './user-auth-status';
 
 interface RedirectToLoginArgs {
   onHoldPage?: boolean;
@@ -13,24 +13,35 @@ export async function redirectToLogin(
   args: ActionFunctionArgs | LoaderFunctionArgs,
   { onHoldPage }: RedirectToLoginArgs = {},
 ) {
-  const { userId } = await getAuth(args);
+  const status = await userAuthStatus(args);
 
-  if (!userId) {
-    console.log('User is not logged in');
-    throw redirect(`/admin/sign-in?redirect_url=${args.request.url}`);
+  switch (status) {
+    case 'unauthorized':
+      throw redirect(`/admin/sign-in?redirect_url=${args.request.url}`);
+    case 'forbidden':
+      if (!onHoldPage) {
+        throw redirect('/admin/user-on-hold');
+      }
+      break;
+    case 'ok':
+      if (onHoldPage) {
+        throw redirect('/admin');
+      }
+      break;
   }
+}
 
-  console.log(`User is logged in: ${userId}`);
+export async function requireLogin(
+  args: ActionFunctionArgs | LoaderFunctionArgs,
+) {
+  const status = await userAuthStatus(args);
 
-  const user = await createClerkClient({
-    secretKey: process.env.CLERK_SECRET_KEY,
-  }).users.getUser(userId);
-
-  const allowed = await userIsAllowed(user);
-  if (!allowed && !onHoldPage) {
-    throw redirect('/admin/user-on-hold');
-  }
-  if (allowed && onHoldPage) {
-    throw redirect('/admin');
+  switch (status) {
+    case 'unauthorized':
+      throw unauthorized();
+    case 'forbidden':
+      throw forbidden();
+    case 'ok':
+      break;
   }
 }
