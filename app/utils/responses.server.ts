@@ -2,6 +2,10 @@ export function badRequest() {
   return new Response('Bad Request', { status: 400 });
 }
 
+export function unauthorized() {
+  return new Response('Unauthorized', { status: 401 });
+}
+
 export function forbidden() {
   return new Response('Forbidden', { status: 403 });
 }
