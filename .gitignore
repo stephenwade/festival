@@ -1,11 +1,11 @@
 .DS_Store
 node_modules/
 .cache/
-build/
+/build/
 .env*
 
 # runtime
-upload
+/upload
 
 # Playwright
 /test-results/

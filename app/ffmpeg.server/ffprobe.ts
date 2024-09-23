@@ -2,10 +2,7 @@ import { spawn } from 'node:child_process';
 
 import { z } from 'zod';
 
-const numericString = z
-  .string()
-  .regex(/^\d+(?:\.\d+)?$/u)
-  .transform(Number);
+import { numericString } from '~/utils/zod-number-schemas';
 
 /**
  * Parses a string containing JSON output from `ffprobe`.
