@@ -12,11 +12,11 @@ import { Temporal } from 'temporal-polyfill';
 import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
 
-import { AudioFileUpload } from '~/components/admin/AudioFileUpload';
-import { FileUpload } from '~/components/admin/FileUpload';
 import { Input } from '~/components/admin/Input';
 import { InputTimeZone } from '~/components/admin/InputTimeZone';
 import { SaveButton } from '~/components/admin/SaveButton';
+import { AudioFileUpload } from '~/components/admin/upload/AudioFileUpload';
+import { FileUpload } from '~/components/admin/upload/FileUpload';
 import { useOrigin } from '~/hooks/useOrigin';
 
 import type { schema, setSchema } from './schema';

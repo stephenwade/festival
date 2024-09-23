@@ -10,49 +10,9 @@ import type { loader as audioUploadLoader } from '~/routes/admin.audio-upload.$i
 import type { action as newAudioUploadAction } from '~/routes/admin.audio-upload.new';
 import type { AudioFileProcessingEvent } from '~/sse.server/audio-file-events';
 
-type PutFormResponse = SerializeFrom<typeof newAudioUploadAction>;
+import { xhrPromise } from './xhrPromise';
 
-interface PutFormOptions {
-  url: string;
-  onProgress?: (progress: number) => void;
-}
-
-function putForm(form: FormData, options: PutFormOptions) {
-  const { url, onProgress } = options;
-
-  // Can't use fetch because it doesn't support tracking upload progress
-  const request = new Promise<PutFormResponse>((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('PUT', url);
-
-    xhr.addEventListener('load', () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        const response = JSON.parse(xhr.responseText) as PutFormResponse;
-        resolve(response);
-      } else {
-        reject({ reason: 'Bad status code', status: xhr.status });
-      }
-    });
-
-    if (onProgress) {
-      xhr.upload.addEventListener('progress', (event) => {
-        onProgress(event.loaded / event.total);
-      });
-    }
-
-    xhr.addEventListener('error', () => {
-      reject({ reason: 'Error', status: xhr.status });
-    });
-
-    xhr.addEventListener('abort', () => {
-      reject({ reason: 'Aborted' });
-    });
-
-    xhr.send(form);
-  });
-
-  return request;
-}
+type UploadResponse = SerializeFrom<typeof newAudioUploadAction>;
 
 function displayConversionStatus(
   status: Exclude<AudioFileProcessingEvent['conversionStatus'], 'DONE'>,
@@ -118,17 +78,21 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
     if (!fileInput?.files?.length) return;
 
     const file = fileInput.files[0]!;
+    fileInput.value = '';
     setIsUploading(true);
     setFileName(file.name);
     setUploadProgress(0);
 
     const form = new FormData();
     form.append(UPLOAD_AUDIO_FORM_KEY, file);
-    putForm(form, {
+    xhrPromise(form, {
       url: '/admin/audio-upload/new',
       onProgress: setUploadProgress,
+      errorOnBadStatus: true,
     })
-      .then((file) => {
+      .then((response) => {
+        const file = JSON.parse(response.responseText) as UploadResponse;
+
         setFileState(file);
 
         // Wait a bit to make sure the fetcher is not triggered before the
@@ -141,8 +105,6 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
       .catch((error: unknown) => {
         console.error(`Audio file upload ${name} failed.`, error);
       });
-
-    fileInput.value = '';
   };
 
   const onRemoveFileClick = () => {
