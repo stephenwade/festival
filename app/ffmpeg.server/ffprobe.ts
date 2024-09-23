@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 const numericString = z
   .string()
-  .regex(/^\d+(?:\.\d+)?$/u)
+  .regex(/^[0-9]+(?:\.[0-9]+)?$/u)
   .transform(Number);
 
 /**

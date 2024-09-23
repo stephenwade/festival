@@ -35,6 +35,7 @@ module.exports = {
   ],
 
   rules: {
+    'no-plusplus': 'error',
     'object-shorthand': 'warn',
     quotes: ['warn', 'single', { avoidEscape: true }],
     'require-unicode-regexp': 'warn',
@@ -85,6 +86,7 @@ module.exports = {
         requireDefaultForNonUnion: true,
       },
     ],
+    'unicorn/better-regex': 'off',
     'unicorn/filename-case': 'off',
     'unicorn/no-array-callback-reference': 'off',
     'unicorn/no-null': 'off',
