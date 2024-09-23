@@ -1,7 +1,7 @@
 import type { Show } from '@prisma/client';
 import { Form, useNavigate, useNavigation } from '@remix-run/react';
 import type { FC } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   useControlField,
   useField,
@@ -9,7 +9,6 @@ import {
   ValidatedForm,
 } from 'remix-validated-form';
 import { Temporal } from 'temporal-polyfill';
-import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
 
 import { Input } from '~/components/admin/Input';
@@ -17,6 +16,11 @@ import { InputTimeZone } from '~/components/admin/InputTimeZone';
 import { SaveButton } from '~/components/admin/SaveButton';
 import { AudioFileUpload } from '~/components/admin/upload/AudioFileUpload';
 import { FileUpload } from '~/components/admin/upload/FileUpload';
+import {
+  isIdle,
+  useUploadAudioFile,
+  useUploadStates,
+} from '~/components/admin/upload/useUploadAudioFile';
 import { useOrigin } from '~/hooks/useOrigin';
 
 import type { schema, setSchema } from './schema';
@@ -27,25 +31,14 @@ const SHOW_FORM_ID = 'show-form';
 interface SetFormProps {
   name: string;
   remove: () => void;
-
-  /** Changes to this prop are ignored. */
-  onIsUploadingChanged: (isUploading: boolean) => void;
 }
 
-const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
-  const [isUploading, setIsUploading] = useState(false);
-
-  useEffect(() => {
-    if (isUploading) {
-      onIsUploadingChanged(isUploading);
-      return () => {
-        onIsUploadingChanged(false);
-      };
-    }
-  }, [isUploading, onIsUploadingChanged]);
-
+const SetForm: FC<SetFormProps> = ({ name, remove }) => {
   const { getInputProps } = useField(`${name}.id`);
   const [id] = useControlField<z.infer<typeof setSchema>['id']>(`${name}.id`);
+
+  const uploadAudioFile = useUploadAudioFile();
+  const { state } = uploadAudioFile;
 
   return (
     <fieldset>
@@ -55,15 +48,14 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
       <Input label="Offset" name={`${name}.offset`} />
       <AudioFileUpload
         name={`${name}.audioFileId`}
-        isUploading={isUploading}
-        setIsUploading={setIsUploading}
+        uploadAudioFile={uploadAudioFile}
       />
       <button
         type="button"
         onClick={() => {
           remove();
         }}
-        disabled={isUploading}
+        disabled={state ? !isIdle(state) : false}
       >
         Remove set
       </button>
@@ -89,23 +81,12 @@ const ShowForm: FC<ShowFormProps> = ({
   const isDeleting =
     navigation.state === 'submitting' && navigation.formMethod === 'DELETE';
 
-  const {
-    count: countUploading,
-    increment: incUploading,
-    decrement: decUploading,
-  } = useCounter();
-
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const [isUploadingBackground, setIsUploadingBackground] = useState(false);
 
-  const saveDisabled = countUploading > 0;
-
-  const onIsUploadingChanged = useCallback(
-    (isUploading: boolean) => {
-      if (isUploading) incUploading();
-      else decUploading();
-    },
-    [incUploading, decUploading],
+  const uploadStates = useUploadStates();
+  const saveDisabled = Object.values(uploadStates).some(
+    (state) => !isIdle(state),
   );
 
   const [sets, { push, remove }] = useFieldArray<z.infer<typeof setSchema>>(
@@ -157,7 +138,6 @@ const ShowForm: FC<ShowFormProps> = ({
             remove={() => {
               remove(index);
             }}
-            onIsUploadingChanged={onIsUploadingChanged}
           />
         ))}
         <p>
