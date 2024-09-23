@@ -2,10 +2,7 @@ import { spawn } from 'node:child_process';
 
 import { z } from 'zod';
 
-const integerString = z
-  .string()
-  .regex(/^[0-9]+$/u)
-  .transform(Number);
+import { integerString } from '~/utils/zod-number-schemas';
 
 /**
  * Parses a string containing progress output in `key=value` format from FFmpeg.
