@@ -48,7 +48,7 @@ jobs:
       - run: npm run test-ct -- --shard=${{ matrix.shardIndex }}/${{ env.shardTotal }}
 
       - name: Upload test results
-        uses: actions/upload-artifact@604373da6381bf24206979c74d06a550515601b9 # v4
+        uses: actions/upload-artifact@84480863f228bb9747b473957fcc9e309aa96097 # v4
         if: always()
         with:
           # name: blob-report-ct-${{ matrix.os }}-${{ matrix.shardIndex }}
@@ -87,7 +87,7 @@ jobs:
         run: npx playwright merge-reports --reporter html ./all-blob-reports
 
       - name: Upload HTML report
-        uses: actions/upload-artifact@604373da6381bf24206979c74d06a550515601b9 # v4
+        uses: actions/upload-artifact@84480863f228bb9747b473957fcc9e309aa96097 # v4
         with:
           # name: html-report-ct-${{ matrix.os }}--attempt-${{ github.run_attempt }}
           name: html-report-ct--attempt-${{ github.run_attempt }}
