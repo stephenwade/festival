@@ -10,7 +10,7 @@ const ToastClose: FC<CloseButtonProps> = ({ type, closeToast }) => {
     <>
       <button
         onClick={() => {
-          window.location.reload();
+          globalThis.location.reload();
         }}
       >
         RELOAD

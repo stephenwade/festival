@@ -4,7 +4,7 @@ export function useOrigin() {
   const [origin, setOrigin] = useState<string>();
 
   useEffect(() => {
-    setOrigin(window.location.origin);
+    setOrigin(globalThis.location.origin);
   }, []);
 
   return origin;

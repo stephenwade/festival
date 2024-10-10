@@ -6,11 +6,11 @@ import { eventStream } from 'remix-utils/sse/server';
  * @see {@link https://remix.run/docs/en/v1/other-api/serve Remix App Server}
  */
 function getAdminEventTarget() {
-  if (!global.adminEventTarget) {
-    global.adminEventTarget = new EventTarget();
+  if (!globalThis.adminEventTarget) {
+    globalThis.adminEventTarget = new EventTarget();
   }
 
-  return global.adminEventTarget;
+  return globalThis.adminEventTarget;
 }
 
 declare global {
