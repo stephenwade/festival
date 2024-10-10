@@ -1,19 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import {
-  fixupConfigRules,
-  fixupPluginRules,
-  includeIgnoreFile,
-} from '@eslint/compat';
-import { FlatCompat } from '@eslint/eslintrc';
+import { fixupPluginRules, includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
+import prettier from 'eslint-config-prettier';
 import _import from 'eslint-plugin-import';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 import noOnlyTests from 'eslint-plugin-no-only-tests';
+import playwright from 'eslint-plugin-playwright';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import unicorn from 'eslint-plugin-unicorn';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -22,36 +20,33 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const gitignorePath = path.resolve(__dirname, '.gitignore');
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
-
 export default tseslint.config(
-  ...fixupConfigRules(
-    compat.extends(
-      'eslint:recommended',
+  js.configs.recommended,
+  react.configs.flat.recommended,
+  react.configs.flat['jsx-runtime'],
+  // This doesn't work yet
+  // reactHooks.configs.recommended,
+  jsxA11y.flatConfigs.recommended,
+  playwright.configs['flat/recommended'],
 
-      'plugin:react/recommended',
-      'plugin:react/jsx-runtime',
-      'plugin:react-hooks/recommended',
-      'plugin:jsx-a11y/recommended',
-      'plugin:playwright/recommended',
+  ...tseslint.configs.recommended,
+  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.stylisticTypeChecked,
 
-      'plugin:@typescript-eslint/strict-type-checked',
-      'plugin:@typescript-eslint/stylistic-type-checked',
+  unicorn.configs['flat/recommended'],
 
-      'plugin:unicorn/recommended',
+  prettier,
 
-      'prettier',
-    ),
-  ),
   {
     plugins: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       import: fixupPluginRules(_import),
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       'no-only-tests': noOnlyTests,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      'react-hooks': reactHooks,
       'simple-import-sort': simpleImportSort,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       'unused-imports': unusedImports,
     },
 
@@ -75,7 +70,11 @@ export default tseslint.config(
       ],
     },
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     rules: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      ...reactHooks.configs.recommended.rules,
+
       'no-plusplus': 'error',
       'object-shorthand': 'warn',
       quotes: ['warn', 'single', { avoidEscape: true }],
