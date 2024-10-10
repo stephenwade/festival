@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { fixupPluginRules, includeIgnoreFile } from '@eslint/compat';
+import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import _import from 'eslint-plugin-import';
@@ -39,11 +41,8 @@ export default tseslint.config(
 
   {
     plugins: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      import: fixupPluginRules(_import),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      import: _import,
       'no-only-tests': noOnlyTests,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       'react-hooks': reactHooks,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
@@ -69,7 +68,6 @@ export default tseslint.config(
       ],
     },
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     rules: {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       ...reactHooks.configs.recommended.rules,
