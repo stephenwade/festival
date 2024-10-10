@@ -47,7 +47,7 @@
     "remix-validated-form": "5.1.5",
     "standardized-audio-context": "25.3.77",
     "temporal-polyfill": "0.2.5",
-    "use-local-storage-state": "19.4.0",
+    "use-local-storage-state": "19.4.1",
     "usehooks-ts": "3.1.0",
     "zod": "3.23.8",
     "zod-form-data": "2.0.2"
