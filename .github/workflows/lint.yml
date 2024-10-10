@@ -23,11 +23,6 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5 # v2
-        with:
-          bun-version: latest
-
       - run: npm install
 
       - run: npm run lint
