@@ -1,3 +1,5 @@
+// @ts-check
+
 export default {
   extends: ['stylelint-config-standard', 'stylelint-config-hudochenkov/order'],
   rules: {

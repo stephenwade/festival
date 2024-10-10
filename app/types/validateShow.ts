@@ -9,7 +9,7 @@ type DeepNonNullable<T> = T extends (infer U)[]
 /**
  * Ensure that all of an object's properties are not null.
  */
-function validate<T>(obj: T): boolean {
+function validate(obj: Record<string, unknown> | null): boolean {
   if (obj === null) return false;
   if (typeof obj !== 'object') return true;
   for (const key in obj) {
