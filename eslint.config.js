@@ -49,9 +49,6 @@ export default tseslint.config(
     },
 
     languageOptions: {
-      ecmaVersion: 5,
-      sourceType: 'script',
-
       parserOptions: {
         projectService: true,
       },
