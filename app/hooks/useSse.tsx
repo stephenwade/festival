@@ -5,6 +5,7 @@ const eventSources = new Map<
   { eventSource: EventSource; refCount: number }
 >();
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export function useSse<T>(url: string | URL, onMessage: (data: T) => void) {
   useEffect(() => {
     const eventSourceData = eventSources.get(url);

@@ -14,6 +14,7 @@ export const SaveButton: FC<SaveButtonProps> = ({
 }) => {
   const isSubmitting = useIsSubmitting();
   const { isValid } = useFormContext();
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   const disabled = disabledProp || isSubmitting || !isValid;
 
   return (

@@ -29,7 +29,7 @@ export default tseslint.config(
   jsxA11y.flatConfigs.recommended,
   playwright.configs['flat/recommended'],
 
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
 
@@ -46,7 +46,6 @@ export default tseslint.config(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       'react-hooks': reactHooks,
       'simple-import-sort': simpleImportSort,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       'unused-imports': unusedImports,
     },
 
@@ -55,7 +54,7 @@ export default tseslint.config(
       sourceType: 'script',
 
       parserOptions: {
-        EXPERIMENTAL_useProjectService: true,
+        projectService: true,
       },
     },
 
@@ -97,6 +96,7 @@ export default tseslint.config(
           ],
         },
       ],
+      'no-only-tests/no-only-tests': 'error',
 
       '@typescript-eslint/no-unused-vars': 'off',
       'unused-imports/no-unused-imports': 'warn',
@@ -106,7 +106,6 @@ export default tseslint.config(
       '@typescript-eslint/consistent-type-imports': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'off', // Used for route params and in tests
       '@typescript-eslint/only-throw-error': 'off', // Remix allows throwing `Response`s
-      '@typescript-eslint/prefer-nullish-coalescing': 'off',
       '@typescript-eslint/prefer-promise-reject-errors': 'off',
       '@typescript-eslint/restrict-template-expressions': [
         'error',
