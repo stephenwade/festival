@@ -71,7 +71,7 @@
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jsx-a11y": "6.10.1",
     "eslint-plugin-no-only-tests": "3.3.0",
-    "eslint-plugin-playwright": "1.8.3",
+    "eslint-plugin-playwright": "2.0.0",
     "eslint-plugin-react": "7.37.2",
     "eslint-plugin-react-hooks": "5.1.0-rc-fb9a90fa48-20240614",
     "eslint-plugin-simple-import-sort": "12.1.1",
