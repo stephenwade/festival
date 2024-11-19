@@ -66,6 +66,9 @@ export default tseslint.config(
     },
 
     rules: {
+      // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2496
+      'unicorn/expiring-todo-comments': 'off',
+
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       ...reactHooks.configs.recommended.rules,
 
