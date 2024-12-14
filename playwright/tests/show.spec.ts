@@ -35,7 +35,7 @@ test('plays the default show', async ({ page, browserName }) => {
 
   await page.getByRole('button', { name: 'LISTEN LIVE' }).click();
 
-  await expect(page.locator('.current-time')).toHaveText('0:02', {
+  await expect(page.locator('.current-time')).toHaveText('0:03', {
     timeout: 15_000,
   });
   await expect(page.locator('.next-up')).toHaveText('NEXT UP');
