@@ -1,0 +1,11 @@
+[branches]
+main = "main"
+
+[create]
+new-branch-type = "prototype"
+
+[ship]
+delete-tracking-branch = false
+
+[sync-strategy]
+prototype-branches = "rebase"
