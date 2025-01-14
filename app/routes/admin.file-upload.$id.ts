@@ -15,5 +15,7 @@ export const loader = (async (args) => {
   });
   if (!imageFile) throw notFound();
 
+  // Single Fetch doesn't work with Clerk
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   return json(imageFile);
 }) satisfies LoaderFunction;

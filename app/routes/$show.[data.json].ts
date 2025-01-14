@@ -1,5 +1,4 @@
-import type { LoaderFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
+import { json, type LoaderFunction } from '@remix-run/node';
 import { addSeconds, formatISO } from 'date-fns';
 
 import { db } from '~/db.server/db';
@@ -35,5 +34,7 @@ export const loader = (async ({ params }) => {
     serverDate: formatISO(new Date()),
   };
 
+  // Single Fetch doesn't work with Clerk
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   return json(data);
 }) satisfies LoaderFunction;

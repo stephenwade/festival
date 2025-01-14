@@ -61,6 +61,8 @@ export const ShowInfoTest: FC<TestProps> = (props) => {
       path: '/',
       Component: ShowInfoDisplay,
       loader() {
+        // Single Fetch doesn't work with Clerk
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         return json(getMockData(props));
       },
     },

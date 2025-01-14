@@ -1,6 +1,6 @@
 // Inspired by https://github.com/Buzut/huge-uploader
 
-import type { SerializeFrom } from '@remix-run/node';
+import type { useLoaderData } from '@remix-run/react';
 import { nanoid } from 'nanoid';
 import { useCallback, useState, useSyncExternalStore } from 'react';
 
@@ -8,6 +8,8 @@ import { uploadAudioFileKeys } from '~/forms/upload-audio';
 import type { action as partialAudioUploadAction } from '~/routes/admin.audio-upload.partial';
 
 import { xhrPromise } from './xhrPromise';
+
+type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;
 
 const UPLOAD_ENDPOINT = '/admin/audio-upload/partial';
 const CHUNK_SIZE = 50_000_000; // 50 MB

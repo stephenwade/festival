@@ -1,4 +1,4 @@
-import type { SerializeFrom } from '@remix-run/node';
+import type { useLoaderData } from '@remix-run/react';
 import { useFetcher } from '@remix-run/react';
 import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -9,6 +9,8 @@ import type { loader as fileUploadLoader } from '~/routes/admin.file-upload.$id'
 import type { action as newFileUploadAction } from '~/routes/admin.file-upload.new';
 
 import { xhrPromise } from './xhrPromise';
+
+type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;
 
 type UploadResponse = SerializeFrom<typeof newFileUploadAction>;
 
