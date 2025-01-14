@@ -1,4 +1,4 @@
-import type { SerializeFrom } from '@remix-run/node';
+import type { useLoaderData } from '@remix-run/react';
 import { useFetcher } from '@remix-run/react';
 import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -9,6 +9,8 @@ import type { loader as audioUploadLoader } from '~/routes/admin.audio-upload.$i
 import type { AudioFileProcessingEvent } from '~/sse.server/audio-file-events';
 
 import type { useUploadAudioFile } from './useUploadAudioFile';
+
+type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;
 
 function displayConversionStatus(
   status: Exclude<AudioFileProcessingEvent['conversionStatus'], 'DONE'>,

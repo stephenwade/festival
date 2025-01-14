@@ -48,6 +48,8 @@ export const action = (async (args) => {
     // Run this in the background after responding to the request
     void checkAudioFile(audioFile);
 
+    // Single Fetch doesn't work with Clerk
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     return json(audioFile);
   }
 

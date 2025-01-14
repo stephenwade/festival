@@ -31,6 +31,8 @@ export const loader = (async (args) => {
   });
   if (!show) throw notFound();
 
+  // Single Fetch doesn't work with Clerk
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   return json(show);
 }) satisfies LoaderFunction;
 

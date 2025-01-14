@@ -25,6 +25,8 @@ export const action = (async (args) => {
 
   const file = await saveFileAndUploadToAzure(fileInfo);
 
+  // Single Fetch doesn't work with Clerk
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   return json(file);
 }) satisfies ActionFunction;
 

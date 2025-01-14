@@ -48,6 +48,8 @@ export const loader = (async (args) => {
         .toString({ smallestUnit: 'second' })
     : null;
 
+  // Single Fetch doesn't work with Clerk
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   return json(replaceNullsWithUndefined({ ...show, startDate }));
 }) satisfies LoaderFunction;
 
