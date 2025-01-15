@@ -9,5 +9,13 @@
       "playwright/tests/global.?(setup|teardown).ts",
       "playwright/ct-tests/index.tsx"
     ]
+  },
+  "remix": {
+    "entry": [
+      "app/root.tsx",
+      "app/entry.{client,server}.tsx",
+      "app/routes.ts",
+      "app/routes/**/*.{ts,tsx}"
+    ]
   }
 }
