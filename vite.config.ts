@@ -6,7 +6,14 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 dotenv.config();
 
 export default defineConfig({
-  plugins: [tsconfigPaths(), remix()],
+  plugins: [
+    tsconfigPaths(),
+    remix({
+      future: {
+        v3_fetcherPersist: true,
+      },
+    }),
+  ],
   server: {
     port: Number(process.env.PORT),
   },
