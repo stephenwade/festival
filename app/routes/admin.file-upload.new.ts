@@ -10,7 +10,6 @@ import {
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
 import { db } from '~/db.server/db';
-import { UPLOAD_DIRECTORY } from '~/forms/upload.server';
 import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
 import { badRequest } from '~/utils/responses.server';
 
@@ -30,12 +29,12 @@ export const action = (async (args) => {
   return json(file);
 }) satisfies ActionFunction;
 
-const uploadHandler = unstable_createFileUploadHandler({
-  directory: UPLOAD_DIRECTORY,
-  maxPartSize: 100 * MEGABYTE,
-});
+async function getFileFromFormData(request: Request): Promise<globalThis.File> {
+  const uploadHandler = unstable_createFileUploadHandler({
+    directory: 'upload',
+    maxPartSize: 100 * MEGABYTE,
+  });
 
-async function getFileFromFormData(request: Request): Promise<File> {
   const form = await unstable_parseMultipartFormData(request, uploadHandler);
 
   const file = form.get(UPLOAD_FILE_FORM_KEY);
@@ -45,7 +44,7 @@ async function getFileFromFormData(request: Request): Promise<File> {
 }
 
 async function saveFileAndUploadToAzure(fileInfo: File) {
-  const fileName = `${UPLOAD_DIRECTORY}/${fileInfo.name}`;
+  const fileName = `upload/${fileInfo.name}`;
   const blobName = `image/${fileInfo.name}`;
   await uploadFileToAzure({
     blobName,

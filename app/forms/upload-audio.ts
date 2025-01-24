@@ -1,6 +1,1 @@
-export const uploadAudioFileKeys = {
-  uploadId: 'uploadId',
-  chunkNumber: 'chunkNumber',
-  totalChunks: 'totalChunks',
-  chunk: 'chunk',
-};
+export const UPLOAD_AUDIO_FORM_KEY = 'uploadAudio';
