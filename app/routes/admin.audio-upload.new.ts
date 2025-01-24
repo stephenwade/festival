@@ -8,7 +8,7 @@ import {
   unstable_parseMultipartFormData,
 } from '@remix-run/node';
 
-import { redirectToLogin } from '~/auth/redirect-to-login.server';
+import { requireLogin } from '~/auth/redirect-to-login.server';
 import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
 import { db } from '~/db.server/db';
 import { ffmpeg } from '~/ffmpeg.server/ffmpeg';
@@ -22,7 +22,7 @@ const GIGABYTE = 1_000_000_000;
 const MICROSECONDS = 1 / 1_000_000;
 
 export const action = (async (args) => {
-  await redirectToLogin(args);
+  await requireLogin(args);
 
   console.log('Uploading audio file');
 
@@ -34,6 +34,8 @@ export const action = (async (args) => {
   // Run this in the background after responding to the request
   void checkAudioFile(file);
 
+  // Single Fetch doesn't work with Clerk
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   return json(file);
 }) satisfies ActionFunction;
 
