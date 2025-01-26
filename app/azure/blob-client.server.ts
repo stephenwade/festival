@@ -1,7 +1,9 @@
 import {
+  BlobSASPermissions,
   BlobServiceClient,
   StorageSharedKeyCredential,
 } from '@azure/storage-blob';
+import { addHours } from 'date-fns';
 
 const account = process.env.AZURE_STORAGE_ACCOUNT;
 const accountKey = process.env.AZURE_STORAGE_KEY;
@@ -32,6 +34,22 @@ interface UploadFileToAzureProps {
   blobName: string;
   fileName: string;
   contentType: string;
+}
+
+const writePermissions = BlobSASPermissions.parse('w');
+
+export async function getBlobSasUrl(blobName: string, contentType: string) {
+  const blobClient = containerClient.getBlockBlobClient(blobName);
+
+  const expiresOn = addHours(new Date(), 1);
+
+  const sas = await blobClient.generateSasUrl({
+    permissions: writePermissions,
+    expiresOn,
+    contentType,
+  });
+
+  return sas;
 }
 
 export async function uploadFileToAzure({

@@ -4,7 +4,10 @@ import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useControlField, useField } from 'remix-validated-form';
 
-import { UPLOAD_AUDIO_FORM_KEY } from '~/forms/upload-audio';
+import {
+  UPLOAD_AUDIO_CONTENT_TYPE_KEY,
+  UPLOAD_AUDIO_NAME_KEY,
+} from '~/forms/upload-audio';
 import { useSse } from '~/hooks/useSse';
 import type { loader as audioUploadLoader } from '~/routes/admin.audio-upload.$id';
 import type { action as newAudioUploadAction } from '~/routes/admin.audio-upload.new';
@@ -20,12 +23,14 @@ function displayConversionStatus(
   status: Exclude<AudioFileProcessingEvent['conversionStatus'], 'DONE'>,
 ) {
   switch (status) {
+    case 'USER_UPLOAD':
+      return 'Uploading…';
     case 'CHECKING':
       return 'Checking…';
     case 'CONVERTING':
       return 'Converting…';
-    case 'UPLOADING':
-      return 'Uploading…';
+    case 'RE_UPLOAD':
+      return 'Converting…';
     case 'ERROR':
       return 'Error';
   }
@@ -75,7 +80,7 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
   const [uploadProgress, setUploadProgress] = useState(0);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const onUploadClick = () => {
+  const onUploadClick = async () => {
     const fileInput = fileInputRef.current;
     if (!fileInput?.files?.length) return;
 
@@ -86,23 +91,30 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
     setUploadProgress(0);
 
     const form = new FormData();
-    form.append(UPLOAD_AUDIO_FORM_KEY, file);
-    xhrPromise(form, {
-      url: '/admin/audio-upload/new',
+    form.append(UPLOAD_AUDIO_NAME_KEY, file.name);
+    form.append(UPLOAD_AUDIO_CONTENT_TYPE_KEY, file.type);
+
+    const newFileResponse = await fetch('/admin/audio-upload/new', {
+      method: 'POST',
+      body: form,
+    });
+    const { file: newFile, uploadUrl } =
+      (await newFileResponse.json()) as UploadResponse;
+    setFileState(newFile);
+    // Wait a bit to make sure the fetcher is not triggered before the
+    // file upload state is updated.
+    setTimeout(() => {
+      setFileId(newFile.id);
+    }, 100);
+
+    xhrPromise(file, {
+      url: uploadUrl,
       onProgress: setUploadProgress,
       errorOnBadStatus: true,
     })
-      .then((response) => {
-        const file = JSON.parse(response.responseText) as UploadResponse;
-
-        setFileState(file);
-
-        // Wait a bit to make sure the fetcher is not triggered before the
-        // file upload state is updated.
-        setTimeout(() => {
-          setFileId(file.id);
-          setIsUploading(false);
-        }, 100);
+      .then(() => {
+        setIsUploading(false);
+        void fetch(`/admin/audio-upload/${newFile.id}/process`);
       })
       .catch((error: unknown) => {
         console.error(`Audio file upload ${name} failed.`, error);
@@ -152,7 +164,7 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
         ) : (
           <>
             <input type="file" ref={fileInputRef} accept="audio/*" />{' '}
-            <button type="button" onClick={onUploadClick}>
+            <button type="button" onClick={() => void onUploadClick()}>
               Upload
             </button>
           </>
