@@ -4,12 +4,12 @@ import type { ActionFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 
 import { requireLogin } from '~/auth/redirect-to-login.server';
-import { getBlobSasUrl, getBlobUrl } from '~/azure/blob-client.server';
 import { db } from '~/db.server/db';
 import {
   UPLOAD_AUDIO_CONTENT_TYPE_KEY,
   UPLOAD_AUDIO_NAME_KEY,
 } from '~/forms/upload-audio';
+import { getObjectUploadUrl, getObjectUrl } from '~/tigris.server/s3-client';
 import { badRequest } from '~/utils/responses.server';
 
 export const action = (async (args) => {
@@ -21,7 +21,7 @@ export const action = (async (args) => {
   const name = getFileNameFromFormData(formData);
   const contentType = getContentTypeFromFormData(formData);
 
-  const { uploadUrl, url } = await getBlobUrls(name, contentType);
+  const { uploadUrl, url } = await makeObjectUrls(name, contentType);
 
   const file = await saveAudioFileToDatabase(name, url);
 
@@ -44,13 +44,13 @@ function getContentTypeFromFormData(formData: FormData): string {
   return contentType;
 }
 
-async function getBlobUrls(name: string, contentType: string) {
+async function makeObjectUrls(name: string, contentType: string) {
   const extname = path.extname(name);
-  const blobName = `upload/${globalThis.crypto.randomUUID()}${extname}`;
+  const blobName = `audio/${crypto.randomUUID()}${extname}`;
 
-  const uploadUrl = await getBlobSasUrl(blobName, contentType);
+  const uploadUrl = await getObjectUploadUrl(blobName, contentType);
 
-  const url = getBlobUrl(blobName);
+  const url = getObjectUrl(blobName);
 
   return { uploadUrl, url };
 }

@@ -7,13 +7,15 @@ import type { AudioFile } from '@prisma/client';
 import type { ActionFunction } from '@remix-run/node';
 
 import { requireLogin } from '~/auth/redirect-to-login.server';
-import { uploadFileToAzure } from '~/azure/blob-client.server';
 import { db } from '~/db.server/db';
 import { ffmpeg } from '~/ffmpeg.server/ffmpeg';
 import type { FFprobeOutput } from '~/ffmpeg.server/ffprobe';
 import { ffprobe } from '~/ffmpeg.server/ffprobe';
 import { emitAudioFileProcessingEvent } from '~/sse.server/audio-file-events';
+import { deleteObjectByUrl, uploadFile } from '~/tigris.server/s3-client';
 import { notFound, serverError } from '~/utils/responses.server';
+
+const UPLOAD_DIR = 'upload';
 
 const MICROSECONDS = 1 / 1_000_000;
 
@@ -29,6 +31,8 @@ export const action = (async (args) => {
 
   // Run this in the background after responding to the request
   void checkAudioFile(file);
+
+  return null;
 }) satisfies ActionFunction;
 
 async function checkAudioFile(file: AudioFile) {
@@ -61,12 +65,15 @@ async function checkAudioFile(file: AudioFile) {
       });
 
       await updateAudioFileUploading(file.id);
-      const blobName = `audio/${file.id}.mp3`;
-      await uploadFileToAzure({
-        blobName,
-        fileName: newFileName,
-        contentType: 'audio/mpeg',
-      });
+      const objectKey = `audio/${crypto.randomUUID()}.mp3`;
+      await Promise.all([
+        uploadFile({
+          fileName: newFileName,
+          objectKey,
+          contentType: 'audio/mpeg',
+        }),
+        deleteObjectByUrl(file.url),
+      ]);
 
       await unlink(newFileName);
     } else {
@@ -82,13 +89,13 @@ async function checkAudioFile(file: AudioFile) {
 }
 
 async function downloadFile(url: string) {
-  await mkdir('upload', {
+  await mkdir(UPLOAD_DIR, {
     // Don't error if the directory already exists
     recursive: true,
   });
 
   const extname = path.extname(url);
-  const filePath = `upload/${crypto.randomUUID()}${extname}`;
+  const filePath = `${UPLOAD_DIR}/${crypto.randomUUID()}${extname}`;
 
   const response = await fetch(url);
   if (!response.ok || !response.body) {

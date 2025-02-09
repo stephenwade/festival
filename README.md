@@ -12,11 +12,16 @@ at the same time) without requiring live streaming infrastructure.
 - Run `npm install` to install the required packages.
 - Run `npm run dev` to serve the application locally.
 
-## Azure Setup
+## Tigris Setup
 
-Make sure that your Azure storage account is set to allow
-[CORS requests](https://stackoverflow.com/a/41351674).
-This is required for the visualizer to work.
+- Create a new public bucket in Tigris.
+- In the bucket settings, disable directory listing.
+- In the bucket settings, add a CORS rule:
+  - Origins: `*` for development or the URL origin of the deployed app
+  - Allowed Methods: HEAD, GET, PUT, OPTIONS
+    - HEAD, GET, and OPTIONS are required for the visualizer
+    - PUT and OPTIONS are required for file uploads
+  - Allowed Headers: `content-type`
 
 ## Testing
 

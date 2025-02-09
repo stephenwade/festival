@@ -8,9 +8,9 @@ import {
 } from '@remix-run/node';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
-import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
 import { db } from '~/db.server/db';
 import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
+import { getObjectUrl, uploadFile } from '~/tigris.server/s3-client';
 import { badRequest } from '~/utils/responses.server';
 
 const MEGABYTE = 1_000_000;
@@ -45,17 +45,17 @@ async function getFileFromFormData(request: Request): Promise<globalThis.File> {
 
 async function saveFileAndUploadToAzure(fileInfo: File) {
   const fileName = `upload/${fileInfo.name}`;
-  const blobName = `image/${fileInfo.name}`;
-  await uploadFileToAzure({
-    blobName,
+  const objectKey = `image/${fileInfo.name}`;
+  await uploadFile({
     fileName,
+    objectKey,
     contentType: fileInfo.type,
   });
 
   const imageFile = await db.imageFile.create({
     data: {
       name: fileInfo.name,
-      url: getBlobUrl(blobName),
+      url: getObjectUrl(objectKey),
     },
   });
 
