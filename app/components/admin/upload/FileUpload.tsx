@@ -4,7 +4,10 @@ import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useControlField, useField } from 'remix-validated-form';
 
-import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
+import {
+  UPLOAD_FILE_CONTENT_TYPE_KEY,
+  UPLOAD_FILE_NAME_KEY,
+} from '~/forms/upload-file';
 import type { loader as fileUploadLoader } from '~/routes/admin.file-upload.$id';
 import type { action as newFileUploadAction } from '~/routes/admin.file-upload.new';
 
@@ -47,7 +50,7 @@ export const FileUpload: FC<FileUploadProps> = ({
   const [uploadProgress, setUploadProgress] = useState(0);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const onUploadClick = () => {
+  const onUploadClick = async () => {
     const fileInput = fileInputRef.current;
     if (!fileInput?.files?.length) return;
 
@@ -58,23 +61,29 @@ export const FileUpload: FC<FileUploadProps> = ({
     setUploadProgress(0);
 
     const form = new FormData();
-    form.append(UPLOAD_FILE_FORM_KEY, file);
-    xhrPromise(form, {
-      url: '/admin/file-upload/new',
+    form.append(UPLOAD_FILE_NAME_KEY, file.name);
+    form.append(UPLOAD_FILE_CONTENT_TYPE_KEY, file.type);
+
+    const newFileResponse = await fetch('/admin/file-upload/new', {
+      method: 'POST',
+      body: form,
+    });
+    const { file: newFile, uploadUrl } =
+      (await newFileResponse.json()) as UploadResponse;
+    setFileState(newFile);
+    // Wait a bit to make sure the fetcher is not triggered before the
+    // file upload state is updated.
+    setTimeout(() => {
+      setFileId(newFile.id);
+    }, 100);
+
+    xhrPromise(file, {
+      url: uploadUrl,
       onProgress: setUploadProgress,
       errorOnBadStatus: true,
     })
-      .then((response) => {
-        const file = JSON.parse(response.responseText) as UploadResponse;
-
-        setFileState(file);
-
-        // Wait a bit to make sure the fetcher is not triggered before the
-        // file upload state is updated.
-        setTimeout(() => {
-          setFileId(file.id);
-          setIsUploading(false);
-        }, 100);
+      .then(() => {
+        setIsUploading(false);
       })
       .catch((error: unknown) => {
         console.error(`File upload ${name} failed.`, error);
@@ -113,7 +122,7 @@ export const FileUpload: FC<FileUploadProps> = ({
         ) : (
           <>
             <input type="file" ref={fileInputRef} accept="image/*" />{' '}
-            <button type="button" onClick={onUploadClick}>
+            <button type="button" onClick={() => void onUploadClick()}>
               Upload
             </button>
           </>
