@@ -114,7 +114,9 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
     })
       .then(() => {
         setIsUploading(false);
-        void fetch(`/admin/audio-upload/${newFile.id}/process`);
+        void fetch(`/admin/audio-upload/${newFile.id}/process`, {
+          method: 'POST',
+        });
       })
       .catch((error: unknown) => {
         console.error(`Audio file upload ${name} failed.`, error);

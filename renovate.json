@@ -1,6 +1,14 @@
 {
   "extends": ["config:best-practices", "config:js-app"],
 
+  "timezone": "America/New_York",
+
+  "lockFileMaintenance": {
+    "enabled": true,
+    "extends": ["schedule:weekly"],
+    "automerge": true
+  },
+
   "packageRules": [
     {
       "matchUpdateTypes": ["patch", "digest"],
@@ -13,14 +21,13 @@
     },
     {
       "matchUpdateTypes": ["minor"],
-      "matchPackageNames": ["/^@remix-run//"],
+      "matchPackageNames": ["@remix-run/*"],
       "automerge": false
+    },
+    {
+      "description": "Disable aws-sdk updates",
+      "matchPackageNames": ["@aws-sdk/*"],
+      "enabled": false
     }
-  ],
-
-  "lockFileMaintenance": {
-    "enabled": true,
-    "extends": ["schedule:weekly"],
-    "automerge": true
-  }
+  ]
 }

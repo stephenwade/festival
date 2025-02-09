@@ -1,4 +1,5 @@
-DELETE FROM `AudioFile` WHERE `conversionStatus` = 'UPLOADING' OR `url` IS NULL;
+DELETE FROM `Show`;
+DELETE FROM `AudioFile`;
 
 -- AlterTable
 ALTER TABLE `AudioFile` MODIFY `url` VARCHAR(191) NOT NULL,

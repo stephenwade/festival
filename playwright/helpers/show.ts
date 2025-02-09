@@ -56,7 +56,7 @@ export async function seedShow(startDate: Date) {
           audioFile: {
             create: {
               name: '5-min-silence.mp3',
-              url: 'https://festivalci.z13.web.core.windows.net/5-min-silence.mp3',
+              url: 'https://festival-ci.fly.storage.tigris.dev/5-min-silence.mp3',
               duration: 5 * 60,
               conversionStatus: 'DONE',
             },

@@ -1,65 +1,67 @@
-import { unlink } from 'node:fs/promises';
+import path from 'node:path';
 
 import type { ActionFunction } from '@remix-run/node';
-import {
-  json,
-  unstable_createFileUploadHandler,
-  unstable_parseMultipartFormData,
-} from '@remix-run/node';
+import { json } from '@remix-run/node';
 
-import { redirectToLogin } from '~/auth/redirect-to-login.server';
-import { getBlobUrl, uploadFileToAzure } from '~/azure/blob-client.server';
+import { requireLogin } from '~/auth/redirect-to-login.server';
 import { db } from '~/db.server/db';
-import { UPLOAD_FILE_FORM_KEY } from '~/forms/upload-file';
+import {
+  UPLOAD_FILE_CONTENT_TYPE_KEY,
+  UPLOAD_FILE_NAME_KEY,
+} from '~/forms/upload-file';
+import { getObjectUploadUrl, getObjectUrl } from '~/tigris.server/s3-client';
 import { badRequest } from '~/utils/responses.server';
 
-const MEGABYTE = 1_000_000;
-
 export const action = (async (args) => {
-  await redirectToLogin(args);
+  await requireLogin(args);
 
-  console.log('Uploading file');
+  console.log('Creating file upload');
 
-  const fileInfo = await getFileFromFormData(args.request);
+  const formData = await args.request.formData();
+  const name = getFileNameFromFormData(formData);
+  const contentType = getContentTypeFromFormData(formData);
 
-  const file = await saveFileAndUploadToAzure(fileInfo);
+  const { uploadUrl, url } = await makeObjectUrls(name, contentType);
+
+  const file = await saveFileToDatabase(name, url);
 
   // Single Fetch doesn't work with Clerk
   // eslint-disable-next-line @typescript-eslint/no-deprecated
-  return json(file);
+  return json({ file, uploadUrl });
 }) satisfies ActionFunction;
 
-async function getFileFromFormData(request: Request): Promise<globalThis.File> {
-  const uploadHandler = unstable_createFileUploadHandler({
-    directory: 'upload',
-    maxPartSize: 100 * MEGABYTE,
-  });
+function getFileNameFromFormData(formData: FormData): string {
+  const name = formData.get(UPLOAD_FILE_NAME_KEY);
+  if (typeof name !== 'string') throw badRequest();
 
-  const form = await unstable_parseMultipartFormData(request, uploadHandler);
-
-  const file = form.get(UPLOAD_FILE_FORM_KEY);
-  if (typeof file === 'string' || file === null) throw badRequest();
-
-  return file;
+  return name;
 }
 
-async function saveFileAndUploadToAzure(fileInfo: File) {
-  const fileName = `upload/${fileInfo.name}`;
-  const blobName = `image/${fileInfo.name}`;
-  await uploadFileToAzure({
-    blobName,
-    fileName,
-    contentType: fileInfo.type,
-  });
+function getContentTypeFromFormData(formData: FormData): string {
+  const contentType = formData.get(UPLOAD_FILE_CONTENT_TYPE_KEY);
+  if (typeof contentType !== 'string') throw badRequest();
 
-  const imageFile = await db.imageFile.create({
+  return contentType;
+}
+
+async function makeObjectUrls(name: string, contentType: string) {
+  const extname = path.extname(name);
+  const blobName = `image/${crypto.randomUUID()}${extname}`;
+
+  const uploadUrl = await getObjectUploadUrl(blobName, contentType);
+
+  const url = getObjectUrl(blobName);
+
+  return { uploadUrl, url };
+}
+
+async function saveFileToDatabase(name: string, url: string) {
+  const file = await db.imageFile.create({
     data: {
-      name: fileInfo.name,
-      url: getBlobUrl(blobName),
+      name,
+      url,
     },
   });
 
-  await unlink(fileName);
-
-  return imageFile;
+  return file;
 }

@@ -29,7 +29,8 @@
     "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.26.0",
+    "@aws-sdk/client-s3": "3.744.0",
+    "@aws-sdk/s3-request-presigner": "3.744.0",
     "@clerk/remix": "4.5.0",
     "@prisma/client": "5.22.0",
     "@remix-run/node": "2.15.3",
@@ -102,6 +103,5 @@
     "*.prisma": "prisma format --schema",
     "*.svg": "svgo",
     "*": "prettier --ignore-unknown --write --ignore-path .gitignore"
-  },
-  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+  }
 }
