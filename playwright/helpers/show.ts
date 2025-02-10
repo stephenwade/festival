@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { addSeconds } from 'date-fns';
 import { nanoid } from 'nanoid';
+import { Temporal } from 'temporal-polyfill';
 
 import { isDefined } from '~/utils/is-defined';
 
@@ -18,7 +18,7 @@ export async function deleteTestShows() {
   });
 }
 
-export async function seedShow(startDate: Date) {
+export async function seedShow(startDate: Temporal.Instant) {
   const [logoImageFile, backgroundImageFile] = await Promise.all([
     prisma.imageFile.create({
       data: {
@@ -40,7 +40,7 @@ export async function seedShow(startDate: Date) {
       name: 'Test Show',
       slug: randomShowSlug(),
       description: 'The best radio show on GitHub Actions!',
-      startDate,
+      startDate: startDate.toString(),
       timeZone: 'GMT',
       backgroundColor: '#000000',
       backgroundColorSecondary: '#000000',
@@ -101,6 +101,8 @@ export async function delayShow(slug: string) {
 
   await prisma.show.update({
     where: { id: show.id },
-    data: { startDate: addSeconds(new Date(), 10) },
+    data: {
+      startDate: Temporal.Now.instant().add({ seconds: 10 }).toString(),
+    },
   });
 }

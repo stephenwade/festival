@@ -1,5 +1,5 @@
 import { json, type LoaderFunction } from '@remix-run/node';
-import { addSeconds, formatISO } from 'date-fns';
+import { Temporal } from 'temporal-polyfill';
 
 import { db } from '~/db.server/db';
 import type { ShowData } from '~/types/ShowData';
@@ -28,10 +28,12 @@ export const loader = (async ({ params }) => {
       id: set.id,
       audioUrl: set.audioFile.url,
       artist: set.artist,
-      start: addSeconds(show.startDate, set.offset).toISOString(),
+      start: Temporal.Instant.from(show.startDate)
+        .add({ seconds: set.offset })
+        .toString(),
       duration: set.audioFile.duration,
     })),
-    serverDate: formatISO(new Date()),
+    serverDate: Temporal.Now.instant().toString(),
   };
 
   // Single Fetch doesn't work with Clerk

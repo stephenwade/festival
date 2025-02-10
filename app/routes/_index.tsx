@@ -3,14 +3,17 @@ import '~/styles/index.css';
 
 import type { LoaderFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
-import { addSeconds } from 'date-fns';
 import type { FC } from 'react';
-import { Temporal, toTemporalInstant } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill';
 
 import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
 import { db } from '~/db.server/db';
 import { showIncludeData } from '~/types/ShowWithData';
 import { validateShow } from '~/types/validateShow';
+
+function isAfter(a: Temporal.Instant, b: Temporal.Instant): boolean {
+  return Temporal.Instant.compare(a, b) === 1;
+}
 
 /**
  * Returns the slug of the earliest show that hasn't ended yet.
@@ -26,18 +29,19 @@ async function calculateIndexShowSlug(): Promise<string | null> {
     // `validateShow` ensures there's at least one set
     const lastSet = show.sets.at(-1)!;
 
+    const startDate = Temporal.Instant.from(show.startDate);
+
     return {
       slug: show.slug,
-      startDate: toTemporalInstant.call(show.startDate),
-      endDate: addSeconds(
-        show.startDate,
-        lastSet.offset + lastSet.audioFile.duration,
-      ),
+      startDate,
+      endDate: startDate.add({
+        seconds: lastSet.offset + lastSet.audioFile.duration,
+      }),
     };
   });
 
-  const upcomingShows = showsWithEndDate.filter(
-    ({ endDate }) => endDate > new Date(),
+  const upcomingShows = showsWithEndDate.filter(({ endDate }) =>
+    isAfter(endDate, Temporal.Now.instant()),
   );
 
   upcomingShows.sort((a, b) =>

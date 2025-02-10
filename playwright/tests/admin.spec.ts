@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { addMinutes } from 'date-fns';
+import { Temporal } from 'temporal-polyfill';
 
 import { deleteShow, randomShowSlug, seedShow } from '../helpers/show';
 
@@ -7,7 +7,7 @@ let adminShowId: string;
 let adminShowSlug: string;
 
 test.beforeAll(async () => {
-  const adminShow = await seedShow(addMinutes(new Date(), 5));
+  const adminShow = await seedShow(Temporal.Now.instant().add({ minutes: 5 }));
   adminShowId = adminShow.id;
   adminShowSlug = adminShow.slug;
 });

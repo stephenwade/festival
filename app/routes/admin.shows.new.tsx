@@ -6,6 +6,7 @@ import type {
 import { redirect } from '@remix-run/node';
 import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
+import { Temporal } from 'temporal-polyfill';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
@@ -28,11 +29,17 @@ export const action = (async (args) => {
   const { data, error } = await validator.validate(form);
   if (error) return validationError(error);
 
-  const { sets, ...rest } = data;
+  const { startDate, sets, ...rest } = data;
+  const startInstant = startDate
+    ? Temporal.PlainDateTime.from(startDate)
+        .toZonedDateTime(rest.timeZone)
+        .toInstant()
+    : undefined;
 
   const show = await db.show.create({
     data: {
       ...rest,
+      startDate: startInstant?.toString(),
       sets: { create: sets },
     },
   });

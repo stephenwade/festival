@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/experimental-ct-react';
-import { addSeconds, formatDistanceToNowStrict, subSeconds } from 'date-fns';
+import { Temporal } from 'temporal-polyfill';
 
 import { getMockData } from './helpers';
 import { ShowInfoTest } from './ShowInfoTest';
@@ -13,9 +13,15 @@ test('1 minute before the show', async ({ mount }) => {
   await expect(component).toContainText('Next set: Artist 2');
 });
 
-for (const offsetSec of [60, 120, 180]) {
-  const distance = formatDistanceToNowStrict(subSeconds(new Date(), offsetSec));
-  test(`${distance} into the show`, async ({ mount }) => {
+function pluralize(word: string, count: number): string {
+  return count === 1 ? word : `${word}s`;
+}
+
+for (const offsetMin of [1, 2, 3]) {
+  const offsetSec = offsetMin * 60;
+  test(`${offsetMin} ${pluralize('minute', offsetMin)} into the show`, async ({
+    mount,
+  }) => {
     const component = await mount(<ShowInfoTest offsetSec={offsetSec} />);
 
     await expect(component).toContainText('Status: PLAYING');
@@ -26,7 +32,7 @@ for (const offsetSec of [60, 120, 180]) {
 }
 
 test('4 minutes into the show', async ({ mount }) => {
-  const component = await mount(<ShowInfoTest offsetSec={240} />);
+  const component = await mount(<ShowInfoTest offsetSec={4 * 60} />);
 
   await expect(component).toContainText('Status: WAITING_UNTIL_START');
   await expect(component).toContainText('Seconds until set: 10');
@@ -34,9 +40,9 @@ test('4 minutes into the show', async ({ mount }) => {
   await expect(component).toContainText('Next set: Artist 3');
 });
 
-for (const offsetSec of [300, 360, 420, 480]) {
-  const distance = formatDistanceToNowStrict(subSeconds(new Date(), offsetSec));
-  test(`${distance} into the show`, async ({ mount }) => {
+for (const offsetMin of [5, 6, 7, 8]) {
+  const offsetSec = offsetMin * 60;
+  test(`${offsetMin} minutes into the show`, async ({ mount }) => {
     const component = await mount(<ShowInfoTest offsetSec={offsetSec} />);
 
     await expect(component).toContainText('Status: PLAYING');
@@ -47,7 +53,7 @@ for (const offsetSec of [300, 360, 420, 480]) {
 }
 
 test('9 minutes into the show', async ({ mount }) => {
-  const component = await mount(<ShowInfoTest offsetSec={540} />);
+  const component = await mount(<ShowInfoTest offsetSec={9 * 60} />);
 
   await expect(component).toContainText('Status: WAITING_UNTIL_START');
   await expect(component).toContainText('Seconds until set: 10');
@@ -55,9 +61,9 @@ test('9 minutes into the show', async ({ mount }) => {
   await expect(component).toContainText('Next set: None');
 });
 
-for (const offsetSec of [600, 660, 720]) {
-  const distance = formatDistanceToNowStrict(subSeconds(new Date(), offsetSec));
-  test(`${distance} into the show`, async ({ mount }) => {
+for (const offsetMin of [10, 11, 12]) {
+  const offsetSec = offsetMin * 60;
+  test(`${offsetMin} minutes into the show`, async ({ mount }) => {
     const component = await mount(<ShowInfoTest offsetSec={offsetSec} />);
 
     await expect(component).toContainText('Status: PLAYING');
@@ -68,7 +74,7 @@ for (const offsetSec of [600, 660, 720]) {
 }
 
 test('after the show', async ({ mount }) => {
-  const component = await mount(<ShowInfoTest offsetSec={780} />);
+  const component = await mount(<ShowInfoTest offsetSec={13 * 60} />);
 
   await expect(component).toContainText('Status: ENDED');
   await expect(component).toContainText('Current set: None');
@@ -79,7 +85,7 @@ test('adjusts start time based on server clock', async ({ mount }) => {
   const component = await mount(
     <ShowInfoTest
       offsetSec={0}
-      serverDateOverride={addSeconds(new Date(), 10)}
+      serverDateOverride={Temporal.Now.instant().add({ seconds: 10 })}
     />,
   );
 
