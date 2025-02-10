@@ -96,7 +96,7 @@ async function parseForm(request: Request) {
     uploadId = z
       .string()
       // nanoid alphabet, filename-safe
-      .regex(/^[A-Za-z0-9_-]+$/u)
+      .regex(/^[A-Za-z0-9_-]+$/)
       .parse(form.get(uploadAudioFileKeys.uploadId));
 
     chunkNumber = integerString.parse(
