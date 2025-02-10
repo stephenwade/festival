@@ -12,7 +12,11 @@ import { ffmpeg } from '~/ffmpeg.server/ffmpeg';
 import type { FFprobeOutput } from '~/ffmpeg.server/ffprobe';
 import { ffprobe } from '~/ffmpeg.server/ffprobe';
 import { emitAudioFileProcessingEvent } from '~/sse.server/audio-file-events';
-import { deleteObjectByUrl, uploadFile } from '~/tigris.server/s3-client';
+import {
+  deleteObjectByUrl,
+  getObjectUrl,
+  uploadFile,
+} from '~/tigris.server/s3-client';
 import { notFound, serverError } from '~/utils/responses.server';
 
 const UPLOAD_DIR = 'upload';
@@ -72,6 +76,7 @@ async function checkAudioFile(file: AudioFile) {
           objectKey,
           contentType: 'audio/mpeg',
         }),
+        updateAudioFileUrl(file.id, objectKey),
         deleteObjectByUrl(file.url),
       ]);
 
@@ -142,6 +147,15 @@ async function updateAudioFileUploading(fileId: AudioFile['id']) {
       conversionStatus: 'RE_UPLOAD',
       conversionProgress: null,
     },
+  });
+
+  emitAudioFileProcessingEvent(file);
+}
+
+async function updateAudioFileUrl(fileId: AudioFile['id'], objectKey: string) {
+  const file = await db.audioFile.update({
+    where: { id: fileId },
+    data: { url: getObjectUrl(objectKey) },
   });
 
   emitAudioFileProcessingEvent(file);
