@@ -72,7 +72,6 @@ export default tseslint.config(
       'no-plusplus': 'error',
       'object-shorthand': 'warn',
       quotes: ['warn', 'single', { avoidEscape: true }],
-      'require-unicode-regexp': 'warn',
 
       'import/first': 'warn',
       'import/newline-after-import': 'warn',
