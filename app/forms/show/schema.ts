@@ -28,7 +28,18 @@ export const schema = zfd.formData({
       message: 'Invalid show URL',
     }),
   ),
-  startDate: zfd.text(z.string().datetime({ local: true }).optional()),
+  startDate: zfd.text(
+    z
+      .string()
+      .refine(
+        (val) =>
+          // The value of a `datetime-local` input doesn't include seconds if they are 0,
+          // so we can't use `.datetime()` here.
+          /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?/.test(val),
+        { message: 'Invalid date/time' },
+      )
+      .optional(),
+  ),
   timeZone: zfd.text(
     z.string().refine(isValidTimeZone, { message: 'Invalid time zone' }),
   ),

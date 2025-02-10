@@ -6,6 +6,7 @@ import type {
 import { redirect } from '@remix-run/node';
 import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
+import { Temporal } from 'temporal-polyfill';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
@@ -30,9 +31,18 @@ export const action = (async (args) => {
 
   const { sets, ...rest } = data;
 
+  const startDate = rest.startDate
+    ? new Date(
+        Temporal.PlainDateTime.from(rest.startDate).toZonedDateTime(
+          rest.timeZone,
+        ).epochMilliseconds,
+      )
+    : null;
+
   const show = await db.show.create({
     data: {
       ...rest,
+      startDate,
       sets: { create: sets },
     },
   });
