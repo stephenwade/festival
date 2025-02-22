@@ -41,18 +41,19 @@ model Set {
 }
 
 enum AudioFileConversionStatus {
+  USER_UPLOAD
   CHECKING
   CONVERTING
-  UPLOADING
+  RE_UPLOAD
   DONE
   ERROR
 }
 
 model AudioFile {
-  id       String  @id @default(uuid())
+  id       String @id @default(uuid())
   name     String
-  url      String? // After conversion
-  duration Float?
+  url      String
+  duration Float? // After conversion
 
   conversionStatus   AudioFileConversionStatus
   conversionProgress Float?
