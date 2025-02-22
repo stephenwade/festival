@@ -1,7 +1,8 @@
 import { createWriteStream } from 'node:fs';
 import { mkdir, unlink } from 'node:fs/promises';
 import path from 'node:path';
-import { Writable } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
+import type { ReadableStream } from 'node:stream/web';
 
 import type { AudioFile } from '@prisma/client';
 import type { ActionFunction } from '@remix-run/node';
@@ -107,8 +108,7 @@ async function downloadFile(url: string) {
     throw new Error(`Failed to download file: ${response.statusText}`);
   }
 
-  const fileStream = Writable.toWeb(createWriteStream(filePath));
-  await response.body.pipeTo(fileStream);
+  await pipeline(response.body as ReadableStream, createWriteStream(filePath));
 
   return filePath;
 }
