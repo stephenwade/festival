@@ -1,5 +1,5 @@
 import { test as setup } from '@playwright/test';
-import { addMinutes } from 'date-fns';
+import { Temporal } from 'temporal-polyfill';
 
 import { deleteTestShows, seedShow } from '../helpers/show';
 import { authFile } from './shared-data';
@@ -15,15 +15,17 @@ import { authFile } from './shared-data';
 setup('seed show', async () => {
   await deleteTestShows();
 
-  const show = await seedShow(addMinutes(new Date(), 1));
+  const show = await seedShow(Temporal.Now.instant().add({ minutes: 1 }));
   process.env.SHOW_SLUG = show.slug;
   process.env.FIRST_ARTIST_NAME = show.sets[0]?.artist ?? '';
 
   // Add other shows to ensure that the root URL redirects to the earliest
   // upcoming show
-  const showLater = await seedShow(addMinutes(new Date(), 10));
+  const showLater = await seedShow(Temporal.Now.instant().add({ minutes: 10 }));
   process.env.SHOW_LATER_SLUG = showLater.slug;
-  const showEarlier = await seedShow(addMinutes(new Date(), -10));
+  const showEarlier = await seedShow(
+    Temporal.Now.instant().subtract({ minutes: 10 }),
+  );
   process.env.SHOW_EARLIER_SLUG = showEarlier.slug;
 });
 

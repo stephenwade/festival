@@ -29,20 +29,26 @@ export const action = (async (args) => {
   const { data, error } = await validator.validate(form);
   if (error) return validationError(error);
 
-  const { sets, ...rest } = data;
+  const { startDate, sets, ...rest } = data;
 
-  const startDate = rest.startDate
-    ? new Date(
-        Temporal.PlainDateTime.from(rest.startDate).toZonedDateTime(
-          rest.timeZone,
-        ).epochMilliseconds,
-      )
-    : null;
+  // const startDate = rest.startDate
+  //   ? new Date(
+  //       Temporal.PlainDateTime.from(rest.startDate).toZonedDateTime(
+  //         rest.timeZone,
+  //       ).epochMilliseconds,
+  //     )
+  //   : null;
+
+  const startInstant = startDate
+    ? Temporal.PlainDateTime.from(startDate)
+        .toZonedDateTime(rest.timeZone)
+        .toInstant()
+    : undefined;
 
   const show = await db.show.create({
     data: {
       ...rest,
-      startDate,
+      startDate: startInstant?.toString(),
       sets: { create: sets },
     },
   });
