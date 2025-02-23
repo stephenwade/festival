@@ -2,12 +2,11 @@
 name: festival-dev
 services:
   db:
-    image: mysql:lts@sha256:0917ecc5863323a48203dda0bb7d58582d958da62914024c474bf2e8c5f5ee73
+    image: postgres:16
     env_file: .env
     volumes:
-      - db-data:/var/lib/mysql
-      - ./db-init:/docker-entrypoint-initdb.d
+      - db-data:/var/lib/postgresql/data
     ports:
-      - 3306:3306
+      - 5432:5432
 volumes:
   db-data:
