@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/experimental-ct-react';
-import { addSeconds, formatDistanceToNowStrict, subSeconds } from 'date-fns';
+import { formatDistanceToNowStrict, subSeconds } from 'date-fns';
+import { Temporal } from 'temporal-polyfill';
 
 import { getMockData } from './helpers';
 import { ShowInfoTest } from './ShowInfoTest';
@@ -79,7 +80,9 @@ test('adjusts start time based on server clock', async ({ mount }) => {
   const component = await mount(
     <ShowInfoTest
       offsetSec={0}
-      serverDateOverride={addSeconds(new Date(), 10)}
+      serverDateOverride={Temporal.Now.instant()
+        .add({ seconds: 10 })
+        .toString()}
     />,
   );
 
