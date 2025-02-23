@@ -8,7 +8,7 @@ at the same time) without requiring live streaming infrastructure.
 ## Local Development
 
 - Copy `.env.sample` to `.env` and fill out the required values.
-- Run `docker compose up -d` to start a MySQL database.
+- Run `docker compose up -d` to start a PostgreSQL database.
 - Run `npm install` to install the required packages.
 - Run `npm run dev` to serve the application locally.
 
