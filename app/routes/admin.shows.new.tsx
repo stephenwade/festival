@@ -31,14 +31,6 @@ export const action = (async (args) => {
 
   const { startDate, sets, ...rest } = data;
 
-  // const startDate = rest.startDate
-  //   ? new Date(
-  //       Temporal.PlainDateTime.from(rest.startDate).toZonedDateTime(
-  //         rest.timeZone,
-  //       ).epochMilliseconds,
-  //     )
-  //   : null;
-
   const startInstant = startDate
     ? Temporal.PlainDateTime.from(startDate)
         .toZonedDateTime(rest.timeZone)
