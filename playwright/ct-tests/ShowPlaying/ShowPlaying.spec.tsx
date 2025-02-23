@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/experimental-ct-react';
-import { addSeconds } from 'date-fns';
+import { Temporal } from 'temporal-polyfill';
 
 import type { ShowPlayingProps } from '~/components/ShowPlaying';
 import { ShowPlaying } from '~/components/ShowPlaying';
@@ -14,8 +14,8 @@ function makeShowInfoWaitingUntilStart(secondsUntilSet: number) {
       id: 'e465d3cf-7875-3fd9-915c-91a915bb8187',
       audioUrl: 'sample/fulton.mp3',
       artist: 'Fulton',
-      start: addSeconds(Date.now(), secondsUntilSet),
-      end: addSeconds(Date.now(), secondsUntilSet + 30),
+      start: Temporal.Now.instant().add({ seconds: secondsUntilSet }),
+      end: Temporal.Now.instant().add({ seconds: secondsUntilSet + 30 }),
       duration: 30,
     },
   } satisfies ShowInfo;
@@ -29,8 +29,8 @@ function makeShowInfoPlaying(currentTime: number) {
       id: '69859842-c6ac-3aa4-8f0d-358ff7758b9e',
       audioUrl: 'sample/dana.mp3',
       artist: 'Dana',
-      start: addSeconds(Date.now(), -currentTime),
-      end: addSeconds(Date.now(), 30 - currentTime),
+      start: Temporal.Now.instant().add({ seconds: -currentTime }),
+      end: Temporal.Now.instant().add({ seconds: 30 - currentTime }),
       duration: 30,
     },
   } satisfies ShowInfo;

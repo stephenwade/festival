@@ -7,7 +7,7 @@ import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
-import { Temporal, toTemporalInstant } from 'temporal-polyfill';
+import { Temporal } from 'temporal-polyfill';
 
 import { redirectToLogin } from '~/auth/redirect-to-login.server';
 import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
@@ -41,8 +41,7 @@ export const loader = (async (args) => {
   if (!show) throw notFound();
 
   const startDate = show.startDate
-    ? toTemporalInstant
-        .call(show.startDate)
+    ? Temporal.Instant.from(show.startDate)
         .toZonedDateTimeISO(show.timeZone)
         .toPlainDateTime()
         .toString({ smallestUnit: 'second' })
@@ -76,21 +75,19 @@ export const action = (async (args) => {
   const { data, error } = await validator.validate(form);
   if (error) return validationError(error);
 
-  const { sets, ...rest } = replaceUndefinedsWithNull(data);
+  const { startDate, sets, ...rest } = replaceUndefinedsWithNull(data);
 
-  const startDate = rest.startDate
-    ? new Date(
-        Temporal.PlainDateTime.from(rest.startDate).toZonedDateTime(
-          rest.timeZone,
-        ).epochMilliseconds,
-      )
-    : null;
+  const startInstant = startDate
+    ? Temporal.PlainDateTime.from(startDate)
+        .toZonedDateTime(rest.timeZone)
+        .toInstant()
+    : undefined;
 
   await db.show.update({
     where: { id },
     data: {
       ...rest,
-      startDate,
+      startDate: startInstant?.toString(),
       sets: {
         deleteMany: {
           id: { notIn: sets.map((set) => set.id).filter(isDefined) },

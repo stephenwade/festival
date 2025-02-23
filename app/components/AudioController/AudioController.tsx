@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 
-import { differenceInSeconds } from 'date-fns';
 import type { AudioHTMLAttributes, FC, ReactNode, SyntheticEvent } from 'react';
 import {
   useCallback,
@@ -248,10 +247,9 @@ export const AudioController: FC<AudioControllerProps> = ({
           showInfo.currentSet &&
           change.currentSet.id !== showInfo.currentSet.id
         ) {
-          const setDifference = differenceInSeconds(
-            change.currentSet.start,
-            showInfo.currentSet.start,
-          );
+          const setDifference = showInfo.currentSet.start
+            .until(change.currentSet.start)
+            .total({ unit: 'seconds' });
           delay += setDifference;
         }
 

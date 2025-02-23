@@ -1,8 +1,10 @@
+import type { Temporal } from 'temporal-polyfill';
+
 import type { SetData } from './ShowData';
 
 type SetInfo = Omit<SetData, 'start'> & {
-  start: Date;
-  end: Date;
+  start: Temporal.Instant;
+  end: Temporal.Instant;
 };
 
 interface SetsInfo {

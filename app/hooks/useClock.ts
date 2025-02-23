@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { Temporal } from 'temporal-polyfill';
 
 function getCurrentSecond() {
-  return Math.floor(Date.now() / 1000);
+  return Math.floor(Temporal.Now.instant().epochMilliseconds / 1000);
 }
 
 export function useClock(enabled = true): void {

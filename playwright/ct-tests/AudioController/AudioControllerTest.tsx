@@ -1,9 +1,9 @@
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { createRemixStub } from '@remix-run/testing';
-import { addSeconds } from 'date-fns';
 import type { FC } from 'react';
 import { useState } from 'react';
+import { Temporal } from 'temporal-polyfill';
 import { useDeepCompareMemo } from 'use-deep-compare';
 
 import type { AudioMetadata } from '~/components/AudioController';
@@ -31,7 +31,7 @@ function getMockData({
   alternate = false,
   empty = false,
 }: GetMockDataProps): Pick<ShowData, 'slug' | 'serverDate' | 'sets'> {
-  const now = new Date();
+  const now = Temporal.Now.instant();
 
   const sets: ShowData['sets'] = empty
     ? []
@@ -40,21 +40,21 @@ function getMockData({
           id: alternate ? ID_3 : ID_1,
           audioUrl: `${AUDIO_FILE_URL}?${alternate ? 3 : 1}`,
           artist: `Artist ${alternate ? 3 : 1}`,
-          start: addSeconds(now, 0 - offsetSec).toISOString(),
+          start: now.add({ seconds: 0 - offsetSec }).toString(),
           duration: AUDIO_FILE_LENGTH,
         },
         {
           id: alternate ? ID_4 : ID_2,
           audioUrl: `${AUDIO_FILE_URL}?${alternate ? 4 : 2}`,
           artist: `Artist ${alternate ? 4 : 2}`,
-          start: addSeconds(now, 100 - offsetSec).toISOString(),
+          start: now.add({ seconds: 100 - offsetSec }).toString(),
           duration: AUDIO_FILE_LENGTH,
         },
       ];
 
   return {
     slug: 'test',
-    serverDate: now.toISOString(),
+    serverDate: now.toString(),
     sets,
   };
 }

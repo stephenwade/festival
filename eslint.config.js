@@ -69,6 +69,19 @@ export default tseslint.config(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       ...reactHooks.configs.recommended.rules,
 
+      'no-restricted-globals': [
+        'error',
+        { name: 'Date', message: 'Use `Temporal` instead.' },
+      ],
+      '@typescript-eslint/no-restricted-types': [
+        'error',
+        {
+          types: {
+            Date: 'Use `Temporal` instead.',
+          },
+        },
+      ],
+
       'no-plusplus': 'error',
       'object-shorthand': 'warn',
       quotes: ['warn', 'single', { avoidEscape: true }],
