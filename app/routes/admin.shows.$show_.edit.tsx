@@ -63,6 +63,8 @@ export const action = (async (args) => {
   if (args.request.method === 'DELETE') {
     await db.show.delete({ where: { id } });
 
+    cache.del(INDEX_SHOW_SLUG_KEY);
+
     return redirect('/admin/shows');
   }
 
