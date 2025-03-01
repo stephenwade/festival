@@ -26,8 +26,7 @@ export default tseslint.config(
   js.configs.recommended,
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
-  // This doesn't work yet
-  // reactHooks.configs.recommended,
+  reactHooks.configs['recommended-latest'],
   jsxA11y.flatConfigs.recommended,
   playwright.configs['flat/recommended'],
 
@@ -35,7 +34,7 @@ export default tseslint.config(
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
 
-  unicorn.configs['flat/recommended'],
+  unicorn.configs.recommended,
 
   prettier,
 
@@ -43,7 +42,6 @@ export default tseslint.config(
     plugins: {
       import: _import,
       'no-only-tests': noOnlyTests,
-      'react-hooks': reactHooks,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
     },
@@ -66,9 +64,6 @@ export default tseslint.config(
     },
 
     rules: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      ...reactHooks.configs.recommended.rules,
-
       'no-restricted-globals': [
         'error',
         { name: 'Date', message: 'Use `Temporal` instead.' },
