@@ -6,6 +6,7 @@ import { eventStream } from 'remix-utils/sse/server';
  * @see {@link https://remix.run/docs/en/v1/other-api/serve Remix App Server}
  */
 function getAdminEventTarget() {
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   if (!globalThis.adminEventTarget) {
     globalThis.adminEventTarget = new EventTarget();
   }
