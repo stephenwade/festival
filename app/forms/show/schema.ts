@@ -14,7 +14,7 @@ const COLOR_REGEX = /^#[0-9a-f]{6}$/i;
 
 function isValidTimeZone(timeZone: string): boolean {
   try {
-    Temporal.TimeZone.from(timeZone);
+    Temporal.Now.zonedDateTimeISO(timeZone);
     return true;
   } catch {
     return false;
