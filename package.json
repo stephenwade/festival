@@ -31,7 +31,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "3.744.0",
     "@aws-sdk/s3-request-presigner": "3.744.0",
-    "@clerk/remix": "4.6.1",
+    "@clerk/remix": "4.6.2",
     "@prisma/client": "6.7.0",
     "@remix-run/node": "2.16.5",
     "@remix-run/react": "2.16.5",
