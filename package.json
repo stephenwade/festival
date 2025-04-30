@@ -63,7 +63,7 @@
     "@remix-run/testing": "2.16.5",
     "@types/eslint-plugin-jsx-a11y": "6.10.0",
     "@types/react": "18.3.20",
-    "@types/react-dom": "18.3.6",
+    "@types/react-dom": "18.3.7",
     "dotenv": "16.5.0",
     "dpdm": "3.14.0",
     "eslint": "9.25.1",
