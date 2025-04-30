@@ -28,6 +28,10 @@
       "description": "Disable aws-sdk updates",
       "matchPackageNames": ["@aws-sdk/*"],
       "enabled": false
+    },
+    {
+      "groupName": "Stylelint",
+      "matchPackageNames": ["stylelint", "stylelint-*"]
     }
   ]
 }
