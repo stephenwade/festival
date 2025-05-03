@@ -1,4 +1,6 @@
 {
+  "enabled": false,
+
   "extends": ["config:best-practices", "config:js-app"],
 
   "timezone": "America/New_York",
