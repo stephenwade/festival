@@ -80,7 +80,7 @@
     "globals": "16.0.0",
     "husky": "9.1.7",
     "knip": "5.53.0",
-    "lint-staged": "15.5.1",
+    "lint-staged": "15.5.2",
     "npm-run-all2": "8.0.1",
     "prettier": "3.5.3",
     "prisma": "6.7.0",
