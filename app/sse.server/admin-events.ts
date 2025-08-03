@@ -1,4 +1,4 @@
-import { eventStream } from 'remix-utils/sse/server';
+import { eventStream } from '~/utils/event-stream.server';
 
 /**
  * Workaround for Remix App Server reloading all files on each request.
