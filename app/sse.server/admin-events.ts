@@ -15,7 +15,6 @@ function getAdminEventTarget() {
 }
 
 declare global {
-  // eslint-disable-next-line no-var
   var adminEventTarget: EventTarget | undefined;
 }
 
