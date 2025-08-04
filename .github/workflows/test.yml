@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       # https://github.com/actions/runner-images/issues/9330
       - name: Allow microphone access to all apps
