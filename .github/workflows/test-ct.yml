@@ -11,16 +11,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # os: [ubuntu-22.04, macos-14]
+        # os: [ubuntu-22.04, macos-15]
         shardIndex: [1, 2, 3]
     env:
       shardTotal: 3
     # runs-on: ${{ matrix.os }}
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       # https://github.com/actions/runner-images/issues/9330
       - name: Allow microphone access to all apps (macOS)
-        # if: matrix.os == 'macos-14'
+        # if: matrix.os == 'macos-15'
         run: |
           sqlite3 $HOME/Library/Application\ Support/com.apple.TCC/TCC.db "INSERT OR IGNORE INTO access VALUES ('kTCCServiceMicrophone','/usr/local/opt/runner/provisioner/provisioner',1,2,4,1,NULL,NULL,0,'UNUSED',NULL,0,1687786159,NULL,NULL,'UNUSED',1687786159);"
 
@@ -62,7 +62,7 @@ jobs:
     # strategy:
     #   fail-fast: false
     #   matrix:
-    #     os: [ubuntu-22.04, macos-14]
+    #     os: [ubuntu-22.04, macos-15]
     steps:
       - name: Check out repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
