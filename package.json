@@ -20,7 +20,7 @@
     "lint:dpdm": "dpdm 'app/routes/*' --no-tree --no-warning --exit-code circular:1",
     "lint:tsc": "tsc",
     "lint": "npm-run-all lint:*",
-    "format:eslint": "eslint . --fix --ignore-path .gitignore",
+    "format:eslint": "eslint . --max-warnings=0 --fix",
     "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .gitignore",
     "format:prettier": "prettier . --write --ignore-path .gitignore --log-level warn",
     "format:knip": "knip --fix",
