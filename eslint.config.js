@@ -14,7 +14,6 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
 import unusedImports from 'eslint-plugin-unused-imports';
-import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -139,13 +138,6 @@ export default defineConfig(
       'unicorn/switch-case-braces': 'off',
 
       'react/jsx-no-leaked-render': ['warn', { validStrategies: ['ternary'] }],
-    },
-  },
-  {
-    files: ['.eslintrc.cjs', 'stylelint.config.js', 'svgo.config.js'],
-
-    languageOptions: {
-      globals: globals.node,
     },
   },
   {
