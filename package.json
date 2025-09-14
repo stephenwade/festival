@@ -23,7 +23,7 @@
     "format:eslint": "eslint . --max-warnings=0 --fix",
     "format:knip": "knip --fix",
     "format:prettier": "prettier . --write --ignore-path .gitignore --log-level warn",
-    "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .gitignore",
+    "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .gitignore --max-warnings 0",
     "format": "npm-run-all format:*",
     "test": "playwright test",
     "test-ct": "playwright test -c playwright-ct.config.ts"
