@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -42,6 +40,7 @@ export default defineConfig(
   {
     plugins: {
       import: _import,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       'no-only-tests': noOnlyTests,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
