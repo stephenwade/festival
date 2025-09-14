@@ -1,5 +1,5 @@
 {
-  "include": ["env.d.ts", ".eslintrc.cjs", "**/*.js", "**/*.ts", "**/*.tsx"],
+  "include": ["env.d.ts", "*.config.js", "**/*.ts", "**/*.tsx"],
   "exclude": ["build"],
   "compilerOptions": {
     "types": ["@remix-run/node", "vite/client"],
