@@ -15,9 +15,9 @@ import type { AudioFileProcessingEvent } from '~/sse.server/audio-file-events';
 
 import { xhrPromise } from './xhrPromise';
 
-type UploadResponse = SerializeFrom<typeof newAudioUploadAction>;
-
 type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;
+
+type UploadResponse = SerializeFrom<typeof newAudioUploadAction>;
 
 function displayConversionStatus(
   status: Exclude<AudioFileProcessingEvent['conversionStatus'], 'DONE'>,
