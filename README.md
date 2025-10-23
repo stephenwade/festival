@@ -40,7 +40,6 @@ Pushing to main triggers a deploy on Railway.
 ## External Dependencies
 
 - [Clerk](https://clerk.com/) for authentication
-- [DigitalOcean](https://www.digitalocean.com/) for database hosting, DNS, and proxying to Railway
 - [Railway](https://railway.app/) for hosting
 - [Sentry](https://sentry.io/) for error reporting
 - [Tigris](https://www.tigrisdata.com/) for file storage
