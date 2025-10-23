@@ -1,8 +1,8 @@
-import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './toast.css';
 
-import type { CloseButtonProps } from 'node_modules/react-toastify/dist/components';
 import type { FC } from 'react';
+import type { CloseButtonProps } from 'react-toastify';
 import { cssTransition, ToastContainer as Container } from 'react-toastify';
 
 const ToastClose: FC<CloseButtonProps> = ({ type, closeToast }) => {

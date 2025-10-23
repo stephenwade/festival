@@ -45,7 +45,7 @@ export const ShowPlaying: FC<ShowPlayingProps> = ({
 
   useEffect(() => {
     if (audioStatus.stalled) {
-      toast('Looks like your internet connection is having trouble.');
+      toast(<div>Looks like your internet connection is having trouble.</div>);
     }
   }, [audioStatus.stalled]);
 
@@ -53,7 +53,7 @@ export const ShowPlaying: FC<ShowPlayingProps> = ({
     'delay' in showInfo && showInfo.delay && showInfo.delay >= 30;
   useEffect(() => {
     if (showDelayToast) {
-      toast('Looks like your audio player is out of sync.');
+      toast(<div>Looks like your audio player is out of sync.</div>);
       return () => {
         toast.dismiss();
       };
