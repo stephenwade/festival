@@ -19,7 +19,7 @@ if (!accessKeyId || !secretAccessKey || !bucket) {
 
 const S3 = new S3Client({
   region: 'auto',
-  endpoint: 'https://fly.storage.tigris.dev',
+  endpoint: 'https://t3.storage.dev',
   credentials: {
     accessKeyId,
     secretAccessKey,
@@ -27,7 +27,7 @@ const S3 = new S3Client({
 });
 
 export function getObjectUrl(objectKey: string) {
-  return `https://${bucket!}.fly.storage.tigris.dev/${objectKey}`;
+  return `https://${bucket!}.t3.storage.dev/${objectKey}`;
 }
 
 export async function getObjectUploadUrl(
@@ -68,10 +68,7 @@ export async function uploadFile({
 }
 
 export async function deleteObjectByUrl(url: string) {
-  const objectKey = url.replace(
-    `https://${bucket!}.fly.storage.tigris.dev/`,
-    '',
-  );
+  const objectKey = url.replace(`https://${bucket!}.t3.storage.dev/`, '');
   if (objectKey.startsWith('http')) {
     throw new Error('Invalid URL');
   }
