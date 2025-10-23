@@ -1,5 +1,5 @@
 export const AUDIO_FILE_URL =
-  'https://festival-ci.fly.storage.tigris.dev/90-sec-silence.mp3';
+  'https://festival-ci.t3.storage.dev/90-sec-silence.mp3';
 export const AUDIO_FILE_LENGTH = 90;
 
 export const ID_1 = 'ccc19b72-4a68-3219-9409-ef1ef0d75643';
