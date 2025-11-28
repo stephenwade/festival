@@ -55,8 +55,8 @@
   "devDependencies": {
     "@eslint/compat": "2.0.0",
     "@eslint/js": "9.39.1",
-    "@playwright/experimental-ct-react": "1.56.1",
-    "@playwright/test": "1.56.1",
+    "@playwright/experimental-ct-react": "1.57.0",
+    "@playwright/test": "1.57.0",
     "@remix-run/dev": "2.17.2",
     "@remix-run/fs-routes": "2.17.2",
     "@remix-run/route-config": "2.17.2",
