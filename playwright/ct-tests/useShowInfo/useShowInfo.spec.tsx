@@ -19,6 +19,7 @@ function pluralize(word: string, count: number): string {
 
 for (const offsetMin of [1, 2, 3]) {
   const offsetSec = offsetMin * 60;
+
   test(`${offsetMin} ${pluralize('minute', offsetMin)} into the show`, async ({
     mount,
   }) => {
@@ -42,6 +43,7 @@ test('4 minutes into the show', async ({ mount }) => {
 
 for (const offsetMin of [5, 6, 7, 8]) {
   const offsetSec = offsetMin * 60;
+
   test(`${offsetMin} minutes into the show`, async ({ mount }) => {
     const component = await mount(<ShowInfoTest offsetSec={offsetSec} />);
 
@@ -63,6 +65,7 @@ test('9 minutes into the show', async ({ mount }) => {
 
 for (const offsetMin of [10, 11, 12]) {
   const offsetSec = offsetMin * 60;
+
   test(`${offsetMin} minutes into the show`, async ({ mount }) => {
     const component = await mount(<ShowInfoTest offsetSec={offsetSec} />);
 
