@@ -82,7 +82,7 @@
     "knip": "5.82.1",
     "lint-staged": "16.2.7",
     "npm-run-all2": "8.0.4",
-    "prettier": "3.8.0",
+    "prettier": "3.8.1",
     "prisma": "6.19.2",
     "stylelint": "17.0.0",
     "stylelint-config-hudochenkov": "12.0.1",
