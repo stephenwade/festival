@@ -84,7 +84,7 @@
     "npm-run-all2": "8.0.4",
     "prettier": "3.8.1",
     "prisma": "6.19.2",
-    "stylelint": "17.1.1",
+    "stylelint": "17.2.0",
     "stylelint-config-hudochenkov": "12.0.1",
     "stylelint-config-standard": "40.0.0",
     "stylelint-order": "7.0.1",
