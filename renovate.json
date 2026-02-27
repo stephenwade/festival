@@ -1,5 +1,5 @@
 {
-  "enabled": true,
+  "enabled": false,
 
   "extends": ["config:best-practices", "config:js-app"],
 
