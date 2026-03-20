@@ -1,4 +1,4 @@
-FROM ubuntu:jammy@sha256:3ba65aa20f86a0fad9df2b2c259c613df006b2e6d0bfcc8a146afb8c525a9751 as base
+FROM ubuntu:jammy@sha256:3ba65aa20f86a0fad9df2b2c259c613df006b2e6d0bfcc8a146afb8c525a9751 AS base
 
 WORKDIR /node
 
@@ -11,14 +11,14 @@ RUN apt-get update && \
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 RUN apt-get update && apt-get install -y nodejs
 
-FROM base as deps
+FROM base AS deps
 
 WORKDIR /app
 
 ADD package.json .npmrc prisma ./
 RUN npm install --include=dev
 
-FROM base as production-deps
+FROM base AS production-deps
 
 WORKDIR /app
 
@@ -26,7 +26,7 @@ COPY --from=deps /app/node_modules /app/node_modules
 ADD package.json .npmrc prisma ./
 RUN npm prune --omit=dev
 
-FROM base as build
+FROM base AS build
 
 WORKDIR /app
 
@@ -38,7 +38,7 @@ RUN npx prisma generate
 ADD . .
 RUN npm run build
 
-FROM linuxserver/ffmpeg:version-5.1.2-cli@sha256:e691582facf5ec1b4f59ad7872e0c763a96875128c38e0fe703dca06a8ed1212 as final
+FROM linuxserver/ffmpeg:version-5.1.2-cli@sha256:e691582facf5ec1b4f59ad7872e0c763a96875128c38e0fe703dca06a8ed1212 AS final
 
 WORKDIR /node
 
