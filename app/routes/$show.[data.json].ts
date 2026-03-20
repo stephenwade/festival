@@ -18,25 +18,41 @@ export const loader = (async ({ params }) => {
 
   if (!validateShow(show)) throw forbidden();
 
+  const showStart = Temporal.Instant.from(show.startDate);
+  const now = Temporal.Now.instant();
+
+  const sets = show.sets
+    .map((set) => {
+      const start = showStart.add({
+        // `.add()` requires integers
+        // seconds: set.offset,
+        milliseconds: Math.round(set.offset * 1000),
+      });
+      const end = start.add({
+        // `.add()` requires integers
+        // seconds: set.audioFile.duration,
+        milliseconds: Math.round(set.audioFile.duration * 1000),
+      });
+
+      return { set, start, end };
+    })
+    // Don't send sets that have already ended
+    .filter(({ end }) => Temporal.Instant.compare(now, end) === -1)
+    .map(({ set, start }) => ({
+      id: set.id,
+      audioUrl: set.audioFile.url,
+      artist: set.artist,
+      start: start.toString(),
+      duration: set.audioFile.duration,
+    }));
+
   const data: ShowData = {
     name: show.name,
     slug,
     description: show.description,
     showLogoUrl: show.logoImageFile.url,
     backgroundImageUrl: show.backgroundImageFile.url,
-    sets: show.sets.map((set) => ({
-      id: set.id,
-      audioUrl: set.audioFile.url,
-      artist: set.artist,
-      start: Temporal.Instant.from(show.startDate)
-        .add({
-          // `.add()` requires integers
-          // seconds: set.offset,
-          milliseconds: Math.round(set.offset * 1000),
-        })
-        .toString(),
-      duration: set.audioFile.duration,
-    })),
+    sets,
     serverDate: Temporal.Now.instant().toString(),
   };
 

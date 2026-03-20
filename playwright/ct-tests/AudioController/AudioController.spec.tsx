@@ -216,7 +216,7 @@ function commonTests({ forceSkipAudioContext = false }) {
       await page.waitForTimeout(1000);
       await expect(
         component.locator('audio').nth(1),
-        '61 seconds before the end of the first set',
+        '60 seconds before the end of the first set',
       ).toHaveAttribute('src', `${AUDIO_FILE_URL}?2`);
     });
 
