@@ -44,8 +44,9 @@ async function calculateIndexShowSlug(): Promise<string | null> {
     };
   });
 
+  const now = Temporal.Now.instant();
   const upcomingShows = showsWithEndDate.filter(({ endDate }) =>
-    isAfter(endDate, Temporal.Now.instant()),
+    isAfter(endDate, now),
   );
 
   upcomingShows.sort((a, b) =>
