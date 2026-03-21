@@ -173,7 +173,7 @@ export const AudioController: FC<AudioControllerProps> = ({
     let newShowInfo: ShowInfo;
 
     if (change.status === 'WAITING_UNTIL_START') {
-      if (shouldChangeSrc && change.currentSet) {
+      if (shouldChangeSrc && change.currentSet?.audioUrl) {
         activeAudio.src = change.currentSet.audioUrl;
       }
 
@@ -184,7 +184,7 @@ export const AudioController: FC<AudioControllerProps> = ({
         nextSet: change.nextSet,
       };
     } else if (change.status === 'PLAYING') {
-      if (shouldChangeSrc && change.currentSet) {
+      if (shouldChangeSrc && change.currentSet?.audioUrl) {
         activeAudio.src = change.currentSet.audioUrl;
       }
 
@@ -455,7 +455,11 @@ export const AudioController: FC<AudioControllerProps> = ({
             showInfo.currentSet.duration - showInfo.currentTime <= 60;
           const shouldPreloadNextSet =
             !nextSrcAlreadySet && showInfo.nextSet && lessThanOneMinuteLeft;
-          if (shouldPreloadNextSet && state.inactiveAudio && showInfo.nextSet) {
+          if (
+            shouldPreloadNextSet &&
+            state.inactiveAudio &&
+            showInfo.nextSet?.audioUrl
+          ) {
             state.inactiveAudio.src = showInfo.nextSet.audioUrl;
           }
         }

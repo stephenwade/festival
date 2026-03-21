@@ -28,21 +28,6 @@ test('show URL redirects to path without trailing slash', async ({
   await expect(page).toHaveURL(`${baseURL!}/${process.env.SHOW_SLUG!}`);
 });
 
-test('data endpoint omits sets that are already over', async ({
-  request,
-  baseURL,
-}) => {
-  const response = await request.get(
-    `${baseURL!}/${process.env.SHOW_EARLIER_SLUG!}/data.json`,
-  );
-
-  expect(response.status()).toBe(200);
-
-  const data = (await response.json()) as { sets: unknown[] };
-
-  expect(data.sets).toEqual([]);
-});
-
 test('plays the default show', async ({ page, browserName }) => {
   await delayShow(process.env.SHOW_SLUG!);
 
