@@ -1,5 +1,5 @@
 {
-  "enabled": false,
+  "enabled": true,
 
   "extends": ["config:best-practices", "config:js-app"],
 
@@ -27,9 +27,9 @@
       "automerge": false
     },
     {
-      "description": "Disable aws-sdk updates",
+      "description": "Schedule aws-sdk updates on Tuesday mornings",
       "matchPackageNames": ["@aws-sdk/*"],
-      "enabled": false
+      "schedule": ["* 0-3 * * 1"]
     },
     {
       "groupName": "Stylelint",
