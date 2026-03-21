@@ -37,6 +37,7 @@
   position: absolute;
   top: 50%;
   left: calc(56px - 12em);
+  clip-path: inset(-24px -24px -24px calc(100% - 30px));
   width: 12em;
   height: 30px;
   padding-right: 15px;
@@ -47,25 +48,24 @@
   transition-duration: 150ms;
   transition-property: left, clip-path;
   transform: translateY(-50%);
-  clip-path: inset(-24px -24px -24px calc(100% - 30px));
 }
 
 .volume-fab-container .slider-container[aria-expanded='true'] {
   left: calc(100% - 30px);
-  transition-duration: 200ms;
   clip-path: inset(-24px);
+  transition-duration: 200ms;
 }
 
 .styled-range-input {
   --range-color-primary: var(--background-color, #050595);
   --range-color-secondary: var(--background-color-lighter, #8383fb);
 
+  appearance: none;
   position: relative;
   top: 1px;
   width: 100%;
   margin: 7px 0;
   background-color: transparent;
-  appearance: none;
 }
 
 .styled-range-input:focus {
@@ -82,6 +82,7 @@
 }
 
 .styled-range-input::-webkit-slider-thumb {
+  appearance: none;
   width: 16px;
   height: 16px;
   margin-top: -7px;
@@ -89,7 +90,6 @@
   border-radius: 8px;
   background: var(--range-color-primary);
   cursor: pointer;
-  appearance: none;
 }
 
 .styled-range-input:focus::-webkit-slider-runnable-track {
