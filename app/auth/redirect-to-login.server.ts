@@ -1,8 +1,7 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 
-import { forbidden, unauthorized } from '~/utils/responses.server';
-
+import { forbidden, unauthorized } from '../utils/responses.server';
 import { userAuthStatus } from './user-auth-status';
 
 interface RedirectToLoginArgs {

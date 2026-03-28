@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useEffect, useRef } from 'react';
 
-import { useClock } from '~/hooks/useClock';
+import { useClock } from '../../../app/hooks/useClock';
 
 function useRenderCount() {
   const count = useRef(1);

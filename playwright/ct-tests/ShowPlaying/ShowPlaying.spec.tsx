@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/experimental-ct-react';
 import { Temporal } from 'temporal-polyfill';
 
-import type { ShowPlayingProps } from '~/components/ShowPlaying';
-import { ShowPlaying } from '~/components/ShowPlaying';
-import { initialAudioStatus } from '~/types/AudioStatus';
-import type { ShowInfo } from '~/types/ShowInfo';
+import type { ShowPlayingProps } from '../../../app/components/ShowPlaying';
+import { ShowPlaying } from '../../../app/components/ShowPlaying';
+import { initialAudioStatus } from '../../../app/types/AudioStatus';
+import type { ShowInfo } from '../../../app/types/ShowInfo';
 
 function makeShowInfoWaitingUntilStart(secondsUntilSet: number) {
   return {

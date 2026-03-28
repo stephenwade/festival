@@ -7,18 +7,18 @@ import type { ReadableStream } from 'node:stream/web';
 import type { AudioFile } from '@prisma/client';
 import type { ActionFunction } from '@remix-run/node';
 
-import { requireLogin } from '~/auth/redirect-to-login.server';
-import { db } from '~/db.server/db';
-import { ffmpeg } from '~/ffmpeg.server/ffmpeg';
-import type { FFprobeOutput } from '~/ffmpeg.server/ffprobe';
-import { ffprobe } from '~/ffmpeg.server/ffprobe';
-import { emitAudioFileProcessingEvent } from '~/sse.server/audio-file-events';
+import { requireLogin } from '../auth/redirect-to-login.server';
+import { db } from '../db.server/db';
+import { ffmpeg } from '../ffmpeg.server/ffmpeg';
+import type { FFprobeOutput } from '../ffmpeg.server/ffprobe';
+import { ffprobe } from '../ffmpeg.server/ffprobe';
+import { emitAudioFileProcessingEvent } from '../sse.server/audio-file-events';
 import {
   deleteObjectByUrl,
   getObjectUrl,
   uploadFile,
-} from '~/tigris.server/s3-client';
-import { notFound, serverError } from '~/utils/responses.server';
+} from '../tigris.server/s3-client';
+import { notFound, serverError } from '../utils/responses.server';
 
 const UPLOAD_DIR = 'upload';
 

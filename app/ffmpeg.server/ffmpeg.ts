@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process';
 
 import { z } from 'zod';
 
-import { integerString } from '~/utils/zod-number-schemas';
+import { integerString } from '../utils/zod-number-schemas';
 
 /**
  * Parses a string containing progress output in `key=value` format from FFmpeg.

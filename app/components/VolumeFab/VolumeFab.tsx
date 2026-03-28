@@ -4,8 +4,7 @@ import type { FC } from 'react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 
-import { useVolume } from '~/hooks/useVolume';
-
+import { useVolume } from '../../hooks/useVolume';
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
 
 const INPUT_MIN = 0;

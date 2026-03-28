@@ -3,14 +3,14 @@ import path from 'node:path';
 import type { ActionFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 
-import { requireLogin } from '~/auth/redirect-to-login.server';
-import { db } from '~/db.server/db';
+import { requireLogin } from '../auth/redirect-to-login.server';
+import { db } from '../db.server/db';
 import {
   UPLOAD_AUDIO_CONTENT_TYPE_KEY,
   UPLOAD_AUDIO_NAME_KEY,
-} from '~/forms/upload-audio';
-import { getObjectUploadUrl, getObjectUrl } from '~/tigris.server/s3-client';
-import { badRequest } from '~/utils/responses.server';
+} from '../forms/upload-audio';
+import { getObjectUploadUrl, getObjectUrl } from '../tigris.server/s3-client';
+import { badRequest } from '../utils/responses.server';
 
 export const action = (async (args) => {
   await requireLogin(args);

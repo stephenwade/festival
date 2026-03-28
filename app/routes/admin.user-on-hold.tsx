@@ -1,6 +1,6 @@
 import type { LoaderFunction } from '@remix-run/node';
 
-import { redirectToLogin } from '~/auth/redirect-to-login.server';
+import { redirectToLogin } from '../auth/redirect-to-login.server';
 
 export const loader = (async (args) => {
   await redirectToLogin(args, { onHoldPage: true });

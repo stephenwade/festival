@@ -1,6 +1,6 @@
 import { Temporal } from 'temporal-polyfill';
 
-import type { ShowData } from '~/types/ShowData';
+import type { ShowData } from '../../../app/types/ShowData';
 
 export interface TestProps {
   offsetSec: number;

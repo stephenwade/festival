@@ -11,10 +11,10 @@ import {
 } from 'react';
 import { AudioContext } from 'standardized-audio-context';
 
-import { useVolume } from '~/hooks/useVolume';
-import type { AudioStatus } from '~/types/AudioStatus';
-import { initialAudioStatus } from '~/types/AudioStatus';
-import type { ShowInfo, TargetShowInfo } from '~/types/ShowInfo';
+import { useVolume } from '../../hooks/useVolume';
+import type { AudioStatus } from '../../types/AudioStatus';
+import { initialAudioStatus } from '../../types/AudioStatus';
+import type { ShowInfo, TargetShowInfo } from '../../types/ShowInfo';
 
 interface State {
   activeAudio: HTMLAudioElement | null;

@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Temporal } from 'temporal-polyfill';
 
-import type { loader as showDataLoader } from '~/routes/$show.[data.json]';
-import type { ShowData } from '~/types/ShowData';
-import type { TargetShowInfo, TargetTimeInfo } from '~/types/ShowInfo';
-
+import type { loader as showDataLoader } from '../routes/$show.[data.json]';
+import type { ShowData } from '../types/ShowData';
+import type { TargetShowInfo, TargetTimeInfo } from '../types/ShowInfo';
 import { useClock } from './useClock';
 import { useFetcherIgnoreErrors } from './useFetcherIgnoreErrors';
 

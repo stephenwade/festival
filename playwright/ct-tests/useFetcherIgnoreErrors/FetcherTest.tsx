@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react';
 
-import { useFetcherIgnoreErrors } from '~/hooks/useFetcherIgnoreErrors';
+import { useFetcherIgnoreErrors } from '../../../app/hooks/useFetcherIgnoreErrors';
 
 export function FetcherTest() {
   const [naiveData, setNaiveData] = useState<unknown>();

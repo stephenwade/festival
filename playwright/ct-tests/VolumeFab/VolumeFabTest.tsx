@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { VolumeFab } from '~/components/VolumeFab';
-import { useVolume } from '~/hooks/useVolume';
-
+import { VolumeFab } from '../../../app/components/VolumeFab';
+import { useVolume } from '../../../app/hooks/useVolume';
 import { INITIAL_VOLUME } from './shared-data';
 
 export function VolumeFabTest() {

@@ -1,4 +1,4 @@
-import '~/styles/show-intro.css';
+import '../../styles/show-intro.css';
 
 import type { FC } from 'react';
 

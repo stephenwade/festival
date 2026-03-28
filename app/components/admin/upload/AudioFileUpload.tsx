@@ -7,12 +7,11 @@ import { useControlField, useField } from 'remix-validated-form';
 import {
   UPLOAD_AUDIO_CONTENT_TYPE_KEY,
   UPLOAD_AUDIO_NAME_KEY,
-} from '~/forms/upload-audio';
-import { useSse } from '~/hooks/useSse';
-import type { loader as audioUploadLoader } from '~/routes/admin.audio-upload.$id';
-import type { action as newAudioUploadAction } from '~/routes/admin.audio-upload.new';
-import type { AudioFileProcessingEvent } from '~/sse.server/audio-file-events';
-
+} from '../../../forms/upload-audio';
+import { useSse } from '../../../hooks/useSse';
+import type { loader as audioUploadLoader } from '../../../routes/admin.audio-upload.$id';
+import type { action as newAudioUploadAction } from '../../../routes/admin.audio-upload.new';
+import type { AudioFileProcessingEvent } from '../../../sse.server/audio-file-events';
 import { xhrPromise } from './xhrPromise';
 
 type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;

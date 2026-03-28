@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import type { ShowData } from '~/types/ShowData';
+import type { ShowData } from '../../app/types/ShowData';
 
 test('data endpoint omits sets that are already over', async ({
   request,
