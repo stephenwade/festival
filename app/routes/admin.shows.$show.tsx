@@ -4,10 +4,10 @@ import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 import { Temporal } from 'temporal-polyfill';
 
-import { redirectToLogin } from '~/auth/redirect-to-login.server';
-import { db } from '~/db.server/db';
-import { useOrigin } from '~/hooks/useOrigin';
-import { notFound } from '~/utils/responses.server';
+import { redirectToLogin } from '../auth/redirect-to-login.server';
+import { db } from '../db.server/db';
+import { useOrigin } from '../hooks/useOrigin';
+import { notFound } from '../utils/responses.server';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
   { title: data ? `${data.name} | Festival admin` : 'Show | Festival admin' },

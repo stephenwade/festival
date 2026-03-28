@@ -1,9 +1,8 @@
 import type { FC } from 'react';
 import { useMemo } from 'react';
 
-import type { AudioStatus } from '~/types/AudioStatus';
-import type { ShowInfo } from '~/types/ShowInfo';
-
+import type { AudioStatus } from '../../types/AudioStatus';
+import type { ShowInfo } from '../../types/ShowInfo';
 import { Spinner } from '../Spinner';
 
 interface CurrentTimeProps {

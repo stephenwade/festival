@@ -1,14 +1,13 @@
-import '~/styles/show-playing.css';
+import '../../styles/show-playing.css';
 
 import type { FC } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-import { ToastContainer } from '~/components/ToastContainer';
-import { VolumeFab } from '~/components/VolumeFab';
-import type { AudioStatus } from '~/types/AudioStatus';
-import type { ShowInfo } from '~/types/ShowInfo';
-
+import type { AudioStatus } from '../../types/AudioStatus';
+import type { ShowInfo } from '../../types/ShowInfo';
+import { ToastContainer } from '../ToastContainer';
+import { VolumeFab } from '../VolumeFab';
 import { AudioCanvas } from './AudioCanvas';
 import { CurrentTime } from './CurrentTime';
 

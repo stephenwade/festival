@@ -1,16 +1,15 @@
-import '~/styles/elevation.css';
-import '~/styles/show.css';
+import '../styles/elevation.css';
+import '../styles/show.css';
 
 import type { MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 
-import { AudioController } from '~/components/AudioController';
-import { ShowEnded } from '~/components/ShowEnded';
-import { ShowIntro } from '~/components/ShowIntro';
-import { ShowPlaying } from '~/components/ShowPlaying';
-import { useShowInfo } from '~/hooks/useShowInfo';
-
+import { AudioController } from '../components/AudioController';
+import { ShowEnded } from '../components/ShowEnded';
+import { ShowIntro } from '../components/ShowIntro';
+import { ShowPlaying } from '../components/ShowPlaying';
+import { useShowInfo } from '../hooks/useShowInfo';
 import { loader as showDataLoader } from './$show.[data.json]';
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {

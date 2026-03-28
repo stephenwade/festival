@@ -3,8 +3,7 @@ import { useLoaderData } from '@remix-run/react';
 import { createRemixStub } from '@remix-run/testing';
 import type { FC } from 'react';
 
-import { useShowInfo } from '~/hooks/useShowInfo';
-
+import { useShowInfo } from '../../../app/hooks/useShowInfo';
 import type { TestProps } from './helpers';
 import { getMockData } from './helpers';
 

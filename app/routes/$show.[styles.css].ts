@@ -1,9 +1,9 @@
 import type { LoaderFunction } from '@remix-run/node';
 
-import { db } from '~/db.server/db';
-import { showIncludeData } from '~/types/ShowWithData';
-import { validateShow } from '~/types/validateShow';
-import { forbidden, notFound } from '~/utils/responses.server';
+import { db } from '../db.server/db';
+import { showIncludeData } from '../types/ShowWithData';
+import { validateShow } from '../types/validateShow';
+import { forbidden, notFound } from '../utils/responses.server';
 
 export const loader = (async ({ params }) => {
   const slug = params.show!;

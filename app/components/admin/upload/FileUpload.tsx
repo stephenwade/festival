@@ -7,10 +7,9 @@ import { useControlField, useField } from 'remix-validated-form';
 import {
   UPLOAD_FILE_CONTENT_TYPE_KEY,
   UPLOAD_FILE_NAME_KEY,
-} from '~/forms/upload-file';
-import type { loader as fileUploadLoader } from '~/routes/admin.file-upload.$id';
-import type { action as newFileUploadAction } from '~/routes/admin.file-upload.new';
-
+} from '../../../forms/upload-file';
+import type { loader as fileUploadLoader } from '../../../routes/admin.file-upload.$id';
+import type { action as newFileUploadAction } from '../../../routes/admin.file-upload.new';
 import { xhrPromise } from './xhrPromise';
 
 type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;

@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
 
 /**
@@ -17,14 +15,6 @@ export default defineConfig({
     trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
     ctPort: 3100,
     ctTemplateDir: 'playwright/ct-tests',
-    ctViteConfig: {
-      resolve: {
-        // Match "paths" in tsconfig.json
-        alias: {
-          '~': path.resolve(import.meta.dirname, 'app'),
-        },
-      },
-    },
   },
 
   projects: [

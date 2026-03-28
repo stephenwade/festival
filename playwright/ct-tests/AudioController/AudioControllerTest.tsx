@@ -6,11 +6,10 @@ import { useState } from 'react';
 import { Temporal } from 'temporal-polyfill';
 import { useDeepCompareMemo } from 'use-deep-compare';
 
-import type { AudioMetadata } from '~/components/AudioController';
-import { AudioController } from '~/components/AudioController';
-import { useShowInfo } from '~/hooks/useShowInfo';
-import type { ShowData } from '~/types/ShowData';
-
+import type { AudioMetadata } from '../../../app/components/AudioController';
+import { AudioController } from '../../../app/components/AudioController';
+import { useShowInfo } from '../../../app/hooks/useShowInfo';
+import type { ShowData } from '../../../app/types/ShowData';
 import {
   AUDIO_FILE_LENGTH,
   AUDIO_FILE_URL,

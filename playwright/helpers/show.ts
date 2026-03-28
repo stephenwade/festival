@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { nanoid } from 'nanoid';
 import { Temporal } from 'temporal-polyfill';
 
-import { isDefined } from '~/utils/is-defined';
+import { isDefined } from '../../app/utils/is-defined';
 
 const prisma = new PrismaClient();
 

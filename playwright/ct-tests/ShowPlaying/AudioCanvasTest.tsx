@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useState } from 'react';
 
-import { AudioCanvas } from '~/components/ShowPlaying/AudioCanvas';
+import { AudioCanvas } from '../../../app/components/ShowPlaying/AudioCanvas';
 
 function hashCode(array: Iterable<number>): number {
   let hash = 0;

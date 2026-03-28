@@ -1,15 +1,15 @@
-import '~/styles/show.css';
-import '~/styles/index.css';
+import '../styles/show.css';
+import '../styles/index.css';
 
 import type { LoaderFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import type { FC } from 'react';
 import { Temporal } from 'temporal-polyfill';
 
-import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
-import { db } from '~/db.server/db';
-import { showIncludeData } from '~/types/ShowWithData';
-import { validateShow } from '~/types/validateShow';
+import { cache, INDEX_SHOW_SLUG_KEY } from '../cache.server/cache';
+import { db } from '../db.server/db';
+import { showIncludeData } from '../types/ShowWithData';
+import { validateShow } from '../types/validateShow';
 
 function isAfter(a: Temporal.Instant, b: Temporal.Instant): boolean {
   return Temporal.Instant.compare(a, b) === 1;

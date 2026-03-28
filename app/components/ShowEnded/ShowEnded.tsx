@@ -1,4 +1,4 @@
-import '~/styles/show-ended.css';
+import '../../styles/show-ended.css';
 
 import type { FC } from 'react';
 import { useEffect } from 'react';

@@ -8,11 +8,11 @@ import type { FC } from 'react';
 import { validationError } from 'remix-validated-form';
 import { Temporal } from 'temporal-polyfill';
 
-import { redirectToLogin } from '~/auth/redirect-to-login.server';
-import { cache, INDEX_SHOW_SLUG_KEY } from '~/cache.server/cache';
-import { db } from '~/db.server/db';
-import { NewShowForm } from '~/forms/show/forms';
-import { makeServerValidator } from '~/forms/show/schema.server';
+import { redirectToLogin } from '../auth/redirect-to-login.server';
+import { cache, INDEX_SHOW_SLUG_KEY } from '../cache.server/cache';
+import { db } from '../db.server/db';
+import { NewShowForm } from '../forms/show/forms';
+import { makeServerValidator } from '../forms/show/schema.server';
 
 export const meta: MetaFunction = () => [
   { title: 'New show | Festival admin' },

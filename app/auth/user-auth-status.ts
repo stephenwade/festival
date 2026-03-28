@@ -3,7 +3,7 @@ import { createClerkClient } from '@clerk/remix/api.server';
 import { getAuth } from '@clerk/remix/ssr.server';
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 
-import { db } from '~/db.server/db';
+import { db } from '../db.server/db';
 
 export async function userAuthStatus(
   args: ActionFunctionArgs | LoaderFunctionArgs,

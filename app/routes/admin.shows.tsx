@@ -2,7 +2,7 @@ import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { Outlet } from '@remix-run/react';
 import type { FC } from 'react';
 
-import { redirectToLogin } from '~/auth/redirect-to-login.server';
+import { redirectToLogin } from '../auth/redirect-to-login.server';
 
 export const meta: MetaFunction = () => [{ title: 'Shows | Festival admin' }];
 

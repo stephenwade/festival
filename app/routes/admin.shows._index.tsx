@@ -3,11 +3,11 @@ import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
 
-import { redirectToLogin } from '~/auth/redirect-to-login.server';
-import { db } from '~/db.server/db';
-import { showIncludeData } from '~/types/ShowWithData';
-import { validateShow } from '~/types/validateShow';
-import { omit } from '~/utils/omit';
+import { redirectToLogin } from '../auth/redirect-to-login.server';
+import { db } from '../db.server/db';
+import { showIncludeData } from '../types/ShowWithData';
+import { validateShow } from '../types/validateShow';
+import { omit } from '../utils/omit';
 
 export const loader = (async (args) => {
   await redirectToLogin(args);

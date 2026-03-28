@@ -1,4 +1,4 @@
-import '~/styles/admin.css';
+import '../styles/admin.css';
 
 import { UserButton } from '@clerk/remix';
 import type { MetaFunction } from '@remix-run/node';

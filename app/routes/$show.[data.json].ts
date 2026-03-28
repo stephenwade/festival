@@ -1,11 +1,11 @@
 import { json, type LoaderFunction } from '@remix-run/node';
 import { Temporal } from 'temporal-polyfill';
 
-import { db } from '~/db.server/db';
-import type { SetData, ShowData } from '~/types/ShowData';
-import { showIncludeData } from '~/types/ShowWithData';
-import { validateShow } from '~/types/validateShow';
-import { forbidden, notFound } from '~/utils/responses.server';
+import { db } from '../db.server/db';
+import type { SetData, ShowData } from '../types/ShowData';
+import { showIncludeData } from '../types/ShowWithData';
+import { validateShow } from '../types/validateShow';
+import { forbidden, notFound } from '../utils/responses.server';
 
 export const loader = (async ({ params }) => {
   const slug = params.show!;
