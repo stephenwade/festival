@@ -3,6 +3,8 @@ import { RemixServer } from '@remix-run/react';
 import { renderToString } from 'react-dom/server';
 import { HelmetProvider, type HelmetServerState } from 'react-helmet-async';
 
+import { TrpcProvider } from './trpc';
+
 function renderHelmetMarkup(helmet: HelmetServerState) {
   return [
     helmet.base.toString(),
@@ -25,9 +27,11 @@ export default function handleRequest(
   const helmetContext: Record<string, unknown> = {};
 
   const markup = renderToString(
-    <HelmetProvider context={helmetContext}>
-      <RemixServer context={remixContext} url={request.url} />
-    </HelmetProvider>,
+    <TrpcProvider>
+      <HelmetProvider context={helmetContext}>
+        <RemixServer context={remixContext} url={request.url} />
+      </HelmetProvider>
+    </TrpcProvider>,
   );
   const markupWithHelmet = markup.replace(
     '</head>',

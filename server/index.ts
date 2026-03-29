@@ -1,8 +1,13 @@
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
+import { clerkMiddleware } from '@clerk/express';
 import { createRequestHandler } from '@remix-run/express';
+import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import express from 'express';
+
+import { appRouter } from './routers/index.ts';
+import { createContext } from './trpc.ts';
 
 const appDirectory = fileURLToPath(new URL('..', import.meta.url));
 const buildClientDirectory = path.join(appDirectory, 'build', 'client');
@@ -25,13 +30,15 @@ const app = express();
 
 app.set('trust proxy', true);
 
-// app.get('/test', (_request, response) => {
-//   response.json({
-//     route: 'test',
-//     server: 'express',
-//     status: 'ok',
-//   });
-// });
+app.use(clerkMiddleware());
+
+app.use(
+  '/trpc',
+  createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  }),
+);
 
 if (viteDevServer) {
   app.use(viteDevServer.middlewares);
@@ -65,5 +72,5 @@ app.all('*', (request, response, next) => {
 });
 
 app.listen(port, () => {
-  console.log(`Express server listening on port ${port}`);
+  console.log(`Express server ready on port ${port}`);
 });
