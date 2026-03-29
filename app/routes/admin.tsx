@@ -1,15 +1,16 @@
 import '../styles/admin.css';
 
 import { UserButton } from '@clerk/remix';
-import type { MetaFunction } from '@remix-run/node';
 import { Outlet } from '@remix-run/react';
 import type { FC } from 'react';
-
-export const meta: MetaFunction = () => [{ title: 'Festival admin' }];
+import { Helmet } from 'react-helmet-async';
 
 const Admin: FC = () => {
   return (
     <>
+      <Helmet>
+        <title>Festival admin</title>
+      </Helmet>
       <h1>Festival admin</h1>
       <UserButton />
       <Outlet />

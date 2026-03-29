@@ -1,19 +1,14 @@
 import { ClerkApp } from '@clerk/remix';
 import { rootAuthLoader } from '@clerk/remix/ssr.server';
-import type { LoaderFunction, MetaFunction } from '@remix-run/node';
+import type { LoaderFunction } from '@remix-run/node';
 import {
   Links,
-  Meta,
   Outlet,
   redirect,
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
-
-export const meta: MetaFunction = () => [
-  { title: 'Festival' },
-  { name: 'description', content: 'Host online music festivals' },
-];
+import { Helmet } from 'react-helmet-async';
 
 export const loader = ((args) => {
   const { pathname, search } = new URL(args.request.url);
@@ -35,7 +30,10 @@ function App() {
           name="viewport"
           content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"
         />
-        <Meta />
+        <Helmet>
+          <title>Festival</title>
+          <meta name="description" content="Host online music festivals" />
+        </Helmet>
         <Links />
 
         <script
