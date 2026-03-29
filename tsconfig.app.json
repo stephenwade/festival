@@ -1,0 +1,24 @@
+{
+  "include": ["*.config.js", "*.config.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["build", "server/**/*.ts"],
+  "compilerOptions": {
+    "types": ["@remix-run/node", "vite/client"],
+    "lib": ["DOM", "DOM.Iterable", "ES2023"],
+    "target": "esnext",
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "tsBuildInfoFile": "node_modules/.tmp/tsconfig.client.tsbuildinfo"
+  }
+}
