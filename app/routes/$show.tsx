@@ -1,6 +1,3 @@
-import '../styles/elevation.css';
-import '../styles/show.css';
-
 import { useLoaderData, useParams } from '@remix-run/react';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -10,6 +7,8 @@ import { ShowEnded } from '../components/ShowEnded';
 import { ShowIntro } from '../components/ShowIntro';
 import { ShowPlaying } from '../components/ShowPlaying';
 import { useShowInfo } from '../hooks/useShowInfo';
+import elevationCssHref from '../styles/elevation.css?url';
+import showCssHref from '../styles/show.css?url';
 import type { loader as showDataLoader } from './$show.[data.json]';
 
 export { loader } from './$show.[data.json]';
@@ -26,6 +25,8 @@ const Show: FC = () => {
       <Helmet>
         <title>{loaderData.name} | Festival</title>
         <meta name="description" content={loaderData.description} />
+        <link rel="stylesheet" href={elevationCssHref} />
+        <link rel="stylesheet" href={showCssHref} />
         <link rel="stylesheet" href={`/${show!}/styles.css`} />
       </Helmet>
       <AudioController

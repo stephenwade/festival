@@ -1,13 +1,7 @@
 import { ClerkApp } from '@clerk/remix';
 import { rootAuthLoader } from '@clerk/remix/ssr.server';
 import type { LoaderFunction } from '@remix-run/node';
-import {
-  Links,
-  Outlet,
-  redirect,
-  Scripts,
-  ScrollRestoration,
-} from '@remix-run/react';
+import { Outlet, redirect, Scripts, ScrollRestoration } from '@remix-run/react';
 import { Helmet } from 'react-helmet-async';
 
 export const loader = ((args) => {
@@ -34,7 +28,6 @@ function App() {
           <title>Festival</title>
           <meta name="description" content="Host online music festivals" />
         </Helmet>
-        <Links />
 
         <script
           async
