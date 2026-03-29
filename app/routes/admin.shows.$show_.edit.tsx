@@ -1,11 +1,8 @@
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-} from '@remix-run/node';
+import type { ActionFunction, LoaderFunction } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { validationError } from 'remix-validated-form';
 import { Temporal } from 'temporal-polyfill';
 
@@ -19,10 +16,6 @@ import { replaceUndefinedsWithNull } from '../forms/utils/replaceUndefinedsWithN
 import { isDefined } from '../utils/is-defined';
 import { omit } from '../utils/omit';
 import { notFound } from '../utils/responses.server';
-
-export const meta: MetaFunction = () => [
-  { title: 'Edit show | Festival admin' },
-];
 
 export const loader = (async (args) => {
   await redirectToLogin(args);
@@ -115,6 +108,9 @@ const EditShow: FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Edit show | Festival admin</title>
+      </Helmet>
       <h3>Edit show</h3>
       <EditShowForm defaultValues={show} showId={show.id} />
     </>

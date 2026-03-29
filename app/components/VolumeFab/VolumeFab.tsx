@@ -1,11 +1,11 @@
-import './volume-fab.css';
-
 import type { FC } from 'react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { useVolume } from '../../hooks/useVolume';
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
+import volumeFabCssHref from './volume-fab.css?url';
 
 const INPUT_MIN = 0;
 const INPUT_MAX = 100;
@@ -82,40 +82,45 @@ export const VolumeFab: FC = memo(function VolumeFab() {
         : VolumeUpIcon;
 
   return (
-    <div ref={buttonRef} className="volume-fab-container">
-      <button
-        className={`elevation-transition ${
-          opened ? 'elevation-z12' : 'elevation-z6'
-        }`}
-        aria-label="Volume"
-        onClick={() => {
-          setOpened((opened) => !opened);
-        }}
-      >
-        <VolumeIcon />
-      </button>
-      <div
-        className={`slider-container elevation-transition ${
-          opened ? 'elevation-z12-r90' : 'elevation-z0'
-        }`}
-        aria-expanded={opened}
-      >
-        <input
-          className="styled-range-input"
-          type="range"
-          value={volume}
-          min={INPUT_MIN}
-          max={INPUT_MAX}
-          step={INPUT_STEP}
+    <>
+      <Helmet>
+        <link rel="stylesheet" href={volumeFabCssHref} />
+      </Helmet>
+      <div ref={buttonRef} className="volume-fab-container">
+        <button
+          className={`elevation-transition ${
+            opened ? 'elevation-z12' : 'elevation-z6'
+          }`}
           aria-label="Volume"
-          disabled={!opened}
-          onInput={(e) => {
-            const input = e.target as HTMLInputElement;
-            const volume = Number(input.value);
-            setVolume(volume);
+          onClick={() => {
+            setOpened((opened) => !opened);
           }}
-        />
+        >
+          <VolumeIcon />
+        </button>
+        <div
+          className={`slider-container elevation-transition ${
+            opened ? 'elevation-z12-r90' : 'elevation-z0'
+          }`}
+          aria-expanded={opened}
+        >
+          <input
+            className="styled-range-input"
+            type="range"
+            value={volume}
+            min={INPUT_MIN}
+            max={INPUT_MAX}
+            step={INPUT_STEP}
+            aria-label="Volume"
+            disabled={!opened}
+            onInput={(e) => {
+              const input = e.target as HTMLInputElement;
+              const volume = Number(input.value);
+              setVolume(volume);
+            }}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 });

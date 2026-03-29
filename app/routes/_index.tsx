@@ -1,13 +1,13 @@
-import '../styles/show.css';
-import '../styles/index.css';
-
 import type { LoaderFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import type { FC } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Temporal } from 'temporal-polyfill';
 
 import { cache, INDEX_SHOW_SLUG_KEY } from '../cache.server/cache';
 import { db } from '../db.server/db';
+import indexCssHref from '../styles/index.css?url';
+import showCssHref from '../styles/show.css?url';
 import { showIncludeData } from '../types/ShowWithData';
 import { validateShow } from '../types/validateShow';
 
@@ -79,15 +79,22 @@ export const loader = (async () => {
 }) satisfies LoaderFunction;
 
 const Index: FC = () => (
-  <div className="index-container full-page">
-    <img className="logo" src="/images/festival.svg" alt="FESTIVAL" />
-    <div className="attribution">
-      Photo by <a href="https://unsplash.com/@yvettedewit">Yvette de Wit</a> on{' '}
-      <a href="https://unsplash.com/photos/group-of-people-attending-a-performance-8XLapfNMW04">
-        Unsplash
-      </a>
+  <>
+    <Helmet>
+      <link rel="stylesheet" href={showCssHref} />
+      <link rel="stylesheet" href={indexCssHref} />
+    </Helmet>
+    <div className="index-container full-page">
+      <img className="logo" src="/images/festival.svg" alt="FESTIVAL" />
+      <div className="attribution">
+        Photo by <a href="https://unsplash.com/@yvettedewit">Yvette de Wit</a>{' '}
+        on{' '}
+        <a href="https://unsplash.com/photos/group-of-people-attending-a-performance-8XLapfNMW04">
+          Unsplash
+        </a>
+      </div>
     </div>
-  </div>
+  </>
 );
 
 export default Index;

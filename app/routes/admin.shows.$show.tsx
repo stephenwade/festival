@@ -1,17 +1,14 @@
-import type { LoaderFunction, MetaFunction } from '@remix-run/node';
+import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import type { FC } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Temporal } from 'temporal-polyfill';
 
 import { redirectToLogin } from '../auth/redirect-to-login.server';
 import { db } from '../db.server/db';
 import { useOrigin } from '../hooks/useOrigin';
 import { notFound } from '../utils/responses.server';
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => [
-  { title: data ? `${data.name} | Festival admin` : 'Show | Festival admin' },
-];
 
 export const loader = (async (args) => {
   await redirectToLogin(args);
@@ -43,6 +40,9 @@ const ViewShow: FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{show.name} | Festival admin</title>
+      </Helmet>
       <p>
         <Link to="/admin/shows">Back to all shows</Link> -{' '}
         <Link to={`/admin/shows/${show.id}/edit`}>Edit</Link>

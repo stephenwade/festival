@@ -1,9 +1,9 @@
-import '../../styles/show-playing.css';
-
 import type { FC } from 'react';
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-toastify';
 
+import showPlayingCssHref from '../../styles/show-playing.css?url';
 import type { AudioStatus } from '../../types/AudioStatus';
 import type { ShowInfo } from '../../types/ShowInfo';
 import { ToastContainer } from '../ToastContainer';
@@ -60,26 +60,31 @@ export const ShowPlaying: FC<ShowPlayingProps> = ({
   }, [showDelayToast]);
 
   return (
-    <div className="playing-container full-page">
-      {showInfo.currentSet && playing ? (
-        <AudioCanvas
-          currentTime={showInfo.currentTime}
-          setLength={showInfo.currentSet.duration}
-          progressLineFrozen={
-            audioStatus.paused || audioStatus.stalled || audioStatus.waiting
-          }
-          getAudioVisualizerData={getAudioVisualizerData}
-        />
-      ) : null}
+    <>
+      <Helmet>
+        <link rel="stylesheet" href={showPlayingCssHref} />
+      </Helmet>
+      <div className="playing-container full-page">
+        {showInfo.currentSet && playing ? (
+          <AudioCanvas
+            currentTime={showInfo.currentTime}
+            setLength={showInfo.currentSet.duration}
+            progressLineFrozen={
+              audioStatus.paused || audioStatus.stalled || audioStatus.waiting
+            }
+            getAudioVisualizerData={getAudioVisualizerData}
+          />
+        ) : null}
 
-      <CurrentTime showInfo={showInfo} audioStatus={audioStatus} />
+        <CurrentTime showInfo={showInfo} audioStatus={audioStatus} />
 
-      {waitingUntilStart ? <div className="next-up">NEXT UP</div> : null}
-      <div className="artist">{showInfo.currentSet?.artist}</div>
+        {waitingUntilStart ? <div className="next-up">NEXT UP</div> : null}
+        <div className="artist">{showInfo.currentSet?.artist}</div>
 
-      <VolumeFab />
+        <VolumeFab />
 
-      <ToastContainer />
-    </div>
+        <ToastContainer />
+      </div>
+    </>
   );
 };
