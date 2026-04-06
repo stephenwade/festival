@@ -10,7 +10,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky; prisma generate",
-    "dev": "node server/index.ts",
+    "dev": "nodemon --ext ts,env --exec node server/index.ts",
     "build": "remix vite:build",
     "start": "NODE_ENV=production node server/index.ts",
     "lint:dpdm": "dpdm 'app/routes/*' server/index.ts --no-tree --no-warning --exit-code circular:1",
@@ -84,6 +84,7 @@
     "husky": "9.1.7",
     "knip": "6.2.0",
     "lint-staged": "16.4.0",
+    "nodemon": "3.1.14",
     "npm-run-all2": "8.0.4",
     "prettier": "3.8.1",
     "prisma": "6.19.3",
