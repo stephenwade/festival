@@ -1,8 +1,11 @@
 import { vitePlugin as remix } from '@remix-run/dev';
-import dotenv from 'dotenv';
 import { defineConfig } from 'vite';
 
-dotenv.config();
+try {
+  process.loadEnvFile('.env');
+} catch {
+  // Ignore errors if `.env` doesn't exist
+}
 
 export default defineConfig({
   plugins: [
