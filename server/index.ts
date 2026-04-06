@@ -4,13 +4,6 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequestHandler } from '@remix-run/express';
 import express from 'express';
 
-try {
-  const dotenv = await import('dotenv');
-  dotenv.config();
-} catch {
-  // ignore errors, dotenv isn't present in production
-}
-
 const appDirectory = fileURLToPath(new URL('..', import.meta.url));
 const buildClientDirectory = path.join(appDirectory, 'build', 'client');
 const serverBuildPath = path.join(appDirectory, 'build', 'server', 'index.js');

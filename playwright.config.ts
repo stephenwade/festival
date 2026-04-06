@@ -1,9 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
-import dotenv from 'dotenv';
 
 import { authFile } from './playwright/tests/shared-data';
 
-dotenv.config();
+try {
+  process.loadEnvFile('.env');
+} catch {
+  // Ignore errors if `.env` doesn't exist
+}
 
 const baseURL = `http://127.0.0.1:${process.env.PORT!}`;
 
