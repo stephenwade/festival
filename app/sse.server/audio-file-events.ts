@@ -1,7 +1,7 @@
 import type { AudioFile } from '@prisma/client';
 import type { useLoaderData } from '@remix-run/react';
 
-import { dispatchAdminEvent } from './admin-events';
+import { dispatchAdminEvent } from './admin-events.ts';
 
 type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;
 

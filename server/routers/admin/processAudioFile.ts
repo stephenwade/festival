@@ -5,40 +5,34 @@ import { pipeline } from 'node:stream/promises';
 import type { ReadableStream } from 'node:stream/web';
 
 import type { AudioFile } from '@prisma/client';
-import type { ActionFunction } from '@remix-run/node';
+import { TRPCError } from '@trpc/server';
 
-import { requireLogin } from '../auth/redirect-to-login.server';
-import { db } from '../db.server/db';
-import { ffmpeg } from '../ffmpeg.server/ffmpeg';
-import type { FFprobeOutput } from '../ffmpeg.server/ffprobe';
-import { ffprobe } from '../ffmpeg.server/ffprobe';
-import { emitAudioFileProcessingEvent } from '../sse.server/audio-file-events';
+import { db } from '../../../app/db.server/db.ts';
+import { emitAudioFileProcessingEvent } from '../../../app/sse.server/audio-file-events.ts';
 import {
   deleteObjectByUrl,
   getObjectUrl,
   uploadFile,
-} from '../tigris.server/s3-client';
-import { notFound, serverError } from '../utils/responses.server';
+} from '../../../app/tigris.server/s3-client.ts';
+import { ffmpeg } from '../../ffmpeg/ffmpeg.ts';
+import type { FFprobeOutput } from '../../ffmpeg/ffprobe.ts';
+import { ffprobe } from '../../ffmpeg/ffprobe.ts';
 
 const UPLOAD_DIR = 'upload';
 
 const MICROSECONDS = 1 / 1_000_000;
 
-export const action = (async (args) => {
-  await requireLogin(args);
-
-  const id = args.params.id!;
-
+export async function processAudioFile(id: string) {
   const file = await db.audioFile.findUnique({
     where: { id },
   });
-  if (!file) throw notFound();
+  if (!file) {
+    throw new TRPCError({ code: 'NOT_FOUND' });
+  }
 
   // Run this in the background after responding to the request
   void checkAudioFile(file);
-
-  return null;
-}) satisfies ActionFunction;
+}
 
 async function checkAudioFile(file: AudioFile) {
   try {
@@ -167,7 +161,7 @@ async function updateAudioFileDoneProcessing(fileId: AudioFile['id']) {
   });
 
   if (!file?.duration || !file.url) {
-    throw serverError();
+    throw new Error('Audio file missing duration or url after processing');
   }
 
   const newFile = await db.audioFile.update({

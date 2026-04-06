@@ -1,7 +1,6 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 
-import { forbidden, unauthorized } from '../utils/responses.server';
 import { userAuthStatus } from './user-auth-status';
 
 interface RedirectToLoginArgs {
@@ -26,21 +25,6 @@ export async function redirectToLogin(
       if (onHoldPage) {
         throw redirect('/admin');
       }
-      break;
-  }
-}
-
-export async function requireLogin(
-  args: ActionFunctionArgs | LoaderFunctionArgs,
-) {
-  const status = await userAuthStatus(args);
-
-  switch (status) {
-    case 'unauthorized':
-      throw unauthorized();
-    case 'forbidden':
-      throw forbidden();
-    case 'ok':
       break;
   }
 }

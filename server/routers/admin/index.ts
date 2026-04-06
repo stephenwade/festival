@@ -1,10 +1,14 @@
 import { z } from 'zod';
+import { zfd } from 'zod-form-data';
 
 import { protectedProcedure, router } from '../../trpc.ts';
+import { createAudioFileUpload } from './createAudioFileUpload.ts';
+import { createFileUpload } from './createFileUpload.ts';
 import { getAudioFile } from './getAudioFile.ts';
 import { getImageFile } from './getImageFile.ts';
 import { getShow, getShowForEditing } from './getShow.ts';
 import { getShows } from './getShows.ts';
+import { processAudioFile } from './processAudioFile.ts';
 
 export const adminRouter = router({
   getShows: protectedProcedure.query(() => getShows()),
@@ -20,4 +24,28 @@ export const adminRouter = router({
   getImageFile: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(({ input: { id } }) => getImageFile(id)),
+  createFileUpload: protectedProcedure
+    .input(
+      zfd.formData({
+        name: zfd.text(),
+        contentType: zfd.text(),
+      }),
+    )
+    .mutation(({ input }) => createFileUpload(input)),
+  createAudioFileUpload: protectedProcedure
+    .input(
+      zfd.formData({
+        name: zfd.text(),
+        contentType: zfd.text(),
+      }),
+    )
+    .mutation(({ input }) =>
+      createAudioFileUpload({
+        name: input.name,
+        contentType: input.contentType,
+      }),
+    ),
+  processAudioFile: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(({ input: { id } }) => processAudioFile(id)),
 });

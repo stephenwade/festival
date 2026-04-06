@@ -1,5 +1,4 @@
-import type { useLoaderData } from '@remix-run/react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import { useControlField, useField } from 'remix-validated-form';
@@ -8,14 +7,9 @@ import {
   UPLOAD_FILE_CONTENT_TYPE_KEY,
   UPLOAD_FILE_NAME_KEY,
 } from '../../../forms/upload-file';
-import type { action as newFileUploadAction } from '../../../routes/admin.file-upload.new';
 import type { RouterOutput } from '../../../trpc';
 import { useTRPC } from '../../../trpc';
 import { xhrPromise } from './xhrPromise';
-
-type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;
-
-type UploadResponse = SerializeFrom<typeof newFileUploadAction>;
 
 interface FileUploadProps {
   name: string;
@@ -34,7 +28,11 @@ export const FileUpload: FC<FileUploadProps> = ({
   const [fileId, setFileId] = useControlField<string | undefined>(name);
 
   const [fileState, setFileState] =
-    useState<SerializeFrom<RouterOutput['admin']['getImageFile']>>();
+    useState<RouterOutput['admin']['getImageFile']>();
+
+  const createFileUpload = useMutation(
+    trpc.admin.createFileUpload.mutationOptions(),
+  );
 
   const { data: fetchedData } = useQuery(
     trpc.admin.getImageFile.queryOptions(
@@ -64,12 +62,8 @@ export const FileUpload: FC<FileUploadProps> = ({
     form.append(UPLOAD_FILE_NAME_KEY, file.name);
     form.append(UPLOAD_FILE_CONTENT_TYPE_KEY, file.type);
 
-    const newFileResponse = await fetch('/admin/file-upload/new', {
-      method: 'POST',
-      body: form,
-    });
     const { file: newFile, uploadUrl } =
-      (await newFileResponse.json()) as UploadResponse;
+      await createFileUpload.mutateAsync(form);
     setFileState(newFile);
     // Wait a bit to make sure the query is not triggered before the
     // file upload state is updated.

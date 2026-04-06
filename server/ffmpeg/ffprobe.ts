@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process';
 
 import { z } from 'zod';
 
-import { numericString } from '../utils/zod-number-schemas';
+import { numericString } from './zod-number-schemas.ts';
 
 /**
  * Parses a string containing JSON output from `ffprobe`.

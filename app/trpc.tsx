@@ -7,7 +7,9 @@ import type { TRPCClient } from '@trpc/client';
 import {
   createTRPCClient,
   httpBatchStreamLink,
+  httpLink,
   httpSubscriptionLink,
+  isNonJsonSerializable,
   splitLink,
   TRPCClientError,
 } from '@trpc/client';
@@ -101,7 +103,11 @@ export function TrpcProvider({ children }: PropsWithChildren) {
         splitLink({
           condition: (op) => op.type === 'subscription',
           true: httpSubscriptionLink({ url: '/trpc' }),
-          false: httpBatchStreamLink({ url: '/trpc' }),
+          false: splitLink({
+            condition: (op) => isNonJsonSerializable(op.input),
+            true: httpLink({ url: '/trpc' }),
+            false: httpBatchStreamLink({ url: '/trpc' }),
+          }),
         }),
       ],
     }),
