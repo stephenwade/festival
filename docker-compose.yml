@@ -2,7 +2,7 @@
 name: festival-dev
 services:
   db:
-    image: postgres:16@sha256:2586e2a95d1c9b31cb2967feb562948f7d364854453d703039b6efa45fe48417
+    image: postgres:16@sha256:83abe4d94e4c5087eb7c3d2663ca876a9e6023746e5be468fda1d6e7152b4054
     env_file: .env
     volumes:
       - db-data:/var/lib/postgresql/data
