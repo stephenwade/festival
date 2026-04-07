@@ -95,7 +95,7 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.58.0",
     "use-deep-compare": "1.3.0",
-    "vite": "6.4.1"
+    "vite": "6.4.2"
   },
   "lint-staged": {
     "*.css": "stylelint --fix",
