@@ -1,8 +1,8 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
+import { validationError } from '@rvf/remix';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { validationError } from 'remix-validated-form';
 import { Temporal } from 'temporal-polyfill';
 
 import { cache, INDEX_SHOW_SLUG_KEY } from '../../server/util/cache';

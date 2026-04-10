@@ -1,13 +1,8 @@
 import type { Show } from '@prisma/client';
 import { Form, useNavigate, useNavigation } from '@remix-run/react';
+import { FormProvider, useField, useFieldArray, useForm } from '@rvf/remix';
 import type { FC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import {
-  useControlField,
-  useField,
-  useFieldArray,
-  ValidatedForm,
-} from 'remix-validated-form';
 import { Temporal } from 'temporal-polyfill';
 import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
@@ -20,8 +15,6 @@ import { FileUpload } from '../../components/admin/upload/FileUpload';
 import { useOrigin } from '../../hooks/useOrigin';
 import type { schema, setSchema } from './schema';
 import { clientValidator } from './schema';
-
-const SHOW_FORM_ID = 'show-form';
 
 interface SetFormProps {
   name: string;
@@ -43,13 +36,13 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
     }
   }, [isUploading, onIsUploadingChanged]);
 
-  const { getInputProps } = useField(`${name}.id`);
-  const [id] = useControlField<z.infer<typeof setSchema>['id']>(`${name}.id`);
+  const field = useField<z.infer<typeof setSchema>['id']>(`${name}.id`);
+  const id = field.value();
 
   return (
     <fieldset>
       <legend>Set</legend>
-      <input {...getInputProps({ type: 'hidden', value: id })} />
+      <input {...field.getInputProps({ type: 'hidden', value: id })} />
       <Input label="Artist" name={`${name}.artist`} />
       <Input label="Offset" name={`${name}.offset`} />
       <AudioFileUpload
@@ -71,7 +64,7 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
 };
 
 interface ShowFormProps {
-  defaultValues?: Partial<z.infer<typeof schema>>;
+  defaultValues?: z.infer<typeof schema>;
   cancelLinkTo: string;
   showDeleteButton?: boolean;
 }
@@ -107,19 +100,17 @@ const ShowForm: FC<ShowFormProps> = ({
     [incUploading, decUploading],
   );
 
-  const [sets, { push, remove }] = useFieldArray<z.infer<typeof setSchema>>(
-    'sets',
-    { formId: SHOW_FORM_ID },
-  );
+  const form = useForm({
+    validator: clientValidator,
+    defaultValues,
+    method: 'post',
+  });
+
+  const sets = useFieldArray(form.scope('sets'));
 
   return (
-    <>
-      <ValidatedForm
-        id={SHOW_FORM_ID}
-        validator={clientValidator}
-        defaultValues={defaultValues}
-        method="post"
-      >
+    <FormProvider scope={form.scope()}>
+      <form {...form.getFormProps()}>
         <Input label="Name" name="name" />
         <Input label="URL" prefix={`${origin ?? ''}/`} name="slug" />
         <Input label="Description" name="description" />
@@ -149,12 +140,12 @@ const ShowForm: FC<ShowFormProps> = ({
           name="backgroundColorSecondary"
         />
         <h4>Sets</h4>
-        {sets.map((set, index) => (
+        {sets.map((key, _form, index) => (
           <SetForm
-            key={set.key}
+            key={key}
             name={`sets[${index}]`}
             remove={() => {
-              remove(index);
+              void sets.remove(index);
             }}
             onIsUploadingChanged={onIsUploadingChanged}
           />
@@ -163,7 +154,7 @@ const ShowForm: FC<ShowFormProps> = ({
           <button
             type="button"
             onClick={() => {
-              push({});
+              void sets.push({});
             }}
           >
             Add set
@@ -181,7 +172,7 @@ const ShowForm: FC<ShowFormProps> = ({
           </button>{' '}
           <SaveButton disabled={saveDisabled} />
         </p>
-      </ValidatedForm>
+      </form>
       {showDeleteButton ? (
         <Form method="delete">
           <p>
@@ -191,13 +182,16 @@ const ShowForm: FC<ShowFormProps> = ({
           </p>
         </Form>
       ) : null}
-    </>
+    </FormProvider>
   );
 };
 
 export const NewShowForm: FC = () => (
   <ShowForm
     defaultValues={{
+      name: '',
+      slug: '',
+      sets: [],
       timeZone: Temporal.Now.timeZoneId(),
     }}
     cancelLinkTo="/admin/shows"

@@ -1,10 +1,10 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import { useParams } from '@remix-run/react';
+import { validationError } from '@rvf/remix';
 import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { validationError } from 'remix-validated-form';
 import { Temporal } from 'temporal-polyfill';
 
 import { cache, INDEX_SHOW_SLUG_KEY } from '../../server/util/cache';

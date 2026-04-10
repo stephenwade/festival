@@ -1,6 +1,6 @@
+import { useField } from '@rvf/remix';
 import type { FC } from 'react';
 import { useTimezoneSelect } from 'react-timezone-select';
-import { useControlField, useField } from 'remix-validated-form';
 
 interface InputTimeZoneProps {
   name: string;
@@ -8,8 +8,9 @@ interface InputTimeZoneProps {
 }
 
 export const InputTimeZone: FC<InputTimeZoneProps> = ({ name, label }) => {
-  const { error, getInputProps } = useField(name);
-  const [value, setValue] = useControlField<string>(name);
+  const field = useField<string>(name);
+  const value = field.value();
+  const error = field.error();
 
   const { options, parseTimezone } = useTimezoneSelect({});
 
@@ -18,10 +19,10 @@ export const InputTimeZone: FC<InputTimeZoneProps> = ({ name, label }) => {
       <label>
         {label}:{' '}
         <select
-          {...getInputProps({
+          {...field.getInputProps({
             value: parseTimezone(value).value,
             onChange: (e) => {
-              setValue(parseTimezone(e.currentTarget.value).value);
+              field.setValue(parseTimezone(e.currentTarget.value).value);
             },
             'aria-invalid': Boolean(error) || undefined,
             'aria-errormessage': error ? `${name}-error` : undefined,

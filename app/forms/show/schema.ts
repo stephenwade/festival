@@ -1,4 +1,4 @@
-import { withZod } from '@remix-validated-form/with-zod';
+import { withZod } from '@rvf/zod';
 import { Temporal } from 'temporal-polyfill';
 import { z } from 'zod';
 import { zfd } from 'zod-form-data';

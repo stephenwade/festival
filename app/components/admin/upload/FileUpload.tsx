@@ -1,7 +1,7 @@
+import { useField } from '@rvf/remix';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
-import { useControlField, useField } from 'remix-validated-form';
 
 import {
   UPLOAD_FILE_CONTENT_TYPE_KEY,
@@ -24,8 +24,8 @@ export const FileUpload: FC<FileUploadProps> = ({
 }) => {
   const trpc = useTRPC();
 
-  const { getInputProps } = useField(name);
-  const [fileId, setFileId] = useControlField<string | undefined>(name);
+  const field = useField<string | undefined>(name);
+  const fileId = field.value();
 
   const [fileState, setFileState] =
     useState<RouterOutput['admin']['getImageFile']>();
@@ -68,7 +68,7 @@ export const FileUpload: FC<FileUploadProps> = ({
     // Wait a bit to make sure the query is not triggered before the
     // file upload state is updated.
     setTimeout(() => {
-      setFileId(newFile.id);
+      field.setValue(newFile.id);
     }, 100);
 
     xhrPromise(file, {
@@ -85,14 +85,14 @@ export const FileUpload: FC<FileUploadProps> = ({
   };
 
   const onRemoveFileClick = () => {
-    setFileId(undefined);
+    field.setValue(undefined);
     setFileState(undefined);
   };
 
   return (
     <>
       <input
-        {...getInputProps({
+        {...field.getInputProps({
           type: 'hidden',
           value: fileId ?? '',
         })}

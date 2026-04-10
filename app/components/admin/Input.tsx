@@ -1,5 +1,5 @@
+import { useField } from '@rvf/remix';
 import type { FC } from 'react';
-import { useField } from 'remix-validated-form';
 
 interface InputProps {
   name: string;
@@ -10,14 +10,15 @@ interface InputProps {
 }
 
 export const Input: FC<InputProps> = ({ name, type, step, label, prefix }) => {
-  const { error, getInputProps } = useField(name);
+  const field = useField(name);
+  const error = field.error();
 
   return (
     <div className="input-wrapper">
       <label>
         {label}: {prefix}
         <input
-          {...getInputProps({
+          {...field.getInputProps({
             type,
             step,
             'aria-invalid': Boolean(error) || undefined,

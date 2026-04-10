@@ -1,5 +1,5 @@
+import { useFormContext } from '@rvf/remix';
 import type { FC, ReactNode } from 'react';
-import { useFormContext, useIsSubmitting } from 'remix-validated-form';
 
 interface SaveButtonProps {
   text?: ReactNode;
@@ -12,8 +12,9 @@ export const SaveButton: FC<SaveButtonProps> = ({
   textSubmitting = 'Saving…',
   disabled: disabledProp,
 }) => {
-  const isSubmitting = useIsSubmitting();
-  const { isValid } = useFormContext();
+  const {
+    formState: { isSubmitting, isValid },
+  } = useFormContext();
   // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   const disabled = disabledProp || isSubmitting || !isValid;
 
