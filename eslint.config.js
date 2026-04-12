@@ -147,6 +147,7 @@ export default defineConfig(
     rules: {
       'no-empty-pattern': 'off',
       '@typescript-eslint/unbound-method': 'off',
+      'react-hooks/rules-of-hooks': 'off',
     },
   },
   includeIgnoreFile(gitignorePath),

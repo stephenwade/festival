@@ -5,8 +5,8 @@ import { Helmet } from 'react-helmet-async';
 import { validationError } from 'remix-validated-form';
 import { Temporal } from 'temporal-polyfill';
 
+import { cache, INDEX_SHOW_SLUG_KEY } from '../../server/util/cache';
 import { redirectToLogin } from '../auth/redirect-to-login.server';
-import { cache, INDEX_SHOW_SLUG_KEY } from '../cache.server/cache';
 import { db } from '../db.server/db';
 import { NewShowForm } from '../forms/show/forms';
 import { makeServerValidator } from '../forms/show/schema.server';

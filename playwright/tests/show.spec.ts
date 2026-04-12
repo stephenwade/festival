@@ -16,7 +16,7 @@ test('root URL redirects to earliest upcoming show', async ({
 test('not found show shows "Not Found" message', async ({ page }) => {
   await page.goto('/not-found');
 
-  await expect(page.locator('h1')).toHaveText('404');
+  await expect(page.locator('h1')).toHaveText('Not Found');
 });
 
 test('show URL redirects to path without trailing slash', async ({

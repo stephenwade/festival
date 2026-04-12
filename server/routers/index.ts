@@ -1,11 +1,8 @@
-import { publicProcedure, router } from '../trpc.ts';
+import { router } from '../trpc.ts';
+import { showRouter } from './show/index.ts';
 
 export const appRouter = router({
-  test: publicProcedure.query(() => ({
-    route: 'test',
-    source: 'trpc',
-    status: 'ok',
-  })),
+  show: showRouter,
 });
 
 export type AppRouter = typeof appRouter;

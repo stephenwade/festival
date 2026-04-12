@@ -1,77 +1,38 @@
-import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
-import { createRemixStub } from '@remix-run/testing';
 import type { FC } from 'react';
-import { useState } from 'react';
-import { Temporal } from 'temporal-polyfill';
-import { useDeepCompareMemo } from 'use-deep-compare';
+import { useMemo, useState } from 'react';
 
 import type { AudioMetadata } from '../../../app/components/AudioController';
 import { AudioController } from '../../../app/components/AudioController';
 import { useShowInfo } from '../../../app/hooks/useShowInfo';
-import type { ShowData } from '../../../app/types/ShowData';
-import {
-  AUDIO_FILE_LENGTH,
-  AUDIO_FILE_URL,
-  ID_1,
-  ID_2,
-  ID_3,
-  ID_4,
-} from './shared-data';
+import { MockedTRPCProvider } from '../trpc';
 
-interface GetMockDataProps {
-  offsetSec?: number;
-  alternate?: boolean;
-  empty?: boolean;
-}
-
-function getMockData({
-  offsetSec = 0,
-  alternate = false,
-  empty = false,
-}: GetMockDataProps): Pick<ShowData, 'slug' | 'serverDate' | 'sets'> {
-  const now = Temporal.Now.instant();
-
-  const sets: ShowData['sets'] = empty
-    ? []
-    : [
-        {
-          id: alternate ? ID_3 : ID_1,
-          audioUrl: `${AUDIO_FILE_URL}?${alternate ? 3 : 1}`,
-          artist: `Artist ${alternate ? 3 : 1}`,
-          start: now.add({ seconds: 0 - offsetSec }).toString(),
-          duration: AUDIO_FILE_LENGTH,
-        },
-        {
-          id: alternate ? ID_4 : ID_2,
-          audioUrl: `${AUDIO_FILE_URL}?${alternate ? 4 : 2}`,
-          artist: `Artist ${alternate ? 4 : 2}`,
-          start: now.add({ seconds: 100 - offsetSec }).toString(),
-          duration: AUDIO_FILE_LENGTH,
-        },
-      ];
-
-  return {
-    slug: 'test',
-    serverDate: now.toString(),
-    sets,
-  };
-}
-
-interface TestProps extends Omit<GetMockDataProps, 'alternate'> {
+interface TestProps {
   forceSkipAudioContext: boolean;
 }
 
-function AudioControllerDisplay() {
-  const { forceSkipAudioContext, ...props } = useLoaderData<TestProps>();
-
+function AudioControllerDisplay({ forceSkipAudioContext }: TestProps) {
   const [alternate, setAlternate] = useState(false);
 
-  const data = useDeepCompareMemo(
-    () => getMockData({ ...props, alternate }),
-    [alternate, props],
-  );
-  const { targetShowInfo } = useShowInfo(data, { ci: true });
+  const { targetShowInfo } = useShowInfo('', { ci: true });
+  const targetShowInfoWithAlternate = useMemo(() => {
+    const result = structuredClone(targetShowInfo);
+
+    if (alternate) {
+      if (result.currentSet) {
+        result.currentSet.id += ' alternate';
+        result.currentSet.audioUrl! += '?alternate';
+        result.currentSet.artist += ' alternate';
+      }
+
+      if (result.nextSet) {
+        result.nextSet.id += ' alternate';
+        result.nextSet.audioUrl! += '?alternate';
+        result.nextSet.artist += ' alternate';
+      }
+    }
+
+    return result;
+  }, [targetShowInfo, alternate]);
 
   const [metadatas, setMetadatas] = useState<AudioMetadata[]>([]);
   function onLoadedMetadata(metadata: AudioMetadata) {
@@ -80,7 +41,7 @@ function AudioControllerDisplay() {
 
   return (
     <AudioController
-      targetShowInfo={targetShowInfo}
+      targetShowInfo={targetShowInfoWithAlternate}
       onLoadedMetadata={onLoadedMetadata}
       forceSkipAudioContext={forceSkipAudioContext}
     >
@@ -136,17 +97,9 @@ function AudioControllerDisplay() {
 }
 
 export const AudioControllerTest: FC<TestProps> = (props) => {
-  const RemixStub = createRemixStub([
-    {
-      path: '/',
-      Component: AudioControllerDisplay,
-      loader() {
-        // Single Fetch doesn't work with Clerk
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        return json(props);
-      },
-    },
-  ]);
-
-  return <RemixStub />;
+  return (
+    <MockedTRPCProvider>
+      <AudioControllerDisplay {...props} />
+    </MockedTRPCProvider>
+  );
 };

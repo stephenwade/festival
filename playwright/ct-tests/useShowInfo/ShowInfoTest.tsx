@@ -1,15 +1,10 @@
-import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
-import { createRemixStub } from '@remix-run/testing';
 import type { FC } from 'react';
 
 import { useShowInfo } from '../../../app/hooks/useShowInfo';
-import type { TestProps } from './helpers';
-import { getMockData } from './helpers';
+import { MockedTRPCProvider } from '../trpc';
 
 function ShowInfoDisplay() {
-  const data = useLoaderData<ReturnType<typeof getMockData>>();
-  const { targetShowInfo } = useShowInfo(data, {
+  const { targetShowInfo } = useShowInfo('', {
     ci: true,
     enableClock: false,
   });
@@ -54,18 +49,10 @@ function ShowInfoDisplay() {
   );
 }
 
-export const ShowInfoTest: FC<TestProps> = (props) => {
-  const RemixStub = createRemixStub([
-    {
-      path: '/',
-      Component: ShowInfoDisplay,
-      loader() {
-        // Single Fetch doesn't work with Clerk
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        return json(getMockData(props));
-      },
-    },
-  ]);
-
-  return <RemixStub />;
+export const ShowInfoTest: FC = () => {
+  return (
+    <MockedTRPCProvider>
+      <ShowInfoDisplay />
+    </MockedTRPCProvider>
+  );
 };

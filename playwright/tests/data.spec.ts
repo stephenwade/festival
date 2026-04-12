@@ -1,49 +1,46 @@
-import { expect, test } from '@playwright/test';
+import { expect, test as base } from '@playwright/test';
+import { createTRPCClient, httpBatchLink, type TRPCClient } from '@trpc/client';
 
-import type { ShowData } from '../../app/types/ShowData';
+import type { AppRouter } from '../../server/routers';
 
-test('data endpoint omits sets that are already over', async ({
-  request,
-  baseURL,
-}) => {
-  const response = await request.get(
-    `${baseURL!}/${process.env.SHOW_EARLIER_SLUG!}/data.json`,
-  );
+const test = base.extend<{ trpc: TRPCClient<AppRouter> }>({
+  trpc: async ({ baseURL }, use) => {
+    if (!baseURL) {
+      throw new Error('baseURL is required');
+    }
+    await use(
+      createTRPCClient<AppRouter>({
+        links: [httpBatchLink({ url: `${baseURL}/trpc` })],
+      }),
+    );
+  },
+});
 
-  expect(response.status()).toBe(200);
-
-  const data = (await response.json()) as ShowData;
+test('data route omits sets that are already over', async ({ trpc }) => {
+  const data = await trpc.show.getShowData.query({
+    slug: process.env.SHOW_EARLIER_SLUG!,
+  });
 
   expect(data.sets).toEqual([]);
 });
 
-test('data endpoint redacts audio URL for the next set more than 2 minutes away', async ({
-  request,
-  baseURL,
+test('data route redacts audio URL for the next set more than 2 minutes away', async ({
+  trpc,
 }) => {
-  const response = await request.get(
-    `${baseURL!}/${process.env.SHOW_LATER_SLUG!}/data.json`,
-  );
-
-  expect(response.status()).toBe(200);
-
-  const data = (await response.json()) as ShowData;
+  const data = await trpc.show.getShowData.query({
+    slug: process.env.SHOW_LATER_SLUG!,
+  });
 
   expect(data.sets).toHaveLength(1);
   expect(data.sets[0]?.audioUrl).toBeUndefined();
 });
 
-test('data endpoint includes audio URL for sets that are currently playing or starting soon', async ({
-  request,
-  baseURL,
+test('data route includes audio URL for sets that are currently playing or starting soon', async ({
+  trpc,
 }) => {
-  const response = await request.get(
-    `${baseURL!}/${process.env.SHOW_SLUG!}/data.json`,
-  );
-
-  expect(response.status()).toBe(200);
-
-  const data = (await response.json()) as ShowData;
+  const data = await trpc.show.getShowData.query({
+    slug: process.env.SHOW_SLUG!,
+  });
 
   expect(data.sets.length).toBeGreaterThan(0);
   expect(data.sets[0]?.audioUrl).toBeDefined();

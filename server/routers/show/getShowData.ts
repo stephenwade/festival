@@ -1,22 +1,19 @@
-import { json, type LoaderFunction } from '@remix-run/node';
+import { TRPCError } from '@trpc/server';
 import { Temporal } from 'temporal-polyfill';
 
-import { db } from '../db.server/db';
-import type { SetData, ShowData } from '../types/ShowData';
-import { showIncludeData } from '../types/ShowWithData';
-import { validateShow } from '../types/validateShow';
-import { forbidden, notFound } from '../utils/responses.server';
+import { db } from '../../../app/db.server/db.ts';
+import type { SetData, ShowData } from '../../../app/types/ShowData.ts';
+import { showIncludeData } from '../../../app/types/ShowWithData.ts';
+import { validateShow } from '../../util/validateShow.ts';
 
-export const loader = (async ({ params }) => {
-  const slug = params.show!;
-
+export async function getShowData(slug: string) {
   const show = await db.show.findUnique({
     where: { slug },
     include: showIncludeData,
   });
-  if (!show) throw notFound();
+  if (!show) throw new TRPCError({ code: 'NOT_FOUND' });
 
-  if (!validateShow(show)) throw forbidden();
+  if (!validateShow(show)) throw new TRPCError({ code: 'FORBIDDEN' });
 
   const showStart = Temporal.Instant.from(show.startDate);
   const now = Temporal.Now.instant();
@@ -76,7 +73,5 @@ export const loader = (async ({ params }) => {
     serverDate: Temporal.Now.instant().toString(),
   };
 
-  // Single Fetch doesn't work with Clerk
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  return json(data);
-}) satisfies LoaderFunction;
+  return data;
+}
