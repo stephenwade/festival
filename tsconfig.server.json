@@ -1,6 +1,7 @@
 {
   "include": ["server/**/*.ts"],
   "compilerOptions": {
+    "types": [],
     "noEmit": true,
     "target": "esnext",
     "module": "nodenext",

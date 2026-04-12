@@ -10,14 +10,7 @@ import type { AppRouter } from '../../server/routers';
 let browserQueryClient: QueryClient | undefined = undefined;
 
 function makeQueryClient() {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: Infinity,
-        retry: false,
-      },
-    },
-  });
+  return new QueryClient();
 }
 
 function getQueryClient() {

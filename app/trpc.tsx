@@ -1,4 +1,8 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  MutationCache,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import type { TRPCClient } from '@trpc/client';
 import {
   createTRPCClient,
@@ -7,6 +11,7 @@ import {
   splitLink,
   TRPCClientError,
 } from '@trpc/client';
+import type { inferRouterOutputs } from '@trpc/server';
 import { createTRPCContext } from '@trpc/tanstack-react-query';
 import { type PropsWithChildren, useState } from 'react';
 
@@ -17,7 +22,6 @@ const { TRPCProvider, useTRPC } = createTRPCContext<AppRouter>();
 export { useTRPC };
 
 const MAX_RETRIES = 3;
-const SECONDS = 1000;
 
 function isTRPCClientError(
   error: unknown,
@@ -26,10 +30,9 @@ function isTRPCClientError(
 }
 
 function makeQueryClient() {
-  return new QueryClient({
+  const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 30 * SECONDS,
         retry: (failureCount: number, error: unknown) => {
           if (failureCount >= MAX_RETRIES) {
             return false;
@@ -45,7 +48,13 @@ function makeQueryClient() {
         },
       },
     },
+    mutationCache: new MutationCache({
+      onSuccess: () => {
+        void queryClient.invalidateQueries();
+      },
+    }),
   });
+  return queryClient;
 }
 
 let browserQueryClient: QueryClient | undefined = undefined;
@@ -104,3 +113,5 @@ export function TrpcProvider({ children }: PropsWithChildren) {
     </SharedTrpcProvider>
   );
 }
+
+export type RouterOutput = inferRouterOutputs<AppRouter>;

@@ -1,6 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node';
-import { json, redirect } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { redirect } from '@remix-run/node';
+import { useParams } from '@remix-run/react';
+import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { validationError } from 'remix-validated-form';
@@ -11,38 +12,15 @@ import { redirectToLogin } from '../auth/redirect-to-login.server';
 import { db } from '../db.server/db';
 import { EditShowForm } from '../forms/show/forms';
 import { makeServerValidator } from '../forms/show/schema.server';
-import { replaceNullsWithUndefined } from '../forms/utils/replaceNullsWithUndefined';
 import { replaceUndefinedsWithNull } from '../forms/utils/replaceUndefinedsWithNull';
+import { useTRPC } from '../trpc';
 import { isDefined } from '../utils/is-defined';
 import { omit } from '../utils/omit';
-import { notFound } from '../utils/responses.server';
 
 export const loader = (async (args) => {
   await redirectToLogin(args);
 
-  const id = args.params.show!;
-
-  const show = await db.show.findUnique({
-    where: { id },
-    include: {
-      sets: {
-        include: { audioFile: true },
-        orderBy: { offset: 'asc' },
-      },
-    },
-  });
-  if (!show) throw notFound();
-
-  const startDate = show.startDate
-    ? Temporal.Instant.from(show.startDate)
-        .toZonedDateTimeISO(show.timeZone)
-        .toPlainDateTime()
-        .toString({ smallestUnit: 'second' })
-    : null;
-
-  // Single Fetch doesn't work with Clerk
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  return json(replaceNullsWithUndefined({ ...show, startDate }));
+  return null;
 }) satisfies LoaderFunction;
 
 export const action = (async (args) => {
@@ -104,7 +82,12 @@ export const action = (async (args) => {
 }) satisfies ActionFunction;
 
 const EditShow: FC = () => {
-  const show = useLoaderData<typeof loader>();
+  const trpc = useTRPC();
+  const id = useParams().show!;
+
+  const { data: show } = useQuery(
+    trpc.admin.getShowForEditing.queryOptions({ id }),
+  );
 
   return (
     <>
@@ -112,7 +95,7 @@ const EditShow: FC = () => {
         <title>Edit show | Festival admin</title>
       </Helmet>
       <h3>Edit show</h3>
-      <EditShowForm defaultValues={show} showId={show.id} />
+      {show ? <EditShowForm defaultValues={show} showId={show.id} /> : null}
     </>
   );
 };

@@ -1,15 +1,16 @@
 import type { useLoaderData } from '@remix-run/react';
-import { useFetcher } from '@remix-run/react';
+import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useControlField, useField } from 'remix-validated-form';
 
 import {
   UPLOAD_FILE_CONTENT_TYPE_KEY,
   UPLOAD_FILE_NAME_KEY,
 } from '../../../forms/upload-file';
-import type { loader as fileUploadLoader } from '../../../routes/admin.file-upload.$id';
 import type { action as newFileUploadAction } from '../../../routes/admin.file-upload.new';
+import type { RouterOutput } from '../../../trpc';
+import { useTRPC } from '../../../trpc';
 import { xhrPromise } from './xhrPromise';
 
 type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;
@@ -27,23 +28,23 @@ export const FileUpload: FC<FileUploadProps> = ({
   isUploading,
   setIsUploading,
 }) => {
+  const trpc = useTRPC();
+
   const { getInputProps } = useField(name);
   const [fileId, setFileId] = useControlField<string | undefined>(name);
 
   const [fileState, setFileState] =
-    useState<SerializeFrom<typeof fileUploadLoader>>();
+    useState<SerializeFrom<RouterOutput['admin']['getImageFile']>>();
 
-  const fetcher = useFetcher<typeof fileUploadLoader>();
-  useEffect(() => {
-    if (!fileId || fetcher.data || fetcher.state === 'loading' || fileState) {
-      return;
-    }
+  const { data: fetchedData } = useQuery(
+    trpc.admin.getImageFile.queryOptions(
+      { id: fileId ?? '' },
+      // Only use query if needed.
+      { enabled: Boolean(fileId) && !fileState, staleTime: Infinity },
+    ),
+  );
 
-    // Only use fetcher if needed.
-    fetcher.load(`/admin/file-upload/${fileId}`);
-  }, [fetcher, fileId, fileState]);
-
-  const file = fileState ?? fetcher.data;
+  const file = fileState ?? fetchedData;
 
   const [fileName, setFileName] = useState<string>();
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -70,7 +71,7 @@ export const FileUpload: FC<FileUploadProps> = ({
     const { file: newFile, uploadUrl } =
       (await newFileResponse.json()) as UploadResponse;
     setFileState(newFile);
-    // Wait a bit to make sure the fetcher is not triggered before the
+    // Wait a bit to make sure the query is not triggered before the
     // file upload state is updated.
     setTimeout(() => {
       setFileId(newFile.id);

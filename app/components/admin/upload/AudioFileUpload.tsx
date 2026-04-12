@@ -1,7 +1,7 @@
 import type { useLoaderData } from '@remix-run/react';
-import { useFetcher } from '@remix-run/react';
+import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useControlField, useField } from 'remix-validated-form';
 
 import {
@@ -9,9 +9,10 @@ import {
   UPLOAD_AUDIO_NAME_KEY,
 } from '../../../forms/upload-audio';
 import { useSse } from '../../../hooks/useSse';
-import type { loader as audioUploadLoader } from '../../../routes/admin.audio-upload.$id';
 import type { action as newAudioUploadAction } from '../../../routes/admin.audio-upload.new';
 import type { AudioFileProcessingEvent } from '../../../sse.server/audio-file-events';
+import type { RouterOutput } from '../../../trpc';
+import { useTRPC } from '../../../trpc';
 import { xhrPromise } from './xhrPromise';
 
 type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;
@@ -46,11 +47,13 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
   isUploading,
   setIsUploading,
 }) => {
+  const trpc = useTRPC();
+
   const { getInputProps } = useField(name);
   const [fileId, setFileId] = useControlField<string | undefined>(name);
 
   const [fileState, setFileState] =
-    useState<SerializeFrom<typeof audioUploadLoader>>();
+    useState<SerializeFrom<RouterOutput['admin']['getAudioFile']>>();
 
   useSse(
     '/admin/audio-upload/events',
@@ -63,17 +66,15 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
     ),
   );
 
-  const fetcher = useFetcher<typeof audioUploadLoader>();
-  useEffect(() => {
-    if (!fileId || fetcher.data || fetcher.state === 'loading' || fileState) {
-      return;
-    }
+  const { data: fetchedData } = useQuery(
+    trpc.admin.getAudioFile.queryOptions(
+      { id: fileId ?? '' },
+      // Only use query if needed. Further data will be fetched from the SSE.
+      { enabled: Boolean(fileId) && !fileState, staleTime: Infinity },
+    ),
+  );
 
-    // Only use fetcher if needed. Further data will be fetched from the SSE.
-    fetcher.load(`/admin/audio-upload/${fileId}`);
-  }, [fetcher, fileId, fileState]);
-
-  const file = fileState ?? fetcher.data;
+  const file = fileState ?? fetchedData;
 
   const [fileName, setFileName] = useState<string>();
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -100,7 +101,7 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
     const { file: newFile, uploadUrl } =
       (await newFileResponse.json()) as UploadResponse;
     setFileState(newFile);
-    // Wait a bit to make sure the fetcher is not triggered before the
+    // Wait a bit to make sure the query is not triggered before the
     // file upload state is updated.
     setTimeout(() => {
       setFileId(newFile.id);

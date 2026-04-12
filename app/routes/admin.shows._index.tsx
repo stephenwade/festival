@@ -1,40 +1,25 @@
 import type { LoaderFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { Link } from '@remix-run/react';
+import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 
-import { validateShow } from '../../server/util/validateShow';
 import { redirectToLogin } from '../auth/redirect-to-login.server';
-import { db } from '../db.server/db';
-import { showIncludeData } from '../types/ShowWithData';
-import { omit } from '../utils/omit';
+import { useTRPC } from '../trpc';
 
 export const loader = (async (args) => {
   await redirectToLogin(args);
 
-  const shows = await db.show.findMany({
-    include: showIncludeData,
-  });
-
-  // Single Fetch doesn't work with Clerk
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  return json(
-    shows.map((show) => ({
-      ...omit(
-        show,
-        Object.keys(showIncludeData) as (keyof typeof showIncludeData)[],
-      ),
-      isValid: validateShow(show),
-    })),
-  );
+  return null;
 }) satisfies LoaderFunction;
 
 const ShowsIndex: FC = () => {
-  const shows = useLoaderData<typeof loader>();
+  const trpc = useTRPC();
+
+  const { data: shows } = useQuery(trpc.admin.getShows.queryOptions());
 
   return (
     <>
-      {shows.length === 0 ? (
+      {!shows || shows.length === 0 ? (
         <p>
           <em>No shows yet</em>
         </p>
