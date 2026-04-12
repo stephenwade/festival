@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { zfd } from 'zod-form-data';
 
 import { schema as showSchema } from '../../schemas/show.ts';
+import { subscribeToAudioFileUpdates } from '../../sse/audioFileEvents.ts';
 import { protectedProcedure, router } from '../../trpc.ts';
 import { createAudioFileUpload } from './createAudioFileUpload.ts';
 import { createFileUpload } from './createFileUpload.ts';
@@ -25,6 +26,17 @@ export const adminRouter = router({
   getAudioFile: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(({ input: { id } }) => getAudioFile(id)),
+  audioFileProcessingUpdates: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .subscription(async function* ({ input: { id }, signal }) {
+      for await (const [data] of subscribeToAudioFileUpdates(signal)) {
+        if (data.id !== id) {
+          continue;
+        }
+
+        yield data;
+      }
+    }),
   getImageFile: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(({ input: { id } }) => getImageFile(id)),

@@ -4,5 +4,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "chat.tools.terminal.autoApprove": {
+    "npx eslint": true
   }
 }

@@ -8,7 +8,6 @@ import type { AudioFile } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 
 import { db } from '../../../app/db.server/db.ts';
-import { emitAudioFileProcessingEvent } from '../../../app/sse.server/audio-file-events.ts';
 import {
   deleteObjectByUrl,
   getObjectUrl,
@@ -17,6 +16,7 @@ import {
 import { ffmpeg } from '../../ffmpeg/ffmpeg.ts';
 import type { FFprobeOutput } from '../../ffmpeg/ffprobe.ts';
 import { ffprobe } from '../../ffmpeg/ffprobe.ts';
+import { emitAudioFileUpdate } from '../../sse/audioFileEvents.ts';
 
 const UPLOAD_DIR = 'upload';
 
@@ -116,7 +116,7 @@ async function updateAudioFileDuration(
     data: { duration },
   });
 
-  emitAudioFileProcessingEvent(file);
+  emitAudioFileUpdate(file);
 }
 
 async function updateAudioFileConvertProgress(
@@ -131,7 +131,7 @@ async function updateAudioFileConvertProgress(
     },
   });
 
-  emitAudioFileProcessingEvent(file);
+  emitAudioFileUpdate(file);
 }
 
 async function updateAudioFileUploading(fileId: AudioFile['id']) {
@@ -143,7 +143,7 @@ async function updateAudioFileUploading(fileId: AudioFile['id']) {
     },
   });
 
-  emitAudioFileProcessingEvent(file);
+  emitAudioFileUpdate(file);
 }
 
 async function updateAudioFileUrl(fileId: AudioFile['id'], objectKey: string) {
@@ -152,7 +152,7 @@ async function updateAudioFileUrl(fileId: AudioFile['id'], objectKey: string) {
     data: { url: getObjectUrl(objectKey) },
   });
 
-  emitAudioFileProcessingEvent(file);
+  emitAudioFileUpdate(file);
 }
 
 async function updateAudioFileDoneProcessing(fileId: AudioFile['id']) {
@@ -171,7 +171,7 @@ async function updateAudioFileDoneProcessing(fileId: AudioFile['id']) {
     },
   });
 
-  emitAudioFileProcessingEvent(newFile);
+  emitAudioFileUpdate(newFile);
 }
 
 async function handleError(error: unknown, fileId: AudioFile['id']) {
@@ -187,7 +187,7 @@ async function handleError(error: unknown, fileId: AudioFile['id']) {
     },
   });
 
-  emitAudioFileProcessingEvent(file);
+  emitAudioFileUpdate(file);
 }
 
 /**

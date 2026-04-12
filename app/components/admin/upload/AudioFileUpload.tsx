@@ -1,20 +1,22 @@
 import { useField } from '@rvf/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useSubscription } from '@trpc/tanstack-react-query';
 import type { FC } from 'react';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   UPLOAD_AUDIO_CONTENT_TYPE_KEY,
   UPLOAD_AUDIO_NAME_KEY,
 } from '../../../forms/upload-audio';
-import { useSse } from '../../../hooks/useSse';
-import type { AudioFileProcessingEvent } from '../../../sse.server/audio-file-events';
 import type { RouterOutput } from '../../../trpc';
 import { useTRPC } from '../../../trpc';
 import { xhrPromise } from './xhrPromise';
 
 function displayConversionStatus(
-  status: Exclude<AudioFileProcessingEvent['conversionStatus'], 'DONE'>,
+  status: Exclude<
+    RouterOutput['admin']['getAudioFile']['conversionStatus'],
+    'DONE'
+  >,
 ) {
   switch (status) {
     case 'USER_UPLOAD':
@@ -56,14 +58,15 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
     trpc.admin.processAudioFile.mutationOptions(),
   );
 
-  useSse(
-    '/admin/audio-upload/events',
-    useCallback(
-      (data: AudioFileProcessingEvent) => {
-        if (data.id !== fileId) return;
-        setFileState(data);
+  useSubscription(
+    trpc.admin.audioFileProcessingUpdates.subscriptionOptions(
+      { id: fileId ?? '' },
+      {
+        enabled: Boolean(fileId),
+        onData: (data) => {
+          setFileState(data);
+        },
       },
-      [fileId],
     ),
   );
 
