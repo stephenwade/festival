@@ -1,4 +1,5 @@
 import { getAuth } from '@clerk/express';
+import type { ValidatorError } from '@rvf/react';
 import { initTRPC, TRPCError } from '@trpc/server';
 import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 
@@ -10,7 +11,25 @@ export function createContext({ req, res }: CreateExpressContextOptions) {
 
 type Context = Awaited<ReturnType<typeof createContext>>;
 
-const t = initTRPC.context<Context>().create();
+function isRVFValidationError(error: unknown): error is ValidatorError {
+  if (!error || typeof error !== 'object') return false;
+
+  return 'fieldErrors' in error;
+}
+
+const t = initTRPC.context<Context>().create({
+  errorFormatter({ error, shape }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        rvfValidationErrors: isRVFValidationError(error.cause)
+          ? error.cause.fieldErrors
+          : null,
+      },
+    };
+  },
+});
 
 export const router = t.router;
 export const publicProcedure = t.procedure;

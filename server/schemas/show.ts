@@ -22,6 +22,7 @@ function isValidTimeZone(timeZone: string): boolean {
 }
 
 export const schema = zfd.formData({
+  id: zfd.text(z.string().optional()),
   name: zfd.text(),
   slug: zfd.text(
     z.string().refine((id) => id !== 'admin', {

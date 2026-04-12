@@ -1,4 +1,4 @@
-import { useField } from '@rvf/remix';
+import { useField } from '@rvf/react';
 import type { FC } from 'react';
 
 interface InputProps {

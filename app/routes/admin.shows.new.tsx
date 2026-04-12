@@ -1,47 +1,9 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/node';
-import { redirect } from '@remix-run/node';
-import { validationError } from '@rvf/remix';
+import type { LoaderFunction } from '@remix-run/node';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Temporal } from 'temporal-polyfill';
 
-import { cache, INDEX_SHOW_SLUG_KEY } from '../../server/util/cache';
 import { redirectToLogin } from '../auth/redirect-to-login.server';
-import { db } from '../db.server/db';
-import { NewShowForm } from '../forms/show/forms';
-import { makeServerValidator } from '../forms/show/schema.server';
-
-export const action = (async (args) => {
-  await redirectToLogin(args);
-
-  console.log('Creating new show');
-
-  const validator = makeServerValidator();
-
-  const form = await args.request.formData();
-  const { data, error } = await validator.validate(form);
-  if (error) return validationError(error);
-
-  const { startDate, sets, ...rest } = data;
-
-  const startInstant = startDate
-    ? Temporal.PlainDateTime.from(startDate)
-        .toZonedDateTime(rest.timeZone)
-        .toInstant()
-    : undefined;
-
-  const show = await db.show.create({
-    data: {
-      ...rest,
-      startDate: startInstant?.toString(),
-      sets: { create: sets },
-    },
-  });
-
-  cache.del(INDEX_SHOW_SLUG_KEY);
-
-  return redirect(`/admin/shows/${show.id}`);
-}) satisfies ActionFunction;
+import { NewShowForm } from '../forms/show';
 
 export const loader = (async (args) => {
   await redirectToLogin(args);

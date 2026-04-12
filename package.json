@@ -26,6 +26,7 @@
     "format:stylelint": "stylelint \"**/*.css\" --fix --ignore-path .gitignore --max-warnings 0",
     "format": "npm-run-all format:*",
     "test": "playwright test",
+    "pretest-ct": "rm -rf playwright/ct-tests/.cache",
     "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
@@ -38,7 +39,7 @@
     "@remix-run/express": "2.17.4",
     "@remix-run/node": "2.17.4",
     "@remix-run/react": "2.17.4",
-    "@rvf/remix": "6.3.0",
+    "@rvf/react": "6.3.0",
     "@rvf/zod": "6.0.3",
     "@tanstack/react-query": "5.95.2",
     "@trpc/client": "11.16.0",

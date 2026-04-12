@@ -1,20 +1,24 @@
 import type { Show } from '@prisma/client';
-import { Form, useNavigate, useNavigation } from '@remix-run/react';
-import { FormProvider, useField, useFieldArray, useForm } from '@rvf/remix';
+import { useNavigate } from '@remix-run/react';
+import type { FieldErrors } from '@rvf/react';
+import { FormProvider, useField, useFieldArray, useForm } from '@rvf/react';
+import { useMutation } from '@tanstack/react-query';
+import { TRPCClientError } from '@trpc/client';
 import type { FC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { Temporal } from 'temporal-polyfill';
 import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
 
-import { Input } from '../../components/admin/Input';
-import { InputTimeZone } from '../../components/admin/InputTimeZone';
-import { SaveButton } from '../../components/admin/SaveButton';
-import { AudioFileUpload } from '../../components/admin/upload/AudioFileUpload';
-import { FileUpload } from '../../components/admin/upload/FileUpload';
-import { useOrigin } from '../../hooks/useOrigin';
-import type { schema, setSchema } from './schema';
-import { clientValidator } from './schema';
+import type { AppRouter } from '../../server/routers/index.ts';
+import type { schema, setSchema } from '../../server/schemas/show.ts';
+import { clientValidator } from '../../server/schemas/show.ts';
+import { Input } from '../components/admin/Input';
+import { InputTimeZone } from '../components/admin/InputTimeZone';
+import { AudioFileUpload } from '../components/admin/upload/AudioFileUpload';
+import { FileUpload } from '../components/admin/upload/FileUpload';
+import { useOrigin } from '../hooks/useOrigin';
+import { useTRPC } from '../trpc';
 
 interface SetFormProps {
   name: string;
@@ -66,20 +70,34 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
 interface ShowFormProps {
   defaultValues?: z.infer<typeof schema>;
   cancelLinkTo: string;
+  showId?: string;
   showDeleteButton?: boolean;
+}
+
+function getServerValidationErrors(error: unknown): FieldErrors | undefined {
+  if (error instanceof TRPCClientError) {
+    return (
+      (error as TRPCClientError<AppRouter>).data?.rvfValidationErrors ??
+      undefined
+    );
+  }
 }
 
 const ShowForm: FC<ShowFormProps> = ({
   defaultValues,
   cancelLinkTo,
-  showDeleteButton,
+  showId,
 }) => {
   const origin = useOrigin();
   const navigate = useNavigate();
+  const trpc = useTRPC();
 
-  const navigation = useNavigation();
-  const isDeleting =
-    navigation.state === 'submitting' && navigation.formMethod === 'DELETE';
+  const createShow = useMutation(trpc.admin.createShow.mutationOptions());
+  const updateShow = useMutation(trpc.admin.updateShow.mutationOptions());
+  const deleteShow = useMutation(trpc.admin.deleteShow.mutationOptions());
+
+  const savePending = createShow.isPending || updateShow.isPending;
+  const deletePending = deleteShow.isPending;
 
   const {
     count: countUploading,
@@ -89,8 +107,10 @@ const ShowForm: FC<ShowFormProps> = ({
 
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const [isUploadingBackground, setIsUploadingBackground] = useState(false);
+  const [serverValidationErrors, setServerValidationErrors] =
+    useState<FieldErrors>();
 
-  const saveDisabled = countUploading > 0;
+  const buttonsDisabled = countUploading > 0 || savePending || deletePending;
 
   const onIsUploadingChanged = useCallback(
     (isUploading: boolean) => {
@@ -103,14 +123,45 @@ const ShowForm: FC<ShowFormProps> = ({
   const form = useForm({
     validator: clientValidator,
     defaultValues,
-    method: 'post',
+    serverValidationErrors,
+    onBeforeSubmit: () => {
+      if (serverValidationErrors) {
+        setServerValidationErrors(undefined);
+      }
+    },
+    handleSubmit: async (_data, formData) => {
+      if (showId) {
+        return await updateShow.mutateAsync(formData);
+      }
+
+      return await createShow.mutateAsync(formData);
+    },
+    onSubmitSuccess: ({ id }) => {
+      navigate(`/admin/shows/${id}`);
+    },
+    onSubmitFailure: (error) => {
+      const nextServerValidationErrors = getServerValidationErrors(error);
+
+      if (nextServerValidationErrors) {
+        setServerValidationErrors(nextServerValidationErrors);
+        return;
+      }
+    },
   });
 
   const sets = useFieldArray(form.scope('sets'));
 
+  const onDeleteClick = async () => {
+    if (!showId) return;
+
+    await deleteShow.mutateAsync({ id: showId });
+    navigate('/admin/shows');
+  };
+
   return (
     <FormProvider scope={form.scope()}>
       <form {...form.getFormProps()}>
+        {showId ? <input type="hidden" name="id" value={showId} /> : null}
         <Input label="Name" name="name" />
         <Input label="URL" prefix={`${origin ?? ''}/`} name="slug" />
         <Input label="Description" name="description" />
@@ -166,21 +217,27 @@ const ShowForm: FC<ShowFormProps> = ({
             onClick={() => {
               navigate(cancelLinkTo);
             }}
-            disabled={saveDisabled}
+            disabled={buttonsDisabled}
           >
             Cancel
           </button>{' '}
-          <SaveButton disabled={saveDisabled} />
+          <button type="submit" disabled={buttonsDisabled}>
+            {savePending ? 'Saving…' : 'Save'}
+          </button>
         </p>
       </form>
-      {showDeleteButton ? (
-        <Form method="delete">
-          <p>
-            <button disabled={isDeleting}>
-              {isDeleting ? 'Deleting show…' : 'Delete show'}
-            </button>
-          </p>
-        </Form>
+      {showId ? (
+        <p>
+          <button
+            type="button"
+            onClick={() => {
+              void onDeleteClick();
+            }}
+            disabled={buttonsDisabled}
+          >
+            {deletePending ? 'Deleting show…' : 'Delete show'}
+          </button>
+        </p>
       ) : null}
     </FormProvider>
   );
@@ -209,6 +266,6 @@ export const EditShowForm: FC<EditShowFormProps> = ({
   <ShowForm
     defaultValues={defaultValues}
     cancelLinkTo={`/admin/shows/${showId}`}
-    showDeleteButton
+    showId={showId}
   />
 );
