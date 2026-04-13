@@ -151,5 +151,34 @@ export default defineConfig(
       'react-hooks/rules-of-hooks': 'off',
     },
   },
+  {
+    files: ['app/**/*.ts', 'app/**/*.tsx'],
+
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: String.raw`(?:\.\./)+server/.*`,
+              allowTypeImports: true,
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['server/**/*.ts'],
+
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [{ regex: String.raw`(?:\.\./)+app/.*` }],
+        },
+      ],
+    },
+  },
   includeIgnoreFile(gitignorePath),
 );

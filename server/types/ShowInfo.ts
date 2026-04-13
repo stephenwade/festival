@@ -1,6 +1,6 @@
 import type { Temporal } from 'temporal-polyfill';
 
-import type { SetData } from './ShowData';
+import type { SetData } from './ShowData.ts';
 
 type SetInfo = Omit<SetData, 'start'> & {
   start: Temporal.Instant;

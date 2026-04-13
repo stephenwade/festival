@@ -2,11 +2,11 @@ import { TRPCError } from '@trpc/server';
 import { Temporal } from 'temporal-polyfill';
 import type { z } from 'zod';
 
-import { db } from '../../../app/db.server/db.ts';
-import { omit } from '../../../app/utils/omit.ts';
+import type { schema } from '../../../shared/schemas/show.ts';
+import { db } from '../../db.ts';
 import { makeServerValidator } from '../../schemas/show.server.ts';
-import type { schema } from '../../schemas/show.ts';
 import { cache, INDEX_SHOW_SLUG_KEY } from '../../util/cache.ts';
+import { omit } from '../../util/omit.ts';
 
 export async function createShow(
   input: z.infer<typeof schema>,

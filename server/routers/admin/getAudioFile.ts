@@ -1,6 +1,6 @@
 import { TRPCError } from '@trpc/server';
 
-import { db } from '../../../app/db.server/db.ts';
+import { db } from '../../db.ts';
 
 export async function getAudioFile(id: string) {
   const audioFile = await db.audioFile.findUnique({

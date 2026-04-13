@@ -2,9 +2,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Temporal } from 'temporal-polyfill';
 
+import type { ShowData } from '../../server/types/ShowData';
+import type {
+  TargetShowInfo,
+  TargetTimeInfo,
+} from '../../server/types/ShowInfo';
 import { useTRPC } from '../trpc';
-import type { ShowData } from '../types/ShowData';
-import type { TargetShowInfo, TargetTimeInfo } from '../types/ShowInfo';
 import { useClock } from './useClock';
 
 type LoadedMetadataHandler = (args: { id: string; duration: number }) => void;

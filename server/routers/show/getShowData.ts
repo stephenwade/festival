@@ -1,9 +1,9 @@
 import { TRPCError } from '@trpc/server';
 import { Temporal } from 'temporal-polyfill';
 
-import { db } from '../../../app/db.server/db.ts';
-import type { SetData, ShowData } from '../../../app/types/ShowData.ts';
-import { showIncludeData } from '../../../app/types/ShowWithData.ts';
+import { db } from '../../db.ts';
+import type { SetData, ShowData } from '../../types/ShowData.ts';
+import { showIncludeData } from '../../types/ShowWithData.ts';
 import { validateShow } from '../../util/validateShow.ts';
 
 export async function getShowData(slug: string) {

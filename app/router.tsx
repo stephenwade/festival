@@ -12,7 +12,7 @@ import { Spinner } from './components/Spinner';
 import Index from './routes/_index';
 import Show from './routes/$show';
 import Admin from './routes/admin';
-import { ProtectedAdminRoute } from './utils/auth-route-guards';
+import { ProtectedAdminRoute } from './routes/auth-route-guards';
 
 const EditShow = lazy(() => import('./routes/admin.shows.$show_.edit'));
 const NewShow = lazy(() => import('./routes/admin.shows.new'));

@@ -1,4 +1,4 @@
-import type { ShowWithData } from '../../app/types/ShowWithData.ts';
+import type { ShowWithData } from '../types/ShowWithData.ts';
 
 type DeepNonNullable<T> = T extends (infer U)[]
   ? DeepNonNullable<U>[]

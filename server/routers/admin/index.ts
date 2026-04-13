@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { zfd } from 'zod-form-data';
 
-import { schema as showSchema } from '../../schemas/show.ts';
+import { schema as showSchema } from '../../../shared/schemas/show.ts';
 import { subscribeToAudioFileUpdates } from '../../sse/audioFileEvents.ts';
 import { protectedProcedure, router } from '../../trpc.ts';
 import { createAudioFileUpload } from './createAudioFileUpload.ts';

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { Spinner } from '../components/Spinner';
 import adminCssHref from '../styles/admin.css?url';
-import { AdminAuthPageGuard } from '../utils/auth-route-guards';
+import { AdminAuthPageGuard } from './auth-route-guards';
 
 export default function SignInRoute() {
   return (

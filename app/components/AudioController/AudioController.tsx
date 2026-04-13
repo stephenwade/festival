@@ -11,10 +11,20 @@ import {
 } from 'react';
 import { AudioContext } from 'standardized-audio-context';
 
+import type { ShowInfo, TargetShowInfo } from '../../../server/types/ShowInfo';
 import { useVolume } from '../../hooks/useVolume';
-import type { AudioStatus } from '../../types/AudioStatus';
-import { initialAudioStatus } from '../../types/AudioStatus';
-import type { ShowInfo, TargetShowInfo } from '../../types/ShowInfo';
+
+export interface AudioStatus {
+  waiting: boolean;
+  stalled: boolean;
+  paused: boolean;
+}
+
+export const initialAudioStatus: AudioStatus = {
+  waiting: false,
+  stalled: false,
+  paused: false,
+};
 
 interface State {
   activeAudio: HTMLAudioElement | null;

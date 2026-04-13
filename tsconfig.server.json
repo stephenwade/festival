@@ -1,5 +1,5 @@
 {
-  "include": ["server/**/*.ts"],
+  "include": ["server/**/*.ts", "shared/**/*.ts"],
   "compilerOptions": {
     "types": [],
     "noEmit": true,

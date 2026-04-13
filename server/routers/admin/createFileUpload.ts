@@ -1,10 +1,7 @@
 import path from 'node:path';
 
-import { db } from '../../../app/db.server/db.ts';
-import {
-  getObjectUploadUrl,
-  getObjectUrl,
-} from '../../../app/tigris.server/s3-client.ts';
+import { db } from '../../db.ts';
+import { getObjectUploadUrl, getObjectUrl } from '../../tigris/s3-client.ts';
 
 interface CreateFileUploadArgs {
   name: string;
