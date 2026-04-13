@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ import { useTRPC } from '../trpc';
 const Index: FC = () => {
   const trpc = useTRPC();
 
-  const { data: indexShowSlug } = useQuery(
+  const { data: indexShowSlug } = useSuspenseQuery(
     trpc.show.getIndexShowSlug.queryOptions(),
   );
 

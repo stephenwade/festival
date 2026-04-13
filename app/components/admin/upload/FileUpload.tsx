@@ -34,13 +34,18 @@ export const FileUpload: FC<FileUploadProps> = ({
     trpc.admin.createFileUpload.mutationOptions(),
   );
 
-  const { data: fetchedData } = useQuery(
+  // Only use query if needed.
+  const queryEnabled = Boolean(fileId) && !fileState;
+  const { data: fetchedData, error: fetchedDataError } = useQuery(
     trpc.admin.getImageFile.queryOptions(
       { id: fileId ?? '' },
-      // Only use query if needed.
-      { enabled: Boolean(fileId) && !fileState, staleTime: Infinity },
+      { enabled: queryEnabled, staleTime: Infinity },
     ),
   );
+
+  if (queryEnabled && fetchedDataError) {
+    throw fetchedDataError;
+  }
 
   const file = fileState ?? fetchedData;
 

@@ -7,6 +7,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 
+import { RouteErrorBoundary } from './components/ErrorBoundary';
 import { Spinner } from './components/Spinner';
 import Index from './routes/_index';
 import Show from './routes/$show';
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <CanonicalPathRedirect />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       { index: true, element: <Index /> },
       {

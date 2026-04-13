@@ -1,10 +1,17 @@
-import type { FC } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { type FC, Suspense } from 'react';
 
 import { useShowInfo } from '../../../app/hooks/useShowInfo';
+import { useTRPC } from '../../../app/trpc';
 import { MockedTRPCProvider } from '../trpc';
 
 function ShowInfoDisplay() {
-  const { targetShowInfo } = useShowInfo('', {
+  const trpc = useTRPC();
+  const { data: showData } = useSuspenseQuery(
+    trpc.show.getShowData.queryOptions({ slug: 'test' }),
+  );
+
+  const { targetShowInfo } = useShowInfo(showData, {
     ci: true,
     enableClock: false,
   });
@@ -52,7 +59,9 @@ function ShowInfoDisplay() {
 export const ShowInfoTest: FC = () => {
   return (
     <MockedTRPCProvider>
-      <ShowInfoDisplay />
+      <Suspense>
+        <ShowInfoDisplay />
+      </Suspense>
     </MockedTRPCProvider>
   );
 };

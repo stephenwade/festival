@@ -4,16 +4,21 @@ import { useMemo, useState } from 'react';
 import type { AudioMetadata } from '../../../app/components/AudioController';
 import { AudioController } from '../../../app/components/AudioController';
 import { useShowInfo } from '../../../app/hooks/useShowInfo';
+import type { ShowData } from '../../../app/types/ShowData';
 import { MockedTRPCProvider } from '../trpc';
 
 interface TestProps {
   forceSkipAudioContext: boolean;
+  showData: ShowData;
 }
 
-function AudioControllerDisplay({ forceSkipAudioContext }: TestProps) {
+function AudioControllerDisplay({
+  forceSkipAudioContext,
+  showData,
+}: TestProps) {
   const [alternate, setAlternate] = useState(false);
 
-  const { targetShowInfo } = useShowInfo('', { ci: true });
+  const { targetShowInfo } = useShowInfo(showData, { ci: true });
   const targetShowInfoWithAlternate = useMemo(() => {
     const result = structuredClone(targetShowInfo);
 

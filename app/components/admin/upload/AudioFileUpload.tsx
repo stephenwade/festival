@@ -70,13 +70,18 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
     ),
   );
 
-  const { data: fetchedData } = useQuery(
+  // Only use query if needed. Further data will be fetched from the SSE.
+  const queryEnabled = Boolean(fileId) && !fileState;
+  const { data: fetchedData, error: fetchedDataError } = useQuery(
     trpc.admin.getAudioFile.queryOptions(
       { id: fileId ?? '' },
-      // Only use query if needed. Further data will be fetched from the SSE.
-      { enabled: Boolean(fileId) && !fileState, staleTime: Infinity },
+      { enabled: queryEnabled, staleTime: Infinity },
     ),
   );
+
+  if (queryEnabled && fetchedDataError) {
+    throw fetchedDataError;
+  }
 
   const file = fileState ?? fetchedData;
 

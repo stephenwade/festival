@@ -23,6 +23,10 @@ function useAuthStatus() {
     enabled: shouldCheckStatus,
   });
 
+  if (shouldCheckStatus && statusQuery.error) {
+    throw statusQuery.error;
+  }
+
   return {
     isClerkLoaded: isLoaded,
     isSignedIn,

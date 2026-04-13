@@ -24,19 +24,25 @@ const Show: FC = () => {
     ],
   });
 
-  const { targetShowInfo, onLoadedMetadata } = useShowInfo(show);
+  const { targetShowInfo, onLoadedMetadata } = useShowInfo(showData);
 
   if (error?.data?.code === 'NOT_FOUND') {
     return <h1>Not Found</h1>;
   }
 
+  if (error) {
+    throw error;
+  }
+
+  if (!showData) {
+    return null;
+  }
+
   return (
     <>
       <Helmet>
-        {showData ? <title>{showData.name} | Festival</title> : null}
-        {showData ? (
-          <meta name="description" content={showData.description} />
-        ) : null}
+        <title>{showData.name} | Festival</title>
+        <meta name="description" content={showData.description} />
         <link rel="stylesheet" href={elevationCssHref} />
         <link rel="stylesheet" href={showCssHref} />
         {showStyles ? <style>{showStyles}</style> : null}
@@ -53,8 +59,6 @@ const Show: FC = () => {
           initializeAudio,
           getAudioVisualizerData,
         }) => {
-          if (!showData) return null;
-
           if (showInfo.status === 'WAITING_FOR_AUDIO_CONTEXT') {
             return (
               <ShowIntro

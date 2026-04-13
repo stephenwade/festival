@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
@@ -11,11 +11,11 @@ const ViewShow: FC = () => {
   const trpc = useTRPC();
   const id = useParams().show!;
 
-  const { data: show } = useQuery(trpc.admin.getShow.queryOptions({ id }));
+  const { data: show } = useSuspenseQuery(
+    trpc.admin.getShow.queryOptions({ id }),
+  );
 
   const origin = useOrigin();
-
-  if (!show) return null;
 
   return (
     <>
