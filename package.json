@@ -30,8 +30,8 @@
     "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.1023.0",
-    "@aws-sdk/s3-request-presigner": "3.1023.0",
+    "@aws-sdk/client-s3": "3.1028.0",
+    "@aws-sdk/s3-request-presigner": "3.1028.0",
     "@clerk/backend": "2.33.1",
     "@clerk/express": "1.7.77",
     "@clerk/remix": "4.13.44",
@@ -92,7 +92,7 @@
     "msw-trpc": "2.0.1",
     "nodemon": "3.1.14",
     "npm-run-all2": "8.0.4",
-    "prettier": "3.8.1",
+    "prettier": "3.8.2",
     "prisma": "6.19.3",
     "stylelint": "17.6.0",
     "stylelint-config-hudochenkov": "13.0.2",
