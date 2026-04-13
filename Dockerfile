@@ -61,5 +61,6 @@ COPY --from=build /app/package.json /app/package.json
 COPY --from=build /app/start.sh /app/start.sh
 COPY --from=build /app/prisma /app/prisma
 COPY --from=build /app/server /app/server
+COPY --from=build /app/shared /app/shared
 
 ENTRYPOINT [ "./start.sh" ]

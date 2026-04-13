@@ -1,7 +1,7 @@
 import { withZod } from '@rvf/zod';
 
+import { schema } from '../../shared/schemas/show.ts';
 import { db } from '../db.ts';
-import { schema } from './show.ts';
 
 export function makeServerValidator({
   previousSlug,

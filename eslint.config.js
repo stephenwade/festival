@@ -83,10 +83,6 @@ export default defineConfig(
       'import/first': 'warn',
       'import/newline-after-import': 'warn',
       'import/no-duplicates': 'warn',
-      'import/no-restricted-paths': [
-        'error',
-        { zones: [{ target: './server', from: './app' }] },
-      ],
 
       'simple-import-sort/imports': 'warn',
       'simple-import-sort/exports': 'warn',
@@ -153,6 +149,35 @@ export default defineConfig(
       'no-empty-pattern': 'off',
       '@typescript-eslint/unbound-method': 'off',
       'react-hooks/rules-of-hooks': 'off',
+    },
+  },
+  {
+    files: ['app/**/*.ts', 'app/**/*.tsx'],
+
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: String.raw`(?:\.\./)+server/.*`,
+              allowTypeImports: true,
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['server/**/*.ts'],
+
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [{ regex: String.raw`(?:\.\./)+app/.*` }],
+        },
+      ],
     },
   },
   includeIgnoreFile(gitignorePath),

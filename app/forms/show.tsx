@@ -11,8 +11,8 @@ import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
 
 import type { AppRouter } from '../../server/routers/index';
-import type { schema, setSchema } from '../../server/schemas/show';
-import { clientValidator } from '../../server/schemas/show';
+import type { schema, setSchema } from '../../shared/schemas/show';
+import { clientValidator } from '../../shared/schemas/show';
 import { Input } from '../components/admin/Input';
 import { InputTimeZone } from '../components/admin/InputTimeZone';
 import { AudioFileUpload } from '../components/admin/upload/AudioFileUpload';
