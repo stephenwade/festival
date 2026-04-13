@@ -2,7 +2,7 @@ import type { RouterFixture } from '@playwright/experimental-ct-core';
 import { expect, test } from '@playwright/experimental-ct-react';
 import { Temporal } from 'temporal-polyfill';
 
-import type { ShowData } from '../../../app/types/ShowData';
+import type { ShowData } from '../../../server/types/ShowData';
 import { trpcMsw } from '../trpc';
 import { ShowInfoTest } from './ShowInfoTest';
 

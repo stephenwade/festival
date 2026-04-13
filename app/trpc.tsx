@@ -17,7 +17,7 @@ import type { inferRouterOutputs } from '@trpc/server';
 import { createTRPCContext } from '@trpc/tanstack-react-query';
 import { type PropsWithChildren, useState } from 'react';
 
-import type { AppRouter } from '../server/routers/index.ts';
+import type { AppRouter } from '../server/routers/index';
 
 const { TRPCProvider, useTRPC } = createTRPCContext<AppRouter>();
 

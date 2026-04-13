@@ -83,6 +83,10 @@ export default defineConfig(
       'import/first': 'warn',
       'import/newline-after-import': 'warn',
       'import/no-duplicates': 'warn',
+      'import/no-restricted-paths': [
+        'error',
+        { zones: [{ target: './server', from: './app' }] },
+      ],
 
       'simple-import-sort/imports': 'warn',
       'simple-import-sort/exports': 'warn',

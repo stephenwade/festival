@@ -1,4 +1,4 @@
-import { UserOnHoldPageGuard } from '../utils/auth-route-guards';
+import { UserOnHoldPageGuard } from './auth-route-guards';
 
 export default function UserOnHold() {
   return (

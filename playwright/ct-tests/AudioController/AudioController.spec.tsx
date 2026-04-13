@@ -6,7 +6,7 @@ import { expect as baseExpect, test } from '@playwright/experimental-ct-react';
 import type { Locator } from '@playwright/test';
 import { Temporal } from 'temporal-polyfill';
 
-import type { ShowData } from '../../../app/types/ShowData';
+import type { ShowData } from '../../../server/types/ShowData';
 import { AudioControllerTest } from './AudioControllerTest';
 import { AUDIO_FILE_LENGTH, AUDIO_FILE_URL, ID_1, ID_2 } from './shared-data';
 

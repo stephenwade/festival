@@ -1,7 +1,7 @@
 import { Temporal } from 'temporal-polyfill';
 
-import { db } from '../../../app/db.server/db.ts';
-import { showIncludeData } from '../../../app/types/ShowWithData.ts';
+import { db } from '../../db.ts';
+import { showIncludeData } from '../../types/ShowWithData.ts';
 import { cache, INDEX_SHOW_SLUG_KEY } from '../../util/cache.ts';
 import { validateShow } from '../../util/validateShow.ts';
 

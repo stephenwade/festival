@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-toastify';
 
+import type { ShowInfo } from '../../../server/types/ShowInfo';
 import showPlayingCssHref from '../../styles/show-playing.css?url';
-import type { AudioStatus } from '../../types/AudioStatus';
-import type { ShowInfo } from '../../types/ShowInfo';
+import type { AudioStatus } from '../AudioController';
 import { ToastContainer } from '../ToastContainer';
 import { VolumeFab } from '../VolumeFab';
 import { AudioCanvas } from './AudioCanvas';

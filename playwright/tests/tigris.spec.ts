@@ -6,7 +6,7 @@ import {
   deleteObjectByUrl,
   getObjectUploadUrl,
   getObjectUrl,
-} from '../../app/tigris.server/s3-client';
+} from '../../server/tigris/s3-client';
 
 test('presigned upload URL can upload, download, and delete blob data', async ({}) => {
   const objectKey = `test/${randomUUID()}.bin`;

@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 
-import { db } from '../../../app/db.server/db.ts';
-import { showIncludeData } from '../../../app/types/ShowWithData.ts';
+import { db } from '../../db.ts';
+import { showIncludeData } from '../../types/ShowWithData.ts';
 import { validateShow } from '../../util/validateShow.ts';
 
 export async function getShowStyles(slug: string) {

@@ -1,4 +1,4 @@
-import { db } from '../../../app/db.server/db.ts';
+import { db } from '../../db.ts';
 import { cache, INDEX_SHOW_SLUG_KEY } from '../../util/cache.ts';
 
 export async function deleteShow(id: string): Promise<void> {

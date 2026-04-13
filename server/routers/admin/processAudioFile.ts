@@ -7,16 +7,16 @@ import type { ReadableStream } from 'node:stream/web';
 import type { AudioFile } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 
-import { db } from '../../../app/db.server/db.ts';
-import {
-  deleteObjectByUrl,
-  getObjectUrl,
-  uploadFile,
-} from '../../../app/tigris.server/s3-client.ts';
+import { db } from '../../db.ts';
 import { ffmpeg } from '../../ffmpeg/ffmpeg.ts';
 import type { FFprobeOutput } from '../../ffmpeg/ffprobe.ts';
 import { ffprobe } from '../../ffmpeg/ffprobe.ts';
 import { emitAudioFileUpdate } from '../../sse/audioFileEvents.ts';
+import {
+  deleteObjectByUrl,
+  getObjectUrl,
+  uploadFile,
+} from '../../tigris/s3-client.ts';
 
 const UPLOAD_DIR = 'upload';
 

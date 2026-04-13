@@ -1,6 +1,6 @@
-import { db } from '../../../app/db.server/db.ts';
-import { showIncludeData } from '../../../app/types/ShowWithData.ts';
-import { omit } from '../../../app/utils/omit.ts';
+import { db } from '../../db.ts';
+import { showIncludeData } from '../../types/ShowWithData.ts';
+import { omit } from '../../util/omit.ts';
 import { validateShow } from '../../util/validateShow.ts';
 
 export async function getShows() {

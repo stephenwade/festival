@@ -1,8 +1,8 @@
 import { TRPCError } from '@trpc/server';
 import { Temporal } from 'temporal-polyfill';
 
-import { db } from '../../../app/db.server/db.ts';
-import { replaceNullsWithUndefined } from '../../../app/forms/utils/replaceNullsWithUndefined.ts';
+import { db } from '../../db.ts';
+import { replaceNullsWithUndefined } from '../../util/replaceNullsWithUndefined.ts';
 
 export async function getShow(id: string) {
   const show = await db.show.findUnique({
