@@ -17,7 +17,7 @@ export function useShowInfo(
   { ci = false, enableClock = true } = {},
 ): {
   targetShowInfo: TargetShowInfo;
-  onLoadedMetadata?: LoadedMetadataHandler;
+  onLoadedMetadata: LoadedMetadataHandler;
 } {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -119,9 +119,11 @@ export function useShowInfo(
 
   const targetShowInfo: TargetShowInfo = { ...timeInfo, currentSet, nextSet };
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (globalThis.window === undefined || !data) {
-    return { targetShowInfo: { status: 'WAITING_UNTIL_START' } };
+  if (!data) {
+    return {
+      targetShowInfo: { status: 'WAITING_UNTIL_START' },
+      onLoadedMetadata,
+    };
   }
 
   return { targetShowInfo, onLoadedMetadata };

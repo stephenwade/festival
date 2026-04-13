@@ -1,8 +1,14 @@
 {
-  "include": ["*.config.js", "*.config.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "*.config.js",
+    "*.config.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "app/utils/auth-route-guards"
+  ],
   "exclude": ["build", "server/**/*.ts"],
   "compilerOptions": {
-    "types": ["@remix-run/node", "vite/client"],
+    "types": ["vite/client"],
     "lib": ["DOM", "DOM.Iterable", "ES2023"],
     "target": "esnext",
     "isolatedModules": true,

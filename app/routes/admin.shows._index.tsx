@@ -1,16 +1,8 @@
-import type { LoaderFunction } from '@remix-run/node';
-import { Link } from '@remix-run/react';
 import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
+import { Link } from 'react-router-dom';
 
-import { redirectToLogin } from '../auth/redirect-to-login.server';
 import { useTRPC } from '../trpc';
-
-export const loader = (async (args) => {
-  await redirectToLogin(args);
-
-  return null;
-}) satisfies LoaderFunction;
 
 const ShowsIndex: FC = () => {
   const trpc = useTRPC();

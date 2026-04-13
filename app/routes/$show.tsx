@@ -1,7 +1,7 @@
-import { useParams } from '@remix-run/react';
 import { useQueries } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
 
 import { AudioController } from '../components/AudioController';
 import { ShowEnded } from '../components/ShowEnded';

@@ -1,11 +1,11 @@
 import type { Show } from '@prisma/client';
-import { useNavigate } from '@remix-run/react';
 import type { FieldErrors } from '@rvf/react';
 import { FormProvider, useField, useFieldArray, useForm } from '@rvf/react';
 import { useMutation } from '@tanstack/react-query';
 import { TRPCClientError } from '@trpc/client';
 import type { FC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Temporal } from 'temporal-polyfill';
 import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
@@ -137,7 +137,7 @@ const ShowForm: FC<ShowFormProps> = ({
       return await createShow.mutateAsync(formData);
     },
     onSubmitSuccess: ({ id }) => {
-      navigate(`/admin/shows/${id}`);
+      void navigate(`/admin/shows/${id}`);
     },
     onSubmitFailure: (error) => {
       const nextServerValidationErrors = getServerValidationErrors(error);
@@ -155,7 +155,7 @@ const ShowForm: FC<ShowFormProps> = ({
     if (!showId) return;
 
     await deleteShow.mutateAsync({ id: showId });
-    navigate('/admin/shows');
+    void navigate('/admin/shows');
   };
 
   return (
@@ -215,7 +215,7 @@ const ShowForm: FC<ShowFormProps> = ({
           <button
             type="button"
             onClick={() => {
-              navigate(cancelLinkTo);
+              void navigate(cancelLinkTo);
             }}
             disabled={buttonsDisabled}
           >

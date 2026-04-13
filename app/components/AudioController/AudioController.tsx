@@ -37,7 +37,7 @@ export interface AudioMetadata {
 
 interface AudioControllerProps {
   targetShowInfo: TargetShowInfo;
-  onLoadedMetadata?: (args: AudioMetadata) => void;
+  onLoadedMetadata: (args: AudioMetadata) => void;
   /** Used in CI */
   forceSkipAudioContext?: boolean;
 
@@ -60,8 +60,7 @@ export const AudioController: FC<AudioControllerProps> = ({
   const { volume } = useVolume();
 
   const [showInfo, setShowInfo] = useState<ShowInfo>(
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    targetShowInfo.status === 'ENDED' && globalThis.window !== undefined
+    targetShowInfo.status === 'ENDED'
       ? { status: 'ENDED' }
       : { status: 'WAITING_FOR_AUDIO_CONTEXT' },
   );
@@ -413,7 +412,7 @@ export const AudioController: FC<AudioControllerProps> = ({
 
         if (!set) return;
 
-        onLoadedMetadata?.({
+        onLoadedMetadata({
           id: set.id,
           duration: (e.target as HTMLAudioElement).duration,
         });

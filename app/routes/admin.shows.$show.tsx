@@ -1,19 +1,11 @@
-import type { LoaderFunction } from '@remix-run/node';
-import { Link, useParams } from '@remix-run/react';
 import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link, useParams } from 'react-router-dom';
 import { Temporal } from 'temporal-polyfill';
 
-import { redirectToLogin } from '../auth/redirect-to-login.server';
 import { useOrigin } from '../hooks/useOrigin';
 import { useTRPC } from '../trpc';
-
-export const loader = (async (args) => {
-  await redirectToLogin(args);
-
-  return null;
-}) satisfies LoaderFunction;
 
 const ViewShow: FC = () => {
   const trpc = useTRPC();

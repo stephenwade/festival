@@ -1,4 +1,4 @@
-import { vitePlugin as remix } from '@remix-run/dev';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 try {
@@ -8,17 +8,10 @@ try {
 }
 
 export default defineConfig({
-  plugins: [
-    remix({
-      future: {
-        v3_fetcherPersist: true,
-        v3_lazyRouteDiscovery: true,
-        v3_relativeSplatPath: true,
-        v3_routeConfig: true,
-        v3_throwAbortReason: true,
-      },
-    }),
-  ],
+  plugins: [react()],
+  build: {
+    outDir: 'build',
+  },
   server: {
     port: Number(process.env.PORT),
   },

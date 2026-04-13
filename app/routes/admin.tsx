@@ -1,7 +1,7 @@
-import { UserButton } from '@clerk/remix';
-import { Outlet } from '@remix-run/react';
+import { UserButton } from '@clerk/clerk-react';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Outlet } from 'react-router-dom';
 
 import adminCssHref from '../styles/admin.css?url';
 

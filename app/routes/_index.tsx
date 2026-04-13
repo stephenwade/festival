@@ -1,7 +1,7 @@
-import { Navigate } from '@remix-run/react';
 import { useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Navigate } from 'react-router-dom';
 
 import indexCssHref from '../styles/index.css?url';
 import showCssHref from '../styles/show.css?url';
