@@ -1,20 +1,15 @@
-import type { useLoaderData } from '@remix-run/react';
-import { useFetcher } from '@remix-run/react';
+import { useField } from '@rvf/react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { useControlField, useField } from 'remix-validated-form';
+import { useRef, useState } from 'react';
 
 import {
   UPLOAD_FILE_CONTENT_TYPE_KEY,
   UPLOAD_FILE_NAME_KEY,
 } from '../../../forms/upload-file';
-import type { loader as fileUploadLoader } from '../../../routes/admin.file-upload.$id';
-import type { action as newFileUploadAction } from '../../../routes/admin.file-upload.new';
+import type { RouterOutput } from '../../../trpc';
+import { useTRPC } from '../../../trpc';
 import { xhrPromise } from './xhrPromise';
-
-type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;
-
-type UploadResponse = SerializeFrom<typeof newFileUploadAction>;
 
 interface FileUploadProps {
   name: string;
@@ -27,23 +22,32 @@ export const FileUpload: FC<FileUploadProps> = ({
   isUploading,
   setIsUploading,
 }) => {
-  const { getInputProps } = useField(name);
-  const [fileId, setFileId] = useControlField<string | undefined>(name);
+  const trpc = useTRPC();
+
+  const field = useField<string | undefined>(name);
+  const fileId = field.value();
 
   const [fileState, setFileState] =
-    useState<SerializeFrom<typeof fileUploadLoader>>();
+    useState<RouterOutput['admin']['getImageFile']>();
 
-  const fetcher = useFetcher<typeof fileUploadLoader>();
-  useEffect(() => {
-    if (!fileId || fetcher.data || fetcher.state === 'loading' || fileState) {
-      return;
-    }
+  const createFileUpload = useMutation(
+    trpc.admin.createFileUpload.mutationOptions(),
+  );
 
-    // Only use fetcher if needed.
-    fetcher.load(`/admin/file-upload/${fileId}`);
-  }, [fetcher, fileId, fileState]);
+  // Only use query if needed.
+  const queryEnabled = Boolean(fileId) && !fileState;
+  const { data: fetchedData, error: fetchedDataError } = useQuery(
+    trpc.admin.getImageFile.queryOptions(
+      { id: fileId ?? '' },
+      { enabled: queryEnabled, staleTime: Infinity },
+    ),
+  );
 
-  const file = fileState ?? fetcher.data;
+  if (queryEnabled && fetchedDataError) {
+    throw fetchedDataError;
+  }
+
+  const file = fileState ?? fetchedData;
 
   const [fileName, setFileName] = useState<string>();
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -63,17 +67,13 @@ export const FileUpload: FC<FileUploadProps> = ({
     form.append(UPLOAD_FILE_NAME_KEY, file.name);
     form.append(UPLOAD_FILE_CONTENT_TYPE_KEY, file.type);
 
-    const newFileResponse = await fetch('/admin/file-upload/new', {
-      method: 'POST',
-      body: form,
-    });
     const { file: newFile, uploadUrl } =
-      (await newFileResponse.json()) as UploadResponse;
+      await createFileUpload.mutateAsync(form);
     setFileState(newFile);
-    // Wait a bit to make sure the fetcher is not triggered before the
+    // Wait a bit to make sure the query is not triggered before the
     // file upload state is updated.
     setTimeout(() => {
-      setFileId(newFile.id);
+      field.setValue(newFile.id);
     }, 100);
 
     xhrPromise(file, {
@@ -90,14 +90,14 @@ export const FileUpload: FC<FileUploadProps> = ({
   };
 
   const onRemoveFileClick = () => {
-    setFileId(undefined);
+    field.setValue(undefined);
     setFileState(undefined);
   };
 
   return (
     <>
       <input
-        {...getInputProps({
+        {...field.getInputProps({
           type: 'hidden',
           value: fileId ?? '',
         })}

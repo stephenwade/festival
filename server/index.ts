@@ -1,41 +1,44 @@
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 
-import { createRequestHandler } from '@remix-run/express';
+import { clerkMiddleware } from '@clerk/express';
+import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import express from 'express';
+import ViteExpress from 'vite-express';
+
+import { appRouter } from './routers/index.ts';
+import { createContext } from './trpc.ts';
 
 const appDirectory = fileURLToPath(new URL('..', import.meta.url));
 const buildClientDirectory = path.join(appDirectory, 'build', 'client');
-const serverBuildPath = path.join(appDirectory, 'build', 'server', 'index.js');
 const mode =
   process.env.NODE_ENV === 'production' ? 'production' : 'development';
 const port = Number(process.env.PORT ?? '3000');
-
-// https://v2.remix.run/docs/guides/vite#migrating-a-custom-server
-const viteDevServer =
-  mode === 'production'
-    ? undefined
-    : await import('vite').then(({ createServer }) =>
-        createServer({
-          server: { middlewareMode: true },
-        }),
-      );
 
 const app = express();
 
 app.set('trust proxy', true);
 
-// app.get('/test', (_request, response) => {
-//   response.json({
-//     route: 'test',
-//     server: 'express',
-//     status: 'ok',
-//   });
-// });
+ViteExpress.config({
+  mode,
+  ignorePaths: /^\/trpc(?:\/|$)/,
+});
 
-if (viteDevServer) {
-  app.use(viteDevServer.middlewares);
-} else {
+app.use(
+  clerkMiddleware({
+    publishableKey: process.env.VITE_CLERK_PUBLISHABLE_KEY,
+  }),
+);
+
+app.use(
+  '/trpc',
+  createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  }),
+);
+
+if (mode === 'production') {
   app.use(
     '/assets',
     express.static(path.join(buildClientDirectory, 'assets'), {
@@ -52,18 +55,6 @@ if (viteDevServer) {
   );
 }
 
-const remixHandler = createRequestHandler({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  build: viteDevServer
-    ? () => viteDevServer.ssrLoadModule('virtual:remix/server-build')
-    : await import(pathToFileURL(serverBuildPath).href),
-  mode,
-});
-
-app.all('*', (request, response, next) => {
-  Promise.resolve(remixHandler(request, response, next)).catch(next);
-});
-
-app.listen(port, () => {
-  console.log(`Express server listening on port ${port}`);
+ViteExpress.listen(app, port, () => {
+  console.log(`Express server ready on port ${port}`);
 });

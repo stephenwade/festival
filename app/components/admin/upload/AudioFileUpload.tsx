@@ -1,25 +1,22 @@
-import type { useLoaderData } from '@remix-run/react';
-import { useFetcher } from '@remix-run/react';
+import { useField } from '@rvf/react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useSubscription } from '@trpc/tanstack-react-query';
 import type { FC } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useControlField, useField } from 'remix-validated-form';
+import { useRef, useState } from 'react';
 
 import {
   UPLOAD_AUDIO_CONTENT_TYPE_KEY,
   UPLOAD_AUDIO_NAME_KEY,
 } from '../../../forms/upload-audio';
-import { useSse } from '../../../hooks/useSse';
-import type { loader as audioUploadLoader } from '../../../routes/admin.audio-upload.$id';
-import type { action as newAudioUploadAction } from '../../../routes/admin.audio-upload.new';
-import type { AudioFileProcessingEvent } from '../../../sse.server/audio-file-events';
+import type { RouterOutput } from '../../../trpc';
+import { useTRPC } from '../../../trpc';
 import { xhrPromise } from './xhrPromise';
 
-type SerializeFrom<T> = ReturnType<typeof useLoaderData<T>>;
-
-type UploadResponse = SerializeFrom<typeof newAudioUploadAction>;
-
 function displayConversionStatus(
-  status: Exclude<AudioFileProcessingEvent['conversionStatus'], 'DONE'>,
+  status: Exclude<
+    RouterOutput['admin']['getAudioFile']['conversionStatus'],
+    'DONE'
+  >,
 ) {
   switch (status) {
     case 'USER_UPLOAD':
@@ -46,34 +43,47 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
   isUploading,
   setIsUploading,
 }) => {
-  const { getInputProps } = useField(name);
-  const [fileId, setFileId] = useControlField<string | undefined>(name);
+  const trpc = useTRPC();
+
+  const field = useField<string | undefined>(name);
+  const fileId = field.value();
 
   const [fileState, setFileState] =
-    useState<SerializeFrom<typeof audioUploadLoader>>();
+    useState<RouterOutput['admin']['getAudioFile']>();
 
-  useSse(
-    '/admin/audio-upload/events',
-    useCallback(
-      (data: AudioFileProcessingEvent) => {
-        if (data.id !== fileId) return;
-        setFileState(data);
+  const createAudioFileUpload = useMutation(
+    trpc.admin.createAudioFileUpload.mutationOptions(),
+  );
+  const processAudioFile = useMutation(
+    trpc.admin.processAudioFile.mutationOptions(),
+  );
+
+  useSubscription(
+    trpc.admin.audioFileProcessingUpdates.subscriptionOptions(
+      { id: fileId ?? '' },
+      {
+        enabled: Boolean(fileId),
+        onData: (data) => {
+          setFileState(data);
+        },
       },
-      [fileId],
     ),
   );
 
-  const fetcher = useFetcher<typeof audioUploadLoader>();
-  useEffect(() => {
-    if (!fileId || fetcher.data || fetcher.state === 'loading' || fileState) {
-      return;
-    }
+  // Only use query if needed. Further data will be fetched from the SSE.
+  const queryEnabled = Boolean(fileId) && !fileState;
+  const { data: fetchedData, error: fetchedDataError } = useQuery(
+    trpc.admin.getAudioFile.queryOptions(
+      { id: fileId ?? '' },
+      { enabled: queryEnabled, staleTime: Infinity },
+    ),
+  );
 
-    // Only use fetcher if needed. Further data will be fetched from the SSE.
-    fetcher.load(`/admin/audio-upload/${fileId}`);
-  }, [fetcher, fileId, fileState]);
+  if (queryEnabled && fetchedDataError) {
+    throw fetchedDataError;
+  }
 
-  const file = fileState ?? fetcher.data;
+  const file = fileState ?? fetchedData;
 
   const [fileName, setFileName] = useState<string>();
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -93,17 +103,13 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
     form.append(UPLOAD_AUDIO_NAME_KEY, file.name);
     form.append(UPLOAD_AUDIO_CONTENT_TYPE_KEY, file.type);
 
-    const newFileResponse = await fetch('/admin/audio-upload/new', {
-      method: 'POST',
-      body: form,
-    });
     const { file: newFile, uploadUrl } =
-      (await newFileResponse.json()) as UploadResponse;
+      await createAudioFileUpload.mutateAsync(form);
     setFileState(newFile);
-    // Wait a bit to make sure the fetcher is not triggered before the
+    // Wait a bit to make sure the query is not triggered before the
     // file upload state is updated.
     setTimeout(() => {
-      setFileId(newFile.id);
+      field.setValue(newFile.id);
     }, 100);
 
     xhrPromise(file, {
@@ -113,9 +119,7 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
     })
       .then(() => {
         setIsUploading(false);
-        void fetch(`/admin/audio-upload/${newFile.id}/process`, {
-          method: 'POST',
-        });
+        void processAudioFile.mutateAsync({ id: newFile.id });
       })
       .catch((error: unknown) => {
         console.error(`Audio file upload ${name} failed.`, error);
@@ -123,14 +127,14 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
   };
 
   const onRemoveFileClick = () => {
-    setFileId(undefined);
+    field.setValue(undefined);
     setFileState(undefined);
   };
 
   return (
     <>
       <input
-        {...getInputProps({
+        {...field.getInputProps({
           type: 'hidden',
           value: fileId ?? '',
         })}

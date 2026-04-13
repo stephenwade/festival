@@ -32,7 +32,7 @@ jobs:
       - name: Run tests
         run: npm run test
         env:
-          CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
           DATABASE_URL: postgresql://runner:@localhost:5432/postgres
           FIRST_ADMIN_EMAIL_ADDRESS: ci@urlfest.com

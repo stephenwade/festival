@@ -1,0 +1,224 @@
+import { createWriteStream } from 'node:fs';
+import { mkdir, unlink } from 'node:fs/promises';
+import path from 'node:path';
+import { pipeline } from 'node:stream/promises';
+import type { ReadableStream } from 'node:stream/web';
+
+import type { AudioFile } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
+
+import { db } from '../../../app/db.server/db.ts';
+import {
+  deleteObjectByUrl,
+  getObjectUrl,
+  uploadFile,
+} from '../../../app/tigris.server/s3-client.ts';
+import { ffmpeg } from '../../ffmpeg/ffmpeg.ts';
+import type { FFprobeOutput } from '../../ffmpeg/ffprobe.ts';
+import { ffprobe } from '../../ffmpeg/ffprobe.ts';
+import { emitAudioFileUpdate } from '../../sse/audioFileEvents.ts';
+
+const UPLOAD_DIR = 'upload';
+
+const MICROSECONDS = 1 / 1_000_000;
+
+export async function processAudioFile(id: string) {
+  const file = await db.audioFile.findUnique({
+    where: { id },
+  });
+  if (!file) {
+    throw new TRPCError({ code: 'NOT_FOUND' });
+  }
+
+  // Run this in the background after responding to the request
+  void checkAudioFile(file);
+}
+
+async function checkAudioFile(file: AudioFile) {
+  try {
+    console.log('Checking audio file', file.id);
+
+    const fileName = await downloadFile(file.url);
+
+    const stats = await ffprobe(fileName);
+    console.log(`ffprobe stats for ${fileName}:`, stats);
+
+    await updateAudioFileDuration(file.id, stats.format.duration);
+
+    const needsConverting = checkNeedsConverting(stats);
+    const newFileName = `upload/${file.id}.mp3`;
+    if (needsConverting) {
+      console.log('Converting audio file:', fileName);
+
+      const streamIndex = getAudioStreamIndex(stats);
+      await ffmpeg(fileName, streamIndex, newFileName, (progress) => {
+        let conversionProgress: number;
+        if (progress.progress === 'end') {
+          conversionProgress = 1;
+        } else {
+          const total = stats.format.duration;
+          const currentTime = progress.out_time_us * MICROSECONDS;
+          conversionProgress = currentTime / total;
+        }
+        void updateAudioFileConvertProgress(file.id, conversionProgress);
+      });
+
+      await updateAudioFileUploading(file.id);
+      const objectKey = `audio/${crypto.randomUUID()}.mp3`;
+      await Promise.all([
+        uploadFile({
+          fileName: newFileName,
+          objectKey,
+          contentType: 'audio/mpeg',
+        }),
+        updateAudioFileUrl(file.id, objectKey),
+        deleteObjectByUrl(file.url),
+      ]);
+
+      await unlink(newFileName);
+    } else {
+      console.log('Audio file does not need converting:', fileName);
+    }
+
+    await unlink(fileName);
+
+    await updateAudioFileDoneProcessing(file.id);
+  } catch (error) {
+    await handleError(error, file.id);
+  }
+}
+
+async function downloadFile(url: string) {
+  await mkdir(UPLOAD_DIR, {
+    // Don't error if the directory already exists
+    recursive: true,
+  });
+
+  const extname = path.extname(url);
+  const filePath = `${UPLOAD_DIR}/${crypto.randomUUID()}${extname}`;
+
+  const response = await fetch(url);
+  if (!response.ok || !response.body) {
+    throw new Error(`Failed to download file: ${response.statusText}`);
+  }
+
+  await pipeline(response.body as ReadableStream, createWriteStream(filePath));
+
+  return filePath;
+}
+
+async function updateAudioFileDuration(
+  fileId: AudioFile['id'],
+  duration: number,
+) {
+  const file = await db.audioFile.update({
+    where: { id: fileId },
+    data: { duration },
+  });
+
+  emitAudioFileUpdate(file);
+}
+
+async function updateAudioFileConvertProgress(
+  fileId: AudioFile['id'],
+  conversionProgress: number,
+) {
+  const file = await db.audioFile.update({
+    where: { id: fileId },
+    data: {
+      conversionStatus: 'CONVERTING',
+      conversionProgress,
+    },
+  });
+
+  emitAudioFileUpdate(file);
+}
+
+async function updateAudioFileUploading(fileId: AudioFile['id']) {
+  const file = await db.audioFile.update({
+    where: { id: fileId },
+    data: {
+      conversionStatus: 'RE_UPLOAD',
+      conversionProgress: null,
+    },
+  });
+
+  emitAudioFileUpdate(file);
+}
+
+async function updateAudioFileUrl(fileId: AudioFile['id'], objectKey: string) {
+  const file = await db.audioFile.update({
+    where: { id: fileId },
+    data: { url: getObjectUrl(objectKey) },
+  });
+
+  emitAudioFileUpdate(file);
+}
+
+async function updateAudioFileDoneProcessing(fileId: AudioFile['id']) {
+  const file = await db.audioFile.findUnique({
+    where: { id: fileId },
+  });
+
+  if (!file?.duration || !file.url) {
+    throw new Error('Audio file missing duration or url after processing');
+  }
+
+  const newFile = await db.audioFile.update({
+    where: { id: fileId },
+    data: {
+      conversionStatus: 'DONE',
+    },
+  });
+
+  emitAudioFileUpdate(newFile);
+}
+
+async function handleError(error: unknown, fileId: AudioFile['id']) {
+  const errorMessage = error instanceof Error ? error.message : String(error);
+
+  console.error('Error while converting file', error);
+
+  const file = await db.audioFile.update({
+    where: { id: fileId },
+    data: {
+      conversionStatus: 'ERROR',
+      errorMessage,
+    },
+  });
+
+  emitAudioFileUpdate(file);
+}
+
+/**
+ * Checks if the file has at least 1 audio stream. If so, returns the index of
+ * the audio stream. Otherwise, throws an error.
+ */
+function getAudioStreamIndex(stats: FFprobeOutput) {
+  const streamIndex = stats.streams.findIndex(
+    (stream) => stream.codec_type === 'audio',
+  );
+
+  if (streamIndex === -1) {
+    throw new Error('No audio streams');
+  }
+
+  return streamIndex;
+}
+
+/**
+ * Checks if the file is an MP3 file with exactly 1 audio stream and a bit rate
+ * of no more than 193 Kbps.
+ */
+function checkNeedsConverting(stats: FFprobeOutput) {
+  const MAX_BIT_RATE = 193_000;
+
+  return !(
+    stats.format.format_name === 'mp3' &&
+    stats.format.bit_rate < MAX_BIT_RATE &&
+    stats.streams.length === 1 &&
+    stats.streams[0]!.codec_name === 'mp3' &&
+    stats.streams[0]!.bit_rate &&
+    stats.streams[0]!.bit_rate < MAX_BIT_RATE
+  );
+}

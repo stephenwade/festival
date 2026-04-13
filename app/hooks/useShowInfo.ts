@@ -1,11 +1,11 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Temporal } from 'temporal-polyfill';
 
-import type { loader as showDataLoader } from '../routes/$show.[data.json]';
+import { useTRPC } from '../trpc';
 import type { ShowData } from '../types/ShowData';
 import type { TargetShowInfo, TargetTimeInfo } from '../types/ShowInfo';
 import { useClock } from './useClock';
-import { useFetcherIgnoreErrors } from './useFetcherIgnoreErrors';
 
 type LoadedMetadataHandler = (args: { id: string; duration: number }) => void;
 
@@ -14,9 +14,15 @@ function isBefore(a: Temporal.Instant, b: Temporal.Instant): boolean {
 }
 
 export function useShowInfo(
-  loaderData: Pick<ShowData, 'slug' | 'serverDate' | 'sets'>,
+  showData: ShowData | undefined,
   { ci = false, enableClock = true } = {},
-) {
+): {
+  targetShowInfo: TargetShowInfo;
+  onLoadedMetadata: LoadedMetadataHandler;
+} {
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+
   const [audioDurations, setAudioDurations] = useState<Record<string, number>>(
     {},
   );
@@ -31,12 +37,13 @@ export function useShowInfo(
     [],
   );
 
-  const fetcher = useFetcherIgnoreErrors<typeof showDataLoader>();
   useEffect(() => {
     const SECONDS = 1000;
     const refetchInterval = setInterval(
       () => {
-        fetcher.load(`/${loaderData.slug}/data.json`);
+        void queryClient.invalidateQueries({
+          queryKey: trpc.show.getShowData.queryKey({ slug: showData?.slug }),
+        });
       },
       ci ? 3 * SECONDS : 60 * SECONDS,
     );
@@ -44,20 +51,21 @@ export function useShowInfo(
     return () => {
       clearTimeout(refetchInterval);
     };
-  }, [ci, fetcher, loaderData.slug]);
-
-  const data = fetcher.data ?? loaderData;
+    // todo(react-19): use useEffectEvent to remove unnecessary dependencies
+  }, [ci, queryClient, showData?.slug, trpc.show.getShowData]);
 
   const clientTimeSkewMs = useMemo(() => {
-    const serverDate = Temporal.Instant.from(data.serverDate);
+    if (!showData?.serverDate) return 0;
+
+    const serverDate = Temporal.Instant.from(showData.serverDate);
 
     return (
       Temporal.Now.instant().epochMilliseconds - serverDate.epochMilliseconds
     );
-  }, [data.serverDate]);
+  }, [showData?.serverDate]);
 
   const sets = useMemo(() => {
-    return data.sets
+    return (showData?.sets ?? [])
       .map(function parseDates(set) {
         const start = Temporal.Instant.from(set.start);
 
@@ -76,7 +84,7 @@ export function useShowInfo(
 
         return { ...set, start, end };
       });
-  }, [audioDurations, clientTimeSkewMs, data.sets]);
+  }, [audioDurations, clientTimeSkewMs, showData?.sets]);
 
   const currentSetIndex = sets.findIndex((set) =>
     isBefore(Temporal.Now.instant(), set.end),
@@ -108,6 +116,13 @@ export function useShowInfo(
   useClock(enableClock && timeInfo.status !== 'ENDED');
 
   const targetShowInfo: TargetShowInfo = { ...timeInfo, currentSet, nextSet };
+
+  if (!showData) {
+    return {
+      targetShowInfo: { status: 'WAITING_UNTIL_START' },
+      onLoadedMetadata,
+    };
+  }
 
   return { targetShowInfo, onLoadedMetadata };
 }

@@ -1,15 +1,17 @@
-import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
-import { createRemixStub } from '@remix-run/testing';
-import type { FC } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { type FC, Suspense } from 'react';
 
 import { useShowInfo } from '../../../app/hooks/useShowInfo';
-import type { TestProps } from './helpers';
-import { getMockData } from './helpers';
+import { useTRPC } from '../../../app/trpc';
+import { MockedTRPCProvider } from '../trpc';
 
 function ShowInfoDisplay() {
-  const data = useLoaderData<ReturnType<typeof getMockData>>();
-  const { targetShowInfo } = useShowInfo(data, {
+  const trpc = useTRPC();
+  const { data: showData } = useSuspenseQuery(
+    trpc.show.getShowData.queryOptions({ slug: 'test' }),
+  );
+
+  const { targetShowInfo } = useShowInfo(showData, {
     ci: true,
     enableClock: false,
   });
@@ -54,18 +56,12 @@ function ShowInfoDisplay() {
   );
 }
 
-export const ShowInfoTest: FC<TestProps> = (props) => {
-  const RemixStub = createRemixStub([
-    {
-      path: '/',
-      Component: ShowInfoDisplay,
-      loader() {
-        // Single Fetch doesn't work with Clerk
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        return json(getMockData(props));
-      },
-    },
-  ]);
-
-  return <RemixStub />;
+export const ShowInfoTest: FC = () => {
+  return (
+    <MockedTRPCProvider>
+      <Suspense>
+        <ShowInfoDisplay />
+      </Suspense>
+    </MockedTRPCProvider>
+  );
 };

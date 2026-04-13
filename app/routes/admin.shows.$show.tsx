@@ -1,40 +1,19 @@
-import type { LoaderFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link, useParams } from 'react-router-dom';
 import { Temporal } from 'temporal-polyfill';
 
-import { redirectToLogin } from '../auth/redirect-to-login.server';
-import { db } from '../db.server/db';
 import { useOrigin } from '../hooks/useOrigin';
-import { notFound } from '../utils/responses.server';
-
-export const loader = (async (args) => {
-  await redirectToLogin(args);
-
-  const id = args.params.show!;
-
-  const show = await db.show.findUnique({
-    where: { id },
-    include: {
-      logoImageFile: true,
-      backgroundImageFile: true,
-      sets: {
-        include: { audioFile: true },
-        orderBy: { offset: 'asc' },
-      },
-    },
-  });
-  if (!show) throw notFound();
-
-  // Single Fetch doesn't work with Clerk
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  return json(show);
-}) satisfies LoaderFunction;
+import { useTRPC } from '../trpc';
 
 const ViewShow: FC = () => {
-  const show = useLoaderData<typeof loader>();
+  const trpc = useTRPC();
+  const id = useParams().show!;
+
+  const { data: show } = useSuspenseQuery(
+    trpc.admin.getShow.queryOptions({ id }),
+  );
 
   const origin = useOrigin();
 
