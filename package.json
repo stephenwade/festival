@@ -36,7 +36,7 @@
     "@clerk/express": "2.1.1",
     "@clerk/react": "6.3.0",
     "@prisma/client": "6.19.3",
-    "@rvf/react": "6.3.0",
+    "@rvf/react": "8.1.1",
     "@rvf/zod": "6.0.3",
     "@tanstack/react-query": "5.97.0",
     "@trpc/client": "11.16.0",
