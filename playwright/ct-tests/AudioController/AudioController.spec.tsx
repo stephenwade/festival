@@ -1,7 +1,5 @@
 /* eslint-disable playwright/no-wait-for-timeout */
 
-import { platform } from 'node:process';
-
 import { expect as baseExpect, test } from '@playwright/experimental-ct-react';
 import type { Locator } from '@playwright/test';
 import { Temporal } from 'temporal-polyfill';
@@ -152,7 +150,6 @@ function commonTests({ forceSkipAudioContext = false }) {
     test('does not play audio until the show starts', async ({
       mount,
       page,
-      browserName,
     }) => {
       const component = await mount(
         <AudioControllerTest
@@ -164,12 +161,6 @@ function commonTests({ forceSkipAudioContext = false }) {
 
       await page.waitForTimeout(500);
       await expectAudioIsNotPlaying(component, '1.5 seconds before the show');
-      test.fail(
-        browserName === 'webkit' &&
-          platform !== 'darwin' &&
-          forceSkipAudioContext,
-        "Playing audio doesn't work on Webkit outside of macOS",
-      );
       await page.waitForTimeout(3000);
       await expectAudioIsPlaying(component, 'during the show');
       await expectAudioCurrentTimeToAlmostEqual(component, 1);
