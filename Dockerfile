@@ -1,3 +1,6 @@
+# syntax=docker/dockerfile:1
+# check=skip=SecretsUsedInArgOrEnv
+
 FROM ubuntu:jammy@sha256:eb29ed27b0821dca09c2e28b39135e185fc1302036427d5f4d70a41ce8fd7659 AS base
 
 WORKDIR /node
@@ -30,6 +33,9 @@ FROM base AS build
 
 WORKDIR /app
 
+ARG VITE_CLERK_PUBLISHABLE_KEY
+ENV VITE_CLERK_PUBLISHABLE_KEY=$VITE_CLERK_PUBLISHABLE_KEY
+
 COPY --from=deps /app/node_modules /app/node_modules
 
 ADD prisma .
@@ -54,13 +60,13 @@ RUN apt-get update && apt-get install -y nodejs
 WORKDIR /app
 
 COPY --from=production-deps /app/node_modules /app/node_modules
-COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
 
-COPY --from=build /app/build /app/build
+COPY --from=build /app/dist /app/dist
+COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
 COPY --from=build /app/package.json /app/package.json
-COPY --from=build /app/start.sh /app/start.sh
 COPY --from=build /app/prisma /app/prisma
 COPY --from=build /app/server /app/server
 COPY --from=build /app/shared /app/shared
+COPY --from=build /app/start.sh /app/start.sh
 
 ENTRYPOINT [ "./start.sh" ]

@@ -35,7 +35,6 @@ jobs:
       - name: Run tests
         run: npm run test
         env:
-          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
           DATABASE_URL: postgresql://runner:@localhost:5432/postgres
           FIRST_ADMIN_EMAIL_ADDRESS: ci@urlfest.com
@@ -43,12 +42,12 @@ jobs:
           TIGRIS_ACCESS_KEY_ID: ${{ secrets.TIGRIS_ACCESS_KEY_ID }}
           TIGRIS_BUCKET: festival-ci
           TIGRIS_SECRET_ACCESS_KEY: ${{ secrets.TIGRIS_SECRET_ACCESS_KEY }}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
 
       - name: Upload test results
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
         with:
-          # name: test-results-${{ matrix.os }}--attempt-${{ github.run_attempt }}
           name: test-results--attempt-${{ github.run_attempt }}
           path: test-results/
 

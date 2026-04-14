@@ -1,0 +1,94 @@
+---
+name: E2E tests (Docker)
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Create .env file for PostgreSQL
+        run: |
+          echo "POSTGRES_USER=festival" > .env
+          echo "POSTGRES_PASSWORD=gha" >> .env
+
+      - name: Start PostgreSQL with Docker Compose
+        run: docker compose up --detach
+
+      - name: Build Docker image
+        run: >
+          docker build
+          --build-arg VITE_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}"
+          --tag festival:${{ github.sha }}
+          .
+
+      - name: Start application container
+        run: >
+          docker run
+          --detach
+          --name festival-app
+          --network host
+          -e CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}"
+          -e DATABASE_URL="postgresql://festival:gha@127.0.0.1:5432/festival"
+          -e FIRST_ADMIN_EMAIL_ADDRESS="ci@urlfest.com"
+          -e PORT="3000"
+          -e TIGRIS_ACCESS_KEY_ID="${{ secrets.TIGRIS_ACCESS_KEY_ID }}"
+          -e TIGRIS_BUCKET="festival-ci"
+          -e TIGRIS_SECRET_ACCESS_KEY="${{ secrets.TIGRIS_SECRET_ACCESS_KEY }}"
+          -e VITE_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}"
+          festival:${{ github.sha }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        with:
+          node-version: 24.14.1
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run tests
+        run: npm run test
+        env:
+          DATABASE_URL: postgresql://festival:gha@127.0.0.1:5432/festival
+          DOCKER_MODE: '1'
+          PORT: '3000'
+          TIGRIS_ACCESS_KEY_ID: ${{ secrets.TIGRIS_ACCESS_KEY_ID }}
+          TIGRIS_BUCKET: festival-ci
+          TIGRIS_SECRET_ACCESS_KEY: ${{ secrets.TIGRIS_SECRET_ACCESS_KEY }}
+
+      - name: Stop application container
+        if: always()
+        run: docker rm --force festival-app
+
+      - name: Stop Docker Compose services
+        if: always()
+        run: docker compose down --volumes
+
+      - name: Upload test results
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: test-results-docker--attempt-${{ github.run_attempt }}
+          path: test-results/
+
+  test-docker-success:
+    needs: [test-docker]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check for failure
+        if: needs.test-docker.result == 'failure' || needs.test-docker.result == 'cancelled'
+        run: exit 1
