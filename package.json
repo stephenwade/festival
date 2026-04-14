@@ -36,8 +36,8 @@
     "@clerk/express": "2.1.1",
     "@clerk/react": "6.3.0",
     "@prisma/client": "6.19.3",
-    "@rvf/react": "6.3.0",
-    "@rvf/zod": "6.0.3",
+    "@rvf/core": "8.1.0",
+    "@rvf/react": "8.1.1",
     "@tanstack/react-query": "5.99.0",
     "@trpc/client": "11.16.0",
     "@trpc/server": "11.16.0",
@@ -57,8 +57,8 @@
     "use-local-storage-state": "19.5.0",
     "usehooks-ts": "3.1.1",
     "vite-express": "0.22.1",
-    "zod": "3.25.76",
-    "zod-form-data": "2.0.8"
+    "zod": "4.3.6",
+    "zod-form-data": "3.0.1"
   },
   "devDependencies": {
     "@eslint/compat": "2.0.5",

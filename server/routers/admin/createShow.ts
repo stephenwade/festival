@@ -2,14 +2,14 @@ import { TRPCError } from '@trpc/server';
 import { Temporal } from 'temporal-polyfill';
 import type { z } from 'zod';
 
-import type { schema } from '../../../shared/schemas/show.ts';
+import type { schema as showSchema } from '../../../shared/schemas/show.ts';
 import { db } from '../../db.ts';
 import { makeServerValidator } from '../../schemas/show.server.ts';
 import { cache, INDEX_SHOW_SLUG_KEY } from '../../util/cache.ts';
 import { omit } from '../../util/omit.ts';
 
 export async function createShow(
-  input: z.infer<typeof schema>,
+  input: z.infer<typeof showSchema>,
 ): Promise<{ id: string }> {
   if (input.id) {
     throw new TRPCError({ code: 'BAD_REQUEST' });

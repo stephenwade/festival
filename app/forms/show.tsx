@@ -1,4 +1,5 @@
 import type { Show } from '@prisma/client';
+import { withStandardSchema } from '@rvf/core';
 import type { FieldErrors } from '@rvf/react';
 import { FormProvider, useField, useFieldArray, useForm } from '@rvf/react';
 import { useMutation } from '@tanstack/react-query';
@@ -11,8 +12,8 @@ import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
 
 import type { AppRouter } from '../../server/routers/index';
-import type { schema, setSchema } from '../../shared/schemas/show';
-import { clientValidator } from '../../shared/schemas/show';
+import type { setSchema } from '../../shared/schemas/show';
+import { schema as showSchema } from '../../shared/schemas/show';
 import { Input } from '../components/admin/Input';
 import { InputTimeZone } from '../components/admin/InputTimeZone';
 import { AudioFileUpload } from '../components/admin/upload/AudioFileUpload';
@@ -68,7 +69,7 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
 };
 
 interface ShowFormProps {
-  defaultValues?: z.infer<typeof schema>;
+  defaultValues: z.infer<typeof showSchema>;
   cancelLinkTo: string;
   showId?: string;
   showDeleteButton?: boolean;
@@ -121,7 +122,7 @@ const ShowForm: FC<ShowFormProps> = ({
   );
 
   const form = useForm({
-    validator: clientValidator,
+    validator: withStandardSchema(showSchema),
     defaultValues,
     serverValidationErrors,
     onBeforeSubmit: () => {

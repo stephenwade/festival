@@ -1,4 +1,3 @@
-import { withZod } from '@rvf/zod';
 import { Temporal } from 'temporal-polyfill';
 import { z } from 'zod';
 import { zfd } from 'zod-form-data';
@@ -26,7 +25,7 @@ export const schema = zfd.formData({
   name: zfd.text(),
   slug: zfd.text(
     z.string().refine((id) => id !== 'admin', {
-      message: 'Invalid show URL',
+      error: 'Invalid show URL',
     }),
   ),
   startDate: zfd.text(
@@ -37,12 +36,12 @@ export const schema = zfd.formData({
           // The value of a `datetime-local` input doesn't include seconds if they are 0,
           // so we can't use `.datetime()` here.
           /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?/.test(val),
-        { message: 'Invalid date/time' },
+        { error: 'Invalid date/time' },
       )
       .optional(),
   ),
   timeZone: zfd.text(
-    z.string().refine(isValidTimeZone, { message: 'Invalid time zone' }),
+    z.string().refine(isValidTimeZone, { error: 'Invalid time zone' }),
   ),
   backgroundColor: zfd.text(z.string().regex(COLOR_REGEX).optional()),
   backgroundColorSecondary: zfd.text(z.string().regex(COLOR_REGEX).optional()),
@@ -51,5 +50,3 @@ export const schema = zfd.formData({
   backgroundImageFileId: zfd.text(z.string().optional()),
   sets: zfd.repeatableOfType(setSchema),
 });
-
-export const clientValidator = withZod(schema);

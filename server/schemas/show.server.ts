@@ -1,13 +1,13 @@
-import { withZod } from '@rvf/zod';
+import { withStandardSchema } from '@rvf/core';
 
-import { schema } from '../../shared/schemas/show.ts';
+import { schema as showSchema } from '../../shared/schemas/show.ts';
 import { db } from '../db.ts';
 
 export function makeServerValidator({
   previousSlug,
 }: { previousSlug?: string } = {}) {
-  return withZod(
-    schema.refine(
+  return withStandardSchema(
+    showSchema.refine(
       async ({ slug }) => {
         if (slug === previousSlug) return true;
         const existingShow = await db.show.findUnique({ where: { slug } });
@@ -15,7 +15,7 @@ export function makeServerValidator({
       },
       {
         path: ['slug'],
-        message: 'A show already exists with that URL.',
+        error: 'A show already exists with that URL.',
       },
     ),
   );
