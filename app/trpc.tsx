@@ -59,17 +59,6 @@ function makeQueryClient() {
   return queryClient;
 }
 
-let queryClient: QueryClient | undefined = undefined;
-
-function getQueryClient() {
-  // Make a new query client if we don't already have one
-  // This is very important, so we don't re-make a new client if React
-  // suspends during the initial render. This may not be needed if we
-  // have a suspense boundary BELOW the creation of the query client
-  queryClient ??= makeQueryClient();
-  return queryClient;
-}
-
 interface SharedTrpcProviderProps extends PropsWithChildren {
   queryClient: QueryClient;
   trpcClient: TRPCClient<AppRouter>;
@@ -90,7 +79,7 @@ export function SharedTrpcProvider({
 }
 
 export function TrpcProvider({ children }: PropsWithChildren) {
-  const queryClient = getQueryClient();
+  const [queryClient] = useState(makeQueryClient);
   const [trpcClient] = useState(() =>
     createTRPCClient<AppRouter>({
       links: [
