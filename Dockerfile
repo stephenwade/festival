@@ -60,13 +60,13 @@ RUN apt-get update && apt-get install -y nodejs
 WORKDIR /app
 
 COPY --from=production-deps /app/node_modules /app/node_modules
-COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
 
-COPY --from=build /app/build /app/build
+COPY --from=build /app/dist /app/dist
+COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
 COPY --from=build /app/package.json /app/package.json
-COPY --from=build /app/start.sh /app/start.sh
 COPY --from=build /app/prisma /app/prisma
 COPY --from=build /app/server /app/server
 COPY --from=build /app/shared /app/shared
+COPY --from=build /app/start.sh /app/start.sh
 
 ENTRYPOINT [ "./start.sh" ]

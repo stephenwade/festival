@@ -37,7 +37,6 @@ jobs:
           --detach
           --name festival-app
           --network host
-          -e VITE_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}"
           -e CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}"
           -e DATABASE_URL="postgresql://festival:gha@127.0.0.1:5432/festival"
           -e FIRST_ADMIN_EMAIL_ADDRESS="ci@urlfest.com"
@@ -45,6 +44,7 @@ jobs:
           -e TIGRIS_ACCESS_KEY_ID="${{ secrets.TIGRIS_ACCESS_KEY_ID }}"
           -e TIGRIS_BUCKET="festival-ci"
           -e TIGRIS_SECRET_ACCESS_KEY="${{ secrets.TIGRIS_SECRET_ACCESS_KEY }}"
+          -e VITE_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}"
           festival:${{ github.sha }}
 
       - name: Set up Node.js

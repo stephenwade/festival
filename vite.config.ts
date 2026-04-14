@@ -9,9 +9,6 @@ try {
 
 export default defineConfig({
   plugins: [react()],
-  build: {
-    outDir: 'build',
-  },
   server: {
     port: Number(process.env.PORT),
   },
