@@ -13,16 +13,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Set up Node.js
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
-        with:
-          node-version: 24.14.1
-          cache: npm
-
-      - run: npm ci
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      - name: Create .env file for PostgreSQL
+        run: |
+          echo "POSTGRES_USER=festival" > .env
+          echo "POSTGRES_PASSWORD=gha" >> .env
 
       - name: Start PostgreSQL with Docker Compose
         run: docker compose up --detach
@@ -42,13 +36,24 @@ jobs:
           --network host
           -e VITE_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}"
           -e CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}"
-          -e DATABASE_URL="postgresql://postgres@127.0.0.1:5432/postgres"
+          -e DATABASE_URL="postgresql://festival:gha@127.0.0.1:5432/festival"
           -e FIRST_ADMIN_EMAIL_ADDRESS="ci@urlfest.com"
           -e PORT="3000"
           -e TIGRIS_ACCESS_KEY_ID="${{ secrets.TIGRIS_ACCESS_KEY_ID }}"
           -e TIGRIS_BUCKET="festival-ci"
           -e TIGRIS_SECRET_ACCESS_KEY="${{ secrets.TIGRIS_SECRET_ACCESS_KEY }}"
           festival:${{ github.sha }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        with:
+          node-version: 24.14.1
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
 
       - name: Run tests
         run: npm run test
