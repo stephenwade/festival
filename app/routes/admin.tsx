@@ -1,4 +1,4 @@
-import { UserButton } from '@clerk/clerk-react';
+import { UserButton } from '@clerk/react';
 import type { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Outlet } from 'react-router-dom';

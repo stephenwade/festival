@@ -1,4 +1,4 @@
-import { SignIn } from '@clerk/clerk-react';
+import { SignIn } from '@clerk/react';
 import { Helmet } from 'react-helmet-async';
 
 import { Spinner } from '../components/Spinner';
