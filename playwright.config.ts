@@ -10,8 +10,8 @@ try {
 }
 
 const baseURL =
-  process.env.PLAYWRIGHT_BASE_URL ?? `http://127.0.0.1:${process.env.PORT!}`;
-const webServer = process.env.PLAYWRIGHT_BASE_URL
+  process.env.DOCKER_BASE_URL ?? `http://127.0.0.1:${process.env.PORT!}`;
+const webServer = process.env.DOCKER_BASE_URL
   ? undefined
   : ({
       command: [
