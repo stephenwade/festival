@@ -1,6 +1,7 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { defineConfig, devices } from '@playwright/test';
 
+import { DOCKER_MODE } from './playwright/helpers/docker';
 import { authFile } from './playwright/tests/shared-data';
 
 try {
@@ -9,9 +10,8 @@ try {
   // Ignore errors if `.env` doesn't exist
 }
 
-const baseURL =
-  process.env.DOCKER_BASE_URL ?? `http://127.0.0.1:${process.env.PORT!}`;
-const webServer = process.env.DOCKER_BASE_URL
+const baseURL = `http://127.0.0.1:${process.env.PORT!}`;
+const webServer = DOCKER_MODE
   ? undefined
   : ({
       command: [
