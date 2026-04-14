@@ -11,8 +11,8 @@ import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
 
 import type { AppRouter } from '../../server/routers/index';
-import type { schema, setSchema } from '../../shared/schemas/show';
-import { clientValidator } from '../../shared/schemas/show';
+import type { setSchema } from '../../shared/schemas/show';
+import { schema as showSchema } from '../../shared/schemas/show';
 import { Input } from '../components/admin/Input';
 import { InputTimeZone } from '../components/admin/InputTimeZone';
 import { AudioFileUpload } from '../components/admin/upload/AudioFileUpload';
@@ -68,7 +68,7 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
 };
 
 interface ShowFormProps {
-  defaultValues?: z.infer<typeof schema>;
+  defaultValues: z.infer<typeof showSchema>;
   cancelLinkTo: string;
   showId?: string;
   showDeleteButton?: boolean;
@@ -120,8 +120,14 @@ const ShowForm: FC<ShowFormProps> = ({
     [incUploading, decUploading],
   );
 
-  const form = useForm({
-    validator: clientValidator,
+  const form = useForm<
+    z.input<typeof showSchema>,
+    z.infer<typeof showSchema>,
+    { id: string },
+    z.infer<typeof showSchema>,
+    z.infer<typeof showSchema>
+  >({
+    schema: showSchema,
     defaultValues,
     serverValidationErrors,
     onBeforeSubmit: () => {

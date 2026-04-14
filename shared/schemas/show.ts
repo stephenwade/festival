@@ -1,4 +1,3 @@
-import { withZod } from '@rvf/zod';
 import { Temporal } from 'temporal-polyfill';
 import { z } from 'zod';
 import { zfd } from 'zod-form-data';
@@ -51,5 +50,3 @@ export const schema = zfd.formData({
   backgroundImageFileId: zfd.text(z.string().optional()),
   sets: zfd.repeatableOfType(setSchema),
 });
-
-export const clientValidator = withZod(schema);
