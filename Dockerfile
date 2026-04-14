@@ -1,3 +1,6 @@
+# syntax=docker/dockerfile:1
+# check=skip=SecretsUsedInArgOrEnv
+
 FROM ubuntu:jammy@sha256:eb29ed27b0821dca09c2e28b39135e185fc1302036427d5f4d70a41ce8fd7659 AS base
 
 WORKDIR /node
@@ -29,6 +32,9 @@ RUN npm prune --omit=dev
 FROM base AS build
 
 WORKDIR /app
+
+ARG VITE_CLERK_PUBLISHABLE_KEY
+ENV VITE_CLERK_PUBLISHABLE_KEY=$VITE_CLERK_PUBLISHABLE_KEY
 
 COPY --from=deps /app/node_modules /app/node_modules
 
