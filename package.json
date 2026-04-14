@@ -38,7 +38,7 @@
     "@prisma/client": "6.19.3",
     "@rvf/react": "6.3.0",
     "@rvf/zod": "6.0.3",
-    "@tanstack/react-query": "5.97.0",
+    "@tanstack/react-query": "5.99.0",
     "@trpc/client": "11.16.0",
     "@trpc/server": "11.16.0",
     "@trpc/tanstack-react-query": "11.16.0",
