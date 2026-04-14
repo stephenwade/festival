@@ -27,7 +27,7 @@ const ffmpegProgressSchema = z.preprocess(
         .trim()
         .split('\n')
         .map((x) => x.split('=')),
-    ),
+    ) as Record<string, string>,
   z.object({
     total_size: integerString,
     out_time_us: integerString,

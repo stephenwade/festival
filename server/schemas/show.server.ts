@@ -15,7 +15,7 @@ export function makeServerValidator({
       },
       {
         path: ['slug'],
-        message: 'A show already exists with that URL.',
+        error: 'A show already exists with that URL.',
       },
     ),
   );

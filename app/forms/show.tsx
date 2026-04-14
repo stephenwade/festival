@@ -1,4 +1,5 @@
 import type { Show } from '@prisma/client';
+import { withStandardSchema } from '@rvf/core';
 import type { FieldErrors } from '@rvf/react';
 import { FormProvider, useField, useFieldArray, useForm } from '@rvf/react';
 import { useMutation } from '@tanstack/react-query';
@@ -120,14 +121,8 @@ const ShowForm: FC<ShowFormProps> = ({
     [incUploading, decUploading],
   );
 
-  const form = useForm<
-    z.input<typeof showSchema>,
-    z.infer<typeof showSchema>,
-    { id: string },
-    z.infer<typeof showSchema>,
-    z.infer<typeof showSchema>
-  >({
-    schema: showSchema,
+  const form = useForm({
+    validator: withStandardSchema(showSchema),
     defaultValues,
     serverValidationErrors,
     onBeforeSubmit: () => {

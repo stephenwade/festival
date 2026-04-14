@@ -10,7 +10,7 @@ import { numericString } from './zod-number-schemas.ts';
  * Tested on FFmpeg 5.1.3.
  */
 const ffprobeOutputSchema = z.preprocess(
-  (str) => JSON.parse(z.string().parse(str)),
+  (str) => JSON.parse(z.string().parse(str)) as unknown,
   z.object({
     streams: z.array(
       z.object({
