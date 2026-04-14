@@ -22,11 +22,6 @@
       "automerge": true
     },
     {
-      "matchUpdateTypes": ["minor"],
-      "matchPackageNames": ["@remix-run/*"],
-      "automerge": false
-    },
-    {
       "description": "Schedule aws-sdk updates on Tuesday mornings",
       "matchPackageNames": ["@aws-sdk/*"],
       "schedule": ["* 0-3 * * 1"]
