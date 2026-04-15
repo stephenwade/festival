@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
 import { Temporal } from 'temporal-polyfill';
 
-import { useOrigin } from '../hooks/useOrigin';
 import { useTRPC } from '../trpc';
 
 const ViewShow: FC = () => {
@@ -14,8 +13,6 @@ const ViewShow: FC = () => {
   const { data: show } = useSuspenseQuery(
     trpc.admin.getShow.queryOptions({ id }),
   );
-
-  const origin = useOrigin();
 
   return (
     <>
@@ -30,7 +27,7 @@ const ViewShow: FC = () => {
         <strong>Name:</strong> {show.name}
       </p>
       <p>
-        <strong>URL:</strong> {origin}/{show.slug}
+        <strong>URL:</strong> {globalThis.location.origin}/{show.slug}
       </p>
       <p>
         <strong>Description:</strong>{' '}

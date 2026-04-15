@@ -18,7 +18,6 @@ import { Input } from '../components/admin/Input';
 import { InputTimeZone } from '../components/admin/InputTimeZone';
 import { AudioFileUpload } from '../components/admin/upload/AudioFileUpload';
 import { FileUpload } from '../components/admin/upload/FileUpload';
-import { useOrigin } from '../hooks/useOrigin';
 import { useTRPC } from '../trpc';
 
 interface SetFormProps {
@@ -89,7 +88,6 @@ const ShowForm: FC<ShowFormProps> = ({
   cancelLinkTo,
   showId,
 }) => {
-  const origin = useOrigin();
   const navigate = useNavigate();
   const trpc = useTRPC();
 
@@ -164,7 +162,11 @@ const ShowForm: FC<ShowFormProps> = ({
       <form {...form.getFormProps()}>
         {showId ? <input type="hidden" name="id" value={showId} /> : null}
         <Input label="Name" name="name" />
-        <Input label="URL" prefix={`${origin ?? ''}/`} name="slug" />
+        <Input
+          label="URL"
+          prefix={`${globalThis.location.origin}/`}
+          name="slug"
+        />
         <Input label="Description" name="description" />
         <Input
           label="Start date"
