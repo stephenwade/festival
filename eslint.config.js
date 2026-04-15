@@ -140,6 +140,10 @@ export default defineConfig(
       'unicorn/switch-case-braces': 'off',
 
       'react/jsx-no-leaked-render': ['warn', { validStrategies: ['ternary'] }],
+
+      // todo(react-19): investigate React Compiler
+      'react-hooks/preserve-manual-memoization': 'off',
+      'react-hooks/refs': 'off',
     },
   },
   {
