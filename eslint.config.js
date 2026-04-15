@@ -24,7 +24,7 @@ export default defineConfig(
   js.configs.recommended,
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
-  reactHooks.configs['recommended-latest'],
+  reactHooks.configs.flat.recommended,
   jsxA11y.flatConfigs.recommended,
   playwright.configs['flat/recommended'],
 
