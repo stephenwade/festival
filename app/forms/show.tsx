@@ -1,3 +1,4 @@
+import { useCounter } from '@mantine/hooks';
 import type { Show } from '@prisma/client';
 import { withStandardSchema } from '@rvf/core';
 import type { FieldErrors } from '@rvf/react';
@@ -8,7 +9,6 @@ import type { FC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Temporal } from 'temporal-polyfill';
-import { useCounter } from 'usehooks-ts';
 import type { z } from 'zod';
 
 import type { AppRouter } from '../../server/routers/index';
@@ -98,11 +98,8 @@ const ShowForm: FC<ShowFormProps> = ({
   const savePending = createShow.isPending || updateShow.isPending;
   const deletePending = deleteShow.isPending;
 
-  const {
-    count: countUploading,
-    increment: incUploading,
-    decrement: decUploading,
-  } = useCounter();
+  const [countUploading, { increment: incUploading, decrement: decUploading }] =
+    useCounter();
 
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const [isUploadingBackground, setIsUploadingBackground] = useState(false);

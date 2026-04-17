@@ -1,7 +1,7 @@
+import { useClickOutside } from '@mantine/hooks';
 import type { FC } from 'react';
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useOnClickOutside } from 'usehooks-ts';
 
 import { useVolume } from '../../hooks/useVolume';
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
@@ -20,9 +20,7 @@ export const VolumeFab: FC = memo(function VolumeFab() {
     setOpened(false);
   }, []);
 
-  const buttonRef = useRef<HTMLDivElement>(null);
-
-  useOnClickOutside(buttonRef, close);
+  const buttonRef = useClickOutside<HTMLDivElement>(close);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {

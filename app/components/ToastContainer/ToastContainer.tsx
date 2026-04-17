@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import type { CloseButtonProps } from 'react-toastify';
 import { cssTransition, ToastContainer as Container } from 'react-toastify';
@@ -6,7 +6,7 @@ import reactToastifyCssHref from 'react-toastify/dist/ReactToastify.css?url';
 
 import toastCssHref from './toast.css?url';
 
-const ToastClose: FC<CloseButtonProps> = ({ type, closeToast }) => {
+const ToastClose = ({ type, closeToast }: CloseButtonProps): ReactNode => {
   return (
     <>
       <button
