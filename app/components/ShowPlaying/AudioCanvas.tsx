@@ -1,6 +1,6 @@
+import { useMediaQuery, useViewportSize } from '@mantine/hooks';
 import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useMediaQuery, useWindowSize } from 'usehooks-ts';
 
 interface AudioCanvasProps {
   currentTime: number;
@@ -29,9 +29,9 @@ export const AudioCanvas: FC<AudioCanvasProps> = ({
 
   const renderedAt = performance.now();
 
-  const animationRequestIdRef = useRef<number>();
+  const animationRequestIdRef = useRef<number>(undefined);
 
-  const { width, height } = useWindowSize();
+  const { width, height } = useViewportSize();
 
   useEffect(() => {
     const canvas = canvasRef.current;
