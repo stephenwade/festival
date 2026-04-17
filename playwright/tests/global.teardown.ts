@@ -1,3 +1,5 @@
+/* eslint-disable playwright/expect-expect */
+
 import { test as teardown } from '@playwright/test';
 
 import { deleteShow } from '../helpers/show';
