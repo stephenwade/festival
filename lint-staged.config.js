@@ -1,6 +1,4 @@
-/**
- * @type {import('lint-staged').Configuration}
- */
+/** @type {import('lint-staged').Configuration} */
 export default {
   Dockerfile: () => 'docker build --check .',
   '*.css': 'stylelint --fix',
