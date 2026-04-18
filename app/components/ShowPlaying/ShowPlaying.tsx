@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-toastify';
 
 import type { ShowInfo } from '../../../server/types/ShowInfo';
@@ -61,9 +60,7 @@ export const ShowPlaying: FC<ShowPlayingProps> = ({
 
   return (
     <>
-      <Helmet>
-        <link rel="stylesheet" href={showPlayingCssHref} />
-      </Helmet>
+      <link rel="stylesheet" precedence="any" href={showPlayingCssHref} />
       <div className="playing-container full-page">
         {showInfo.currentSet && playing ? (
           <AudioCanvas

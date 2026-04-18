@@ -11,6 +11,7 @@ const ShowsIndex: FC = () => {
 
   return (
     <>
+      <title>Shows | Festival admin</title>
       {shows.length === 0 ? (
         <p>
           <em>No shows yet</em>

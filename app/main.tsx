@@ -1,7 +1,6 @@
 import { ClerkProvider } from '@clerk/react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { HelmetProvider } from 'react-helmet-async';
 
 import { AppRouter } from './router';
 import { TrpcProvider } from './trpc';
@@ -23,9 +22,7 @@ createRoot(document.querySelector('#root')!).render(
       afterSignOutUrl="/admin"
     >
       <TrpcProvider>
-        <HelmetProvider>
-          <AppRouter />
-        </HelmetProvider>
+        <AppRouter />
       </TrpcProvider>
     </ClerkProvider>
   </StrictMode>,

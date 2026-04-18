@@ -1,14 +1,11 @@
 import type { FC } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 import { NewShowForm } from '../forms/show';
 
 const NewShow: FC = () => {
   return (
     <>
-      <Helmet>
-        <title>New show | Festival admin</title>
-      </Helmet>
+      <title>New show | Festival admin</title>
       <h3>New show</h3>
       <NewShowForm />
     </>
