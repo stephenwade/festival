@@ -1,6 +1,5 @@
 import { useQueries } from '@tanstack/react-query';
 import type { FC } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
 import { AudioController } from '../components/AudioController';
@@ -40,13 +39,11 @@ const Show: FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{showData.name} | Festival</title>
-        <meta name="description" content={showData.description} />
-        <link rel="stylesheet" href={elevationCssHref} />
-        <link rel="stylesheet" href={showCssHref} />
-        {showStyles ? <style>{showStyles}</style> : null}
-      </Helmet>
+      <title>{showData.name} | Festival</title>
+      <meta name="description" content={showData.description} />
+      <link rel="stylesheet" precedence="any" href={elevationCssHref} />
+      <link rel="stylesheet" precedence="any" href={showCssHref} />
+      {showStyles ? <style>{showStyles}</style> : null}
       <AudioController
         targetShowInfo={targetShowInfo}
         onLoadedMetadata={onLoadedMetadata}

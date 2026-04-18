@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 import showIntroCssHref from '../../styles/show-intro.css?url';
 
@@ -11,9 +10,7 @@ interface ShowIntroProps {
 export const ShowIntro: FC<ShowIntroProps> = ({ logoUrl, onListenClicked }) => {
   return (
     <>
-      <Helmet>
-        <link rel="stylesheet" href={showIntroCssHref} />
-      </Helmet>
+      <link rel="stylesheet" precedence="any" href={showIntroCssHref} />
       <div className="intro-container">
         <a
           className="logo-link"

@@ -1,7 +1,6 @@
 import { useClickOutside } from '@mantine/hooks';
 import type { FC } from 'react';
 import { memo, useCallback, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 import { useVolume } from '../../hooks/useVolume';
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
@@ -81,9 +80,7 @@ export const VolumeFab: FC = memo(function VolumeFab() {
 
   return (
     <>
-      <Helmet>
-        <link rel="stylesheet" href={volumeFabCssHref} />
-      </Helmet>
+      <link rel="stylesheet" precedence="any" href={volumeFabCssHref} />
       <div ref={buttonRef} className="volume-fab-container">
         <button
           className={`elevation-transition ${

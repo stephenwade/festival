@@ -1,5 +1,4 @@
 import type { FC, ReactNode } from 'react';
-import { Helmet } from 'react-helmet-async';
 import type { CloseButtonProps } from 'react-toastify';
 import { cssTransition, ToastContainer as Container } from 'react-toastify';
 import reactToastifyCssHref from 'react-toastify/dist/ReactToastify.css?url';
@@ -23,10 +22,8 @@ const ToastClose = ({ type, closeToast }: CloseButtonProps): ReactNode => {
 
 export const ToastContainer: FC = () => (
   <>
-    <Helmet>
-      <link rel="stylesheet" href={reactToastifyCssHref} />
-      <link rel="stylesheet" href={toastCssHref} />
-    </Helmet>
+    <link rel="stylesheet" precedence="any" href={reactToastifyCssHref} />
+    <link rel="stylesheet" precedence="any" href={toastCssHref} />
     <Container
       autoClose={false}
       closeButton={ToastClose}

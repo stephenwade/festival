@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-toastify';
 
 import showEndedCssHref from '../../styles/show-ended.css?url';
@@ -17,9 +16,7 @@ export const ShowEnded: FC<ShowEndedProps> = ({ logoUrl }) => {
 
   return (
     <>
-      <Helmet>
-        <link rel="stylesheet" href={showEndedCssHref} />
-      </Helmet>
+      <link rel="stylesheet" precedence="any" href={showEndedCssHref} />
       <div className="ended-container full-page">
         <a
           className="logo-link"

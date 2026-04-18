@@ -1,6 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
 import { Temporal } from 'temporal-polyfill';
 
@@ -16,9 +15,7 @@ const ViewShow: FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{show.name} | Festival admin</title>
-      </Helmet>
+      <title>{show.name} | Festival admin</title>
       <p>
         <Link to="/admin/shows">Back to all shows</Link> -{' '}
         <Link to={`/admin/shows/${show.id}/edit`}>Edit</Link>

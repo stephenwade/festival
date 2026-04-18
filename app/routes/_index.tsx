@@ -1,6 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import type { FC } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Navigate } from 'react-router-dom';
 
 import indexCssHref from '../styles/index.css?url';
@@ -20,10 +19,9 @@ const Index: FC = () => {
 
   return (
     <>
-      <Helmet>
-        <link rel="stylesheet" href={showCssHref} />
-        <link rel="stylesheet" href={indexCssHref} />
-      </Helmet>
+      <title>Festival</title>
+      <link rel="stylesheet" precedence="any" href={showCssHref} />
+      <link rel="stylesheet" precedence="any" href={indexCssHref} />
       <div className="index-container full-page">
         <img className="logo" src="/images/festival.svg" alt="FESTIVAL" />
         <div className="attribution">
