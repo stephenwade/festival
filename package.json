@@ -99,11 +99,5 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.58.2",
     "vite": "8.0.8"
-  },
-  "lint-staged": {
-    "*.css": "stylelint --fix",
-    "*.prisma": "prisma format --schema",
-    "*.svg": "svgo",
-    "*": "prettier --ignore-unknown --write --ignore-path .gitignore"
   }
 }
