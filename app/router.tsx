@@ -48,26 +48,15 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Index /> },
       {
-        path: 'admin/sign-in/*',
-        element: <Admin />,
-        children: [{ path: '*', element: <SignInRoute /> }],
-      },
-      {
-        path: 'admin/sign-up/*',
-        element: <Admin />,
-        children: [{ path: '*', element: <SignUpRoute /> }],
-      },
-      {
-        path: 'admin/user-on-hold',
-        element: <Admin />,
-        children: [{ index: true, element: <UserOnHold /> }],
-      },
-      {
         path: 'admin',
-        element: <ProtectedAdminRoute />,
+        element: <Admin />,
         children: [
+          { path: 'sign-in/*', element: <SignInRoute /> },
+          { path: 'sign-up/*', element: <SignUpRoute /> },
+          { path: 'user-on-hold', element: <UserOnHold /> },
           {
-            element: <Admin />,
+            path: '*',
+            element: <ProtectedAdminRoute />,
             children: [
               { index: true, element: <Navigate replace to="/admin/shows" /> },
               {
