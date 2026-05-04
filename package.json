@@ -45,7 +45,7 @@
     "@trpc/tanstack-react-query": "11.17.0",
     "@types/express": "5.0.6",
     "express": "5.2.1",
-    "nanoid": "5.1.10",
+    "nanoid": "5.1.11",
     "node-cache": "5.1.2",
     "react": "19.2.5",
     "react-dom": "19.2.5",
