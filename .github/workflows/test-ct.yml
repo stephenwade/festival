@@ -19,7 +19,7 @@ jobs:
     env:
       shardTotal: 3
     # runs-on: ${{ matrix.os }}
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       # https://github.com/actions/runner-images/issues/9330
       - name: Allow microphone access to all apps (macOS)
