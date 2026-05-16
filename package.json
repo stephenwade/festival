@@ -60,7 +60,7 @@
     "zod-form-data": "3.0.1"
   },
   "devDependencies": {
-    "@eslint/compat": "2.0.5",
+    "@eslint/compat": "2.1.0",
     "@eslint/js": "9.39.4",
     "@playwright/experimental-ct-core": "1.60.0",
     "@playwright/experimental-ct-react": "1.60.0",
