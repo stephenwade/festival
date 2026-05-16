@@ -1,6 +1,6 @@
 # check=skip=SecretsUsedInArgOrEnv
 
-FROM ubuntu:jammy@sha256:962f6cadeae0ea6284001009daa4cc9a8c37e75d1f5191cf0eb83fe565b63dd7 AS base
+FROM ubuntu:jammy@sha256:13861e4d4047fbbe1fc1737d690dffe8d31c4524c8f203beb0c9bb1ddda35d3c AS base
 
 WORKDIR /node
 
