@@ -78,7 +78,7 @@ export function SharedTrpcProvider({
   );
 }
 
-export const trpcClient = createTRPCClient<AppRouter>({
+const trpcClient = createTRPCClient<AppRouter>({
   links: [
     splitLink({
       condition: (op) => op.type === 'subscription',
