@@ -1,10 +1,8 @@
 import { expect, test } from '@playwright/experimental-ct-react';
 import { Temporal } from 'temporal-polyfill';
 
-import { initialAudioStatus } from '../../../app/components/AudioController';
-import type { ShowPlayingProps } from '../../../app/components/ShowPlaying';
-import { ShowPlaying } from '../../../app/components/ShowPlaying';
 import type { ShowInfo } from '../../../server/types/ShowInfo';
+import { ShowPlayingTest } from './ShowPlayingTest';
 
 function makeShowInfoWaitingUntilStart(secondsUntilSet: number) {
   return {
@@ -36,37 +34,24 @@ function makeShowInfoPlaying(currentTime: number) {
   } satisfies ShowInfo;
 }
 
-function showPlayingTemplate(
-  props: Partial<ShowPlayingProps> & Pick<ShowPlayingProps, 'showInfo'>,
-) {
-  return (
-    <ShowPlaying
-      audioStatus={initialAudioStatus}
-      audioError={false}
-      getAudioVisualizerData={null}
-      {...props}
-    />
-  );
-}
-
 test.describe('while waiting for start', () => {
   const showInfo = makeShowInfoWaitingUntilStart(10);
 
   test('includes the words "NEXT UP"', async ({ mount }) => {
-    const component = await mount(showPlayingTemplate({ showInfo }));
+    const component = await mount(<ShowPlayingTest showInfo={showInfo} />);
 
     await expect(component).toContainText('NEXT UP');
   });
 
   test('includes the artist name', async ({ mount }) => {
-    const component = await mount(showPlayingTemplate({ showInfo }));
+    const component = await mount(<ShowPlayingTest showInfo={showInfo} />);
 
     await expect(component).toContainText('Fulton');
   });
 
   test('includes minutes and seconds', async ({ mount }) => {
     const component = await mount(
-      showPlayingTemplate({ showInfo: makeShowInfoWaitingUntilStart(165) }),
+      <ShowPlayingTest showInfo={makeShowInfoWaitingUntilStart(165)} />,
     );
 
     await expect(component).toContainText('2:45');
@@ -77,9 +62,7 @@ test.describe('while waiting for start', () => {
     mount,
   }) => {
     const component = await mount(
-      showPlayingTemplate({
-        showInfo: makeShowInfoWaitingUntilStart(165 + 3600),
-      }),
+      <ShowPlayingTest showInfo={makeShowInfoWaitingUntilStart(165 + 3600)} />,
     );
 
     await expect(component).toContainText('1:02:45');
@@ -91,20 +74,20 @@ test.describe('while playing', () => {
   const showInfo = makeShowInfoPlaying(15);
 
   test('does not include the words "NEXT UP"', async ({ mount }) => {
-    const component = await mount(showPlayingTemplate({ showInfo }));
+    const component = await mount(<ShowPlayingTest showInfo={showInfo} />);
 
     await expect(component).not.toContainText('NEXT UP');
   });
 
   test('includes the artist name', async ({ mount }) => {
-    const component = await mount(showPlayingTemplate({ showInfo }));
+    const component = await mount(<ShowPlayingTest showInfo={showInfo} />);
 
     await expect(component).toContainText('Dana');
   });
 
   test('includes minutes and seconds', async ({ mount }) => {
     const component = await mount(
-      showPlayingTemplate({ showInfo: makeShowInfoPlaying(295) }),
+      <ShowPlayingTest showInfo={makeShowInfoPlaying(295)} />,
     );
 
     await expect(component).toContainText('4:55');
@@ -115,9 +98,7 @@ test.describe('while playing', () => {
     mount,
   }) => {
     const component = await mount(
-      showPlayingTemplate({
-        showInfo: makeShowInfoPlaying(295 + 3600),
-      }),
+      <ShowPlayingTest showInfo={makeShowInfoPlaying(295 + 3600)} />,
     );
 
     await expect(component).toContainText('1:04:55');
@@ -126,7 +107,7 @@ test.describe('while playing', () => {
 
   test('includes a canvas', async ({ mount }) => {
     const component = await mount(
-      showPlayingTemplate({ showInfo: makeShowInfoPlaying(295) }),
+      <ShowPlayingTest showInfo={makeShowInfoPlaying(295)} />,
     );
 
     await expect(component.locator('canvas')).toBeVisible();

@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 
 import type { ShowInfo } from '../../../server/types/ShowInfo';
-import type { AudioStatus } from '../AudioController';
+import type { AudioStatus } from '../../playback/AudioManager';
 import { Spinner } from '../Spinner';
 
 interface CurrentTimeProps {

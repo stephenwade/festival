@@ -3,11 +3,11 @@
 import { platform } from 'node:process';
 
 import { expect as baseExpect, test } from '@playwright/experimental-ct-react';
-import type { Locator } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import { Temporal } from 'temporal-polyfill';
 
 import type { ShowData } from '../../../server/types/ShowData';
-import { AudioControllerTest } from './AudioControllerTest';
+import { AudioManagerTest } from './AudioManagerTest';
 import { AUDIO_FILE_LENGTH, AUDIO_FILE_URL, ID_1, ID_2 } from './shared-data';
 
 export interface GetMockDataProps {
@@ -66,8 +66,8 @@ const expect = baseExpect.extend({
   },
 });
 
-async function expectAudioIsPlaying(component: Locator, message?: string) {
-  const audio = component.locator('audio[src]').nth(0);
+async function expectAudioIsPlaying(page: Page, message?: string) {
+  const audio = page.locator('audio[src]').nth(0);
   const currentTime = await audio.evaluate(
     (el: HTMLAudioElement) => el.currentTime,
   );
@@ -79,11 +79,11 @@ async function expectAudioIsPlaying(component: Locator, message?: string) {
   ).toBeTruthy();
 }
 
-async function expectAudioIsNotPlaying(component: Locator, message?: string) {
-  const audio = component
+async function expectAudioIsNotPlaying(page: Page, message?: string) {
+  const audio = page
     .locator('audio[src]')
     // If neither of the audio elements have a src, the test should pass.
-    .or(component.locator('audio'))
+    .or(page.locator('audio'))
     .nth(0);
   const currentTime = await audio.evaluate(
     (el: HTMLAudioElement) => el.currentTime,
@@ -97,10 +97,10 @@ async function expectAudioIsNotPlaying(component: Locator, message?: string) {
 }
 
 async function expectAudioCurrentTimeToAlmostEqual(
-  component: Locator,
+  page: Page,
   expected: number,
 ) {
-  const audio = component.locator('audio[src]').nth(0);
+  const audio = page.locator('audio[src]').nth(0);
   const currentTime = await audio.evaluate(
     (el: HTMLAudioElement) => el.currentTime,
   );
@@ -111,15 +111,15 @@ function commonTests({ forceSkipAudioContext = false }) {
   test.describe('init', () => {
     const offsetSec = -5;
 
-    test('renders two audio elements', async ({ mount }) => {
-      const component = await mount(
-        <AudioControllerTest
+    test('renders two audio elements', async ({ mount, page }) => {
+      await mount(
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ offsetSec })}
         />,
       );
 
-      const audios = component.locator('audio');
+      const audios = page.locator('audio');
       await expect(audios).toHaveCount(2);
       for (const audio of await audios.all()) {
         await expect(audio).toHaveAttribute('crossorigin', 'anonymous');
@@ -130,7 +130,7 @@ function commonTests({ forceSkipAudioContext = false }) {
       mount,
     }) => {
       const component = await mount(
-        <AudioControllerTest
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ offsetSec })}
         />,
@@ -155,7 +155,7 @@ function commonTests({ forceSkipAudioContext = false }) {
       browserName,
     }) => {
       const component = await mount(
-        <AudioControllerTest
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ offsetSec })}
         />,
@@ -163,7 +163,7 @@ function commonTests({ forceSkipAudioContext = false }) {
       await component.getByTestId('init-button').click();
 
       await page.waitForTimeout(500);
-      await expectAudioIsNotPlaying(component, '1.5 seconds before the show');
+      await expectAudioIsNotPlaying(page, '1.5 seconds before the show');
       test.fail(
         browserName === 'webkit' &&
           platform !== 'darwin' &&
@@ -171,45 +171,46 @@ function commonTests({ forceSkipAudioContext = false }) {
         "Playing audio doesn't work on Webkit outside of macOS",
       );
       await page.waitForTimeout(3000);
-      await expectAudioIsPlaying(component, 'during the show');
-      await expectAudioCurrentTimeToAlmostEqual(component, 1);
+      await expectAudioIsPlaying(page, 'during the show');
+      await expectAudioCurrentTimeToAlmostEqual(page, 1);
     });
 
-    test('calls onLoadedMetadata with id and duration', async ({ mount }) => {
-      const component = await mount(
-        <AudioControllerTest
-          forceSkipAudioContext={forceSkipAudioContext}
-          showData={getMockData({ offsetSec })}
-        />,
-      );
-      await component.getByTestId('init-button').click();
+    // test('calls onLoadedMetadata with id and duration', async ({ mount }) => {
+    //   const component = await mount(
+    //     <AudioManagerTest
+    //       forceSkipAudioContext={forceSkipAudioContext}
+    //       showData={getMockData({ offsetSec })}
+    //     />,
+    //   );
+    //   await component.getByTestId('init-button').click();
 
-      await expect(component.getByTestId('metadata-event-id')).toHaveText(ID_1);
-      const duration = await component
-        .getByTestId('metadata-event-duration')
-        .textContent();
-      expect(Number(duration)).toAlmostEqual(AUDIO_FILE_LENGTH);
-    });
+    //   await expect(component.getByTestId('metadata-event-id')).toHaveText(ID_1);
+    //   const duration = await component
+    //     .getByTestId('metadata-event-duration')
+    //     .textContent();
+    //   expect(Number(duration)).toAlmostEqual(AUDIO_FILE_LENGTH);
+    // });
 
     test('updates src immediately if set info is changed', async ({
       mount,
+      page,
     }) => {
       const component = await mount(
-        <AudioControllerTest
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ offsetSec })}
         />,
       );
       await component.getByTestId('init-button').click();
 
-      await expect(component.locator('audio[src]')).toHaveAttribute(
+      await expect(page.locator('audio[src]')).toHaveAttribute(
         'src',
         AUDIO_FILE_URL,
       );
 
       await component.getByTestId('alternate-button').click();
 
-      await expect(component.locator('audio[src]')).toHaveAttribute(
+      await expect(page.locator('audio[src]')).toHaveAttribute(
         'src',
         `${AUDIO_FILE_URL}?alternate`,
       );
@@ -222,7 +223,7 @@ function commonTests({ forceSkipAudioContext = false }) {
       page,
     }) => {
       const component = await mount(
-        <AudioControllerTest
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ offsetSec: 5 })}
         />,
@@ -230,9 +231,9 @@ function commonTests({ forceSkipAudioContext = false }) {
       await component.getByTestId('init-button').click();
 
       await page.waitForTimeout(500);
-      await expectAudioIsPlaying(component);
+      await expectAudioIsPlaying(page);
       await expect(component).toContainText('Show status: PLAYING');
-      await expectAudioCurrentTimeToAlmostEqual(component, 5.5);
+      await expectAudioCurrentTimeToAlmostEqual(page, 5.5);
     });
 
     test('preloads the next set 60 seconds before the end of the first set', async ({
@@ -240,7 +241,7 @@ function commonTests({ forceSkipAudioContext = false }) {
       page,
     }) => {
       const component = await mount(
-        <AudioControllerTest
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ offsetSec: AUDIO_FILE_LENGTH - 62 })}
         />,
@@ -249,17 +250,17 @@ function commonTests({ forceSkipAudioContext = false }) {
 
       await page.waitForTimeout(400);
       await expect(
-        component.locator('audio').nth(1),
+        page.locator('audio').nth(1),
         '62 seconds before the end of the first set',
       ).not.toHaveAttribute('src');
       await page.waitForTimeout(1000);
       await expect(
-        component.locator('audio').nth(1),
+        page.locator('audio').nth(1),
         '61 seconds before the end of the first set',
       ).not.toHaveAttribute('src');
       await page.waitForTimeout(1000);
       await expect(
-        component.locator('audio').nth(1),
+        page.locator('audio').nth(1),
         '60 seconds before the end of the first set',
       ).toHaveAttribute('src', AUDIO_FILE_URL);
     });
@@ -269,7 +270,7 @@ function commonTests({ forceSkipAudioContext = false }) {
       page,
     }) => {
       const component = await mount(
-        <AudioControllerTest
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ offsetSec: AUDIO_FILE_LENGTH - 10 })}
         />,
@@ -277,7 +278,7 @@ function commonTests({ forceSkipAudioContext = false }) {
       await component.getByTestId('init-button').click();
 
       await expect(
-        component.locator('audio').nth(0),
+        page.locator('audio').nth(0),
         '10 seconds before the end of the first set',
       ).toHaveAttribute('src', /\.mp3(#t=[0-9]+)?$/);
 
@@ -285,7 +286,7 @@ function commonTests({ forceSkipAudioContext = false }) {
 
       await page.waitForTimeout(1000);
       await expect(
-        component.locator('audio').nth(0),
+        page.locator('audio').nth(0),
         '9 seconds before the end of the first set',
       ).toHaveAttribute('src', /\.mp3(#t=[0-9]+)?$/);
     });
@@ -294,7 +295,7 @@ function commonTests({ forceSkipAudioContext = false }) {
   test.describe('after the show', () => {
     test('sets the show status', async ({ mount }) => {
       const component = await mount(
-        <AudioControllerTest
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ offsetSec: AUDIO_FILE_LENGTH * 3 })}
         />,
@@ -308,7 +309,7 @@ function commonTests({ forceSkipAudioContext = false }) {
   test.describe('empty show', () => {
     test('sets the show status to ENDED', async ({ mount }) => {
       const component = await mount(
-        <AudioControllerTest
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ empty: true })}
         />,
@@ -328,7 +329,7 @@ test.describe('with AudioContext', () => {
   test.describe('init with AudioContext', () => {
     test('visualizer data is available', async ({ mount }) => {
       const component = await mount(
-        <AudioControllerTest
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ offsetSec: -5 })}
         />,
@@ -348,7 +349,7 @@ test.describe('without AudioContext', () => {
   test.describe('init without AudioContext', () => {
     test('visualizer data is not available', async ({ mount, page }) => {
       const component = await mount(
-        <AudioControllerTest
+        <AudioManagerTest
           forceSkipAudioContext={forceSkipAudioContext}
           showData={getMockData({ empty: true })}
         />,

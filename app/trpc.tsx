@@ -78,23 +78,22 @@ export function SharedTrpcProvider({
   );
 }
 
+export const trpcClient = createTRPCClient<AppRouter>({
+  links: [
+    splitLink({
+      condition: (op) => op.type === 'subscription',
+      true: httpSubscriptionLink({ url: '/trpc' }),
+      false: splitLink({
+        condition: (op) => isNonJsonSerializable(op.input),
+        true: httpLink({ url: '/trpc' }),
+        false: httpBatchStreamLink({ url: '/trpc' }),
+      }),
+    }),
+  ],
+});
+
 export function TrpcProvider({ children }: PropsWithChildren) {
   const [queryClient] = useState(makeQueryClient);
-  const [trpcClient] = useState(() =>
-    createTRPCClient<AppRouter>({
-      links: [
-        splitLink({
-          condition: (op) => op.type === 'subscription',
-          true: httpSubscriptionLink({ url: '/trpc' }),
-          false: splitLink({
-            condition: (op) => isNonJsonSerializable(op.input),
-            true: httpLink({ url: '/trpc' }),
-            false: httpBatchStreamLink({ url: '/trpc' }),
-          }),
-        }),
-      ],
-    }),
-  );
 
   return (
     <SharedTrpcProvider queryClient={queryClient} trpcClient={trpcClient}>

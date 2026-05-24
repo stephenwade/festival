@@ -1,26 +1,22 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
-import { VolumeFab } from '../../../app/components/VolumeFab';
+import { ShowPlaying } from '../../../app/components/ShowPlaying';
 import { PlaybackManagerContext } from '../../../app/playback';
 import { mockPlaybackManager } from '../../../app/playback/PlaybackManager';
-import { INITIAL_VOLUME } from './shared-data';
+import type { ShowInfo } from '../../../server/types/ShowInfo';
 
-export function VolumeFabTest() {
-  const [volume, setVolume] = useState(INITIAL_VOLUME);
-
+export function ShowPlayingTest({ showInfo }: { showInfo: ShowInfo }) {
   const mockedContext = useMemo(
     () => ({
       ...mockPlaybackManager,
-      volume,
-      setVolume,
+      showInfo,
     }),
-    [volume],
+    [showInfo],
   );
 
   return (
     <PlaybackManagerContext.Provider value={mockedContext}>
-      <VolumeFab />
-      <p>Volume: {volume}</p>
+      <ShowPlaying />
     </PlaybackManagerContext.Provider>
   );
 }

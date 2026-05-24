@@ -1,20 +1,12 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { type FC, Suspense } from 'react';
 
-import { useShowInfo } from '../../../app/hooks/useShowInfo';
+import { PlaybackProvider, useTargetShowInfo } from '../../../app/playback';
 import { useTRPC } from '../../../app/trpc';
 import { MockedTRPCProvider } from '../trpc';
 
 function ShowInfoDisplay() {
-  const trpc = useTRPC();
-  const { data: showData } = useSuspenseQuery(
-    trpc.show.getShowData.queryOptions({ slug: 'test' }),
-  );
-
-  const { targetShowInfo } = useShowInfo(showData, {
-    ci: true,
-    enableClock: false,
-  });
+  const targetShowInfo = useTargetShowInfo();
 
   const { status, currentSet, nextSet } = targetShowInfo;
 
@@ -56,11 +48,27 @@ function ShowInfoDisplay() {
   );
 }
 
+const ShowInfoLoader: FC = () => {
+  const trpc = useTRPC();
+  const { data: showData } = useSuspenseQuery(
+    trpc.show.getShowData.queryOptions({ slug: 'test' }),
+  );
+
+  return (
+    <PlaybackProvider
+      showData={showData}
+      targetShowParams={{ ci: true, enableClock: false }}
+    >
+      <ShowInfoDisplay />
+    </PlaybackProvider>
+  );
+};
+
 export const ShowInfoTest: FC = () => {
   return (
     <MockedTRPCProvider>
       <Suspense>
-        <ShowInfoDisplay />
+        <ShowInfoLoader />
       </Suspense>
     </MockedTRPCProvider>
   );
