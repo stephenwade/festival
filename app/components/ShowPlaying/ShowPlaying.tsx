@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
@@ -14,7 +13,7 @@ import { VolumeFab } from '../VolumeFab';
 import { AudioCanvas } from './AudioCanvas';
 import { CurrentTime } from './CurrentTime';
 
-export const ShowPlaying: FC = () => {
+export function ShowPlaying() {
   const audioStatus = useAudioStatus();
   const audioError = useAudioError();
   const showInfo = useShowInfo();
@@ -80,4 +79,4 @@ export const ShowPlaying: FC = () => {
       </div>
     </>
   );
-};
+}

@@ -1,5 +1,4 @@
 import { useClickOutside } from '@mantine/hooks';
-import type { FC } from 'react';
 import { memo, useCallback, useEffect, useState } from 'react';
 
 import { useVolume } from '../../playback';
@@ -10,7 +9,7 @@ const INPUT_MIN = 0;
 const INPUT_MAX = 100;
 const INPUT_STEP = 5;
 
-export const VolumeFab: FC = memo(function VolumeFab() {
+export const VolumeFab = memo(function VolumeFab() {
   const { volume, setVolume, toggleMute } = useVolume();
 
   const [opened, setOpened] = useState(false);

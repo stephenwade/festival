@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import { useMemo } from 'react';
 
 import type { ShowInfo } from '../../../server/types/ShowInfo';
@@ -10,10 +9,7 @@ interface CurrentTimeProps {
   audioStatus: AudioStatus;
 }
 
-export const CurrentTime: FC<CurrentTimeProps> = ({
-  showInfo,
-  audioStatus,
-}) => {
+export function CurrentTime({ showInfo, audioStatus }: CurrentTimeProps) {
   const waitingUntilStart = showInfo.status === 'WAITING_UNTIL_START';
   const playing = showInfo.status === 'PLAYING';
   const waitingForNetwork = audioStatus.waiting;
@@ -51,4 +47,4 @@ export const CurrentTime: FC<CurrentTimeProps> = ({
       {showSpinner || !currentTime ? <Spinner /> : currentTime}
     </div>
   );
-};
+}

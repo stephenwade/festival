@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { type FC, Suspense } from 'react';
+import { Suspense } from 'react';
 
 import { PlaybackProvider, useTargetShowInfo } from '../../../app/playback';
 import { useTRPC } from '../../../app/trpc';
@@ -48,7 +48,7 @@ function ShowInfoDisplay() {
   );
 }
 
-const ShowInfoLoader: FC = () => {
+function ShowInfoLoader() {
   const trpc = useTRPC();
   const { data: showData } = useSuspenseQuery(
     trpc.show.getShowData.queryOptions({ slug: 'test' }),
@@ -62,9 +62,9 @@ const ShowInfoLoader: FC = () => {
       <ShowInfoDisplay />
     </PlaybackProvider>
   );
-};
+}
 
-export const ShowInfoTest: FC = () => {
+export function ShowInfoTest() {
   return (
     <MockedTRPCProvider>
       <Suspense>
@@ -72,4 +72,4 @@ export const ShowInfoTest: FC = () => {
       </Suspense>
     </MockedTRPCProvider>
   );
-};
+}

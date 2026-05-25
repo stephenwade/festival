@@ -1,5 +1,4 @@
 import { useMediaQuery, useViewportSize } from '@mantine/hooks';
-import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface AudioCanvasProps {
@@ -12,14 +11,14 @@ interface AudioCanvasProps {
   getAudioVisualizerData: (() => Uint8Array) | undefined;
 }
 
-export const AudioCanvas: FC<AudioCanvasProps> = ({
+export function AudioCanvas({
   currentTime,
   setLength,
   progressLineFrozen,
   forceReduceMotion,
 
   getAudioVisualizerData,
-}) => {
+}: AudioCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const reduceMotion =
@@ -234,7 +233,7 @@ export const AudioCanvas: FC<AudioCanvasProps> = ({
   }, [animate]);
 
   return <canvas ref={canvasRef} className="full-page"></canvas>;
-};
+}
 
 function calcGrow(dataArray: Uint8Array) {
   const average = dataArray.slice(0, 5).reduce((a, b) => a + b) / 5;

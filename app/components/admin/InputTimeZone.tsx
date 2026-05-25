@@ -1,5 +1,4 @@
 import { useField } from '@rvf/react';
-import type { FC } from 'react';
 import { useTimezoneSelect } from 'react-timezone-select';
 
 interface InputTimeZoneProps {
@@ -7,7 +6,7 @@ interface InputTimeZoneProps {
   label: string;
 }
 
-export const InputTimeZone: FC<InputTimeZoneProps> = ({ name, label }) => {
+export function InputTimeZone({ name, label }: InputTimeZoneProps) {
   const field = useField<string>(name);
   const value = field.value();
   const error = field.error();
@@ -42,4 +41,4 @@ export const InputTimeZone: FC<InputTimeZoneProps> = ({ name, label }) => {
       ) : null}
     </div>
   );
-};
+}

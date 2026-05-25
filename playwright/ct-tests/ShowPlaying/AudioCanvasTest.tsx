@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import { useState } from 'react';
 
 import { AudioCanvas } from '../../../app/components/ShowPlaying/AudioCanvas';
@@ -15,7 +14,7 @@ interface TestProps {
   forceReduceMotion: boolean;
 }
 
-export const AudioCanvasTest: FC<TestProps> = ({ forceReduceMotion }) => {
+export function AudioCanvasTest({ forceReduceMotion }: TestProps) {
   const [withAudioData, setWithAudioData] = useState(false);
   const [snapshot1Hash, setSnapshot1Hash] = useState<number | null>(null);
   const [snapshot2Hash, setSnapshot2Hash] = useState<number | null>(null);
@@ -83,4 +82,4 @@ export const AudioCanvasTest: FC<TestProps> = ({ forceReduceMotion }) => {
       />
     </>
   );
-};
+}

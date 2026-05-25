@@ -1,8 +1,6 @@
-import type { FC } from 'react';
-
 import { NewShowForm } from '../forms/show';
 
-const NewShow: FC = () => {
+function NewShow() {
   return (
     <>
       <title>New show | Festival admin</title>
@@ -10,6 +8,6 @@ const NewShow: FC = () => {
       <NewShowForm />
     </>
   );
-};
+}
 
 export default NewShow;

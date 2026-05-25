@@ -1,12 +1,11 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import type { FC } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import indexCssHref from '../styles/index.css?url';
 import showCssHref from '../styles/show.css?url';
 import { useTRPC } from '../trpc';
 
-const Index: FC = () => {
+function Index() {
   const trpc = useTRPC();
 
   const { data: indexShowSlug } = useSuspenseQuery(
@@ -34,6 +33,6 @@ const Index: FC = () => {
       </div>
     </>
   );
-};
+}
 
 export default Index;

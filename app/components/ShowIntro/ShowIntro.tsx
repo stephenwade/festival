@@ -1,5 +1,3 @@
-import type { FC } from 'react';
-
 import { useInitializeAudio } from '../../playback';
 import showIntroCssHref from '../../styles/show-intro.css?url';
 
@@ -7,7 +5,7 @@ interface ShowIntroProps {
   logoUrl: string;
 }
 
-export const ShowIntro: FC<ShowIntroProps> = ({ logoUrl }) => {
+export function ShowIntro({ logoUrl }: ShowIntroProps) {
   const initializeAudio = useInitializeAudio();
 
   return (
@@ -40,4 +38,4 @@ export const ShowIntro: FC<ShowIntroProps> = ({ logoUrl }) => {
       </div>
     </>
   );
-};
+}
