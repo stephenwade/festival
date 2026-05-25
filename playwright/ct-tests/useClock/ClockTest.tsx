@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import { useEffect, useRef } from 'react';
 
 import { useClock } from '../../../app/hooks/useClock';
@@ -11,9 +10,9 @@ function useRenderCount() {
   return count.current;
 }
 
-export const ClockTest: FC = () => {
+export function ClockTest() {
   useClock();
 
   const count = useRenderCount();
   return <div>{count}</div>;
-};
+}

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 
-import type { AudioHTMLAttributes, FC, ReactNode, SyntheticEvent } from 'react';
+import type { AudioHTMLAttributes, ReactNode, SyntheticEvent } from 'react';
 import {
   useCallback,
   useEffect,
@@ -61,12 +61,12 @@ interface AudioControllerProps {
   }) => ReactNode;
 }
 
-export const AudioController: FC<AudioControllerProps> = ({
+export function AudioController({
   targetShowInfo,
   onLoadedMetadata,
   forceSkipAudioContext,
   children,
-}) => {
+}: AudioControllerProps) {
   const { volume } = useVolume();
 
   const [showInfo, setShowInfo] = useState<ShowInfo>(
@@ -519,4 +519,4 @@ export const AudioController: FC<AudioControllerProps> = ({
       <audio ref={audio2Ref} crossOrigin="anonymous" {...audioEvents} />
     </>
   );
-};
+}

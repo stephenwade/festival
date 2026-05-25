@@ -1,6 +1,5 @@
 import { useField } from '@rvf/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import type { FC } from 'react';
 import { useRef, useState } from 'react';
 
 import {
@@ -17,11 +16,11 @@ interface FileUploadProps {
   setIsUploading: (isUploading: boolean) => void;
 }
 
-export const FileUpload: FC<FileUploadProps> = ({
+export function FileUpload({
   name,
   isUploading,
   setIsUploading,
-}) => {
+}: FileUploadProps) {
   const trpc = useTRPC();
 
   const field = useField<string | undefined>(name);
@@ -129,4 +128,4 @@ export const FileUpload: FC<FileUploadProps> = ({
       </p>
     </>
   );
-};
+}

@@ -1,7 +1,6 @@
-import type { FC } from 'react';
 import { useRouteError } from 'react-router-dom';
 
-export const RouteErrorBoundary: FC = () => {
+export function RouteErrorBoundary() {
   const error = useRouteError();
 
   return (
@@ -14,4 +13,4 @@ export const RouteErrorBoundary: FC = () => {
       </p>
     </>
   );
-};
+}

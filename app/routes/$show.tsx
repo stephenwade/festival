@@ -1,5 +1,4 @@
 import { useQueries } from '@tanstack/react-query';
-import type { FC } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { AudioController } from '../components/AudioController';
@@ -11,7 +10,7 @@ import elevationCssHref from '../styles/elevation.css?url';
 import showCssHref from '../styles/show.css?url';
 import { useTRPC } from '../trpc.tsx';
 
-const Show: FC = () => {
+function Show() {
   const show = useParams().show!;
 
   const trpc = useTRPC();
@@ -84,6 +83,6 @@ const Show: FC = () => {
       </AudioController>
     </>
   );
-};
+}
 
 export default Show;

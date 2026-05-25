@@ -1,10 +1,9 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import type { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useTRPC } from '../trpc';
 
-const ShowsIndex: FC = () => {
+function ShowsIndex() {
   const trpc = useTRPC();
 
   const { data: shows } = useSuspenseQuery(trpc.admin.getShows.queryOptions());
@@ -33,6 +32,6 @@ const ShowsIndex: FC = () => {
       </p>
     </>
   );
-};
+}
 
 export default ShowsIndex;

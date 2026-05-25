@@ -1,11 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import type { FC } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Temporal } from 'temporal-polyfill';
 
 import { useTRPC } from '../trpc';
 
-const ViewShow: FC = () => {
+function ViewShow() {
   const trpc = useTRPC();
   const id = useParams().show!;
 
@@ -88,6 +87,6 @@ const ViewShow: FC = () => {
       )}
     </>
   );
-};
+}
 
 export default ViewShow;

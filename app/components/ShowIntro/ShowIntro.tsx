@@ -1,5 +1,3 @@
-import type { FC } from 'react';
-
 import showIntroCssHref from '../../styles/show-intro.css?url';
 
 interface ShowIntroProps {
@@ -7,7 +5,7 @@ interface ShowIntroProps {
   onListenClicked: () => void;
 }
 
-export const ShowIntro: FC<ShowIntroProps> = ({ logoUrl, onListenClicked }) => {
+export function ShowIntro({ logoUrl, onListenClicked }: ShowIntroProps) {
   return (
     <>
       <link rel="stylesheet" precedence="any" href={showIntroCssHref} />
@@ -38,4 +36,4 @@ export const ShowIntro: FC<ShowIntroProps> = ({ logoUrl, onListenClicked }) => {
       </div>
     </>
   );
-};
+}

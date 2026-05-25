@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { type FC, Suspense } from 'react';
+import { Suspense } from 'react';
 
 import { useShowInfo } from '../../../app/hooks/useShowInfo';
 import { useTRPC } from '../../../app/trpc';
@@ -56,7 +56,7 @@ function ShowInfoDisplay() {
   );
 }
 
-export const ShowInfoTest: FC = () => {
+export function ShowInfoTest() {
   return (
     <MockedTRPCProvider>
       <Suspense>
@@ -64,4 +64,4 @@ export const ShowInfoTest: FC = () => {
       </Suspense>
     </MockedTRPCProvider>
   );
-};
+}
