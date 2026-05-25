@@ -175,21 +175,21 @@ function commonTests({ forceSkipAudioContext = false }) {
       await expectAudioCurrentTimeToAlmostEqual(page, 1);
     });
 
-    // test('calls onLoadedMetadata with id and duration', async ({ mount }) => {
-    //   const component = await mount(
-    //     <AudioManagerTest
-    //       forceSkipAudioContext={forceSkipAudioContext}
-    //       showData={getMockData({ offsetSec })}
-    //     />,
-    //   );
-    //   await component.getByTestId('init-button').click();
+    test('calls onLoadedMetadata with id and duration', async ({ mount }) => {
+      const component = await mount(
+        <AudioManagerTest
+          forceSkipAudioContext={forceSkipAudioContext}
+          showData={getMockData({ offsetSec })}
+        />,
+      );
+      await component.getByTestId('init-button').click();
 
-    //   await expect(component.getByTestId('metadata-event-id')).toHaveText(ID_1);
-    //   const duration = await component
-    //     .getByTestId('metadata-event-duration')
-    //     .textContent();
-    //   expect(Number(duration)).toAlmostEqual(AUDIO_FILE_LENGTH);
-    // });
+      await expect(component.getByTestId('metadata-event-id')).toHaveText(ID_1);
+      const duration = await component
+        .getByTestId('metadata-event-duration')
+        .textContent();
+      expect(Number(duration)).toAlmostEqual(AUDIO_FILE_LENGTH);
+    });
 
     test('updates src immediately if set info is changed', async ({
       mount,
