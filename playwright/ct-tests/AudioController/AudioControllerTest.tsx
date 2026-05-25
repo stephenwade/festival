@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import { useMemo, useState } from 'react';
 
 import type { AudioMetadata } from '../../../app/components/AudioController';
@@ -101,10 +100,10 @@ function AudioControllerDisplay({
   );
 }
 
-export const AudioControllerTest: FC<TestProps> = (props) => {
+export function AudioControllerTest(props: TestProps) {
   return (
     <MockedTRPCProvider>
       <AudioControllerDisplay {...props} />
     </MockedTRPCProvider>
   );
-};
+}

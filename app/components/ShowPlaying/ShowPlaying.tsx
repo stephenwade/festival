@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
@@ -18,13 +17,13 @@ export interface ShowPlayingProps {
   getAudioVisualizerData: (() => Uint8Array) | null;
 }
 
-export const ShowPlaying: FC<ShowPlayingProps> = ({
+export function ShowPlaying({
   audioStatus,
   audioError,
   showInfo,
 
   getAudioVisualizerData,
-}) => {
+}: ShowPlayingProps) {
   const waitingUntilStart = showInfo.status === 'WAITING_UNTIL_START';
   const playing = showInfo.status === 'PLAYING';
 
@@ -84,4 +83,4 @@ export const ShowPlaying: FC<ShowPlayingProps> = ({
       </div>
     </>
   );
-};
+}

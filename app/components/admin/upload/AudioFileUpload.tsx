@@ -1,7 +1,6 @@
 import { useField } from '@rvf/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useSubscription } from '@trpc/tanstack-react-query';
-import type { FC } from 'react';
 import { useRef, useState } from 'react';
 
 import {
@@ -38,11 +37,11 @@ interface AudioFileUploadProps {
   setIsUploading: (isUploading: boolean) => void;
 }
 
-export const AudioFileUpload: FC<AudioFileUploadProps> = ({
+export function AudioFileUpload({
   name,
   isUploading,
   setIsUploading,
-}) => {
+}: AudioFileUploadProps) {
   const trpc = useTRPC();
 
   const field = useField<string | undefined>(name);
@@ -177,4 +176,4 @@ export const AudioFileUpload: FC<AudioFileUploadProps> = ({
       </p>
     </>
   );
-};
+}

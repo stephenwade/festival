@@ -5,7 +5,6 @@ import type { FieldErrors } from '@rvf/react';
 import { FormProvider, useField, useFieldArray, useForm } from '@rvf/react';
 import { useMutation } from '@tanstack/react-query';
 import { TRPCClientError } from '@trpc/client';
-import type { FC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Temporal } from 'temporal-polyfill';
@@ -28,7 +27,7 @@ interface SetFormProps {
   onIsUploadingChanged: (isUploading: boolean) => void;
 }
 
-const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
+function SetForm({ name, remove, onIsUploadingChanged }: SetFormProps) {
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
@@ -65,7 +64,7 @@ const SetForm: FC<SetFormProps> = ({ name, remove, onIsUploadingChanged }) => {
       </button>
     </fieldset>
   );
-};
+}
 
 interface ShowFormProps {
   defaultValues: z.infer<typeof showSchema>;
@@ -83,11 +82,7 @@ function getServerValidationErrors(error: unknown): FieldErrors | undefined {
   }
 }
 
-const ShowForm: FC<ShowFormProps> = ({
-  defaultValues,
-  cancelLinkTo,
-  showId,
-}) => {
+function ShowForm({ defaultValues, cancelLinkTo, showId }: ShowFormProps) {
   const navigate = useNavigate();
   const trpc = useTRPC();
 
@@ -241,31 +236,32 @@ const ShowForm: FC<ShowFormProps> = ({
       ) : null}
     </FormProvider>
   );
-};
+}
 
-export const NewShowForm: FC = () => (
-  <ShowForm
-    defaultValues={{
-      name: '',
-      slug: '',
-      sets: [],
-      timeZone: Temporal.Now.timeZoneId(),
-    }}
-    cancelLinkTo="/admin/shows"
-  />
-);
+export function NewShowForm() {
+  return (
+    <ShowForm
+      defaultValues={{
+        name: '',
+        slug: '',
+        sets: [],
+        timeZone: Temporal.Now.timeZoneId(),
+      }}
+      cancelLinkTo="/admin/shows"
+    />
+  );
+}
 
 type EditShowFormProps = {
   showId: Show['id'];
 } & Required<Pick<ShowFormProps, 'defaultValues'>>;
 
-export const EditShowForm: FC<EditShowFormProps> = ({
-  defaultValues,
-  showId,
-}) => (
-  <ShowForm
-    defaultValues={defaultValues}
-    cancelLinkTo={`/admin/shows/${showId}`}
-    showId={showId}
-  />
-);
+export function EditShowForm({ defaultValues, showId }: EditShowFormProps) {
+  return (
+    <ShowForm
+      defaultValues={defaultValues}
+      cancelLinkTo={`/admin/shows/${showId}`}
+      showId={showId}
+    />
+  );
+}

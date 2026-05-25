@@ -1,5 +1,4 @@
 import { useField } from '@rvf/react';
-import type { FC } from 'react';
 
 interface InputProps {
   name: string;
@@ -9,7 +8,7 @@ interface InputProps {
   prefix?: string;
 }
 
-export const Input: FC<InputProps> = ({ name, type, step, label, prefix }) => {
+export function Input({ name, type, step, label, prefix }: InputProps) {
   const field = useField(name);
   const error = field.error();
 
@@ -33,4 +32,4 @@ export const Input: FC<InputProps> = ({ name, type, step, label, prefix }) => {
       ) : null}
     </div>
   );
-};
+}

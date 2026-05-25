@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
@@ -8,7 +7,7 @@ interface ShowEndedProps {
   logoUrl: string;
 }
 
-export const ShowEnded: FC<ShowEndedProps> = ({ logoUrl }) => {
+export function ShowEnded({ logoUrl }: ShowEndedProps) {
   // This will only run once.
   useEffect(() => {
     toast.dismiss();
@@ -37,4 +36,4 @@ export const ShowEnded: FC<ShowEndedProps> = ({ logoUrl }) => {
       </div>
     </>
   );
-};
+}
