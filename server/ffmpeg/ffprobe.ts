@@ -35,7 +35,7 @@ export type FFprobeOutput = z.infer<typeof ffprobeOutputSchema>;
 export function ffprobe(fileName: string) {
   console.log(`Running ffprobe on ${fileName}`);
 
-  const ffprobe = spawn('ffprobe', [
+  const process = spawn('ffprobe', [
     '-loglevel',
     'warning',
     '-print_format',
@@ -47,17 +47,17 @@ export function ffprobe(fileName: string) {
 
   let output = '';
 
-  ffprobe.stdout.on('data', (data: Buffer) => {
+  process.stdout.on('data', (data: Buffer) => {
     output += data.toString();
   });
 
-  ffprobe.stderr.on('data', (data: Buffer) => {
+  process.stderr.on('data', (data: Buffer) => {
     console.warn(`stderr when running ffprobe on ${fileName}:`);
     console.warn(data.toString());
   });
 
   return new Promise<FFprobeOutput>((resolve, reject) => {
-    ffprobe.on('close', (code) => {
+    process.on('close', (code) => {
       if (code === 0) {
         try {
           resolve(ffprobeOutputSchema.parse(output));

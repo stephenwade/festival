@@ -98,8 +98,8 @@ function usePlaybackManagerValue<T, R>(
 
   useEffect(() => {
     const unsubscribe = subscribeGetter(playbackManager).bind(playbackManager)(
-      (value) => {
-        setValueRef.current(refineValue(value));
+      (next) => {
+        setValueRef.current(refineValue(next));
       },
     );
 

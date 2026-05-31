@@ -87,7 +87,7 @@ export const VolumeFab = memo(function VolumeFab() {
           }`}
           aria-label="Volume"
           onClick={() => {
-            setOpened((opened) => !opened);
+            setOpened((opened_) => !opened_);
           }}
         >
           <VolumeIcon />
@@ -109,8 +109,8 @@ export const VolumeFab = memo(function VolumeFab() {
             disabled={!opened}
             onInput={(e) => {
               const input = e.target as HTMLInputElement;
-              const volume = Number(input.value);
-              setVolume(volume);
+              const nextVolume = Number(input.value);
+              setVolume(nextVolume);
             }}
           />
         </div>

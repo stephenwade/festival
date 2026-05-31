@@ -82,7 +82,7 @@ export function AudioFileUpload({
     throw fetchedDataError;
   }
 
-  const file = fileState ?? fetchedData;
+  const fileData = fileState ?? fetchedData;
 
   const [fileName, setFileName] = useState<string>();
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -144,21 +144,21 @@ export function AudioFileUpload({
             Uploading… <progress value={uploadProgress} /> {fileName}
           </>
         ) : fileId ? (
-          file ? (
-            file.conversionStatus === 'DONE' ? (
+          fileData ? (
+            fileData.conversionStatus === 'DONE' ? (
               <>
-                Duration: {file.duration}{' '}
+                Duration: {fileData.duration}{' '}
                 <button type="button" onClick={onRemoveFileClick}>
                   Remove file
                 </button>
               </>
-            ) : file.errorMessage ? (
-              <>Error while converting audio file: {file.errorMessage}</>
+            ) : fileData.errorMessage ? (
+              <>Error while converting audio file: {fileData.errorMessage}</>
             ) : (
               <>
-                {displayConversionStatus(file.conversionStatus)}{' '}
-                {file.conversionProgress === null ? null : (
-                  <progress value={file.conversionProgress} />
+                {displayConversionStatus(fileData.conversionStatus)}{' '}
+                {fileData.conversionProgress === null ? null : (
+                  <progress value={fileData.conversionProgress} />
                 )}
               </>
             )

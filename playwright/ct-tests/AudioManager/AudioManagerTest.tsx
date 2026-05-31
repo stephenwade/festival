@@ -26,8 +26,8 @@ export function AudioManagerTest({
   const [visualizerAvailable, setVisualizerAvailable] = useState(false);
 
   useEffect(() => {
-    const unsubscribeShowInfo = manager.addShowInfoListener((showInfo) => {
-      setShowInfo(showInfo);
+    const unsubscribeShowInfo = manager.addShowInfoListener((nextShowInfo) => {
+      setShowInfo(nextShowInfo);
     });
     const unsubscribeMetadata = manager.addLoadedMetadataListener(
       (metadata) => {
