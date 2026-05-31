@@ -21,13 +21,11 @@ export const PlaybackManagerContext = createContext<
 
 interface PlaybackProviderProps {
   showData?: ShowData;
-  targetShowParams?: ConstructorParameters<typeof PlaybackManager>[2];
   children: ReactNode;
 }
 
 export function PlaybackProvider({
   showData,
-  targetShowParams,
   children,
 }: PlaybackProviderProps) {
   const trpc = useTRPC();
@@ -38,13 +36,10 @@ export function PlaybackProvider({
       return undefined;
     }
 
-    return new PlaybackManager(
-      showData,
-      () =>
-        queryClient.fetchQuery(
-          trpc.show.getShowData.queryOptions({ slug: showData.slug }),
-        ),
-      targetShowParams,
+    return new PlaybackManager(showData, () =>
+      queryClient.fetchQuery(
+        trpc.show.getShowData.queryOptions({ slug: showData.slug }),
+      ),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showData?.slug]);

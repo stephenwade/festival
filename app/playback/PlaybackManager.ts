@@ -11,16 +11,8 @@ export class PlaybackManager {
 
   private unsubscribeTargetShowInfo: Unsubscribe;
 
-  constructor(
-    showData: ShowData,
-    getShowData: GetShowData,
-    targetShowParams?: ConstructorParameters<typeof TargetShowManager>[2],
-  ) {
-    this.targetShowManager = new TargetShowManager(
-      showData,
-      getShowData,
-      targetShowParams,
-    );
+  constructor(showData: ShowData, getShowData: GetShowData) {
+    this.targetShowManager = new TargetShowManager(showData, getShowData);
 
     this.audioManager = new AudioManager(this.targetShowManager.targetShowInfo);
 
