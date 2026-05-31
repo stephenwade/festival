@@ -1,5 +1,5 @@
 import type { SetStateAction } from 'react';
-import z from 'zod';
+import { z } from 'zod';
 
 import type { Listener, Unsubscribe } from './ListenerSet';
 import { ListenerSet } from './ListenerSet';

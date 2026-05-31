@@ -1,5 +1,5 @@
 import { useMediaQuery, useViewportSize } from '@mantine/hooks';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 interface AudioCanvasProps {
   currentTime: number;
@@ -24,13 +24,14 @@ export function AudioCanvas({
   const reduceMotion =
     useMediaQuery('(prefers-reduced-motion: reduce)') || forceReduceMotion;
 
-  const [sizeMultiplier, setSizeMultiplier] = useState(1);
-
+  // eslint-disable-next-line @eslint-react/purity
   const renderedAt = performance.now();
 
   const animationRequestIdRef = useRef<number>(undefined);
 
   const { width, height } = useViewportSize();
+  const sizeMultiplier =
+    window.devicePixelRatio * Math.min(1, width / 500, height / 800);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -44,17 +45,12 @@ export function AudioCanvas({
     canvas.width = width * scale;
     canvas.height = height * scale;
 
-    const sizeMultiplier =
-      window.devicePixelRatio * Math.min(1, width / 500, height / 800);
-
-    setSizeMultiplier(sizeMultiplier);
-
     // canvas properties must be reset after canvas is resized
     ctx.lineWidth = 4 * sizeMultiplier;
     const color = '#fff';
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
-  }, [height, width]);
+  }, [height, sizeMultiplier, width]);
 
   const getCirclePoint = useCallback(
     (i: number, end: number, dataArray: Uint8Array, grow: number) => {
@@ -148,7 +144,7 @@ export function AudioCanvas({
     return result;
 
     // Excluding `renderedAt` is needed to make the line animate smoothly
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line @eslint-react/exhaustive-deps
   }, [currentTime, progressLineFrozen, setLength]);
 
   const drawProgress = useCallback(

@@ -18,7 +18,7 @@ export function ShowIntro({ logoUrl }: ShowIntroProps) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {/* eslint-disable-next-line jsx-a11y/alt-text */}
+          {/* eslint-disable-next-line jsx-a11y-x/alt-text */}
           <img className="logo" src={logoUrl} />
         </a>
         <div className="buttons">

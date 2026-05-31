@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import {
   createContext,
   type ReactNode,
-  useContext,
+  use,
   useEffect,
   useMemo,
   useRef,
@@ -41,7 +41,7 @@ export function PlaybackProvider({
         trpc.show.getShowData.queryOptions({ slug: showData.slug }),
       ),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line @eslint-react/exhaustive-deps
   }, [showData?.slug]);
 
   useEffect(() => {
@@ -55,14 +55,14 @@ export function PlaybackProvider({
   }
 
   return (
-    <PlaybackManagerContext.Provider value={playbackManager}>
+    <PlaybackManagerContext value={playbackManager}>
       {children}
-    </PlaybackManagerContext.Provider>
+    </PlaybackManagerContext>
   );
 }
 
 function usePlaybackManager() {
-  return useContext(PlaybackManagerContext)!;
+  return use(PlaybackManagerContext)!;
 }
 
 function usePlaybackManagerValue<T>(
@@ -89,7 +89,7 @@ function usePlaybackManagerValue<T, R>(
     return value;
   };
 
-  const [value, setValue] = useState<T | R>(
+  const [value, setValue] = useState<T | R>(() =>
     refineValue(getter(playbackManager)),
   );
 
@@ -103,10 +103,8 @@ function usePlaybackManagerValue<T, R>(
       },
     );
 
-    setValue(refineValue(getter(playbackManager)));
-
     return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line @eslint-react/exhaustive-deps
   }, [playbackManager]);
 
   return value;
@@ -119,7 +117,7 @@ function usePlaybackManagerMethod<
 
   const result = useMemo(() => {
     return getter(playbackManager)?.bind(playbackManager) as T;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line @eslint-react/exhaustive-deps
   }, [playbackManager]);
 
   return result;

@@ -1,16 +1,14 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
-import { defineConfig } from 'eslint/config';
+import eslintReact from '@eslint-react/eslint-plugin';
+import { defineConfig, includeIgnoreFile } from 'eslint/config';
 import prettier from 'eslint-config-prettier';
-import _import from 'eslint-plugin-import';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
+import { importX } from 'eslint-plugin-import-x';
+import jsxA11yX from 'eslint-plugin-jsx-a11y-x';
 import noOnlyTests from 'eslint-plugin-no-only-tests';
 import playwright from 'eslint-plugin-playwright';
-import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
 import unusedImports from 'eslint-plugin-unused-imports';
@@ -22,10 +20,10 @@ const gitignorePath = path.resolve(__dirname, '.gitignore');
 
 export default defineConfig(
   js.configs.recommended,
-  react.configs.flat.recommended,
-  react.configs.flat['jsx-runtime'],
-  reactHooks.configs.flat.recommended,
-  jsxA11y.flatConfigs.recommended,
+  eslintReact.configs['recommended-type-checked'],
+  importX.flatConfigs.recommended,
+  importX.flatConfigs.typescript,
+  jsxA11yX.configs.recommended,
   playwright.configs['flat/recommended'],
 
   ...tseslint.configs.recommendedTypeChecked,
@@ -38,7 +36,6 @@ export default defineConfig(
 
   {
     plugins: {
-      import: _import,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       'no-only-tests': noOnlyTests,
       'simple-import-sort': simpleImportSort,
@@ -80,9 +77,9 @@ export default defineConfig(
       'object-shorthand': 'warn',
       quotes: ['warn', 'single', { avoidEscape: true }],
 
-      'import/first': 'warn',
-      'import/newline-after-import': 'warn',
-      'import/no-duplicates': 'warn',
+      'import-x/first': 'warn',
+      'import-x/newline-after-import': 'warn',
+      'import-x/no-named-as-default-member': 'off',
 
       'simple-import-sort/imports': 'warn',
       'simple-import-sort/exports': 'warn',
@@ -138,12 +135,6 @@ export default defineConfig(
       'unicorn/prefer-switch': 'off',
       'unicorn/prevent-abbreviations': 'off',
       'unicorn/switch-case-braces': 'off',
-
-      'react/jsx-no-leaked-render': ['warn', { validStrategies: ['ternary'] }],
-
-      // todo(react-19): investigate React Compiler
-      'react-hooks/preserve-manual-memoization': 'off',
-      'react-hooks/refs': 'off',
     },
   },
   {
@@ -152,7 +143,7 @@ export default defineConfig(
     rules: {
       'no-empty-pattern': 'off',
       '@typescript-eslint/unbound-method': 'off',
-      'react-hooks/rules-of-hooks': 'off',
+      '@eslint-react/rules-of-hooks': 'off',
     },
   },
   {

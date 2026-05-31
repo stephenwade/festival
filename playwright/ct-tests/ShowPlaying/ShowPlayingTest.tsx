@@ -15,8 +15,8 @@ export function ShowPlayingTest({ showInfo }: { showInfo: ShowInfo }) {
   );
 
   return (
-    <PlaybackManagerContext.Provider value={mockedContext}>
+    <PlaybackManagerContext value={mockedContext}>
       <ShowPlaying />
-    </PlaybackManagerContext.Provider>
+    </PlaybackManagerContext>
   );
 }

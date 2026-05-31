@@ -18,9 +18,9 @@ export function VolumeFabTest() {
   );
 
   return (
-    <PlaybackManagerContext.Provider value={mockedContext}>
+    <PlaybackManagerContext value={mockedContext}>
       <VolumeFab />
       <p>Volume: {volume}</p>
-    </PlaybackManagerContext.Provider>
+    </PlaybackManagerContext>
   );
 }
