@@ -4,7 +4,7 @@ import { Temporal } from 'temporal-polyfill';
 
 import type { ShowData } from '../../../server/types/ShowData';
 import { trpcMsw } from '../trpc';
-import { ShowInfoTest } from './ShowInfoTest';
+import { TargetShowManagerTest } from './TargetShowManagerTest';
 
 interface TestProps {
   offsetSec: number;
@@ -54,7 +54,7 @@ async function setupMock(props: TestProps, router: RouterFixture) {
 test('1 minute before the show', async ({ mount, router }) => {
   await setupMock({ offsetSec: -1 * 60 }, router);
 
-  const component = await mount(<ShowInfoTest />);
+  const component = await mount(<TargetShowManagerTest />);
 
   await expect(component).toContainText('Status: WAITING_UNTIL_START');
   await expect(component).toContainText('Seconds until set: 60');
@@ -75,7 +75,7 @@ for (const offsetMin of [1, 2, 3]) {
   }) => {
     await setupMock({ offsetSec }, router);
 
-    const component = await mount(<ShowInfoTest />);
+    const component = await mount(<TargetShowManagerTest />);
 
     await expect(component).toContainText('Status: PLAYING');
     await expect(component).toContainText(`Current time: ${offsetSec}`);
@@ -87,7 +87,7 @@ for (const offsetMin of [1, 2, 3]) {
 test('4 minutes into the show', async ({ mount, router }) => {
   await setupMock({ offsetSec: 4 * 60 }, router);
 
-  const component = await mount(<ShowInfoTest />);
+  const component = await mount(<TargetShowManagerTest />);
 
   await expect(component).toContainText('Status: WAITING_UNTIL_START');
   await expect(component).toContainText('Seconds until set: 10');
@@ -101,7 +101,7 @@ for (const offsetMin of [5, 6, 7, 8]) {
   test(`${offsetMin} minutes into the show`, async ({ mount, router }) => {
     await setupMock({ offsetSec }, router);
 
-    const component = await mount(<ShowInfoTest />);
+    const component = await mount(<TargetShowManagerTest />);
 
     await expect(component).toContainText('Status: PLAYING');
     await expect(component).toContainText(`Current time: ${offsetSec - 250}`);
@@ -113,7 +113,7 @@ for (const offsetMin of [5, 6, 7, 8]) {
 test('9 minutes into the show', async ({ mount, router }) => {
   await setupMock({ offsetSec: 9 * 60 }, router);
 
-  const component = await mount(<ShowInfoTest />);
+  const component = await mount(<TargetShowManagerTest />);
 
   await expect(component).toContainText('Status: WAITING_UNTIL_START');
   await expect(component).toContainText('Seconds until set: 10');
@@ -127,7 +127,7 @@ for (const offsetMin of [10, 11, 12]) {
   test(`${offsetMin} minutes into the show`, async ({ mount, router }) => {
     await setupMock({ offsetSec }, router);
 
-    const component = await mount(<ShowInfoTest />);
+    const component = await mount(<TargetShowManagerTest />);
 
     await expect(component).toContainText('Status: PLAYING');
     await expect(component).toContainText(`Current time: ${offsetSec - 550}`);
@@ -139,7 +139,7 @@ for (const offsetMin of [10, 11, 12]) {
 test('after the show', async ({ mount, router }) => {
   await setupMock({ offsetSec: 13 * 60 }, router);
 
-  const component = await mount(<ShowInfoTest />);
+  const component = await mount(<TargetShowManagerTest />);
 
   await expect(component).toContainText('Status: ENDED');
   await expect(component).toContainText('Current set: None');
@@ -157,7 +157,7 @@ test('adjusts start time based on server clock', async ({ mount, router }) => {
     router,
   );
 
-  const component = await mount(<ShowInfoTest />);
+  const component = await mount(<TargetShowManagerTest />);
 
   await expect(component).toContainText('Status: PLAYING');
   await expect(component).toContainText('Current time: 9');
@@ -168,7 +168,7 @@ test('adjusts start time based on server clock', async ({ mount, router }) => {
 test('should fetch new data after a few seconds', async ({ mount, router }) => {
   await setupMock({ offsetSec: 0 }, router);
 
-  const component = await mount(<ShowInfoTest />);
+  const component = await mount(<TargetShowManagerTest />);
 
   await expect(component).not.toContainText('(FUTURE)');
 

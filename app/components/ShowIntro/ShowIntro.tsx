@@ -1,11 +1,13 @@
+import { useInitializeAudio } from '../../playback';
 import showIntroCssHref from '../../styles/show-intro.css?url';
 
 interface ShowIntroProps {
   logoUrl: string;
-  onListenClicked: () => void;
 }
 
-export function ShowIntro({ logoUrl, onListenClicked }: ShowIntroProps) {
+export function ShowIntro({ logoUrl }: ShowIntroProps) {
+  const initializeAudio = useInitializeAudio();
+
   return (
     <>
       <link rel="stylesheet" precedence="any" href={showIntroCssHref} />
@@ -21,7 +23,7 @@ export function ShowIntro({ logoUrl, onListenClicked }: ShowIntroProps) {
         </a>
         <div className="buttons">
           <span className="elevation-z2">
-            <button onClick={onListenClicked}>LISTEN LIVE</button>
+            <button onClick={initializeAudio}>LISTEN LIVE</button>
           </span>
           <span className="elevation-z2">
             <a

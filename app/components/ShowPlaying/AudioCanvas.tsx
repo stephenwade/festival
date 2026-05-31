@@ -8,7 +8,7 @@ interface AudioCanvasProps {
   /** Used in CI */
   forceReduceMotion?: boolean;
 
-  getAudioVisualizerData: (() => Uint8Array) | null;
+  getAudioVisualizerData: (() => Uint8Array) | undefined;
 }
 
 export function AudioCanvas({

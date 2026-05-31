@@ -27,7 +27,7 @@ test('should expand when clicked', async ({ mount }) => {
   await expect(component.locator('input')).toBeEnabled();
 });
 
-test('should update the useVolume hook when the volume is dragged', async ({
+test('should update the volume when the slider is dragged', async ({
   mount,
 }) => {
   const component = await mount(<VolumeFabTest />);

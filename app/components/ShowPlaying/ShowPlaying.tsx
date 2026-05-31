@@ -1,29 +1,25 @@
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-import type { ShowInfo } from '../../../server/types/ShowInfo';
+import {
+  useAudioError,
+  useAudioStatus,
+  useGetAudioVisualizerData,
+  useShowInfo,
+} from '../../playback';
 import showPlayingCssHref from '../../styles/show-playing.css?url';
-import type { AudioStatus } from '../AudioController';
 import { ToastContainer } from '../ToastContainer';
 import { VolumeFab } from '../VolumeFab';
 import { AudioCanvas } from './AudioCanvas';
 import { CurrentTime } from './CurrentTime';
 
-export interface ShowPlayingProps {
-  audioStatus: AudioStatus;
-  audioError: boolean;
-  showInfo: ShowInfo;
+export function ShowPlaying() {
+  const audioStatus = useAudioStatus();
+  const audioError = useAudioError();
+  const showInfo = useShowInfo();
 
-  getAudioVisualizerData: (() => Uint8Array) | null;
-}
+  const getAudioVisualizerData = useGetAudioVisualizerData();
 
-export function ShowPlaying({
-  audioStatus,
-  audioError,
-  showInfo,
-
-  getAudioVisualizerData,
-}: ShowPlayingProps) {
   const waitingUntilStart = showInfo.status === 'WAITING_UNTIL_START';
   const playing = showInfo.status === 'PLAYING';
 

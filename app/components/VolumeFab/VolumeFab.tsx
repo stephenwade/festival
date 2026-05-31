@@ -1,7 +1,7 @@
 import { useClickOutside } from '@mantine/hooks';
 import { memo, useCallback, useEffect, useState } from 'react';
 
-import { useVolume } from '../../hooks/useVolume';
+import { useVolume } from '../../playback';
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
 import volumeFabCssHref from './volume-fab.css?url';
 
