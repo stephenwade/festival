@@ -125,13 +125,6 @@ function usePlaybackManagerMethod<
   return result;
 }
 
-export function useTargetShowInfo() {
-  return usePlaybackManagerValue(
-    (m) => m.targetShowInfo,
-    (m) => m.addTargetShowInfoListener,
-  );
-}
-
 export function useAudioError() {
   return usePlaybackManagerValue(
     (m) => m.audioError,

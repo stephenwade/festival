@@ -22,20 +22,6 @@ export class PlaybackManager {
       });
   }
 
-  // TargetShowManager data
-
-  get targetShowInfo() {
-    return this.targetShowManager.targetShowInfo;
-  }
-
-  get addTargetShowInfoListener() {
-    return this.targetShowManager.addTargetShowInfoListener.bind(
-      this.targetShowManager,
-    );
-  }
-
-  // AudioManager data
-
   get audioError() {
     return this.audioManager.audioError;
   }
@@ -103,8 +89,6 @@ export type PlaybackManagerContract = Pick<
 
 /* eslint-disable unicorn/consistent-function-scoping */
 export const mockPlaybackManager = {
-  targetShowInfo: { status: 'WAITING_UNTIL_START' },
-  addTargetShowInfoListener: () => () => undefined,
   audioError: false,
   addAudioErrorListener: () => () => undefined,
   audioStatus: initialAudioStatus,
