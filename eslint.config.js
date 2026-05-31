@@ -7,7 +7,6 @@ import { defineConfig, includeIgnoreFile } from 'eslint/config';
 import prettier from 'eslint-config-prettier';
 import { importX } from 'eslint-plugin-import-x';
 import jsxA11yX from 'eslint-plugin-jsx-a11y-x';
-import noOnlyTests from 'eslint-plugin-no-only-tests';
 import playwright from 'eslint-plugin-playwright';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
@@ -36,8 +35,6 @@ export default defineConfig(
 
   {
     plugins: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      'no-only-tests': noOnlyTests,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
     },
@@ -94,7 +91,6 @@ export default defineConfig(
           ],
         },
       ],
-      'no-only-tests/no-only-tests': 'error',
 
       '@typescript-eslint/no-unused-vars': 'off',
       'unused-imports/no-unused-imports': 'warn',
