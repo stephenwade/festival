@@ -18,16 +18,21 @@ function displayConversionStatus(
   >,
 ) {
   switch (status) {
-    case 'USER_UPLOAD':
+    case 'USER_UPLOAD': {
       return 'Uploading…';
-    case 'CHECKING':
+    }
+    case 'CHECKING': {
       return 'Checking…';
-    case 'CONVERTING':
+    }
+    case 'CONVERTING': {
       return 'Converting…';
-    case 'RE_UPLOAD':
+    }
+    case 'RE_UPLOAD': {
       return 'Converting…';
-    case 'ERROR':
+    }
+    case 'ERROR': {
       return 'Error';
+    }
   }
 }
 

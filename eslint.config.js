@@ -125,25 +125,17 @@ export default defineConfig(
         },
       ],
 
-      'unicorn/better-regex': 'off',
       'unicorn/filename-case': 'off',
-      'unicorn/no-array-callback-reference': 'off',
-      'unicorn/no-array-reduce': 'off',
       'unicorn/no-null': 'off',
       'unicorn/no-useless-undefined': 'off',
       'unicorn/prefer-event-target': 'off',
-      'unicorn/prefer-module': 'off',
-      'unicorn/prefer-switch': 'off',
       'unicorn/prevent-abbreviations': 'off',
-      'unicorn/switch-case-braces': 'off',
     },
   },
   {
     files: ['playwright/**/*.ts', 'playwright/**/*.tsx'],
 
     rules: {
-      'no-empty-pattern': 'off',
-      '@typescript-eslint/unbound-method': 'off',
       '@eslint-react/rules-of-hooks': 'off',
     },
   },

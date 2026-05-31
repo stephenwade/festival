@@ -26,35 +26,35 @@ export const VolumeFab = memo(function VolumeFab() {
 
       switch (e.key) {
         case 'ArrowUp':
-        case 'ArrowRight':
+        case 'ArrowRight': {
           setVolume((v) => Math.min(v + INPUT_STEP, INPUT_MAX));
           break;
-
+        }
         case 'ArrowDown':
-        case 'ArrowLeft':
+        case 'ArrowLeft': {
           setVolume((v) => Math.max(v - INPUT_STEP, INPUT_MIN));
           break;
-
-        case 'PageUp':
+        }
+        case 'PageUp': {
           setVolume((v) => Math.min(v + INPUT_STEP * 2, INPUT_MAX));
           break;
-
-        case 'PageDown':
+        }
+        case 'PageDown': {
           setVolume((v) => Math.max(v - INPUT_STEP * 2, INPUT_MIN));
           break;
-
-        case 'Home':
+        }
+        case 'Home': {
           setVolume(INPUT_MIN);
           break;
-
-        case 'End':
+        }
+        case 'End': {
           setVolume(INPUT_MAX);
           break;
-
-        case 'm':
+        }
+        case 'm': {
           toggleMute();
           break;
-
+        }
         default:
         // Ignore other keys
       }
