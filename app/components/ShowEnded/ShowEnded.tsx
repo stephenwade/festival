@@ -23,7 +23,7 @@ export function ShowEnded({ logoUrl }: ShowEndedProps) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {/* eslint-disable-next-line jsx-a11y/alt-text */}
+          {/* eslint-disable-next-line jsx-a11y-x/alt-text */}
           <img className="logo" src={logoUrl} />
         </a>
         <a

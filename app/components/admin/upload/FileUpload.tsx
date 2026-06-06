@@ -46,7 +46,7 @@ export function FileUpload({
     throw fetchedDataError;
   }
 
-  const file = fileState ?? fetchedData;
+  const fileData = fileState ?? fetchedData;
 
   const [fileName, setFileName] = useState<string>();
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -107,9 +107,9 @@ export function FileUpload({
             Uploading… <progress value={uploadProgress} /> {fileName}
           </>
         ) : fileId ? (
-          file ? (
+          fileData ? (
             <>
-              URL: <a href={file.url}>{file.name}</a>{' '}
+              URL: <a href={fileData.url}>{fileData.name}</a>{' '}
               <button type="button" onClick={onRemoveFileClick}>
                 Remove file
               </button>

@@ -49,7 +49,7 @@ export function ffmpeg(
 ) {
   console.log('Running ffmpeg', { inputFileName, outputFileName });
 
-  const ffmpeg = spawn('ffmpeg', [
+  const process = spawn('ffmpeg', [
     '-loglevel',
     'warning',
     '-i',
@@ -62,7 +62,7 @@ export function ffmpeg(
   ]);
 
   if (progressCallback) {
-    ffmpeg.stdout.on('data', (data: Buffer) => {
+    process.stdout.on('data', (data: Buffer) => {
       try {
         progressCallback(ffmpegProgressSchema.parse(data.toString()));
       } catch (error) {
@@ -75,7 +75,7 @@ export function ffmpeg(
     });
   }
 
-  ffmpeg.stderr.on('data', (data: Buffer) => {
+  process.stderr.on('data', (data: Buffer) => {
     console.warn('stderr when running ffmpeg:', {
       inputFileName,
       outputFileName,
@@ -84,7 +84,7 @@ export function ffmpeg(
   });
 
   return new Promise<void>((resolve, reject) => {
-    ffmpeg.on('close', (code) => {
+    process.on('close', (code) => {
       if (code === 0) {
         resolve();
       } else {

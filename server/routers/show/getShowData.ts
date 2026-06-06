@@ -37,31 +37,27 @@ export async function getShowData(slug: string) {
     ({ start }) => Temporal.Instant.compare(now, start) === -1, // now < start
   );
 
-  const sets = setsWithTimes.reduce<SetData[]>(
-    (accumulator, { set, start, end }) => {
-      // Set is currently playing or is starting soon
-      const shouldIncludeFull =
-        Temporal.Instant.compare(start.subtract({ minutes: 2 }), now) <= 0 &&
-        Temporal.Instant.compare(now, end) === -1;
+  const sets: SetData[] = [];
+  for (const { set, start, end } of setsWithTimes) {
+    // Set is currently playing or is starting soon
+    const shouldIncludeFull =
+      Temporal.Instant.compare(start.subtract({ minutes: 2 }), now) <= 0 &&
+      Temporal.Instant.compare(now, end) === -1;
 
-      // Set is the next upcoming set but isn't starting soon
-      const shouldInclude =
-        shouldIncludeFull || set.id === nextUpcomingSet?.set.id;
+    // Set is the next upcoming set but isn't starting soon
+    const shouldInclude =
+      shouldIncludeFull || set.id === nextUpcomingSet?.set.id;
 
-      if (shouldInclude) {
-        accumulator.push({
-          id: set.id,
-          audioUrl: shouldIncludeFull ? set.audioFile.url : undefined,
-          artist: set.artist,
-          start: start.toString(),
-          duration: set.audioFile.duration,
-        });
-      }
-
-      return accumulator;
-    },
-    [],
-  );
+    if (shouldInclude) {
+      sets.push({
+        id: set.id,
+        audioUrl: shouldIncludeFull ? set.audioFile.url : undefined,
+        artist: set.artist,
+        start: start.toString(),
+        duration: set.audioFile.duration,
+      });
+    }
+  }
 
   const data: ShowData = {
     name: show.name,

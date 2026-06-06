@@ -26,8 +26,8 @@ export function AudioManagerTest({
   const [visualizerAvailable, setVisualizerAvailable] = useState(false);
 
   useEffect(() => {
-    const unsubscribeShowInfo = manager.addShowInfoListener((showInfo) => {
-      setShowInfo(showInfo);
+    const unsubscribeShowInfo = manager.addShowInfoListener((nextShowInfo) => {
+      setShowInfo(nextShowInfo);
     });
     const unsubscribeMetadata = manager.addLoadedMetadataListener(
       (metadata) => {
@@ -79,6 +79,7 @@ export function AudioManagerTest({
         Metadata events:
         <ul>
           {metadatas.map((metadata, i) => (
+            // eslint-disable-next-line @eslint-react/no-array-index-key
             <li data-testid="metadata-event" key={i}>
               <span data-testid="metadata-event-id">{metadata.setId}</span>{' '}
               <span data-testid="metadata-event-duration">

@@ -35,7 +35,7 @@ export class AudioManager {
   private previousTargetShowInfo?: TargetShowInfo;
 
   private showInfo_: ShowInfo;
-  private nextChange?: ShowInfo;
+  private nextChange?: TargetShowInfo;
 
   private stalledTimeout?: NodeJS.Timeout;
 
@@ -388,38 +388,46 @@ export class AudioManager {
 
     let newShowInfo: ShowInfo;
 
-    if (change.status === 'WAITING_UNTIL_START') {
-      if (shouldChangeSrc && change.currentSet?.audioUrl) {
-        activeAudio.src = change.currentSet.audioUrl;
+    switch (change.status) {
+      case 'WAITING_UNTIL_START': {
+        if (shouldChangeSrc && change.currentSet?.audioUrl) {
+          activeAudio.src = change.currentSet.audioUrl;
+        }
+
+        newShowInfo = {
+          currentSet: change.currentSet,
+          status: 'WAITING_UNTIL_START',
+          secondsUntilSet: change.secondsUntilSet,
+          nextSet: change.nextSet,
+        };
+
+        break;
       }
+      case 'PLAYING': {
+        if (shouldChangeSrc && change.currentSet?.audioUrl) {
+          activeAudio.src = change.currentSet.audioUrl;
+        }
 
-      newShowInfo = {
-        currentSet: change.currentSet,
-        status: 'WAITING_UNTIL_START',
-        secondsUntilSet: change.secondsUntilSet,
-        nextSet: change.nextSet,
-      };
-    } else if (change.status === 'PLAYING') {
-      if (shouldChangeSrc && change.currentSet?.audioUrl) {
-        activeAudio.src = change.currentSet.audioUrl;
+        if (change.currentTime > 0) {
+          activeAudio.src += `#t=${change.currentTime}`;
+        }
+
+        void activeAudio.play();
+
+        newShowInfo = {
+          currentSet: change.currentSet,
+          status: 'PLAYING',
+          currentTime: change.currentTime,
+          nextSet: change.nextSet,
+        };
+
+        break;
       }
+      case 'ENDED': {
+        newShowInfo = { status: 'ENDED' };
 
-      if (change.currentTime > 0) {
-        activeAudio.src += `#t=${change.currentTime}`;
+        break;
       }
-
-      void activeAudio.play();
-
-      newShowInfo = {
-        currentSet: change.currentSet,
-        status: 'PLAYING',
-        currentTime: change.currentTime,
-        nextSet: change.nextSet,
-      };
-    } else if (change.status === 'ENDED') {
-      newShowInfo = { status: 'ENDED' };
-    } else {
-      throw new Error('Unknown status');
     }
 
     this.showInfo_ = newShowInfo;
