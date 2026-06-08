@@ -30,8 +30,8 @@
     "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.1047.0",
-    "@aws-sdk/s3-request-presigner": "3.1047.0",
+    "@aws-sdk/client-s3": "3.1063.0",
+    "@aws-sdk/s3-request-presigner": "3.1063.0",
     "@clerk/backend": "3.5.0",
     "@clerk/express": "2.1.23",
     "@clerk/react": "6.7.3",
