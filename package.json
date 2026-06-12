@@ -84,7 +84,7 @@
     "msw-trpc": "2.0.1",
     "nodemon": "3.1.14",
     "npm-run-all2": "9.0.1",
-    "prettier": "3.8.3",
+    "prettier": "3.8.4",
     "prisma": "6.19.3",
     "stylelint": "17.13.0",
     "stylelint-config-hudochenkov": "13.0.2",
