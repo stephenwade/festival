@@ -26,12 +26,12 @@ export class TargetShowManager {
 
   private audioDurations: Record<string, number> = {};
 
-  private refetchInterval: NodeJS.Timeout;
+  private readonly refetchInterval: NodeJS.Timeout;
   private isFetching = false;
 
-  private clockInterval?: NodeJS.Timeout;
+  private readonly clockInterval?: NodeJS.Timeout;
 
-  private targetShowInfoListeners = new ListenerSet<TargetShowInfo>();
+  private readonly targetShowInfoListeners = new ListenerSet<TargetShowInfo>();
 
   constructor(
     showData: ShowData,

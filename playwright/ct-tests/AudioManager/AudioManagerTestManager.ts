@@ -4,11 +4,11 @@ import { TargetShowManager } from '../../../app/playback/TargetShowManager';
 import type { ShowData } from '../../../server/types/ShowData';
 
 export class AudioManagerTestManager {
-  private audioManager: AudioManager;
-  private targetShowManager: TargetShowManager;
+  private readonly audioManager: AudioManager;
+  private readonly targetShowManager: TargetShowManager;
 
-  private unsubscribeTargetShowInfo: Unsubscribe;
-  private unsubscribeLoadedMetadata: Unsubscribe;
+  private readonly unsubscribeTargetShowInfo: Unsubscribe;
+  private readonly unsubscribeLoadedMetadata: Unsubscribe;
 
   private useAlternateData = false;
 

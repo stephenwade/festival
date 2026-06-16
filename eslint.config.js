@@ -109,6 +109,7 @@ export default defineConfig(
       '@typescript-eslint/no-shadow': 'warn',
       '@typescript-eslint/only-throw-error': 'off',
       '@typescript-eslint/prefer-promise-reject-errors': 'off',
+      '@typescript-eslint/prefer-readonly': 'warn',
       '@typescript-eslint/restrict-template-expressions': [
         'error',
         {

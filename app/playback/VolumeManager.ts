@@ -11,7 +11,7 @@ export class VolumeManager {
   private volume_: number;
   private lastPositiveVolume: number;
 
-  private volumeListeners = new ListenerSet<number>();
+  private readonly volumeListeners = new ListenerSet<number>();
 
   constructor() {
     this.volume_ = readNumberFromLocalStorage(VOLUME_KEY) ?? 100;
