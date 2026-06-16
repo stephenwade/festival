@@ -1,4 +1,4 @@
-import { useMediaQuery, useViewportSize } from '@mantine/hooks';
+import { useReducedMotion, useViewportSize } from '@mantine/hooks';
 import { useCallback, useEffect, useRef } from 'react';
 
 interface AudioCanvasProps {
@@ -21,8 +21,7 @@ export function AudioCanvas({
 }: AudioCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const reduceMotion =
-    useMediaQuery('(prefers-reduced-motion: reduce)') || forceReduceMotion;
+  const reduceMotion = useReducedMotion() || forceReduceMotion;
 
   const animationDataRef = useRef({
     currentTime,

@@ -1,5 +1,5 @@
-import { useClickOutside } from '@mantine/hooks';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { useClickOutside, useDisclosure } from '@mantine/hooks';
+import { memo, useCallback, useEffect } from 'react';
 
 import { useVolume } from '../../playback';
 import { VolumeDownIcon, VolumeMuteIcon, VolumeUpIcon } from './icons';
@@ -12,11 +12,7 @@ const INPUT_STEP = 5;
 export const VolumeFab = memo(function VolumeFab() {
   const { volume, setVolume, toggleMute } = useVolume();
 
-  const [opened, setOpened] = useState(false);
-
-  const close = useCallback(() => {
-    setOpened(false);
-  }, []);
+  const [opened, { close, toggle }] = useDisclosure();
 
   const buttonRef = useClickOutside<HTMLDivElement>(close);
 
@@ -87,7 +83,7 @@ export const VolumeFab = memo(function VolumeFab() {
           }`}
           aria-label="Volume"
           onClick={() => {
-            setOpened((opened_) => !opened_);
+            toggle();
           }}
         >
           <VolumeIcon />
