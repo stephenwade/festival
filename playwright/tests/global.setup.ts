@@ -1,5 +1,3 @@
-/* eslint-disable playwright/expect-expect */
-
 import { test as setup } from '@playwright/test';
 import { Temporal } from 'temporal-polyfill';
 
@@ -14,6 +12,7 @@ import { authFile } from './shared-data';
  * show that the test is expecting.
  */
 
+/* eslint-disable playwright/expect-expect -- Setup doesn't require `expect` */
 setup('seed show', async () => {
   await deleteTestShows();
 
@@ -42,3 +41,4 @@ setup('authenticate', async ({ page, baseURL }) => {
 
   await page.context().storageState({ path: authFile });
 });
+/* eslint-enable */

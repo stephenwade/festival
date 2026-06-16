@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
+import type { ShowData } from '../../../server/types/ShowData';
 import showEndedCssHref from '../../styles/show-ended.css?url';
 
 interface ShowEndedProps {
-  logoUrl: string;
+  showData: ShowData;
 }
 
-export function ShowEnded({ logoUrl }: ShowEndedProps) {
+export function ShowEnded({ showData }: ShowEndedProps) {
   // This will only run once.
   useEffect(() => {
     toast.dismiss();
@@ -23,8 +24,11 @@ export function ShowEnded({ logoUrl }: ShowEndedProps) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {/* eslint-disable-next-line jsx-a11y-x/alt-text */}
-          <img className="logo" src={logoUrl} />
+          <img
+            className="logo"
+            src={showData.showLogoUrl}
+            alt={showData.name}
+          />
         </a>
         <a
           href="https://twitter.com/URLFESTIVAL"

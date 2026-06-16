@@ -22,6 +22,10 @@ export class PlaybackManager {
       });
   }
 
+  set getShowData(getShowData: TargetShowManager['getShowData']) {
+    this.targetShowManager.getShowData = getShowData;
+  }
+
   get audioError() {
     return this.audioManager.audioError;
   }
@@ -87,8 +91,9 @@ export type PlaybackManagerContract = Pick<
   keyof PlaybackManager
 >;
 
-/* eslint-disable unicorn/consistent-function-scoping */
+/* eslint-disable unicorn/consistent-function-scoping -- Harder to read in this case */
 export const mockPlaybackManager = {
+  getShowData: () => undefined as unknown as Promise<ShowData>,
   audioError: false,
   addAudioErrorListener: () => () => undefined,
   audioStatus: initialAudioStatus,
@@ -103,3 +108,4 @@ export const mockPlaybackManager = {
   toggleMute: () => undefined,
   dispose: () => undefined,
 } satisfies PlaybackManagerContract;
+/* eslint-enable */

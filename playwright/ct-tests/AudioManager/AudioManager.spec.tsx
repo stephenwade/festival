@@ -1,5 +1,3 @@
-/* eslint-disable playwright/no-wait-for-timeout */
-
 import { platform } from 'node:process';
 
 import { expect as baseExpect, test } from '@playwright/experimental-ct-react';
@@ -107,6 +105,7 @@ async function expectAudioCurrentTimeToAlmostEqual(
   expect(currentTime).toAlmostEqual(expected);
 }
 
+/* eslint-disable playwright/no-wait-for-timeout -- Audio is hard to test without timeouts */
 function commonTests({ forceSkipAudioContext = false }) {
   test.describe('init', () => {
     const offsetSec = -5;
@@ -361,3 +360,4 @@ test.describe('without AudioContext', () => {
     });
   });
 });
+/* eslint-enable */

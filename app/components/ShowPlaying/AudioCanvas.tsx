@@ -24,10 +24,16 @@ export function AudioCanvas({
   const reduceMotion =
     useMediaQuery('(prefers-reduced-motion: reduce)') || forceReduceMotion;
 
-  // eslint-disable-next-line @eslint-react/purity
-  const renderedAt = performance.now();
+  const animationDataRef = useRef({
+    currentTime,
+    renderedAt: 0,
+    frameRequestId: undefined as number | undefined,
+  });
 
-  const animationRequestIdRef = useRef<number>(undefined);
+  useEffect(() => {
+    animationDataRef.current.currentTime = currentTime;
+    animationDataRef.current.renderedAt = performance.now();
+  }, [currentTime, progressLineFrozen]);
 
   const { width, height } = useViewportSize();
   const sizeMultiplier =
@@ -135,16 +141,13 @@ export function AudioCanvas({
     if (progressLineFrozen) {
       time = currentTime;
     } else {
-      const delayMs = performance.now() - renderedAt;
-      time = currentTime + delayMs / 1000;
+      const delayMs = performance.now() - animationDataRef.current.renderedAt;
+      time = animationDataRef.current.currentTime + delayMs / 1000;
     }
 
     const result = time / setLength;
     if (result > 1) return 1;
     return result;
-
-    // Excluding `renderedAt` is needed to make the line animate smoothly
-    // eslint-disable-next-line @eslint-react/exhaustive-deps
   }, [currentTime, progressLineFrozen, setLength]);
 
   const drawProgress = useCallback(
@@ -211,21 +214,22 @@ export function AudioCanvas({
     if (!reduceMotion) drawCircle(dataArray, grow);
     drawProgress(grow);
 
-    animationRequestIdRef.current = requestAnimationFrame(animate);
+    animationDataRef.current.frameRequestId = requestAnimationFrame(animate);
   }, [drawCircle, drawProgress, getAudioVisualizerData, reduceMotion]);
 
   useEffect(() => {
-    if (animationRequestIdRef.current) {
-      cancelAnimationFrame(animationRequestIdRef.current);
+    if (animationDataRef.current.frameRequestId) {
+      cancelAnimationFrame(animationDataRef.current.frameRequestId);
     }
 
     animate();
 
-    return () => {
-      if (animationRequestIdRef.current) {
-        cancelAnimationFrame(animationRequestIdRef.current);
-      }
-    };
+    const frameRequestId = animationDataRef.current.frameRequestId;
+    if (frameRequestId) {
+      return () => {
+        cancelAnimationFrame(frameRequestId);
+      };
+    }
   }, [animate]);
 
   return <canvas ref={canvasRef} className="full-page"></canvas>;

@@ -33,8 +33,8 @@ test('plays the default show', async ({ page, browserName }) => {
   // Since the Docker tests require an Ubuntu runner, this test is flaky,
   // so just skip it. If all the other tests pass, I'm confident the app
   // is working correctly in Docker.
-  // eslint-disable-next-line playwright/no-skipped-test
-  test.skip(DOCKER_MODE, 'This test is flaky on Ubuntu');
+  // eslint-disable-next-line playwright/no-skipped-test -- This test is flaky on Ubuntu
+  test.skip(DOCKER_MODE);
 
   await delayShow(process.env.SHOW_SLUG!);
 

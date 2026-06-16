@@ -1,11 +1,12 @@
+import type { ShowData } from '../../../server/types/ShowData';
 import { useInitializeAudio } from '../../playback';
 import showIntroCssHref from '../../styles/show-intro.css?url';
 
 interface ShowIntroProps {
-  logoUrl: string;
+  showData: ShowData;
 }
 
-export function ShowIntro({ logoUrl }: ShowIntroProps) {
+export function ShowIntro({ showData }: ShowIntroProps) {
   const initializeAudio = useInitializeAudio();
 
   return (
@@ -18,8 +19,11 @@ export function ShowIntro({ logoUrl }: ShowIntroProps) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {/* eslint-disable-next-line jsx-a11y-x/alt-text */}
-          <img className="logo" src={logoUrl} />
+          <img
+            className="logo"
+            src={showData.showLogoUrl}
+            alt={showData.name}
+          />
         </a>
         <div className="buttons">
           <span className="elevation-z2">

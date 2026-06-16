@@ -1,3 +1,4 @@
+import { useDidUpdate } from '@mantine/hooks';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   createContext,
@@ -31,18 +32,32 @@ export function PlaybackProvider({
   const trpc = useTRPC();
   const queryClient = useQueryClient();
 
-  const playbackManager = useMemo(() => {
+  const getShowData = useMemo(() => {
     if (!showData) {
       return undefined;
     }
 
-    return new PlaybackManager(showData, () =>
+    return () =>
       queryClient.fetchQuery(
         trpc.show.getShowData.queryOptions({ slug: showData.slug }),
-      ),
-    );
-    // eslint-disable-next-line @eslint-react/exhaustive-deps
+      );
+  }, [queryClient, showData, trpc.show.getShowData]);
+
+  const playbackManager = useMemo(() => {
+    if (!showData || !getShowData) {
+      return undefined;
+    }
+
+    return new PlaybackManager(showData, getShowData);
+    // eslint-disable-next-line @eslint-react/exhaustive-deps -- Intentional, `getShowData` changing is handled below
   }, [showData?.slug]);
+
+  useDidUpdate(() => {
+    if (playbackManager && getShowData) {
+      playbackManager.getShowData = getShowData;
+    }
+    // if playbackManager just changed, it was created with the new getShowData
+  }, [getShowData]);
 
   useEffect(() => {
     return () => {
@@ -104,7 +119,7 @@ function usePlaybackManagerValue<T, R>(
     );
 
     return unsubscribe;
-    // eslint-disable-next-line @eslint-react/exhaustive-deps
+    // eslint-disable-next-line @eslint-react/exhaustive-deps -- Intentionally ignoring `refiner` and `subscribeGetter`
   }, [playbackManager]);
 
   return value;
@@ -117,7 +132,7 @@ function usePlaybackManagerMethod<
 
   const result = useMemo(() => {
     return getter(playbackManager)?.bind(playbackManager) as T;
-    // eslint-disable-next-line @eslint-react/exhaustive-deps
+    // eslint-disable-next-line @eslint-react/exhaustive-deps -- Intentionally ignoring `getter`
   }, [playbackManager]);
 
   return result;

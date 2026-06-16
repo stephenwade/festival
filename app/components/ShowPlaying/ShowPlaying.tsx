@@ -27,13 +27,8 @@ export function ShowPlaying() {
     if (audioError) {
       toast.dismiss();
 
-      const verb =
-        showInfo.status === 'WAITING_UNTIL_START' ? 'loading' : 'playing';
-      toast.error(`There was a problem ${verb} the audio track.`);
+      toast.error('There was a problem loading the audio track.');
     }
-
-    // Only trigger when `audioError` changes
-    // eslint-disable-next-line @eslint-react/exhaustive-deps
   }, [audioError]);
 
   useEffect(() => {
