@@ -1,9 +1,8 @@
-/* eslint-disable playwright/no-wait-for-timeout */
-
 import { expect, test } from '@playwright/experimental-ct-react';
 
 import { AudioCanvasTest } from './AudioCanvasTest';
 
+/* eslint-disable playwright/no-wait-for-timeout -- Canvas is hard to test without timeouts */
 test.describe('reduceMotion false', () => {
   test('canvas looks different with sound and no sound', async ({
     mount,
@@ -29,7 +28,7 @@ test.describe('reduceMotion false', () => {
       .getByTestId('snapshot-2-hash')
       .textContent();
 
-    // eslint-disable-next-line playwright/prefer-web-first-assertions
+    // eslint-disable-next-line playwright/prefer-web-first-assertions -- This is more readable
     expect(imageDataSound).not.toEqual(imageDataNoSound);
   });
 });
@@ -57,7 +56,8 @@ test.describe('reduceMotion true', () => {
       .getByTestId('snapshot-2-hash')
       .textContent();
 
-    // eslint-disable-next-line playwright/prefer-web-first-assertions
+    // eslint-disable-next-line playwright/prefer-web-first-assertions -- This is more readable
     expect(imageDataSound).toEqual(imageDataNoSound);
   });
 });
+/* eslint-enable */

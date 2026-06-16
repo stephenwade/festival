@@ -79,7 +79,7 @@ export function AudioManagerTest({
         Metadata events:
         <ul>
           {metadatas.map((metadata, i) => (
-            // eslint-disable-next-line @eslint-react/no-array-index-key
+            // eslint-disable-next-line @eslint-react/no-array-index-key -- The array is only appended to
             <li data-testid="metadata-event" key={i}>
               <span data-testid="metadata-event-id">{metadata.setId}</span>{' '}
               <span data-testid="metadata-event-duration">

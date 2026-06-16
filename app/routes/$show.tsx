@@ -38,7 +38,7 @@ function Show() {
       <link rel="stylesheet" precedence="any" href={elevationCssHref} />
       <link rel="stylesheet" precedence="any" href={showCssHref} />
       {showStyles ? <style>{showStyles}</style> : null}
-      <ShowDisplay showLogoUrl={showData.showLogoUrl} />
+      <ShowDisplay showData={showData} />
     </PlaybackProvider>
   );
 }

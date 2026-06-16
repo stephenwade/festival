@@ -16,7 +16,7 @@ function isBefore(a: Temporal.Instant, b: Temporal.Instant): boolean {
 
 export class TargetShowManager {
   private showData: ShowData;
-  private readonly getShowData: GetShowData;
+  getShowData: GetShowData;
   private clientTimeSkewMs = 0;
   private sets: (Omit<SetData, 'start'> & {
     start: Temporal.Instant;
