@@ -2,6 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import js from '@eslint/js';
+import * as comments from '@eslint-community/eslint-plugin-eslint-comments/configs';
 import eslintReact from '@eslint-react/eslint-plugin';
 import { defineConfig, includeIgnoreFile } from 'eslint/config';
 import prettier from 'eslint-config-prettier';
@@ -19,6 +20,7 @@ const gitignorePath = path.resolve(__dirname, '.gitignore');
 
 export default defineConfig(
   js.configs.recommended,
+  comments.recommended,
   eslintReact.configs['recommended-type-checked'],
   importX.flatConfigs.recommended,
   importX.flatConfigs.typescript,
@@ -57,6 +59,11 @@ export default defineConfig(
     },
 
     rules: {
+      '@eslint-community/eslint-comments/require-description': [
+        'warn',
+        { ignore: ['eslint-enable'] },
+      ],
+
       'no-restricted-globals': [
         'error',
         { name: 'Date', message: 'Use `Temporal` instead.' },
