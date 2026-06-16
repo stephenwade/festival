@@ -16,7 +16,7 @@ function isBefore(a: Temporal.Instant, b: Temporal.Instant): boolean {
 
 export class TargetShowManager {
   private showData: ShowData;
-  private getShowData: GetShowData;
+  private readonly getShowData: GetShowData;
   private clientTimeSkewMs = 0;
   private sets: (Omit<SetData, 'start'> & {
     start: Temporal.Instant;
@@ -26,12 +26,12 @@ export class TargetShowManager {
 
   private audioDurations: Record<string, number> = {};
 
-  private refetchInterval: NodeJS.Timeout;
+  private readonly refetchInterval: NodeJS.Timeout;
   private isFetching = false;
 
-  private clockInterval?: NodeJS.Timeout;
+  private readonly clockInterval?: NodeJS.Timeout;
 
-  private targetShowInfoListeners = new ListenerSet<TargetShowInfo>();
+  private readonly targetShowInfoListeners = new ListenerSet<TargetShowInfo>();
 
   constructor(
     showData: ShowData,

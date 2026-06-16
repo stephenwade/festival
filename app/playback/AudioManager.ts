@@ -19,14 +19,14 @@ export const initialAudioStatus: AudioStatus = {
 };
 
 export class AudioManager {
-  private volumeManager: VolumeManager;
+  private readonly volumeManager: VolumeManager;
 
   private activeAudio: HTMLAudioElement;
   private inactiveAudio: HTMLAudioElement;
   private audioError_ = false;
   private audioStatus_ = { ...initialAudioStatus };
 
-  private forceSkipAudioContext: boolean;
+  private readonly forceSkipAudioContext: boolean;
   private audioContext?: AudioContext;
   private setAudioContextVolume?: (volume: number) => void;
   private getAudioVisualizerData_?: () => Uint8Array;
@@ -39,13 +39,13 @@ export class AudioManager {
 
   private stalledTimeout?: NodeJS.Timeout;
 
-  private removeAudioListenerCallbacks: (() => void)[] = [];
+  private readonly removeAudioListenerCallbacks: (() => void)[] = [];
 
-  private audioErrorListeners = new ListenerSet<boolean>();
-  private audioStatusListeners = new ListenerSet<AudioStatus>();
-  private loadedMetadataListeners = new ListenerSet<AudioMetadata>();
-  private showInfoListeners = new ListenerSet<ShowInfo>();
-  private unsubscribeVolume: Unsubscribe;
+  private readonly audioErrorListeners = new ListenerSet<boolean>();
+  private readonly audioStatusListeners = new ListenerSet<AudioStatus>();
+  private readonly loadedMetadataListeners = new ListenerSet<AudioMetadata>();
+  private readonly showInfoListeners = new ListenerSet<ShowInfo>();
+  private readonly unsubscribeVolume: Unsubscribe;
 
   constructor(
     targetShowInfo: TargetShowInfo,

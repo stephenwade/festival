@@ -3,7 +3,7 @@ export type Unsubscribe = () => void;
 export type Subscribe<T> = (listener: Listener<T>) => Unsubscribe;
 
 export class ListenerSet<T> {
-  private listeners = new Set<Listener<T>>();
+  private readonly listeners = new Set<Listener<T>>();
 
   subscribe(listener: Listener<T>): Unsubscribe {
     this.listeners.add(listener);

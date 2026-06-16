@@ -6,10 +6,10 @@ import { TargetShowManager } from './TargetShowManager';
 type GetShowData = ConstructorParameters<typeof TargetShowManager>[1];
 
 export class PlaybackManager {
-  private audioManager: AudioManager;
-  private targetShowManager: TargetShowManager;
+  private readonly audioManager: AudioManager;
+  private readonly targetShowManager: TargetShowManager;
 
-  private unsubscribeTargetShowInfo: Unsubscribe;
+  private readonly unsubscribeTargetShowInfo: Unsubscribe;
 
   constructor(showData: ShowData, getShowData: GetShowData) {
     this.targetShowManager = new TargetShowManager(showData, getShowData);
