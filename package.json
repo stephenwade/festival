@@ -34,7 +34,7 @@
     "@aws-sdk/s3-request-presigner": "3.1067.0",
     "@clerk/backend": "3.8.0",
     "@clerk/express": "2.1.28",
-    "@clerk/react": "6.10.1",
+    "@clerk/react": "6.10.2",
     "@mantine/hooks": "9.3.2",
     "@prisma/client": "6.19.3",
     "@rvf/core": "8.1.1",
