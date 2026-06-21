@@ -129,6 +129,7 @@ export default defineConfig(
         },
       ],
 
+      'unicorn/consistent-boolean-name': 'off',
       'unicorn/filename-case': 'off',
       'unicorn/no-null': 'off',
       'unicorn/no-useless-undefined': 'off',
@@ -136,8 +137,6 @@ export default defineConfig(
       'unicorn/prevent-abbreviations': 'off',
 
       // temporary
-      'unicorn/consistent-boolean-name': 'off',
-      'unicorn/consistent-class-member-order': 'off',
       'unicorn/max-nested-calls': 'off',
       'unicorn/no-array-from-fill': 'off',
       'unicorn/no-declarations-before-early-exit': 'off',

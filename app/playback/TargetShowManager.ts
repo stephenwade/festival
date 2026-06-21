@@ -16,7 +16,6 @@ function isBefore(a: Temporal.Instant, b: Temporal.Instant): boolean {
 
 export class TargetShowManager {
   private showData: ShowData;
-  getShowData: GetShowData;
   private clientTimeSkewMs = 0;
   private sets: (Omit<SetData, 'start'> & {
     start: Temporal.Instant;
@@ -32,6 +31,8 @@ export class TargetShowManager {
   private readonly clockInterval?: NodeJS.Timeout;
 
   private readonly targetShowInfoListeners = new ListenerSet<TargetShowInfo>();
+
+  getShowData: GetShowData;
 
   constructor(
     showData: ShowData,
@@ -65,20 +66,6 @@ export class TargetShowManager {
         }
       }, 200);
     }
-  }
-
-  get targetShowInfo(): Readonly<typeof this.targetShowInfo_> {
-    return this.targetShowInfo_;
-  }
-
-  addTargetShowInfoListener(listener: Listener<TargetShowInfo>): Unsubscribe {
-    return this.targetShowInfoListeners.subscribe(listener);
-  }
-
-  onLoadedMetadata(metadata: AudioMetadata) {
-    this.audioDurations[metadata.setId] = metadata.duration;
-
-    this.updateSets();
   }
 
   private async fetch() {
@@ -166,6 +153,20 @@ export class TargetShowManager {
     if (timeInfo.status === 'ENDED') {
       globalThis.clearInterval(this.clockInterval);
     }
+  }
+
+  get targetShowInfo(): Readonly<typeof this.targetShowInfo_> {
+    return this.targetShowInfo_;
+  }
+
+  addTargetShowInfoListener(listener: Listener<TargetShowInfo>): Unsubscribe {
+    return this.targetShowInfoListeners.subscribe(listener);
+  }
+
+  onLoadedMetadata(metadata: AudioMetadata) {
+    this.audioDurations[metadata.setId] = metadata.duration;
+
+    this.updateSets();
   }
 
   dispose() {
