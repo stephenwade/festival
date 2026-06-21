@@ -1,11 +1,5 @@
 {
-  "include": [
-    "*.config.js",
-    "*.config.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "app/utils/auth-route-guards"
-  ],
+  "include": ["*.config.js", "*.config.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["build", "server/**/*.ts"],
   "compilerOptions": {
     "module": "esnext",

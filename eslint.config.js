@@ -131,14 +131,13 @@ export default defineConfig(
 
       'unicorn/consistent-boolean-name': 'off',
       'unicorn/filename-case': 'off',
+      'unicorn/max-nested-calls': 'off',
       'unicorn/no-null': 'off',
       'unicorn/no-useless-undefined': 'off',
       'unicorn/prefer-event-target': 'off',
       'unicorn/prevent-abbreviations': 'off',
 
       // temporary
-      'unicorn/max-nested-calls': 'off',
-      'unicorn/no-array-from-fill': 'off',
       'unicorn/no-declarations-before-early-exit': 'off',
       'unicorn/no-global-object-property-assignment': 'off',
       'unicorn/no-non-function-verb-prefix': 'off',
