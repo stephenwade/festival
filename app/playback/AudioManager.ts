@@ -292,10 +292,10 @@ export class AudioManager {
 
   private doNextStatusChange() {
     const change = this.nextChange;
-    const activeAudio = this.activeAudio;
     if (!change) {
       return;
     }
+    const activeAudio = this.activeAudio;
     this.nextChange = undefined;
 
     const setChanged = change.currentSet !== this.showInfo.currentSet;
