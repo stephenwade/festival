@@ -138,7 +138,6 @@ export default defineConfig(
       'unicorn/prevent-abbreviations': 'off',
 
       // temporary
-      'unicorn/no-global-object-property-assignment': 'off',
       'unicorn/no-non-function-verb-prefix': 'off',
       'unicorn/no-return-array-push': 'off',
       'unicorn/no-top-level-assignment-in-function': 'off',
