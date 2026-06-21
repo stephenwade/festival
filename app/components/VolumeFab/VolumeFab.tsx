@@ -9,6 +9,7 @@ const INPUT_MIN = 0;
 const INPUT_MAX = 100;
 const INPUT_STEP = 5;
 
+// eslint-disable-next-line @typescript-eslint/no-shadow -- intentional
 export const VolumeFab = memo(function VolumeFab() {
   const { volume, setVolume, toggleMute } = useVolume();
 
