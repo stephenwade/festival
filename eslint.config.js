@@ -139,9 +139,6 @@ export default defineConfig(
       'unicorn/prefer-event-target': 'off',
       'unicorn/prefer-minimal-ternary': 'off',
       'unicorn/prevent-abbreviations': 'off',
-
-      // temporary
-      'unicorn/prefer-type-literal-last': 'off',
     },
   },
   {

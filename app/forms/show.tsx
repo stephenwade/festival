@@ -253,9 +253,9 @@ export function NewShowForm() {
   );
 }
 
-type EditShowFormProps = {
+type EditShowFormProps = Required<Pick<ShowFormProps, 'defaultValues'>> & {
   showId: Show['id'];
-} & Required<Pick<ShowFormProps, 'defaultValues'>>;
+};
 
 export function EditShowForm({ defaultValues, showId }: EditShowFormProps) {
   return (
