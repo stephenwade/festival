@@ -18,17 +18,15 @@ function isRVFValidationError(error: unknown): error is ValidatorError {
 }
 
 const t = initTRPC.context<Context>().create({
-  errorFormatter({ error, shape }) {
-    return {
-      ...shape,
-      data: {
-        ...shape.data,
-        rvfValidationErrors: isRVFValidationError(error.cause)
-          ? error.cause.fieldErrors
-          : null,
-      },
-    };
-  },
+  errorFormatter: ({ error, shape }) => ({
+    ...shape,
+    data: {
+      ...shape.data,
+      rvfValidationErrors: isRVFValidationError(error.cause)
+        ? error.cause.fieldErrors
+        : null,
+    },
+  }),
 });
 
 export const router = t.router;

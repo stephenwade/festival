@@ -135,17 +135,12 @@ export default defineConfig(
       'unicorn/no-non-function-verb-prefix': 'off',
       'unicorn/no-null': 'off',
       'unicorn/no-useless-undefined': 'off',
+      'unicorn/prefer-early-return': 'off',
       'unicorn/prefer-event-target': 'off',
+      'unicorn/prefer-minimal-ternary': 'off',
       'unicorn/prevent-abbreviations': 'off',
 
       // temporary
-      'unicorn/no-unreadable-array-destructuring': 'off',
-      'unicorn/no-unreadable-for-of-expression': 'off',
-      'unicorn/no-unsafe-property-key': 'off',
-      'unicorn/prefer-await': 'off',
-      'unicorn/prefer-early-return': 'off',
-      'unicorn/prefer-minimal-ternary': 'off',
-      'unicorn/prefer-short-arrow-method': 'off',
       'unicorn/prefer-type-literal-last': 'off',
     },
   },
@@ -155,6 +150,7 @@ export default defineConfig(
     rules: {
       '@eslint-react/rules-of-hooks': 'off',
       'unicorn/no-top-level-side-effects': 'off',
+      'unicorn/no-unreadable-for-of-expression': 'off',
     },
   },
   {

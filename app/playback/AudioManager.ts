@@ -112,6 +112,7 @@ export class AudioManager {
     this.activeAudio.removeAttribute('src');
 
     // swap activeAudio and inactiveAudio
+    // eslint-disable-next-line unicorn/no-unreadable-array-destructuring -- swap in one line
     [this.activeAudio, this.inactiveAudio] = [
       this.inactiveAudio,
       this.activeAudio,
@@ -461,6 +462,7 @@ export class AudioManager {
 
     for (const audio of [this.activeAudio, this.inactiveAudio]) {
       // Safari: activate the audio element by trying to play
+      // eslint-disable-next-line unicorn/prefer-await -- only ignoring errors
       audio.play().catch(() => {
         // ignore errors
       });
@@ -469,6 +471,7 @@ export class AudioManager {
       audio.pause();
     }
 
+    // eslint-disable-next-line unicorn/prefer-await -- only ignoring errors
     this.audioContext?.resume().catch(() => {
       // ignore errors
     });
