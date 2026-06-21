@@ -75,9 +75,8 @@ export function AudioCanvasTest({ forceReduceMotion }: TestProps) {
         forceReduceMotion={forceReduceMotion}
         getAudioVisualizerData={
           withAudioData
-            ? () =>
-                Uint8Array.from(Array.from<number>({ length: 512 }).fill(100))
-            : () => Uint8Array.from(Array.from<number>({ length: 512 }).fill(0))
+            ? () => Uint8Array.from(Array.from({ length: 512 }, () => 100))
+            : () => Uint8Array.from(Array.from({ length: 512 }, () => 0))
         }
       />
     </>

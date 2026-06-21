@@ -75,17 +75,17 @@ export function FileUpload({
       field.setValue(newFile.id);
     }, 100);
 
-    xhrPromise(file, {
-      url: uploadUrl,
-      onProgress: setUploadProgress,
-      errorOnBadStatus: true,
-    })
-      .then(() => {
-        setIsUploading(false);
-      })
-      .catch((error: unknown) => {
-        console.error(`File upload ${name} failed.`, error);
+    try {
+      await xhrPromise(file, {
+        url: uploadUrl,
+        onProgress: setUploadProgress,
+        errorOnBadStatus: true,
       });
+
+      setIsUploading(false);
+    } catch (error: unknown) {
+      console.error(`File upload ${name} failed.`, error);
+    }
   };
 
   const onRemoveFileClick = () => {

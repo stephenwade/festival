@@ -129,10 +129,15 @@ export default defineConfig(
         },
       ],
 
+      'unicorn/consistent-boolean-name': 'off',
       'unicorn/filename-case': 'off',
+      'unicorn/max-nested-calls': 'off',
+      'unicorn/no-non-function-verb-prefix': 'off',
       'unicorn/no-null': 'off',
       'unicorn/no-useless-undefined': 'off',
+      'unicorn/prefer-early-return': 'off',
       'unicorn/prefer-event-target': 'off',
+      'unicorn/prefer-minimal-ternary': 'off',
       'unicorn/prevent-abbreviations': 'off',
     },
   },
@@ -141,6 +146,8 @@ export default defineConfig(
 
     rules: {
       '@eslint-react/rules-of-hooks': 'off',
+      'unicorn/no-top-level-side-effects': 'off',
+      'unicorn/no-unreadable-for-of-expression': 'off',
     },
   },
   {

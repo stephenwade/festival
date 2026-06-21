@@ -23,6 +23,7 @@ export function replaceUndefinedsWithNull<T>(
   if (obj.constructor.name === 'Object' || Array.isArray(obj)) {
     for (const key in obj) {
       // @ts-expect-error I know what I'm doing
+      // eslint-disable-next-line unicorn/no-unsafe-property-key -- I know what I'm doing
       newObj[key] = replaceUndefinedsWithNull(obj[key]);
     }
   }

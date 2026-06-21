@@ -16,7 +16,6 @@ function isBefore(a: Temporal.Instant, b: Temporal.Instant): boolean {
 
 export class TargetShowManager {
   private showData: ShowData;
-  getShowData: GetShowData;
   private clientTimeSkewMs = 0;
   private sets: (Omit<SetData, 'start'> & {
     start: Temporal.Instant;
@@ -33,6 +32,8 @@ export class TargetShowManager {
 
   private readonly targetShowInfoListeners = new ListenerSet<TargetShowInfo>();
 
+  getShowData: GetShowData;
+
   constructor(
     showData: ShowData,
     getShowData: GetShowData,
@@ -44,7 +45,7 @@ export class TargetShowManager {
     this.updateSets();
 
     const SECONDS = 1000;
-    this.refetchInterval = globalThis.setInterval(
+    this.refetchInterval = setInterval(
       () => {
         if (!this.isFetching) {
           void this.fetch();
@@ -55,7 +56,7 @@ export class TargetShowManager {
 
     if (enableClock) {
       let currentSecond = 0;
-      this.clockInterval = globalThis.setInterval(() => {
+      this.clockInterval = setInterval(() => {
         const lastSecond = currentSecond;
         currentSecond = Math.floor(
           Temporal.Now.instant().epochMilliseconds / 1000,
@@ -65,20 +66,6 @@ export class TargetShowManager {
         }
       }, 200);
     }
-  }
-
-  get targetShowInfo(): Readonly<typeof this.targetShowInfo_> {
-    return this.targetShowInfo_;
-  }
-
-  addTargetShowInfoListener(listener: Listener<TargetShowInfo>): Unsubscribe {
-    return this.targetShowInfoListeners.subscribe(listener);
-  }
-
-  onLoadedMetadata(metadata: AudioMetadata) {
-    this.audioDurations[metadata.setId] = metadata.duration;
-
-    this.updateSets();
   }
 
   private async fetch() {
@@ -164,14 +151,28 @@ export class TargetShowManager {
     this.targetShowInfoListeners.emit(this.targetShowInfo);
 
     if (timeInfo.status === 'ENDED') {
-      globalThis.clearInterval(this.clockInterval);
+      clearInterval(this.clockInterval);
     }
+  }
+
+  get targetShowInfo(): Readonly<typeof this.targetShowInfo_> {
+    return this.targetShowInfo_;
+  }
+
+  addTargetShowInfoListener(listener: Listener<TargetShowInfo>): Unsubscribe {
+    return this.targetShowInfoListeners.subscribe(listener);
+  }
+
+  onLoadedMetadata(metadata: AudioMetadata) {
+    this.audioDurations[metadata.setId] = metadata.duration;
+
+    this.updateSets();
   }
 
   dispose() {
     this.targetShowInfoListeners.clear();
 
-    globalThis.clearInterval(this.refetchInterval);
-    globalThis.clearInterval(this.clockInterval);
+    clearInterval(this.refetchInterval);
+    clearInterval(this.clockInterval);
   }
 }

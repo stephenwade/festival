@@ -58,7 +58,7 @@ export class VolumeManager {
 
 function readNumberFromLocalStorage(key: string): number | null {
   try {
-    const string = globalThis.localStorage.getItem(key);
+    const string = localStorage.getItem(key);
     if (string) {
       const number = z.number().parse(JSON.parse(string));
       return number;
@@ -71,7 +71,7 @@ function readNumberFromLocalStorage(key: string): number | null {
 
 function saveToLocalStorage(key: string, value: unknown) {
   try {
-    globalThis.localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
   } catch {
     // ignore errors
   }

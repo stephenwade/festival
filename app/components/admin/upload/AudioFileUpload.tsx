@@ -116,18 +116,18 @@ export function AudioFileUpload({
       field.setValue(newFile.id);
     }, 100);
 
-    xhrPromise(file, {
-      url: uploadUrl,
-      onProgress: setUploadProgress,
-      errorOnBadStatus: true,
-    })
-      .then(() => {
-        setIsUploading(false);
-        void processAudioFile.mutateAsync({ id: newFile.id });
-      })
-      .catch((error: unknown) => {
-        console.error(`Audio file upload ${name} failed.`, error);
+    try {
+      await xhrPromise(file, {
+        url: uploadUrl,
+        onProgress: setUploadProgress,
+        errorOnBadStatus: true,
       });
+
+      setIsUploading(false);
+      void processAudioFile.mutateAsync({ id: newFile.id });
+    } catch (error: unknown) {
+      console.error(`Audio file upload ${name} failed.`, error);
+    }
   };
 
   const onRemoveFileClick = () => {

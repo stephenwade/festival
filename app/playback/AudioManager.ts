@@ -69,54 +69,6 @@ export class AudioManager {
         : { status: 'WAITING_FOR_AUDIO_CONTEXT' };
   }
 
-  get audioStatus(): Readonly<typeof this.audioStatus_> {
-    return this.audioStatus_;
-  }
-
-  get audioError() {
-    return this.audioError_;
-  }
-
-  get getAudioVisualizerData() {
-    return this.getAudioVisualizerData_;
-  }
-
-  get showInfo(): Readonly<typeof this.showInfo_> {
-    return this.showInfo_;
-  }
-
-  addAudioErrorListener(listener: Listener<boolean>): Unsubscribe {
-    return this.audioErrorListeners.subscribe(listener);
-  }
-
-  addAudioStatusListener(listener: Listener<AudioStatus>): Unsubscribe {
-    return this.audioStatusListeners.subscribe(listener);
-  }
-
-  addLoadedMetadataListener(listener: Listener<AudioMetadata>): Unsubscribe {
-    return this.loadedMetadataListeners.subscribe(listener);
-  }
-
-  addShowInfoListener(listener: Listener<ShowInfo>): Unsubscribe {
-    return this.showInfoListeners.subscribe(listener);
-  }
-
-  get volume() {
-    return this.volumeManager.volume;
-  }
-
-  setVolume(volume: SetStateAction<number>) {
-    this.volumeManager.setVolume(volume);
-  }
-
-  toggleMute() {
-    this.volumeManager.toggleMute();
-  }
-
-  addVolumeListener(listener: Listener<number>): Unsubscribe {
-    return this.volumeManager.addVolumeListener(listener);
-  }
-
   private resetAudioStatus() {
     this.audioStatus_ = { ...initialAudioStatus };
   }
@@ -160,6 +112,7 @@ export class AudioManager {
     this.activeAudio.removeAttribute('src');
 
     // swap activeAudio and inactiveAudio
+    // eslint-disable-next-line unicorn/no-unreadable-array-destructuring -- swap in one line
     [this.activeAudio, this.inactiveAudio] = [
       this.inactiveAudio,
       this.activeAudio,
@@ -171,7 +124,7 @@ export class AudioManager {
 
     this.resetAudioStatus();
 
-    globalThis.clearTimeout(this.stalledTimeout);
+    clearTimeout(this.stalledTimeout);
   }
 
   private error() {
@@ -203,7 +156,7 @@ export class AudioManager {
 
     this.resetAudioStatus();
 
-    globalThis.clearTimeout(this.stalledTimeout);
+    clearTimeout(this.stalledTimeout);
   }
 
   private stalled(event?: GlobalEventHandlersEventMap['stalled']) {
@@ -242,44 +195,10 @@ export class AudioManager {
 
     this.audioStatus_.waiting = true;
 
-    globalThis.clearTimeout(this.stalledTimeout);
-    this.stalledTimeout = globalThis.setTimeout(() => {
+    clearTimeout(this.stalledTimeout);
+    this.stalledTimeout = setTimeout(() => {
       this.stalled();
     }, 10 * 1000);
-  }
-
-  updateTargetShowInfo(targetShowInfo: TargetShowInfo) {
-    this.targetShowInfo = targetShowInfo;
-
-    this.checkTargetShowInfo();
-  }
-
-  initializeAudio() {
-    if (this.targetShowInfo.status === 'ENDED') return;
-
-    if (!this.forceSkipAudioContext) {
-      try {
-        this.setupAudioContext();
-      } catch {
-        // ignore errors
-      }
-    }
-
-    for (const audio of [this.activeAudio, this.inactiveAudio]) {
-      // Safari: activate the audio element by trying to play
-      audio.play().catch(() => {
-        // ignore errors
-      });
-      // Firefox: if you don't pause after trying to play, it will start to play
-      // as soon as src is set
-      audio.pause();
-    }
-
-    this.audioContext?.resume().catch(() => {
-      // ignore errors
-    });
-
-    this.checkTargetShowInfo({ ignoreAudioContext: true });
   }
 
   private setupAudioContext() {
@@ -374,10 +293,10 @@ export class AudioManager {
 
   private doNextStatusChange() {
     const change = this.nextChange;
-    const activeAudio = this.activeAudio;
     if (!change) {
       return;
     }
+    const activeAudio = this.activeAudio;
     this.nextChange = undefined;
 
     const setChanged = change.currentSet !== this.showInfo.currentSet;
@@ -474,6 +393,90 @@ export class AudioManager {
       this.showInfo_ = newShowInfo;
       this.showInfoListeners.emit(this.showInfo);
     }
+  }
+
+  get audioStatus(): Readonly<typeof this.audioStatus_> {
+    return this.audioStatus_;
+  }
+
+  get audioError() {
+    return this.audioError_;
+  }
+
+  get getAudioVisualizerData() {
+    return this.getAudioVisualizerData_;
+  }
+
+  get showInfo(): Readonly<typeof this.showInfo_> {
+    return this.showInfo_;
+  }
+
+  addAudioErrorListener(listener: Listener<boolean>): Unsubscribe {
+    return this.audioErrorListeners.subscribe(listener);
+  }
+
+  addAudioStatusListener(listener: Listener<AudioStatus>): Unsubscribe {
+    return this.audioStatusListeners.subscribe(listener);
+  }
+
+  addLoadedMetadataListener(listener: Listener<AudioMetadata>): Unsubscribe {
+    return this.loadedMetadataListeners.subscribe(listener);
+  }
+
+  addShowInfoListener(listener: Listener<ShowInfo>): Unsubscribe {
+    return this.showInfoListeners.subscribe(listener);
+  }
+
+  get volume() {
+    return this.volumeManager.volume;
+  }
+
+  setVolume(volume: SetStateAction<number>) {
+    this.volumeManager.setVolume(volume);
+  }
+
+  toggleMute() {
+    this.volumeManager.toggleMute();
+  }
+
+  addVolumeListener(listener: Listener<number>): Unsubscribe {
+    return this.volumeManager.addVolumeListener(listener);
+  }
+
+  updateTargetShowInfo(targetShowInfo: TargetShowInfo) {
+    this.targetShowInfo = targetShowInfo;
+
+    this.checkTargetShowInfo();
+  }
+
+  initializeAudio() {
+    if (this.targetShowInfo.status === 'ENDED') return;
+
+    if (!this.forceSkipAudioContext) {
+      try {
+        this.setupAudioContext();
+      } catch {
+        // ignore errors
+      }
+    }
+
+    for (const audio of [this.activeAudio, this.inactiveAudio]) {
+      // Safari: activate the audio element by trying to play
+      // eslint-disable-next-line unicorn/prefer-await -- only ignoring errors
+      audio.play().catch(() => {
+        // ignore errors
+      });
+      // Firefox: if you don't pause after trying to play, it will start to play
+      // as soon as src is set
+      audio.pause();
+    }
+
+    // eslint-disable-next-line unicorn/prefer-await -- only ignoring errors
+    this.audioContext?.resume().catch(() => {
+      // ignore errors
+    });
+
+    this.checkTargetShowInfo({ ignoreAudioContext: true });
   }
 
   dispose() {
