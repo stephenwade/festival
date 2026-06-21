@@ -200,6 +200,7 @@ function ShowForm({ defaultValues, cancelLinkTo, showId }: ShowFormProps) {
           <button
             type="button"
             onClick={() => {
+              // eslint-disable-next-line unicorn/no-return-array-push -- https://github.com/sindresorhus/eslint-plugin-unicorn/issues/3379
               void sets.push({});
             }}
           >
