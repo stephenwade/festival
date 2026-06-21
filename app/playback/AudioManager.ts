@@ -123,7 +123,7 @@ export class AudioManager {
 
     this.resetAudioStatus();
 
-    globalThis.clearTimeout(this.stalledTimeout);
+    clearTimeout(this.stalledTimeout);
   }
 
   private error() {
@@ -155,7 +155,7 @@ export class AudioManager {
 
     this.resetAudioStatus();
 
-    globalThis.clearTimeout(this.stalledTimeout);
+    clearTimeout(this.stalledTimeout);
   }
 
   private stalled(event?: GlobalEventHandlersEventMap['stalled']) {
@@ -194,8 +194,8 @@ export class AudioManager {
 
     this.audioStatus_.waiting = true;
 
-    globalThis.clearTimeout(this.stalledTimeout);
-    this.stalledTimeout = globalThis.setTimeout(() => {
+    clearTimeout(this.stalledTimeout);
+    this.stalledTimeout = setTimeout(() => {
       this.stalled();
     }, 10 * 1000);
   }

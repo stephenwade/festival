@@ -139,8 +139,6 @@ export default defineConfig(
       'unicorn/prevent-abbreviations': 'off',
 
       // temporary
-      'unicorn/no-top-level-side-effects': 'off',
-      'unicorn/no-unnecessary-global-this': 'off',
       'unicorn/no-unreadable-array-destructuring': 'off',
       'unicorn/no-unreadable-for-of-expression': 'off',
       'unicorn/no-unsafe-property-key': 'off',
@@ -156,6 +154,7 @@ export default defineConfig(
 
     rules: {
       '@eslint-react/rules-of-hooks': 'off',
+      'unicorn/no-top-level-side-effects': 'off',
     },
   },
   {

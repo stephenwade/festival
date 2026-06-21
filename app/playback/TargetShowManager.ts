@@ -45,7 +45,7 @@ export class TargetShowManager {
     this.updateSets();
 
     const SECONDS = 1000;
-    this.refetchInterval = globalThis.setInterval(
+    this.refetchInterval = setInterval(
       () => {
         if (!this.isFetching) {
           void this.fetch();
@@ -56,7 +56,7 @@ export class TargetShowManager {
 
     if (enableClock) {
       let currentSecond = 0;
-      this.clockInterval = globalThis.setInterval(() => {
+      this.clockInterval = setInterval(() => {
         const lastSecond = currentSecond;
         currentSecond = Math.floor(
           Temporal.Now.instant().epochMilliseconds / 1000,
@@ -151,7 +151,7 @@ export class TargetShowManager {
     this.targetShowInfoListeners.emit(this.targetShowInfo);
 
     if (timeInfo.status === 'ENDED') {
-      globalThis.clearInterval(this.clockInterval);
+      clearInterval(this.clockInterval);
     }
   }
 
@@ -172,7 +172,7 @@ export class TargetShowManager {
   dispose() {
     this.targetShowInfoListeners.clear();
 
-    globalThis.clearInterval(this.refetchInterval);
-    globalThis.clearInterval(this.clockInterval);
+    clearInterval(this.refetchInterval);
+    clearInterval(this.clockInterval);
   }
 }
