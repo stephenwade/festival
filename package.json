@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "4.7.2",
-    "@eslint-react/eslint-plugin": "5.9.3",
+    "@eslint-react/eslint-plugin": "5.9.5",
     "@eslint/js": "10.0.1",
     "@playwright/experimental-ct-core": "1.61.1",
     "@playwright/experimental-ct-react": "1.61.1",
