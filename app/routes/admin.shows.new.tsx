@@ -1,6 +1,6 @@
 import { NewShowForm } from '../forms/show';
 
-function NewShow() {
+export default function NewShow() {
   return (
     <>
       <title>New show | Festival admin</title>
@@ -9,5 +9,3 @@ function NewShow() {
     </>
   );
 }
-
-export default NewShow;

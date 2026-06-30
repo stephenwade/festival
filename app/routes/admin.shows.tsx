@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-function Shows() {
+export default function Shows() {
   return (
     <>
       <h2>Shows</h2>
@@ -8,5 +8,3 @@ function Shows() {
     </>
   );
 }
-
-export default Shows;

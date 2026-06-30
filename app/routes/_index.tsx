@@ -5,7 +5,7 @@ import indexCssHref from '../styles/index.css?url';
 import showCssHref from '../styles/show.css?url';
 import { useTRPC } from '../trpc';
 
-function Index() {
+export default function Index() {
   const trpc = useTRPC();
 
   const { data: indexShowSlug } = useSuspenseQuery(
@@ -34,5 +34,3 @@ function Index() {
     </>
   );
 }
-
-export default Index;
