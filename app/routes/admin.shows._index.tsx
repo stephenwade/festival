@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useTRPC } from '../trpc';
 
-function ShowsIndex() {
+export default function ShowsIndex() {
   const trpc = useTRPC();
 
   const { data: shows } = useSuspenseQuery(trpc.admin.getShows.queryOptions());
@@ -33,5 +33,3 @@ function ShowsIndex() {
     </>
   );
 }
-
-export default ShowsIndex;

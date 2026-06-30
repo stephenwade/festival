@@ -52,7 +52,7 @@ async function setupMock(props: TestProps, router: RouterFixture) {
 }
 
 test('1 minute before the show', async ({ mount, router }) => {
-  await setupMock({ offsetSec: -1 * 60 }, router);
+  await setupMock({ offsetSec: -60 }, router);
 
   const component = await mount(<TargetShowManagerTest />);
 
