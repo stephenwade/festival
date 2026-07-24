@@ -35,7 +35,7 @@
     "@clerk/backend": "3.11.7",
     "@clerk/express": "2.1.43",
     "@clerk/react": "6.12.5",
-    "@mantine/hooks": "9.4.1",
+    "@mantine/hooks": "9.4.2",
     "@prisma/client": "6.19.3",
     "@rvf/core": "8.1.2",
     "@rvf/react": "8.1.3",
