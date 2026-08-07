@@ -32,9 +32,9 @@
   "dependencies": {
     "@aws-sdk/client-s3": "3.1090.0",
     "@aws-sdk/s3-request-presigner": "3.1090.0",
-    "@clerk/backend": "3.11.7",
-    "@clerk/express": "2.1.43",
-    "@clerk/react": "6.12.5",
+    "@clerk/backend": "3.15.0",
+    "@clerk/express": "2.1.49",
+    "@clerk/react": "6.12.10",
     "@mantine/hooks": "9.4.2",
     "@prisma/client": "6.19.3",
     "@rvf/core": "8.1.2",
